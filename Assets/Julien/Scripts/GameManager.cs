@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     int _nbManches;
     int _nbMancheActu = 0;
 
-    int _scoreP1, _scoreP2, _scoreP3, _scoreP4;
+    int _scoreP1 = 0, _scoreP2 = 0, _scoreP3 = 0, _scoreP4 = 0;
 
 
     //fonction à call depuis le menu suite au clic() du bouton play;
