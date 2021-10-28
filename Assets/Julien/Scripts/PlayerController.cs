@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask enemyLayer, hammerHitboxLayer;
     public float hammerProjection = 3;
     public float hammerBlockProjection = 1.5f;
-        //false = droite; true = gauche
+    //false = droite; true = gauche
     private bool attackDirection = false;
     public float attackRate = 2f;
     public float attackDuration = 0.1f;
@@ -53,6 +53,9 @@ public class PlayerController : MonoBehaviour
     float nextAttackTime = 0f;
     public float stunTime = 0.5f;
     private float stunTimeActu;
+
+    public float lastTimeAttackHit = 0;
+    public float lastTimeGotHit = -1;
 
 
     void Start()
@@ -103,18 +106,10 @@ public class PlayerController : MonoBehaviour
             }
             else if (jumpState != JumpState.InFlight)
             {
-                if (rb.velocity.x > 0)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x - 0.1f, rb.velocity.y);
-                }
-                else if (rb.velocity.x < 0)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x + 0.1f, rb.velocity.y);
-                }
-
+                rb.velocity = new Vector2(0, rb.velocity.y);
             }
 
-            //Saut
+            //Saut + wall jump
             if (Input.GetKeyDown(jumpKey) && jumpState == JumpState.Grounded && !isAttackRunningL && !isAttackRunningR)
             {
                 //Debug.Log("Jump");
@@ -195,7 +190,7 @@ public class PlayerController : MonoBehaviour
                 if (hammers.Length > 1)
                 {
                     //on contre
-                    Debug.Log("Blocage � Gauche");
+                    Debug.Log("Blocage à Gauche");
 
                     didAttackedBlockedL = true;
                     /*
@@ -203,7 +198,7 @@ public class PlayerController : MonoBehaviour
                     hammerPointL.SetActive(false);
                     */
                 }
-                
+
             }
             //3) applyAttack
             if (isAttackRunningL && Time.time >= attackDurationActu)
@@ -222,6 +217,7 @@ public class PlayerController : MonoBehaviour
                         //Appliquer une velocit�
                         //Attention: check la direction pour coord x
                         enemy.GetComponent<PlayerController>().applyAttack(-hammerProjection, 0);
+                        lastTimeAttackHit = Time.time;
                     }
                 }
                 else
@@ -234,7 +230,7 @@ public class PlayerController : MonoBehaviour
                 isAttackRunningL = false;
                 //disparition hammerHitBox
                 hammerPointL.SetActive(false);
-                
+
             }
 
 
@@ -259,7 +255,7 @@ public class PlayerController : MonoBehaviour
                 if (hammers.Length > 1)
                 {
                     //on contre
-                    Debug.Log("Blocage � Droite");
+                    Debug.Log("Blocage à Droite");
                     didAttackedBlockedR = true;
                 }
             }
@@ -283,6 +279,7 @@ public class PlayerController : MonoBehaviour
                         //Appliquer une velocit�
                         //Attention: check la direction pour coord x
                         enemy.GetComponent<PlayerController>().applyAttack(hammerProjection, 0);
+                        lastTimeAttackHit = Time.time;
                         //Debug.Log("Attaque � Droite");
                         //Debug.Log("Enemy hit");
                     }
@@ -306,6 +303,9 @@ public class PlayerController : MonoBehaviour
         //Stun
         stunTimeActu = stunTime + Time.time;
 
+        //var pour mini jeu
+        lastTimeGotHit = Time.time;
+
         //Velocit�
         rb.velocity = new Vector2(velocityX, velocityY);
     }
@@ -322,6 +322,22 @@ public class PlayerController : MonoBehaviour
     {
         //Exception anti "grip" sur le cot� des plateforme
         //Bug: Le grip ne s'effectue pas au niveau des pieds. Solution : Changer la HitBox (� faire apr�s changement du sprite et animations)
+
+        if (jumpState == JumpState.InFlight && col.gameObject.tag == "Plateform")
+        {
+            if (col.gameObject.transform.position.x <= transform.position.x)
+            {
+                isGrippingLeft = true;
+                //Debug.Log("Gripping Left");
+            }
+            else
+            {
+                isGrippingRight = true;
+                //Debug.Log("Gripping Right");
+            }
+
+        }
+        /*
         if (jumpState == JumpState.InFlight && col.gameObject.tag == "Plateform" && 
             col.gameObject.transform.position.x <= transform.position.x && col.gameObject.transform.position.y >= transform.position.y - hight)
         {
@@ -334,11 +350,12 @@ public class PlayerController : MonoBehaviour
             isGrippingRight = true;
             //Debug.Log("Gripping Right");
         }
+        */
     }
 
     void OnCollisionExit2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Plateform" && jumpState == JumpState.InFlight)
+        if (col.gameObject.tag == "Plateform" && jumpState == JumpState.InFlight)
         {
             isGrippingLeft = false;
             isGrippingRight = false;
