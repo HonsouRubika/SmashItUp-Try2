@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     int _nbManches;
     int _nbMancheActu = 0;
 
+    int _scoreP1 = 0, _scoreP2 = 0, _scoreP3 = 0, _scoreP4 = 0;
+
 
     //fonction à call depuis le menu suite au clic() du bouton play;
     public void initializeGameModes(int nbManches)
@@ -18,6 +20,10 @@ public class GameManager : MonoBehaviour
         _selectedGameModes = new int[nbManches];
         int nbGameModeMax = (int)GameMode.total;
 
+        _scoreP1 = 0;
+        _scoreP2 = 0;
+        _scoreP3 = 0;
+        _scoreP4 = 0;
 
         //randomize depuis une liste de gameMode possible
         for (int i = 0; i < nbManches; ++i)
@@ -71,6 +77,44 @@ public class GameManager : MonoBehaviour
         //SceneManager.LoadScene("Menu");
     }
 
+    //actualise le nouveau score de tout les joueurs
+    //dois être appelé avant nextMap()
+    //scoreP[x] = nombre de point gagné dans cette manche
+    public void addScores(int scoreP1, int scoreP2, int scoreP3, int scoreP4)
+    {
+        _scoreP1 += scoreP1;
+        _scoreP2 += scoreP2;
+        _scoreP3 += scoreP3;
+        _scoreP4 += scoreP4;
+        Debug.Log("ajout des scores");
+    }
+
+    //renvoie le score d'un joueur en particulier
+    public int getScorePlayer(int numJoueur)
+    {
+        switch (numJoueur)
+        {
+            case 1:
+                Debug.Log("get score P1");
+                return _scoreP1;
+            case 2:
+                Debug.Log("get score P2");
+                return _scoreP2;
+            case 3:
+                Debug.Log("get score P3");
+                return _scoreP3;
+            case 4:
+                Debug.Log("get score P4");
+                return _scoreP4;
+            default:
+                Debug.Log("Erreur : id de joueur inconnu");
+                break;
+        }
+
+        return -1; //situation impossible
+    }
+
+    //liste des gameMode présent dans le jeu (jouable)
     enum GameMode
     {
         CaptureTheFlag,
