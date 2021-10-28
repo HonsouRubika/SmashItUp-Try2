@@ -20,21 +20,20 @@ public class Flag : MonoBehaviour
         {
             flagIsCaptured = true;
 
-            if (collision.GetComponent<PlayerController>().playerID == 0)
+            switch (collision.GetComponent<PlayerController>().playerID)
             {
-                captureTheFlagRulesScript.FlagCaptured(0);
-            }
-            else if (collision.GetComponent<PlayerController>().playerID == 1)
-            {
-                captureTheFlagRulesScript.FlagCaptured(1);
-            }
-            else if (collision.GetComponent<PlayerController>().playerID == 2)
-            {
-                captureTheFlagRulesScript.FlagCaptured(2);
-            }
-            else if (collision.GetComponent<PlayerController>().playerID == 3)
-            {
-                captureTheFlagRulesScript.FlagCaptured(3);
+                case 0:
+                    captureTheFlagRulesScript.FlagCaptured(0);
+                    break;
+                case 1:
+                    captureTheFlagRulesScript.FlagCaptured(1);
+                    break;
+                case 2:
+                    captureTheFlagRulesScript.FlagCaptured(2);
+                    break;
+                case 3:
+                    captureTheFlagRulesScript.FlagCaptured(3);
+                    break;
             }
         }
     }

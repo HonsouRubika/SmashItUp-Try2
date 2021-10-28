@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CaptureTheFlag_Rules : MonoBehaviour
+public class DetructCrate_Rules : MonoBehaviour
 {
     /// <summary>
     /// By Antoine LEROUX
-    /// This script reference the rules of mini-game Capture the flag
+    /// This script reference the rules of mini-game Detruct Crate
     /// </summary>
 
-    [Header("CaptureTheFlag Rules")]
+    [Header("Players Score")]
+    public int scorePlayer0 = 0;
+    public int scorePlayer1 = 0;
+    public int scorePlayer2 = 0;
+    public int scorePlayer3 = 0;
+    
+    [Header("DetructCreate Rules")]
     public float durationMiniGame = 30;
     public float miniGameTimer = 0;
 
@@ -23,11 +29,5 @@ public class CaptureTheFlag_Rules : MonoBehaviour
         {
             miniGameTimer += Time.deltaTime;
         }
-    }
-
-    public void FlagCaptured(int playerWin)
-    {
-        //Call here the function score and next map from MiniGameManager
-        Debug.Log("Win");
     }
 }
