@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     //Force et Distance de projection
     public float hammerProjection = 3;
     public float hammerBlockProjection = 1.5f;
-    public float HammerSideProjectionMaxDistance = 3;
+    public float HammerSideProjectionMaxDistance = 1;
     private float startProjectedPostion = 0;
     private bool selfProjectionDirection = false;
     private bool isBeingProjected = false;
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
         {
             //reset var
             stunTimeActu = 0;
-            isBeingProjected = false;
+            //isBeingProjected = false;
             /////////////////////////////////////
             //////////// DEPLACEMENT ////////////
             /////////////////////////////////////
@@ -149,15 +149,15 @@ public class PlayerController : MonoBehaviour
 
             //Distance de projection max
               //gauche
-            if ((transform.position.x < startProjectedPostion + HammerSideProjectionMaxDistance) && isBeingProjected)
+            if ((transform.position.x < startProjectedPostion - HammerSideProjectionMaxDistance) && isBeingProjected)
             {
                 rb.velocity = new Vector2(rb.velocity.x + 0.05f, rb.velocity.y);
-                Debug.Log("OUI gauche");
+                Debug.Log("dist max gauche");
             } //droite
             else if ((transform.position.x > startProjectedPostion + HammerSideProjectionMaxDistance) && isBeingProjected)
             {
                 rb.velocity = new Vector2(rb.velocity.x - 0.05f, rb.velocity.y);
-                Debug.Log("OUI droite");
+                Debug.Log("dist max droite");
             } else if (isBeingProjected)
             {
                 Debug.Log("NON");
