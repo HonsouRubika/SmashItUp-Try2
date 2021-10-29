@@ -9,15 +9,18 @@ public class CaptureTheFlag_Rules : MonoBehaviour
     /// This script reference the rules of mini-game Capture the flag
     /// </summary>
 
+    public GameManager GM;
+
     [Header("CaptureTheFlag Rules")]
     public float durationMiniGame = 30;
     public float miniGameTimer = 0;
+    public int winPoints;
 
     public void Update()
     {
         if (miniGameTimer >= durationMiniGame)
         {
-            //Call here the function score and next map from MiniGameManager
+            GM.NextMap();
         }
         else
         {
@@ -27,7 +30,22 @@ public class CaptureTheFlag_Rules : MonoBehaviour
 
     public void FlagCaptured(int playerWin)
     {
-        //Call here the function score and next map from MiniGameManager
-        Debug.Log("Win");
+        switch (playerWin)
+        {
+            case 0:
+                GM.addScores(winPoints, 0, 0, 0);
+                break;
+            case 1:
+                GM.addScores(0, winPoints, 0, 0);
+                break;
+            case 2:
+                GM.addScores(0, 0, winPoints, 0);
+                break;
+            case 3:
+                GM.addScores(0, 0, 0, winPoints);
+                break;
+        }
+
+        GM.NextMap();
     }
 }
