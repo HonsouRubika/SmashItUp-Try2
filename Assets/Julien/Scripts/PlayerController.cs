@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour
                     hammerPointL.SetActive(false);
                     */
                 }
-                
+
             }
             //3) applyAttack
             if (isAttackRunningL && Time.time >= attackDurationActu)
@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour
                 isAttackRunningL = false;
                 //disparition hammerHitBox
                 hammerPointL.SetActive(false);
-                
+
             }
 
 
@@ -367,7 +367,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Plateform" && jumpState == JumpState.InFlight)
+        if (col.gameObject.tag == "Plateform" && jumpState == JumpState.InFlight)
         {
             isGrippingLeft = false;
             isGrippingRight = false;
