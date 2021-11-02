@@ -9,12 +9,15 @@ public class CaptureManager : MonoBehaviour
     private Zone zoneScript;
     public float timePastInZone = 0;
     public float timeToScore = 1;
-
+    private CaptureSound captureSoundScript;
 
 
     private void Start()
     {
         zoneScript = GetComponentInChildren<Zone>();
+
+        captureSoundScript = GetComponentInChildren<CaptureSound>();
+
     }
 
     private void Update()
@@ -22,6 +25,8 @@ public class CaptureManager : MonoBehaviour
         if (zoneScript.player0IsInZone == true && zoneScript.player1IsInZone == true)
         {
             timePastInZone = 0;
+            captureSoundScript.PlayerOutZone();
+
 
         }
         else
@@ -29,6 +34,8 @@ public class CaptureManager : MonoBehaviour
             if (zoneScript.player0IsInZone == true)
             {
                 timePastInZone += Time.deltaTime;
+                captureSoundScript.PlayerCapturing();
+
 
                 if (timePastInZone >= timeToScore)
                 {
@@ -40,6 +47,7 @@ public class CaptureManager : MonoBehaviour
             if (zoneScript.player1IsInZone == true)
             {
                 timePastInZone += Time.deltaTime;
+                captureSoundScript.PlayerCapturing();
 
                 if (timePastInZone >= timeToScore)
                 {
@@ -52,6 +60,7 @@ public class CaptureManager : MonoBehaviour
         if (zoneScript.player0IsInZone == false && zoneScript.player1IsInZone == false)
         {
             timePastInZone = 0;
+            captureSoundScript.PlayerOutZone();
         }
     }
 }
