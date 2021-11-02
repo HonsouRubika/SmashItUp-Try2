@@ -114,13 +114,13 @@ public class PlayerController : MonoBehaviour
             /////////////////////////////////////
 
             //Gauche + Droite
-            if (Input.GetKey(leftKey) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
+            if ((Input.GetKey(leftKey) || Input.GetAxis("Horizontal") < 0) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
             {
                 //gauche
                 rb.velocity = new Vector2(-speed, rb.velocity.y);
                 attackDirection = true;
             }
-            else if (Input.GetKey(rightkey) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
+            else if ((Input.GetKey(rightkey) || Input.GetAxis("Horizontal") > 0) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
             {
                 //droite
                 rb.velocity = new Vector2(speed, rb.velocity.y);
