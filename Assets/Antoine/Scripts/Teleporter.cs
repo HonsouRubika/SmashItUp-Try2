@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class Teleporter : MonoBehaviour
 {
+    private TeleporterSound teleportSoundScript;
+
     public enum direction {Vertical, Horizontal};
     public direction teleporterDirection = direction.Vertical;
 
-    public Vector2 transformAdded;
+    public Vector2 transformAddedOnExit;
     public Transform otherTP;
+
+    private void Start()
+    {
+        teleportSoundScript = GetComponentInChildren<TeleporterSound>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,6 +24,7 @@ public class Teleporter : MonoBehaviour
             if (collision.CompareTag("Player"))
             {
                 TeleportPlayer(collision);
+                teleportSoundScript.PlayerTeleported();
             }
         }
     }
@@ -26,10 +34,10 @@ public class Teleporter : MonoBehaviour
         switch (teleporterDirection)
         {
             case direction.Vertical:
-                collision.transform.position = new Vector2(collision.transform.position.x, otherTP.position.y + transformAdded.y);
+                collision.transform.position = new Vector2(collision.transform.position.x, otherTP.position.y + transformAddedOnExit.y);
                 break;
             case direction.Horizontal:
-                collision.transform.position = new Vector2(otherTP.position.x + transformAdded.x, collision.transform.position.y);
+                collision.transform.position = new Vector2(otherTP.position.x + transformAddedOnExit.x, collision.transform.position.y);
                 break;
         } 
     }

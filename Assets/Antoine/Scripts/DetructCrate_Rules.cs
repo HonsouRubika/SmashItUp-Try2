@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// By Antoine LEROUX
+/// This script reference the rules of mini-game Detruct Crate
+/// </summary>
+
 public class DetructCrate_Rules : MonoBehaviour
 {
-    /// <summary>
-    /// By Antoine LEROUX
-    /// This script reference the rules of mini-game Detruct Crate
-    /// </summary>
-
     [Header("Players Score")]
     public int scorePlayer0 = 0;
     public int scorePlayer1 = 0;

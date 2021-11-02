@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// By Antoine LEROUX
+/// This script reference the rules of mini-game Capture the flag
+/// </summary>
+
 public class CaptureTheFlag_Rules : MonoBehaviour
 {
-    /// <summary>
-    /// By Antoine LEROUX
-    /// This script reference the rules of mini-game Capture the flag
-    /// </summary>
-
     public GameManager GM;
 
     [Header("CaptureTheFlag Rules")]
