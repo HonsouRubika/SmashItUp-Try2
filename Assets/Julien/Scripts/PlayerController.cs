@@ -42,9 +42,9 @@ public class PlayerController : MonoBehaviour
     //Force et Distance de projection
     public float hammerProjection = 3;
     public float hammerBlockProjection = 1.5f;
-    public float HammerSideProjectionMaxDistance = 3;
+    public float HammerSideProjectionMaxDistance = 1;
     private float startProjectedPostion = 0;
-    private bool selfProjectionDirection = false;
+    //private bool selfProjectionDirection = false;
     private bool isBeingProjected = false;
         //false = droite; true = gauche
     //Paramètre vitesse
@@ -83,25 +83,44 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //Distance de projection max
+        //gauche
+        if ((transform.position.x <= startProjectedPostion + -HammerSideProjectionMaxDistance) && isBeingProjected)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            isBeingProjected = false;
+            Debug.Log("OUI gauche");
+            Debug.Log("Dist max : " + -HammerSideProjectionMaxDistance);
+            Debug.Log("1: " + transform.position.x + " >= " + startProjectedPostion + " + " + -HammerSideProjectionMaxDistance);
+        } //droite
+        else if ((transform.position.x >= startProjectedPostion + HammerSideProjectionMaxDistance) && isBeingProjected)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            isBeingProjected = false;
+            Debug.Log("OUI droite");
+            Debug.Log("Dist max : " + HammerSideProjectionMaxDistance);
+            Debug.Log("1: " + transform.position.x + " <= " + startProjectedPostion + " + " + HammerSideProjectionMaxDistance);
+        }
 
         //stun also equal to immortality
         if (Time.time >= stunTimeActu)
         {
             //reset var
             stunTimeActu = 0;
-            isBeingProjected = false;
+            //isBeingProjected = false;
+            
             /////////////////////////////////////
             //////////// DEPLACEMENT ////////////
             /////////////////////////////////////
 
             //Gauche + Droite
-            if (Input.GetKey(leftKey) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
+            if ((Input.GetKey(leftKey) || Input.GetAxis("Horizontal") < 0) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
             {
                 //gauche
                 rb.velocity = new Vector2(-speed, rb.velocity.y);
                 attackDirection = true;
             }
-            else if (Input.GetKey(rightkey) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
+            else if ((Input.GetKey(rightkey) || Input.GetAxis("Horizontal") > 0) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
             {
                 //droite
                 rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -147,22 +166,6 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - 0.05f);
             }
 
-            //Distance de projection max
-              //gauche
-            if ((transform.position.x < startProjectedPostion + HammerSideProjectionMaxDistance) && isBeingProjected)
-            {
-                rb.velocity = new Vector2(rb.velocity.x + 0.05f, rb.velocity.y);
-                Debug.Log("OUI gauche");
-            } //droite
-            else if ((transform.position.x > startProjectedPostion + HammerSideProjectionMaxDistance) && isBeingProjected)
-            {
-                rb.velocity = new Vector2(rb.velocity.x - 0.05f, rb.velocity.y);
-                Debug.Log("OUI droite");
-            } else if (isBeingProjected)
-            {
-                Debug.Log("NON");
-            }
-
             //Colision Sol
             if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
                 Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Plateform")))
@@ -195,7 +198,6 @@ public class PlayerController : MonoBehaviour
 
                 isAttackRunningL = true;
                 attackDurationActu = attackDuration + Time.time;
-                Debug.Log("Attaque gauche");
 
                 //apparition hammerHitBox
                 hammerPointL.SetActive(true);
@@ -209,20 +211,16 @@ public class PlayerController : MonoBehaviour
                 if (hammers.Length > 1)
                 {
                     //on contre
-                    Debug.Log("Blocage à Gauche");
+                    //Debug.Log("Blocage à Gauche");
 
                     didAttackedBlockedL = true;
-                    /*
-                    isAttackRunningL = false;
-                    hammerPointL.SetActive(false);
-                    */
                 }
 
             }
             //3) applyAttack
             if (isAttackRunningL && Time.time >= attackDurationActu)
             {
-                Debug.Log("Attaque gauche3");
+                //Debug.Log("Attaque gauche3");
                 //Animation / Attack hitbox Apparition (pour test)
 
                 //Detection des player dans la zone
@@ -262,7 +260,6 @@ public class PlayerController : MonoBehaviour
 
                 isAttackRunningR = true;
                 attackDurationActu = attackDuration + Time.time;
-                Debug.Log("Attaque droite");
                 //apparition hammerHitBox
                 hammerPointR.SetActive(true);
             }
@@ -274,14 +271,12 @@ public class PlayerController : MonoBehaviour
                 if (hammers.Length > 1)
                 {
                     //on contre
-                    Debug.Log("Blocage à Droite");
                     didAttackedBlockedR = true;
                 }
             }
             //3) applyAttack
             if (isAttackRunningR && Time.time >= attackDurationActu)
             {
-                Debug.Log("Attaque droite3");
                 //reset timeAttack
                 nextAttackTime = Time.time + 1f / attackRate;
 
@@ -299,8 +294,6 @@ public class PlayerController : MonoBehaviour
                         //Attention: check la direction pour coord x
                         enemy.GetComponent<PlayerController>().applyAttack(hammerProjection, 0);
                         lastTimeAttackHit = Time.time;
-                        //Debug.Log("Attaque � Droite");
-                        //Debug.Log("Enemy hit");
                     }
                 }
                 else
@@ -325,15 +318,12 @@ public class PlayerController : MonoBehaviour
         //var pour mini jeu
         lastTimeGotHit = Time.time;
 
-        //Velocit�
-        rb.velocity = new Vector2(velocityX, velocityY);
-
         //gestion distance max
         isBeingProjected = true;
         startProjectedPostion = transform.position.x;
-        //direction
-        if (velocityX < 0) selfProjectionDirection = true;
-        else selfProjectionDirection = false;
+
+        //Velocit�
+        rb.velocity = new Vector2(velocityX, velocityY);
     }
 
     void OnDrawGizmosSelected()
