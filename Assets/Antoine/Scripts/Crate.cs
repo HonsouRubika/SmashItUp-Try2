@@ -9,6 +9,9 @@ public class Crate : MonoBehaviour
     [Header("Hammer")]
     public LayerMask hammerLayer;
 
+    [Header("Score")]
+    public int pointsToAdd = 1;
+
     private Collider2D hammerCollider = null;
     private BoxCollider2D crateCollider;
 
@@ -40,16 +43,16 @@ public class Crate : MonoBehaviour
             switch (hammerCollider.GetComponentInParent<PlayerController>().playerID)
             {
                 case 0:
-                    detructCrateRulesScript.scorePlayer0++;
+                    detructCrateRulesScript.scorePlayer0 += pointsToAdd;
                     break;
                 case 1:
-                    detructCrateRulesScript.scorePlayer1++;
+                    detructCrateRulesScript.scorePlayer1 += pointsToAdd;
                     break;
                 case 2:
-                    detructCrateRulesScript.scorePlayer2++;
+                    detructCrateRulesScript.scorePlayer2 += pointsToAdd;
                     break;
                 case 3:
-                    detructCrateRulesScript.scorePlayer3++;
+                    detructCrateRulesScript.scorePlayer3 += pointsToAdd;
                     break;
             }
 
