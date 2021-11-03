@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
 
     int _scoreP1 = 0, _scoreP2 = 0, _scoreP3 = 0, _scoreP4 = 0;
 
+    private void Start()
+    {
+        DontDestroyOnLoad(this);
+    }
 
     //fonction à call depuis le menu suite au clic() du bouton play;
     public void initializeGameModes(int nbManches)
@@ -34,7 +38,19 @@ public class GameManager : MonoBehaviour
         }
 
         //on passe à la première manche
-        NextMap();
+        //TestScore();
+        TestMap();
+    }
+
+    public void TestScore()
+    {
+        addScores(1, 0, 0, 0);
+        SceneManager.LoadScene("Score");
+    }
+
+    public void TestMap()
+    {
+        SceneManager.LoadScene("CaptureTheFlag01");
     }
 
     public void NextMap()
