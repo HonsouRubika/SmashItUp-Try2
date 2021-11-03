@@ -6,8 +6,9 @@ public class Zone : MonoBehaviour
 {
     public bool player0IsInZone = false;
     public bool player1IsInZone = false;
-    //public bool player2IsInZone = false;
-    //public bool player3IsInZone = false;
+    public bool player2IsInZone = false;
+    public bool player3IsInZone = false;
+    public int counterPlayerinZone = 0;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -16,11 +17,26 @@ public class Zone : MonoBehaviour
             if (collision.GetComponent<PlayerController>().playerID == 0)
             {
                 player0IsInZone = true;
+                counterPlayerinZone++;
+
             }
 
             if (collision.GetComponent<PlayerController>().playerID == 1)
             {
                 player1IsInZone = true;
+                counterPlayerinZone++;
+            }
+
+            if (collision.GetComponent<PlayerController>().playerID == 2)
+            {
+                player2IsInZone = true;
+                counterPlayerinZone++;
+            }
+
+            if (collision.GetComponent<PlayerController>().playerID == 3)
+            {
+                player3IsInZone = true;
+                counterPlayerinZone++;
             }
         }
     }
@@ -32,11 +48,25 @@ public class Zone : MonoBehaviour
             if (collision.GetComponent<PlayerController>().playerID == 0)
             {
                 player0IsInZone = false;
+                counterPlayerinZone--;
             }
 
             if (collision.GetComponent<PlayerController>().playerID == 1)
             {
                 player1IsInZone = false;
+                counterPlayerinZone--;
+            }
+
+            if (collision.GetComponent<PlayerController>().playerID == 2)
+            {
+                player2IsInZone = false;
+                counterPlayerinZone--;
+            }
+
+            if (collision.GetComponent<PlayerController>().playerID == 3)
+            {
+                player3IsInZone = false;
+                counterPlayerinZone--;
             }
         }
     }

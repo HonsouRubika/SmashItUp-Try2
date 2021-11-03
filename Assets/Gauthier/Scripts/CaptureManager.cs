@@ -6,10 +6,14 @@ public class CaptureManager : MonoBehaviour
 {
     public int scorePlayer0 = 0;
     public int scorePlayer1 = 0;
+    public int scorePlayer2 = 0;
+    public int scorePlayer3 = 0;
     private Zone zoneScript;
     public float timePastInZone = 0;
     public float timeToScore = 1;
     private CaptureSound captureSoundScript;
+    public Score scoreScript;
+    private bool zoneSound = false;
 
 
     private void Start()
@@ -22,11 +26,11 @@ public class CaptureManager : MonoBehaviour
 
     private void Update()
     {
-        if (zoneScript.player0IsInZone == true && zoneScript.player1IsInZone == true)
+        if (zoneScript.counterPlayerinZone >= 2)
         {
             timePastInZone = 0;
             captureSoundScript.PlayerOutZone();
-
+            zoneSound = false;
 
         }
         else
@@ -34,37 +38,88 @@ public class CaptureManager : MonoBehaviour
             if (zoneScript.player0IsInZone == true)
             {
                 timePastInZone += Time.deltaTime;
-                captureSoundScript.PlayerCapturing();
+                
+
+                if (!zoneSound)
+                {
+                    zoneSound = true;
+                    captureSoundScript.PlayerCapturing();
+                }
 
 
                 if (timePastInZone >= timeToScore)
                 {
                     scorePlayer0++;
                     timePastInZone = 0;
+                    scoreScript.AddScore(1,0,0,0);
                 }
             }          
 
             if (zoneScript.player1IsInZone == true)
             {
-                timePastInZone += Time.deltaTime;
-                captureSoundScript.PlayerCapturing();
+                timePastInZone += Time.deltaTime;             
+
+
+                if (!zoneSound)
+                {
+                    zoneSound = true;
+                    captureSoundScript.PlayerCapturing();
+                }
 
                 if (timePastInZone >= timeToScore)
                 {
                     scorePlayer1++;
                     timePastInZone = 0;
+                    scoreScript.AddScore(0, 1, 0, 0);
                 }
-            }            
+            }
+
+            if (zoneScript.player2IsInZone == true)
+            {
+                timePastInZone += Time.deltaTime;
+
+
+                if (!zoneSound)
+                {
+                    zoneSound = true;
+                    captureSoundScript.PlayerCapturing();
+                }
+
+                if (timePastInZone >= timeToScore)
+                {
+                    scorePlayer2++;
+                    timePastInZone = 0;
+                    scoreScript.AddScore(0, 0, 1, 0);
+                }
+            }
+
+            if (zoneScript.player3IsInZone == true)
+            {
+                timePastInZone += Time.deltaTime;
+
+
+                if (!zoneSound)
+                {
+                    zoneSound = true;
+                    captureSoundScript.PlayerCapturing();
+                }
+
+                if (timePastInZone >= timeToScore)
+                {
+                    scorePlayer3++;
+                    timePastInZone = 0;
+                    scoreScript.AddScore(0, 0, 0, 1);
+                }
+            }
         }
 
-        if (zoneScript.player0IsInZone == false && zoneScript.player1IsInZone == false)
+        if (zoneScript.counterPlayerinZone < 1)
         {
             timePastInZone = 0;
             captureSoundScript.PlayerOutZone();
+            zoneSound = false;
         }
     }
 }
 
-// Il faut trouver un moyen de remettre le timer de capture à 0 quand un joueur quitte la zone, même si un autre joueur est dedans
-// Il manque le timer du mini jeu (le global) 
-// Un scoring avec un classement pour chaque joueur (if score0 < score1 alors Joueur1 est premier et Joueur0 est deuxième)
+// Il manque un scoring avec un classement pour chaque joueur (if score0 < score1 alors Joueur1 est premier et Joueur0 est deuxième)

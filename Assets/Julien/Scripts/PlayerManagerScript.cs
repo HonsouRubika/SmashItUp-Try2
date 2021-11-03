@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerManagerScript : MonoBehaviour
 {
+    //public TeleporterLobby teleporterLobby;
     public Transform spawner1, spawner2, spawner3, spawner4;
     private int nbPlayerActu = 0;
 
@@ -11,7 +12,7 @@ public class PlayerManagerScript : MonoBehaviour
         //initialisation des joueurs dans le menu selection
         //teleporterLobby.nbPlayerInGame++;
 
-        //instancialisation dans joueurs au début de chaque mapDebug.Log("player connected");
+        //instancialisation dans joueurs au dï¿½but de chaque mapDebug.Log("player connected");
         switch (nbPlayerActu)
         {
             case 0:
