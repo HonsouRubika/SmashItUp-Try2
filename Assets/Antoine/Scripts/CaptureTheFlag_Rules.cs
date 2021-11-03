@@ -12,21 +12,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
     public GameManager GM;
 
     [Header("CaptureTheFlag Rules")]
-    public float durationMiniGame = 30;
-    public float miniGameTimer = 0;
     public int winPoints;
-
-    public void Update()
-    {
-        if (miniGameTimer >= durationMiniGame)
-        {
-            GM.NextMap();
-        }
-        else
-        {
-            miniGameTimer += Time.deltaTime;
-        }
-    }
 
     public void FlagCaptured(int playerWin)
     {
@@ -44,7 +30,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
             case 3:
                 GM.addScores(0, 0, 0, winPoints);
                 break;
-        }
+        } 
 
         GM.NextMap();
     }

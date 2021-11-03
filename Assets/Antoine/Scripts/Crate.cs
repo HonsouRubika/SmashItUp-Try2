@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Crate : MonoBehaviour
 {
-    private DetructCrate_Rules detructCrateRulesScript;
+    private DetructCrate_Rules detructCrateScript;
+    private Score scoreScript;
 
     [Header("Hammer")]
     public LayerMask hammerLayer;
+
+    [Header("Score")]
+    public int pointsToAdd = 1;
 
     private Collider2D hammerCollider = null;
     private BoxCollider2D crateCollider;
@@ -19,7 +23,8 @@ public class Crate : MonoBehaviour
 
     private void Start()
     {
-        detructCrateRulesScript = GetComponentInParent<DetructCrate_Rules>();
+        detructCrateScript = GetComponentInParent<DetructCrate_Rules>();
+        scoreScript = detructCrateScript.scoreScript;
 
         crateCollider = GetComponent<BoxCollider2D>();
 
@@ -40,16 +45,16 @@ public class Crate : MonoBehaviour
             switch (hammerCollider.GetComponentInParent<PlayerController>().playerID)
             {
                 case 0:
-                    detructCrateRulesScript.scorePlayer0++;
+                    scoreScript.AddScore(1, 0, 0, 0);
                     break;
                 case 1:
-                    detructCrateRulesScript.scorePlayer1++;
+                    scoreScript.AddScore(0, 1, 0, 0);
                     break;
                 case 2:
-                    detructCrateRulesScript.scorePlayer2++;
+                    scoreScript.AddScore(0, 0, 1, 0);
                     break;
                 case 3:
-                    detructCrateRulesScript.scorePlayer3++;
+                    scoreScript.AddScore(0, 0, 0, 1);
                     break;
             }
 
