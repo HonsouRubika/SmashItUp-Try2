@@ -228,6 +228,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &99647831
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1436,6 +1437,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &563345099
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1635,6 +1637,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &622241233
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1701,6 +1704,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.3
       objectReference: {fileID: 0}
+    - target: {fileID: 2492257470413821586, guid: 8d33cbb3ea0e05842b43ee152b866f8a, type: 3}
+      propertyPath: scoreScript
+      value: 
+      objectReference: {fileID: 720637880}
     - target: {fileID: 2492257470413821587, guid: 8d33cbb3ea0e05842b43ee152b866f8a, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2126,6 +2133,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &708747200
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2177,6 +2185,74 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &720637879
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1646328300780651939, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_Name
+      value: --UI--
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859242416725923967, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859242416725923967, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859242416725923967, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859242416725923967, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859242416725923967, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859242416725923967, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859242416725923967, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859242416725923967, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859242416725923967, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859242416725923967, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8859242416725923967, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+--- !u!114 &720637880 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4151503575342458534, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
+  m_PrefabInstance: {fileID: 720637879}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2794cd33c311db24a89c01ca87daedc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &723652947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2399,6 +2475,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &751753938
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2524,6 +2601,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &752485654
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3058,6 +3136,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &865472771
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3479,6 +3558,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &1074820508
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3678,6 +3758,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &1179154591
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4173,6 +4254,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &1311640668
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4372,6 +4454,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &1378420787
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4497,6 +4580,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &1390896606
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4953,6 +5037,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &1666734131
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5226,6 +5311,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &1775509183
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5549,6 +5635,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &1834301666
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5917,6 +6004,7 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
 --- !u!212 &2104304261
 SpriteRenderer:
   m_ObjectHideFlags: 0
