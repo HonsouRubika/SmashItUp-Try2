@@ -26,9 +26,11 @@ public class GameManager : MonoBehaviour
         _scoreP4 = 0;
 
         //randomize depuis une liste de gameMode possible
+        Random.InitState((int)Time.time);
         for (int i = 0; i < nbManches; ++i)
         {
             _selectedGameModes[i] = Random.Range(0, nbGameModeMax);
+            //Debug.Log(i + " : " +_selectedGameModes[i]);
         }
 
         //on passe à la première manche
@@ -38,26 +40,34 @@ public class GameManager : MonoBehaviour
     public void NextMap()
     {
         //affichage game over
-        Debug.Log("Next map");
+        //Debug.Log("Call fct Next map");
         if (_nbMancheActu < _nbManches)
         {
             switch (_selectedGameModes[_nbMancheActu])
             {
                 case (int)GameMode.CaptureTheFlag:
                     //TODO : necessite nomenclature pour le nom des maps
-                    //SceneManager.LoadScene("CaptureTheFlag"+Random(0,5).to_string);
+                    Debug.Log("CaptureTheFlag");
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("CaptureTheFlag0" + Random.Range(1, 5));
                     break;
                 case (int)GameMode.Loup:
                     //TODO : necessite nomenclature pour le nom des maps
-                    //SceneManager.LoadScene("Loup"+Random(0,5).to_string);
+                    Debug.Log("Loup");
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("Loup0" + Random.Range(1, 5));
                     break;
                 case (int)GameMode.CaptureDeZone:
                     //TODO : necessite nomenclature pour le nom des maps
-                    //SceneManager.LoadScene("CaptureDeZone"+Random(0,5).to_string);
+                    Debug.Log("CaptureZone");
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("CaptureZone0" + Random.Range(1, 5));
                     break;
                 case (int)GameMode.DestrucBox:
                     //TODO : necessite nomenclature pour le nom des maps
-                    //SceneManager.LoadScene("DestrucBox"+Random(0,5).to_string);
+                    Debug.Log("DestrucCaisse");
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("DestrucCaisse0" + Random.Range(1, 5));
                     break;
                 default:
                     Debug.Log("Error, GameMode not found");
@@ -68,6 +78,7 @@ public class GameManager : MonoBehaviour
         {
             //partie terminé, affichage des cores finals
             //SceneManager.LoadScene("Scores");
+            Debug.Log("Affichage des scores");
         }
     }
 

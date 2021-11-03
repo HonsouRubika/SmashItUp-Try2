@@ -3,14 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerManagerScript : MonoBehaviour
 {
-    //public TeleporterLobby teleporterLobby;
+    public TeleporterLobby teleporterLobby;
     public Transform spawner1, spawner2, spawner3, spawner4;
     private int nbPlayerActu = 0;
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
         //initialisation des joueurs dans le menu selection
-        //teleporterLobby.nbPlayerInGame++;
+        teleporterLobby.nbPlayerInGame++;
 
         //instancialisation dans joueurs au d�but de chaque mapDebug.Log("player connected");
         switch (nbPlayerActu)
@@ -33,6 +33,13 @@ public class PlayerManagerScript : MonoBehaviour
                 break;
         }
         nbPlayerActu++;
+    }
+
+    public void OnPlayerLeft(PlayerInput playerInput)
+    {
+        //A v�rifier
+        teleporterLobby.nbPlayerInGame++;
+        nbPlayerActu--;
     }
 
 
