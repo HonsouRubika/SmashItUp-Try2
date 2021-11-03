@@ -1,10 +1,16 @@
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Inputs")]
+    //old input
+    //[Header("Inputs")]
     public KeyCode leftKey, rightkey, jumpKey, attackKey;
+    //new input
+    private CharacterController controller;
+    private Vector2 movementInput = Vector2.zero;
+    private bool jumped = false;
+    private bool attacked = false;
 
     public float speed = 3;
     public float jumpSpeed = 3;
@@ -64,6 +70,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+
+        //init var
         rb = GetComponent<Rigidbody2D>();
         oldYPosition = transform.position.y;
         startJumpPosition = transform.position.y;
@@ -79,6 +87,22 @@ public class PlayerController : MonoBehaviour
         //deactivate hammerHitBox
         hammerPointL.SetActive(false);
         hammerPointR.SetActive(false);
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        movementInput = context.ReadValue<Vector2>();
+        //TODO: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/ActionBindings.html
+        // https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/Actions.html
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        jumped = context.action.triggered;
+    }
+    public void OnAttacked(InputAction.CallbackContext context)
+    {
+        attacked = context.action.triggered;
     }
 
     private void Update()
@@ -108,19 +132,20 @@ public class PlayerController : MonoBehaviour
             //reset var
             stunTimeActu = 0;
             //isBeingProjected = false;
-            
+
             /////////////////////////////////////
             //////////// DEPLACEMENT ////////////
             /////////////////////////////////////
-
+            #region Deplacement
             //Gauche + Droite
-            if ((Input.GetKey(leftKey) || Input.GetAxis("Horizontal") < 0) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
+            if ((movementInput.x < 0) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
             {
                 //gauche
+                //rb.velocity = new Vector2(-speed, rb.velocity.y);
                 rb.velocity = new Vector2(-speed, rb.velocity.y);
                 attackDirection = true;
             }
-            else if ((Input.GetKey(rightkey) || Input.GetAxis("Horizontal") > 0) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
+            else if ((movementInput.x > 0) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
             {
                 //droite
                 rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -132,14 +157,14 @@ public class PlayerController : MonoBehaviour
             }
 
             //Saut + wall jump
-            if (Input.GetKeyDown(jumpKey) && jumpState == JumpState.Grounded && !isAttackRunningL && !isAttackRunningR)
+            if (jumped && jumpState == JumpState.Grounded && !isAttackRunningL && !isAttackRunningR)
             {
                 //Debug.Log("Jump");
                 rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
                 jumpState = JumpState.InFlight;
                 startJumpPosition = transform.position.y;
             }
-            else if (Input.GetKeyDown(jumpKey) && isGrippingRight && !isAttackRunningL && !isAttackRunningR)
+            else if (jumped && isGrippingRight && !isAttackRunningL && !isAttackRunningR)
             {
                 //jump to the left w/ 45� angle
                 rb.velocity = new Vector2(-wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
@@ -149,7 +174,7 @@ public class PlayerController : MonoBehaviour
                 //freeze movement for small time
                 wallJumpMovementFreezeActuR = wallJumpMovementFreeze + Time.time;
             }
-            else if (Input.GetKeyDown(jumpKey) && isGrippingLeft && !isAttackRunningL && !isAttackRunningR)
+            else if (jumped && isGrippingLeft && !isAttackRunningL && !isAttackRunningR)
             {
                 //jump to the right w/ 45� angle
                 rb.velocity = new Vector2(wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
@@ -183,6 +208,7 @@ public class PlayerController : MonoBehaviour
                 jumpState = JumpState.InFlight;
                 oldYPosition = transform.position.y;
             }
+            #endregion
 
             /////////////////////////////////
             //////////// ATTAQUE ////////////
@@ -191,7 +217,8 @@ public class PlayerController : MonoBehaviour
             //Attaque droite et gauche
             //Gauche
             //1) debut attaque
-            if (Input.GetKeyDown(attackKey) && attackDirection && Time.time >= nextAttackTime)
+            
+            if (attacked && attackDirection && Time.time >= nextAttackTime)
             {
                 //reset timeAttack
                 nextAttackTime = Time.time + 1f / attackRate;
@@ -253,7 +280,7 @@ public class PlayerController : MonoBehaviour
 
             //Droite
             //1) debut attaque
-            if (Input.GetKeyDown(attackKey) && !attackDirection && Time.time >= nextAttackTime)
+            if (attacked && !attackDirection && Time.time >= nextAttackTime)
             {
                 //reset timeAttack
                 nextAttackTime = Time.time + 1f / attackRate;
@@ -307,6 +334,7 @@ public class PlayerController : MonoBehaviour
                 //disparition hammerHitBox
                 hammerPointR.SetActive(false);
             }
+            
         }
     }
 
