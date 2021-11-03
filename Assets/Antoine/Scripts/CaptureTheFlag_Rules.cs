@@ -9,10 +9,15 @@ using UnityEngine;
 
 public class CaptureTheFlag_Rules : MonoBehaviour
 {
-    public GameManager GM;
+    private GameManager GM;
 
     [Header("CaptureTheFlag Rules")]
     public int winPoints;
+
+    private void Start()
+    {
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 
     public void FlagCaptured(int playerWin)
     {

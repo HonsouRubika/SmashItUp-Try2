@@ -24,21 +24,25 @@ public class PlayerManagerScript : MonoBehaviour
             case 0:
                 playerInput.transform.position = new Vector2(spawner1.position.x, spawner1.position.y);
                 playerInput.GetComponent<PlayerController>().playerID = 0;
+                playerInput.transform.GetChild(6).GetComponent<SpriteRenderer>().sprite = P1;
                 DontDestroyOnLoad(playerInput);
                 break;
             case 1:
                 playerInput.transform.position = new Vector2(spawner2.position.x, spawner2.position.y);
                 playerInput.GetComponent<PlayerController>().playerID = 1;
+                playerInput.transform.GetChild(6).GetComponent<SpriteRenderer>().sprite = P2;
                 DontDestroyOnLoad(playerInput);
                 break;
             case 2:
                 playerInput.transform.position = new Vector2(spawner3.position.x, spawner3.position.y);
                 playerInput.GetComponent<PlayerController>().playerID = 2;
+                playerInput.transform.GetChild(6).GetComponent<SpriteRenderer>().sprite = P3;
                 DontDestroyOnLoad(playerInput);
                 break;
             case 3:
                 playerInput.transform.position = new Vector2(spawner4.position.x, spawner4.position.y);
                 playerInput.GetComponent<PlayerController>().playerID = 3;
+                playerInput.transform.GetChild(6).GetComponent<SpriteRenderer>().sprite = P4;
                 DontDestroyOnLoad(playerInput);
                 break;
         }
@@ -51,6 +55,4 @@ public class PlayerManagerScript : MonoBehaviour
         teleporterLobby.nbPlayerInGame++;
         nbPlayerActu--;
     }*/
-
-
 }
