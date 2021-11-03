@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Teleporter : MonoBehaviour
 {
-    private TeleporterSound teleportSoundScript;
+    /*private TeleporterSound teleportSoundScript;
 
     public enum direction {Vertical, Horizontal};
     public direction teleporterDirection = direction.Vertical;
@@ -40,5 +40,5 @@ public class Teleporter : MonoBehaviour
                 collision.transform.position = new Vector2(otherTP.position.x + transformAddedOnExit.x, collision.transform.position.y);
                 break;
         } 
-    }
+    }*/
 }

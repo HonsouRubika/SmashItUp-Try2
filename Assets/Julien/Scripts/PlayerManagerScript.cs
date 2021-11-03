@@ -16,7 +16,7 @@ public class PlayerManagerScript : MonoBehaviour
     public void OnPlayerJoined(PlayerInput playerInput)
     {
         //initialisation des joueurs dans le menu selection
-        //teleporterLobby.nbPlayerInGame++;
+        teleporterLobby.nbPlayerInGame++;
 
         //instancialisation dans joueurs au d�but de chaque mapDebug.Log("player connected");
         switch (nbPlayerActu)
@@ -49,10 +49,10 @@ public class PlayerManagerScript : MonoBehaviour
         nbPlayerActu++;
     }
 
-    /*public void OnPlayerLeft(PlayerInput playerInput)
+    public void OnPlayerLeft(PlayerInput playerInput)
     {
         //A v�rifier
         teleporterLobby.nbPlayerInGame++;
         nbPlayerActu--;
-    }*/
+    }
 }

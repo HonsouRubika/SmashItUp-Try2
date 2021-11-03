@@ -42,9 +42,8 @@ public class GameManager : MonoBehaviour
         TestMap();
     }
 
-    public void TestScore()
+    public void Score()
     {
-        addScores(1, 0, 0, 0);
         SceneManager.LoadScene("Score");
     }
 
@@ -67,12 +66,14 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
                     SceneManager.LoadScene("CaptureTheFlag0" + Random.Range(1, 5));
                     break;
+                /*
                 case (int)GameMode.Loup:
                     //TODO : necessite nomenclature pour le nom des maps
                     Debug.Log("Loup");
                     _nbMancheActu++;
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 5));
                     break;
+                */
                 case (int)GameMode.CaptureDeZone:
                     //TODO : necessite nomenclature pour le nom des maps
                     Debug.Log("CaptureZone");
@@ -145,7 +146,7 @@ public class GameManager : MonoBehaviour
     enum GameMode
     {
         CaptureTheFlag,
-        Loup,
+        //Loup,
         CaptureDeZone,
         DestrucBox,
         total //egal le nombre d'élément dans l'enum

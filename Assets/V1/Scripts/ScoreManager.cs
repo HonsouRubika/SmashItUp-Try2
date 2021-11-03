@@ -17,9 +17,9 @@ public class ScoreManager : MonoBehaviour
         //appel de la fonction setScore du ScoreManager
         gameManager = GameObject.Find("GameManager");
         p1.text = "Player 1 : " + gameManager.GetComponent<GameManager>().getScorePlayer(1);
-        p2.text = "Player 1 : " + gameManager.GetComponent<GameManager>().getScorePlayer(2);
-        p3.text = "Player 1 : " + gameManager.GetComponent<GameManager>().getScorePlayer(3);
-        p4.text = "Player 1 : " + gameManager.GetComponent<GameManager>().getScorePlayer(4);
+        p2.text = "Player 2 : " + gameManager.GetComponent<GameManager>().getScorePlayer(2);
+        p3.text = "Player 3 : " + gameManager.GetComponent<GameManager>().getScorePlayer(3);
+        p4.text = "Player 4 : " + gameManager.GetComponent<GameManager>().getScorePlayer(4);
 
         TimerNextMapActu = Time.time + TimerNextMap;
 
@@ -30,7 +30,7 @@ public class ScoreManager : MonoBehaviour
         if (Time.time >= TimerNextMapActu)
         {
             //Next Map
-            gameManager.GetComponent<GameManager>().TestMap();
+            gameManager.GetComponent<GameManager>().NextMap();
         }
     }
 
