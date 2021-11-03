@@ -42,6 +42,7 @@ public class WolfBehaviour : MonoBehaviour
 
         playerColor = player0Sprite.color;
 
+        // Il faudrait que je puisse prendre la couleur des persos de bases afin de pouvoir les modifier en couleur de loup. Avec les spawner je ne peut pas les prend au lancement.
         if (randomWolf == 0)
         {
             player0 = true;
