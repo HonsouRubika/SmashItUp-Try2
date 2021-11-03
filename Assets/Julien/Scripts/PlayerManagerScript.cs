@@ -9,23 +9,29 @@ public class PlayerManagerScript : MonoBehaviour
     public void OnPlayerJoined(PlayerInput playerInput)
     {
         //initialisation des joueurs dans le menu selection
+        //teleporterLobby.nbPlayerInGame++;
 
         //instancialisation dans joueurs au début de chaque mapDebug.Log("player connected");
         switch (nbPlayerActu)
         {
             case 0:
                 playerInput.transform.position = new Vector2(spawner1.position.x, spawner1.position.y);
+                playerInput.GetComponent<PlayerController>().playerID = 0;
                 break;
             case 1:
                 playerInput.transform.position = new Vector2(spawner2.position.x, spawner2.position.y);
+                playerInput.GetComponent<PlayerController>().playerID = 1;
                 break;
             case 2:
                 playerInput.transform.position = new Vector2(spawner3.position.x, spawner3.position.y);
+                playerInput.GetComponent<PlayerController>().playerID = 2;
                 break;
             case 3:
                 playerInput.transform.position = new Vector2(spawner4.position.x, spawner4.position.y);
+                playerInput.GetComponent<PlayerController>().playerID = 3;
                 break;
         }
+        nbPlayerActu++;
     }
 
 
