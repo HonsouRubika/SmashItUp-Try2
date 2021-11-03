@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WolfBehaviour : MonoBehaviour
 {
+    private WolfSound wolfSoundScript;
+
     public bool player0;
     public SpriteRenderer player0Sprite;
 
@@ -30,6 +32,8 @@ public class WolfBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        wolfSoundScript = GetComponentInChildren<WolfSound>();
+
         timerActu = Time.time;
 
         randomWolf = Random.Range(0, 3);
@@ -39,21 +43,25 @@ public class WolfBehaviour : MonoBehaviour
         if (randomWolf == 0)
         {
             player0 = true;
+            wolfSoundScript.WolfAttack();
             player0Sprite.color = wolfColor;
         }
         else if (randomWolf == 1)
         {
             player1 = true;
+            wolfSoundScript.WolfAttack();
             player1Sprite.color = wolfColor;
         }
         else if (randomWolf == 2)
         {
             player2 = true;
+            wolfSoundScript.WolfAttack();
             player2Sprite.color = wolfColor;
         }
         else if (randomWolf == 3)
         {
             player3 = true;
+            wolfSoundScript.WolfAttack();
             player3Sprite.color = wolfColor;
         }
     }
@@ -65,6 +73,7 @@ public class WolfBehaviour : MonoBehaviour
         {
             lastTimePlayerBecomeWolf = Time.time;
             //devient loup
+            wolfSoundScript.WolfAttack();
             player0Sprite.color = wolfColor;
             Debug.Log("got hit :" + p0.lastTimeGotHit + "vs : "+ lastTimePlayerBecomeWolf);
         }
@@ -72,18 +81,21 @@ public class WolfBehaviour : MonoBehaviour
         {
             lastTimePlayerBecomeWolf = Time.time;
             //devient loup
+            wolfSoundScript.WolfAttack();
             player1Sprite.color = wolfColor;
         }
         if (p2.lastTimeGotHit >= lastTimePlayerBecomeWolf)
         {
             lastTimePlayerBecomeWolf = Time.time;
             //devient loup
+            wolfSoundScript.WolfAttack();
             player2Sprite.color = wolfColor;
         }
         if (p3.lastTimeGotHit >= lastTimePlayerBecomeWolf)
         {
             lastTimePlayerBecomeWolf = Time.time;
             //devient loup
+            wolfSoundScript.WolfAttack();
             player3Sprite.color = wolfColor;
         }
             // GESTION TIMER //
