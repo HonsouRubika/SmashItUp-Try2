@@ -12,7 +12,7 @@ public class PlayerManagerScript : MonoBehaviour
         //initialisation des joueurs dans le menu selection
         teleporterLobby.nbPlayerInGame++;
 
-        //instancialisation dans joueurs au début de chaque mapDebug.Log("player connected");
+        //instancialisation dans joueurs au dï¿½but de chaque mapDebug.Log("player connected");
         switch (nbPlayerActu)
         {
             case 0:
@@ -41,7 +41,7 @@ public class PlayerManagerScript : MonoBehaviour
 
     public void OnPlayerLeft(PlayerInput playerInput)
     {
-        //A vérifier
+        //A vï¿½rifier
         teleporterLobby.nbPlayerInGame++;
         nbPlayerActu--;
     }
