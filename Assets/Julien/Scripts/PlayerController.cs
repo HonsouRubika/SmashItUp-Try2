@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     public float HammerSideProjectionMaxDistance = 1;
     private float startProjectedPostion = 0;
     //private bool selfProjectionDirection = false;
-    private bool isBeingProjected = false;
+    public bool isBeingProjected = false;
         //false = droite; true = gauche
     //Paramètre vitesse
     private bool attackDirection = false;
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
     //Animation
     private PlayerAnim playerAnimScript;
-    //private 
+    private Transform playerAnim;
 
     void Start()
     {
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         //get anim script
         playerAnimScript = GetComponentInChildren<PlayerAnim>();
-        playerAnimScript.transform.localScale = new Vector2(-playerAnimScript.transform.localScale.x, playerAnimScript.transform.localScale.y);
+        playerAnim = playerAnimScript.transform;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -123,6 +123,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("OUI gauche");
             Debug.Log("Dist max : " + -HammerSideProjectionMaxDistance);
             Debug.Log("1: " + transform.position.x + " >= " + startProjectedPostion + " + " + -HammerSideProjectionMaxDistance);
+
         } //droite
         else if ((transform.position.x >= startProjectedPostion + HammerSideProjectionMaxDistance) && isBeingProjected)
         {
@@ -136,6 +137,12 @@ public class PlayerController : MonoBehaviour
         //stun also equal to immortality
         if (Time.time >= stunTimeActu)
         {
+            //anim
+            if (playerAnimScript.playerAnimator != null)
+            {
+                playerAnimScript.Expulsion(false);
+            }
+            
             //reset var
             stunTimeActu = 0;
             //isBeingProjected = false;
@@ -151,16 +158,34 @@ public class PlayerController : MonoBehaviour
                 //rb.velocity = new Vector2(-speed, rb.velocity.y);
                 rb.velocity = new Vector2(-speed, rb.velocity.y);
                 attackDirection = true;
+
+                //anim
+                playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+                if (playerAnimScript.playerAnimator != null)
+                {
+                    playerAnimScript.Running(true);
+                }
             }
             else if ((movementInput.x > 0) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
             {
                 //droite
                 rb.velocity = new Vector2(speed, rb.velocity.y);
                 attackDirection = false;
+
+                //anim
+                playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+                if (playerAnimScript.playerAnimator != null)
+                {
+                    playerAnimScript.Running(true);
+                }
             }
             else if (jumpState != JumpState.InFlight)
             {
                 rb.velocity = new Vector2(0, rb.velocity.y);
+
+                //anim
+                playerAnimScript.Running(false);
+                playerAnimScript.Idle(true);
             }
 
             //Saut + wall jump
@@ -170,6 +195,9 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
                 jumpState = JumpState.InFlight;
                 startJumpPosition = transform.position.y;
+
+                //anim
+                playerAnimScript.Jumping(true);
             }
             else if (jumped && isGrippingRight && !isAttackRunningL && !isAttackRunningR)
             {
@@ -209,6 +237,12 @@ public class PlayerController : MonoBehaviour
                 //reset var for walljump
                 wallJumpMovementFreezeActuL = Time.time;
                 wallJumpMovementFreezeActuR = Time.time;
+
+                //anim
+                if (playerAnimScript.playerAnimator != null)
+                {
+                    playerAnimScript.Jumping(false);
+                }              
             }
             else
             {
@@ -235,6 +269,9 @@ public class PlayerController : MonoBehaviour
 
                 //apparition hammerHitBox
                 hammerPointL.SetActive(true);
+
+                //anim
+                playerAnimScript.Attack();
             }
             //2)animation attaque + verif block
             if (isAttackRunningL && Time.time < attackDurationActu)
@@ -296,6 +333,9 @@ public class PlayerController : MonoBehaviour
                 attackDurationActu = attackDuration + Time.time;
                 //apparition hammerHitBox
                 hammerPointR.SetActive(true);
+
+                //anim
+                playerAnimScript.Attack();
             }
             //2) animation attaque + verif block
             if (isAttackRunningR && Time.time < attackDurationActu)
@@ -342,6 +382,20 @@ public class PlayerController : MonoBehaviour
                 hammerPointR.SetActive(false);
             }
             
+        }
+        else
+        {
+            //anim
+            playerAnimScript.Expulsion(true);
+
+            if (transform.position.x <= startProjectedPostion)
+            {
+                playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            }
+            else if (transform.position.x >= startProjectedPostion)
+            {
+                playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            }  
         }
     }
 

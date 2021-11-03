@@ -77,9 +77,10 @@ MonoBehaviour:
   hammerHitboxLayer:
     serializedVersion: 2
     m_Bits: 512
-  hammerProjection: 3
-  hammerBlockProjection: 1.5
-  HammerSideProjectionMaxDistance: 3
+  hammerProjection: 15
+  hammerBlockProjection: 10
+  HammerSideProjectionMaxDistance: 15
+  isBeingProjected: 0
   attackRate: 2
   attackDuration: 0.1
   stunTime: 0.5
@@ -214,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59dfd0de2c32eb5479e494af7282de23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 0}
 --- !u!1 &3772684629145893175
 GameObject:
   m_ObjectHideFlags: 0
