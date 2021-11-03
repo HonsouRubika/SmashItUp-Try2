@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerAnim : MonoBehaviour
+{
+    private Animator playerAnimator;
+
+    private void Start()
+    {
+        playerAnimator = GetComponent<Animator>();
+    }
+
+    public void Idle(bool idle)
+    {
+        playerAnimator.SetBool("isIdle", idle);
+    }
+
+    public void Running(bool run)
+    {
+        playerAnimator.SetBool("isRunning", run);
+    }
+
+    public void Jumping(bool jump)
+    {
+        playerAnimator.SetBool("isJumping", jump);
+    }
+
+    public void Expulsion(bool expulsed)
+    {
+        playerAnimator.SetBool("isExpulsing", expulsed);
+    }
+
+    public void Attack()
+    {
+        playerAnimator.SetTrigger("isAttacking");
+    }
+}

@@ -67,6 +67,9 @@ public class PlayerController : MonoBehaviour
     public float lastTimeAttackHit = 0;
     public float lastTimeGotHit = 0;
 
+    //Animation
+    private PlayerAnim playerAnimScript;
+    //private 
 
     void Start()
     {
@@ -87,6 +90,10 @@ public class PlayerController : MonoBehaviour
         //deactivate hammerHitBox
         hammerPointL.SetActive(false);
         hammerPointR.SetActive(false);
+
+        //get anim script
+        playerAnimScript = GetComponentInChildren<PlayerAnim>();
+        playerAnimScript.transform.localScale = new Vector2(-playerAnimScript.transform.localScale.x, playerAnimScript.transform.localScale.y);
     }
 
     public void OnMove(InputAction.CallbackContext context)
