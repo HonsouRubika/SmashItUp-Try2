@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
     //old input
@@ -9,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public KeyCode leftKey, rightkey, jumpKey, attackKey;
     //new input
     private CharacterController controller;
-    private int movementInput = 0; //LR => -1 : 1
+    private Vector2 movementInput = Vector2.zero;
     private bool jumped = false;
 
     public float speed = 3;
@@ -70,8 +69,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        //input
-        controller = gameObject.GetComponent<CharacterController>();
 
         //init var
         rb = GetComponent<Rigidbody2D>();
@@ -93,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        //movementInput = context.ReadValue<float>();
+        movementInput = context.ReadValue<Vector2>();
         //TODO: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/ActionBindings.html
         // https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/Actions.html
     }
@@ -130,19 +127,20 @@ public class PlayerController : MonoBehaviour
             //reset var
             stunTimeActu = 0;
             //isBeingProjected = false;
-            
+
             /////////////////////////////////////
             //////////// DEPLACEMENT ////////////
             /////////////////////////////////////
-
+            #region Deplacement
             //Gauche + Droite
-            if ((movementInput < 0) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
+            if ((movementInput.x < 0) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
             {
                 //gauche
+                //rb.velocity = new Vector2(-speed, rb.velocity.y);
                 rb.velocity = new Vector2(-speed, rb.velocity.y);
                 attackDirection = true;
             }
-            else if ((movementInput > 0) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
+            else if ((movementInput.x > 0) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
             {
                 //droite
                 rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -205,6 +203,7 @@ public class PlayerController : MonoBehaviour
                 jumpState = JumpState.InFlight;
                 oldYPosition = transform.position.y;
             }
+            #endregion
 
             /////////////////////////////////
             //////////// ATTAQUE ////////////
