@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TeleporterLobby : MonoBehaviour
 {
-    //public GameManager gameManager;
+    public GameManager gameManager;
     public int nbPlayerInZone = 0;
     public int nbPlayerInGame = 0;
 
-    public float timerBeforeTeleportation = 5;
+    public float timerBeforeTeleportation = 2;
     public float timerBeforeTeleportationActu = 0;
     private bool isTimerInitiated = false;
 
@@ -26,7 +26,7 @@ public class TeleporterLobby : MonoBehaviour
 
     private void Update()
     {
-        if (nbPlayerInZone !=0 && nbPlayerInZone == nbPlayerInGame && !isTimerInitiated)
+        if (nbPlayerInZone >= 2 && nbPlayerInZone == nbPlayerInGame && !isTimerInitiated)
         {
             //start timer
             timerBeforeTeleportationActu = timerBeforeTeleportation + Time.time;
@@ -40,7 +40,9 @@ public class TeleporterLobby : MonoBehaviour
 
         if (Time.time >= timerBeforeTeleportationActu && isTimerInitiated)
         {
+            isTimerInitiated = false;
             Debug.Log("doit débuter le compte à rebour avant lancement du jeu");
+            gameManager.initializeGameModes(5);
         }
     }
 }
