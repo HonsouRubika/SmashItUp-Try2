@@ -6,6 +6,7 @@ public class Crate : MonoBehaviour
 {
     private DetructCrate_Rules detructCrateScript;
     private Score scoreScript;
+    private DestructSound destructSoundScript;
 
     [Header("Hammer")]
     public LayerMask hammerLayer;
