@@ -20,13 +20,21 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Attaquer",
+                    "type": "Button",
+                    "id": "5b3b3a60-4421-4dad-b585-c9d05a7d6be3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "87d50610-8e81-40ce-b44d-93ad8def08af",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -108,6 +116,39 @@
                     "processors": "",
                     "groups": "Manette",
                     "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d1f5828-a6a6-4ab0-8f40-6c106572121e",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Manette",
+                    "action": "Attaquer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6113214a-f503-469d-86d2-de8602f0fc31",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Manette",
+                    "action": "Attaquer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1509fc06-6c87-42d1-9767-da271361b378",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Attaquer",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

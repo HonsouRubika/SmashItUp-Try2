@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Vector2 movementInput = Vector2.zero;
     private bool jumped = false;
+    private bool attacked = false;
 
     public float speed = 3;
     public float jumpSpeed = 3;
@@ -98,6 +99,10 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         jumped = context.action.triggered;
+    }
+    public void OnAttacked(InputAction.CallbackContext context)
+    {
+        attacked = context.action.triggered;
     }
 
     private void Update()
@@ -212,8 +217,8 @@ public class PlayerController : MonoBehaviour
             //Attaque droite et gauche
             //Gauche
             //1) debut attaque
-            /*
-            if (Input.GetKeyDown(attackKey) && attackDirection && Time.time >= nextAttackTime)
+            
+            if (attacked && attackDirection && Time.time >= nextAttackTime)
             {
                 //reset timeAttack
                 nextAttackTime = Time.time + 1f / attackRate;
@@ -275,7 +280,7 @@ public class PlayerController : MonoBehaviour
 
             //Droite
             //1) debut attaque
-            if (Input.GetKeyDown(attackKey) && !attackDirection && Time.time >= nextAttackTime)
+            if (attacked && !attackDirection && Time.time >= nextAttackTime)
             {
                 //reset timeAttack
                 nextAttackTime = Time.time + 1f / attackRate;
@@ -329,7 +334,7 @@ public class PlayerController : MonoBehaviour
                 //disparition hammerHitBox
                 hammerPointR.SetActive(false);
             }
-            */
+            
         }
     }
 

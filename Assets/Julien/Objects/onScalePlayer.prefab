@@ -57,6 +57,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 2e4a75d3-13d1-41c8-b5e4-73c50f7bde84
     m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4521113626264798764}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnAttacked
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5b3b3a60-4421-4dad-b585-c9d05a7d6be3
+    m_ActionName: Player/Attaquer[/XInputControllerWindows/rightTrigger,/XInputControllerWindows/leftTrigger,/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player
