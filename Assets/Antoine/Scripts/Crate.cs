@@ -31,6 +31,8 @@ public class Crate : MonoBehaviour
         crateColliderBoundsX = crateCollider.bounds.size.x;
         crateColliderBoundsY = crateCollider.bounds.size.y;
         pos = transform.position;
+
+        destructSoundScript = GetComponentInChildren<DestructSound>();
     }
 
     private void FixedUpdate()
@@ -59,6 +61,7 @@ public class Crate : MonoBehaviour
             }
 
             Destroy(gameObject);
+            destructSoundScript.PlayerDestroy();
         }
     }
 

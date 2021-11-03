@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Flag : MonoBehaviour
 {
+    private FlagSound flagSoundScript;
     private CaptureTheFlag_Rules captureTheFlagRulesScript;
 
     //Security for trigger only one time
@@ -12,6 +13,10 @@ public class Flag : MonoBehaviour
     private void Start()
     {
         captureTheFlagRulesScript = GetComponentInParent<CaptureTheFlag_Rules>();
+
+       
+            flagSoundScript = GetComponentInChildren<FlagSound>();
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -19,6 +24,7 @@ public class Flag : MonoBehaviour
         if (collision.CompareTag("Player") && !flagIsCaptured)
         {
             flagIsCaptured = true;
+            flagSoundScript.PlayerTakeFlag();
 
             switch (collision.GetComponent<PlayerController>().playerID)
             {

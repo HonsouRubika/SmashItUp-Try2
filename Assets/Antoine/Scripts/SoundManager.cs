@@ -34,6 +34,8 @@ public class SoundManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource sfxSource;
     public AudioSource voiceSource;
+    public AudioSource zoneSource;
+
     #endregion
 
     void Awake()
@@ -112,6 +114,22 @@ public class SoundManager : MonoBehaviour
         }
 
         voiceSource.pitch = 1;
+
+        return;
+    }
+
+    public void PlayZone(AudioClip sfx, float volume = 1f, float pitch = 1f)
+    {
+        zoneSource.pitch = pitch;
+        zoneSource.PlayOneShot(sfx, (sfxDefaultVolume * volume) * globalDefaultVolume);
+
+        zoneSource.pitch = 1;
+
+        return;
+    }
+    public void StopZone()
+    {
+        zoneSource.Stop();
 
         return;
     }
