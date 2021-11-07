@@ -38,8 +38,7 @@ public class GameManager : MonoBehaviour
         }
 
         //on passe à la première manche
-        //TestScore();
-        TestMap();
+        NextMap();
     }
 
     public void Score()

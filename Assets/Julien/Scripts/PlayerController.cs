@@ -5,43 +5,48 @@ public class PlayerController : MonoBehaviour
 {
     //old input
     //[Header("Inputs")]
-    public KeyCode leftKey, rightkey, jumpKey, attackKey;
     //new input
     private CharacterController controller;
     private Vector2 movementInput = Vector2.zero;
-    private bool jumped = false;
-    private bool attacked = false;
 
+    [Header("Déplacement")]
     public float speed = 3;
     public float jumpSpeed = 3;
 
-    public uint health;
-    public bool controlEnabled = true;
+    //TODO : GameMode avec Hp
+    //public uint health; 
 
     //Player Controll Asignation
-    public uint playerID = 0;
+    [System.NonSerialized] public uint playerID = 0;
 
     //Sprite et animation
     private Rigidbody2D rb;
-    SpriteRenderer spriteRenderer;
 
     //jump variable
-    private float oldYPosition;
-    private float startJumpPosition;
+    [Header("Jump")]
     public float maxJumpHigh = 1;
+    private float startJumpPosition;
+    private float startWallJumpPosition;
+    public float maxWallJumpHigh = 1;
     public float wallJumpSpeed = 1;
     private JumpState jumpState = JumpState.InFlight;
     public float wallJumpMovementFreeze = 0.2f;
     private float wallJumpMovementFreezeActuL, wallJumpMovementFreezeActuR;
+    public float numberMaxWalljump = 2;
+    private float numberMaxWalljumpActu;
 
     //Colision checks
+    [Header("GroundCheck")]
     public Transform groundCheck;
     private bool isGrippingLeft = false, isGrippingRight = false;
 
     ///////////Attack///////////
     //Hitbox
-    public Transform attackPointL, attackPointR;
-    public GameObject hammerPointL, hammerPointR;
+    [Header("Attack")]
+    public Transform attackPointL;
+    public Transform attackPointR;
+    public GameObject hammerPointL;
+    public GameObject hammerPointR;
     public float attackRange = 0.5f;
     public float hammerHitboxRange = 0.75f;
     public LayerMask enemyLayer, hammerHitboxLayer;
@@ -51,8 +56,8 @@ public class PlayerController : MonoBehaviour
     public float HammerSideProjectionMaxDistance = 1;
     private float startProjectedPostion = 0;
     //private bool selfProjectionDirection = false;
-    public bool isBeingProjected = false;
-        //false = droite; true = gauche
+    [System.NonSerialized] public bool isBeingProjected = false;
+                           //false = droite; true = gauche
     //Paramètre vitesse
     private bool attackDirection = false;
     public float attackRate = 2f;
@@ -61,11 +66,15 @@ public class PlayerController : MonoBehaviour
     private bool isAttackRunningL, isAttackRunningR;
     private bool didAttackedBlockedL, didAttackedBlockedR;
     float nextAttackTime = 0f;
+
+    [Header("Stun")]
     public float stunTime = 0.5f;
     private float stunTimeActu;
+    public float blockStunTime = 0.5f;
+    private float blockStunTimeActu;
 
-    public float lastTimeAttackHit = 0;
-    public float lastTimeGotHit = 0;
+    [System.NonSerialized] public float lastTimeAttackHit = 0;
+    [System.NonSerialized] public float lastTimeGotHit = 0;
 
     //Animation
     private PlayerAnim playerAnimScript;
@@ -73,14 +82,14 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-
         //init var
         rb = GetComponent<Rigidbody2D>();
-        oldYPosition = transform.position.y;
         startJumpPosition = transform.position.y;
         stunTimeActu = 0;
+        blockStunTimeActu = 0;
         wallJumpMovementFreezeActuL = 0;
         wallJumpMovementFreezeActuR = 0;
+        numberMaxWalljumpActu = 0;
         attackDurationActu = 0;
         isAttackRunningL = false;
         isAttackRunningR = false;
@@ -105,11 +114,19 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        jumped = context.action.triggered;
+        //stun
+        if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
+        {
+            if (context.started) jump();
+        }
     }
     public void OnAttacked(InputAction.CallbackContext context)
     {
-        attacked = context.action.triggered;
+        //stun
+        if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
+        {
+            if (context.started) attack();
+        }
     }
 
     private void Update()
@@ -134,8 +151,8 @@ public class PlayerController : MonoBehaviour
             Debug.Log("1: " + transform.position.x + " <= " + startProjectedPostion + " + " + HammerSideProjectionMaxDistance);
         }
 
-        //stun also equal to immortality
-        if (Time.time >= stunTimeActu)
+        //stun
+        if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
         {
             //anim
             if (playerAnimScript.playerAnimator != null)
@@ -152,7 +169,7 @@ public class PlayerController : MonoBehaviour
             /////////////////////////////////////
             #region Deplacement
             //Gauche + Droite
-            if ((movementInput.x < 0) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
+            if ((movementInput.x < -0.3) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
             {
                 //gauche
                 //rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -166,7 +183,7 @@ public class PlayerController : MonoBehaviour
                     playerAnimScript.Running(true);
                 }
             }
-            else if ((movementInput.x > 0) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
+            else if ((movementInput.x > 0.3) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
             {
                 //droite
                 rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -188,40 +205,13 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.Idle(true);
             }
 
-            //Saut + wall jump
-            if (jumped && jumpState == JumpState.Grounded && !isAttackRunningL && !isAttackRunningR)
-            {
-                //Debug.Log("Jump");
-                rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-                jumpState = JumpState.InFlight;
-                startJumpPosition = transform.position.y;
-
-                //anim
-                playerAnimScript.Jumping(true);
-            }
-            else if (jumped && isGrippingRight && !isAttackRunningL && !isAttackRunningR)
-            {
-                //jump to the left w/ 45� angle
-                rb.velocity = new Vector2(-wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
-                jumpState = JumpState.InFlight;
-                startJumpPosition = transform.position.y;
-
-                //freeze movement for small time
-                wallJumpMovementFreezeActuR = wallJumpMovementFreeze + Time.time;
-            }
-            else if (jumped && isGrippingLeft && !isAttackRunningL && !isAttackRunningR)
-            {
-                //jump to the right w/ 45� angle
-                rb.velocity = new Vector2(wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
-                jumpState = JumpState.InFlight;
-                startJumpPosition = transform.position.y;
-
-                //freeze movement for small time
-                wallJumpMovementFreezeActuL = wallJumpMovementFreeze + Time.time;
-            }
-
             //Hauteur max
             if (transform.position.y > startJumpPosition + maxJumpHigh)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - 0.05f);
+            }
+            //hauteur max wall jump
+            if (transform.position.y > startWallJumpPosition + maxWallJumpHigh)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - 0.05f);
             }
@@ -233,6 +223,7 @@ public class PlayerController : MonoBehaviour
                 //le perso touche le sol
                 jumpState = JumpState.Grounded;
                 startJumpPosition = transform.position.y;
+                numberMaxWalljumpActu = 0; //reset nb de walljump
 
                 //reset var for walljump
                 wallJumpMovementFreezeActuL = Time.time;
@@ -247,7 +238,6 @@ public class PlayerController : MonoBehaviour
             else
             {
                 jumpState = JumpState.InFlight;
-                oldYPosition = transform.position.y;
             }
             #endregion
 
@@ -257,22 +247,6 @@ public class PlayerController : MonoBehaviour
 
             //Attaque droite et gauche
             //Gauche
-            //1) debut attaque
-            
-            if (attacked && attackDirection && Time.time >= nextAttackTime)
-            {
-                //reset timeAttack
-                nextAttackTime = Time.time + 1f / attackRate;
-
-                isAttackRunningL = true;
-                attackDurationActu = attackDuration + Time.time;
-
-                //apparition hammerHitBox
-                hammerPointL.SetActive(true);
-
-                //anim
-                playerAnimScript.Attack();
-            }
             //2)animation attaque + verif block
             if (isAttackRunningL && Time.time < attackDurationActu)
             {
@@ -311,7 +285,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     // apply self blockProjection
-                    applyAttack(hammerBlockProjection, 0);
+                    applyBlock(hammerBlockProjection, 0);
                 }
                 //reset var
                 didAttackedBlockedL = false;
@@ -321,22 +295,7 @@ public class PlayerController : MonoBehaviour
 
             }
 
-
             //Droite
-            //1) debut attaque
-            if (attacked && !attackDirection && Time.time >= nextAttackTime)
-            {
-                //reset timeAttack
-                nextAttackTime = Time.time + 1f / attackRate;
-
-                isAttackRunningR = true;
-                attackDurationActu = attackDuration + Time.time;
-                //apparition hammerHitBox
-                hammerPointR.SetActive(true);
-
-                //anim
-                playerAnimScript.Attack();
-            }
             //2) animation attaque + verif block
             if (isAttackRunningR && Time.time < attackDurationActu)
             {
@@ -373,7 +332,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     // apply self blockProjection
-                    applyAttack(-hammerBlockProjection, 0);
+                    applyBlock(-hammerBlockProjection, 0);
                 }
                 //reset var
                 didAttackedBlockedR = false;
@@ -383,7 +342,7 @@ public class PlayerController : MonoBehaviour
             }
             
         }
-        else
+        else //player is stun
         {
             //anim
             playerAnimScript.Expulsion(true);
@@ -399,10 +358,97 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void jump()
+    {
+        //Saut + wall jump
+        if (jumpState == JumpState.Grounded && !isAttackRunningL && !isAttackRunningR)
+        {
+            //Debug.Log("Jump");
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+            jumpState = JumpState.InFlight;
+            startJumpPosition = transform.position.y;
+
+            //anim
+            playerAnimScript.Jumping(true);
+        }
+        else if (isGrippingRight && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
+        {
+            //jump to the left w/ 45� angle
+            rb.velocity = new Vector2(-wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
+            jumpState = JumpState.InFlight;
+            startJumpPosition = transform.position.y;
+            startWallJumpPosition = transform.position.y;
+            numberMaxWalljumpActu++;
+
+            //freeze movement for small time
+            wallJumpMovementFreezeActuR = wallJumpMovementFreeze + Time.time;
+        }
+        else if (isGrippingLeft && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
+        {
+            //jump to the right w/ 45� angle
+            rb.velocity = new Vector2(wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
+            jumpState = JumpState.InFlight;
+            startJumpPosition = transform.position.y;
+            startWallJumpPosition = transform.position.y;
+            numberMaxWalljumpActu++;
+
+            //freeze movement for small time
+            wallJumpMovementFreezeActuL = wallJumpMovementFreeze + Time.time;
+        }
+    }
+
+    void attack()
+    {
+        //Gauche
+        if (attackDirection && Time.time >= nextAttackTime)
+        {
+            //reset timeAttack
+            nextAttackTime = Time.time + 1f / attackRate;
+
+            isAttackRunningL = true;
+            attackDurationActu = attackDuration + Time.time;
+
+            //apparition hammerHitBox
+            hammerPointL.SetActive(true);
+
+            //anim
+            playerAnimScript.Attack();
+        }
+        //Droite
+        else if (!attackDirection && Time.time >= nextAttackTime)
+        {
+            //reset timeAttack
+            nextAttackTime = Time.time + 1f / attackRate;
+
+            isAttackRunningR = true;
+            attackDurationActu = attackDuration + Time.time;
+            //apparition hammerHitBox
+            hammerPointR.SetActive(true);
+
+            //anim
+            playerAnimScript.Attack();
+        }
+    }
+
     void applyAttack(float velocityX, float velocityY)
     {
         //Stun
         stunTimeActu = stunTime + Time.time;
+
+        //var pour mini jeu
+        lastTimeGotHit = Time.time;
+
+        //gestion distance max
+        isBeingProjected = true;
+        startProjectedPostion = transform.position.x;
+
+        //Velocit�
+        rb.velocity = new Vector2(velocityX, velocityY);
+    }
+    void applyBlock(float velocityX, float velocityY)
+    {
+        //Stun
+        blockStunTimeActu = blockStunTime + Time.time;
 
         //var pour mini jeu
         lastTimeGotHit = Time.time;
