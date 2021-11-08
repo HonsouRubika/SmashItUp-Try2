@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private int[] _selectedGameModes;
+    private int[] _teamCompo;
     int _nbManches;
     int _nbMancheActu = 0;
 
@@ -22,7 +23,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Initialisation des gameMode pour la partie");
         _nbManches = nbManches;
         _selectedGameModes = new int[nbManches];
-        int nbGameModeMax = (int)GameMode.total;
 
         _scoreP1 = 0;
         _scoreP2 = 0;
@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour
         Random.InitState((int)Time.time);
         for (int i = 0; i < nbManches; ++i)
         {
-            _selectedGameModes[i] = Random.Range(0, nbGameModeMax);
+            _selectedGameModes[i] = Random.Range(0, (int)GameMode.total);
+            _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
             //Debug.Log(i + " : " +_selectedGameModes[i]);
         }
 
@@ -135,10 +136,14 @@ public class GameManager : MonoBehaviour
                 return _scoreP4;
             default:
                 Debug.Log("Erreur : id de joueur inconnu");
-                break;
-        }
+                return -1;
+        } 
+    }
 
-        return -1; //situation impossible
+    //renvoie la compo d'equipe pour une manche précise
+    public int getTeamCompo(int laManche)
+    {
+        return _teamCompo[_nbMancheActu];
     }
 
     //liste des gameMode présent dans le jeu (jouable)
@@ -148,6 +153,15 @@ public class GameManager : MonoBehaviour
         //Loup,
         CaptureDeZone,
         DestrucBox,
-        total //egal le nombre d'élément dans l'enum
+        total //egal au nombre d'élément dans l'enum
+    }
+
+    enum TeamCompo
+    {
+        FFA,
+        OneVSThree,
+        TwoVSTwo,
+        Coop,
+        total //egal au nombre d'élément dans l'enum
     }
 }
