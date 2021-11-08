@@ -3,8 +3,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    //old input
-    //[Header("Inputs")]
     //new input
     private CharacterController controller;
     private Vector2 movementInput = Vector2.zero;
@@ -108,8 +106,6 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         movementInput = context.ReadValue<Vector2>();
-        //TODO: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/ActionBindings.html
-        // https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/Actions.html
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -117,7 +113,7 @@ public class PlayerController : MonoBehaviour
         //stun
         if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
         {
-            if (context.started) jump();
+            if (context.started) computeJump();
         }
     }
     public void OnAttacked(InputAction.CallbackContext context)
@@ -125,31 +121,13 @@ public class PlayerController : MonoBehaviour
         //stun
         if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
         {
-            if (context.started) attack();
+            if (context.started) computeAttack();
         }
     }
 
     private void Update()
     {
-        //Distance de projection max
-        //gauche
-        if ((transform.position.x <= startProjectedPostion + -HammerSideProjectionMaxDistance) && isBeingProjected)
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            isBeingProjected = false;
-            Debug.Log("OUI gauche");
-            Debug.Log("Dist max : " + -HammerSideProjectionMaxDistance);
-            Debug.Log("1: " + transform.position.x + " >= " + startProjectedPostion + " + " + -HammerSideProjectionMaxDistance);
-
-        } //droite
-        else if ((transform.position.x >= startProjectedPostion + HammerSideProjectionMaxDistance) && isBeingProjected)
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            isBeingProjected = false;
-            Debug.Log("OUI droite");
-            Debug.Log("Dist max : " + HammerSideProjectionMaxDistance);
-            Debug.Log("1: " + transform.position.x + " <= " + startProjectedPostion + " + " + HammerSideProjectionMaxDistance);
-        }
+        verifProjectionMax();
 
         //stun
         if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
@@ -162,184 +140,19 @@ public class PlayerController : MonoBehaviour
             
             //reset var
             stunTimeActu = 0;
+            blockStunTimeActu = 0;
             //isBeingProjected = false;
 
             /////////////////////////////////////
             //////////// DEPLACEMENT ////////////
             /////////////////////////////////////
-            #region Deplacement
-            //Gauche + Droite
-            if ((movementInput.x < -0.3) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
-            {
-                //gauche
-                //rb.velocity = new Vector2(-speed, rb.velocity.y);
-                rb.velocity = new Vector2(-speed, rb.velocity.y);
-                attackDirection = true;
-
-                //anim
-                playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
-                if (playerAnimScript.playerAnimator != null)
-                {
-                    playerAnimScript.Running(true);
-                }
-            }
-            else if ((movementInput.x > 0.3) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
-            {
-                //droite
-                rb.velocity = new Vector2(speed, rb.velocity.y);
-                attackDirection = false;
-
-                //anim
-                playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
-                if (playerAnimScript.playerAnimator != null)
-                {
-                    playerAnimScript.Running(true);
-                }
-            }
-            else if (jumpState != JumpState.InFlight)
-            {
-                rb.velocity = new Vector2(0, rb.velocity.y);
-
-                //anim
-                playerAnimScript.Running(false);
-                playerAnimScript.Idle(true);
-            }
-
-            //Hauteur max
-            if (transform.position.y > startJumpPosition + maxJumpHigh)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - 0.05f);
-            }
-            //hauteur max wall jump
-            if (transform.position.y > startWallJumpPosition + maxWallJumpHigh)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - 0.05f);
-            }
-
-            //Colision Sol
-            if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
-                Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Plateform")))
-            {
-                //le perso touche le sol
-                jumpState = JumpState.Grounded;
-                startJumpPosition = transform.position.y;
-                numberMaxWalljumpActu = 0; //reset nb de walljump
-
-                //reset var for walljump
-                wallJumpMovementFreezeActuL = Time.time;
-                wallJumpMovementFreezeActuR = Time.time;
-
-                //anim
-                if (playerAnimScript.playerAnimator != null)
-                {
-                    playerAnimScript.Jumping(false);
-                }              
-            }
-            else
-            {
-                jumpState = JumpState.InFlight;
-            }
-            #endregion
+            move();
 
             /////////////////////////////////
             //////////// ATTAQUE ////////////
             /////////////////////////////////
 
-            //Attaque droite et gauche
-            //Gauche
-            //2)animation attaque + verif block
-            if (isAttackRunningL && Time.time < attackDurationActu)
-            {
-                //Detection d'un blocage
-                Collider2D[] hammers = Physics2D.OverlapCircleAll(hammerPointL.transform.position, hammerHitboxRange, hammerHitboxLayer);
-
-                if (hammers.Length > 1)
-                {
-                    //on contre
-                    //Debug.Log("Blocage à Gauche");
-
-                    didAttackedBlockedL = true;
-                }
-
-            }
-            //3) applyAttack
-            if (isAttackRunningL && Time.time >= attackDurationActu)
-            {
-                //Debug.Log("Attaque gauche3");
-                //Animation / Attack hitbox Apparition (pour test)
-
-                //Detection des player dans la zone
-                Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointL.position, attackRange, enemyLayer);
-
-                if (!didAttackedBlockedL)
-                {
-                    //On leur applique une velocit� (effet de l'attaque)
-                    foreach (Collider2D enemy in hitEnemies)
-                    {
-                        //Appliquer une velocit�
-                        //Attention: check la direction pour coord x
-                        enemy.GetComponent<PlayerController>().applyAttack(-hammerProjection, 0);
-                        lastTimeAttackHit = Time.time;
-                    }
-                }
-                else
-                {
-                    // apply self blockProjection
-                    applyBlock(hammerBlockProjection, 0);
-                }
-                //reset var
-                didAttackedBlockedL = false;
-                isAttackRunningL = false;
-                //disparition hammerHitBox
-                hammerPointL.SetActive(false);
-
-            }
-
-            //Droite
-            //2) animation attaque + verif block
-            if (isAttackRunningR && Time.time < attackDurationActu)
-            {
-                //Detection d'un blocage
-                Collider2D[] hammers = Physics2D.OverlapCircleAll(hammerPointR.transform.position, hammerHitboxRange, hammerHitboxLayer);
-                if (hammers.Length > 1)
-                {
-                    //on contre
-                    didAttackedBlockedR = true;
-                }
-            }
-            //3) applyAttack
-            if (isAttackRunningR && Time.time >= attackDurationActu)
-            {
-                //reset timeAttack
-                nextAttackTime = Time.time + 1f / attackRate;
-
-                //Animation / Attack hitbox Apparition (pour test)
-
-                //Detection des player dans la zone
-                Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointR.position, attackRange, enemyLayer);
-
-                if (!didAttackedBlockedR)
-                {
-                    //On leur applique une velocit� (effet de l'attaque)
-                    foreach (Collider2D enemy in hitEnemies)
-                    {
-                        //Appliquer une velocit�
-                        //Attention: check la direction pour coord x
-                        enemy.GetComponent<PlayerController>().applyAttack(hammerProjection, 0);
-                        lastTimeAttackHit = Time.time;
-                    }
-                }
-                else
-                {
-                    // apply self blockProjection
-                    applyBlock(-hammerBlockProjection, 0);
-                }
-                //reset var
-                didAttackedBlockedR = false;
-                isAttackRunningR = false;
-                //disparition hammerHitBox
-                hammerPointR.SetActive(false);
-            }
+            attack();
             
         }
         else //player is stun
@@ -358,7 +171,208 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void jump()
+    void attack()
+    {
+        //Attaque droite et gauche
+        //Gauche
+        //2)animation attaque + verif block
+        if (isAttackRunningL && Time.time < attackDurationActu)
+        {
+            //Detection d'un blocage
+            Collider2D[] hammers = Physics2D.OverlapCircleAll(hammerPointL.transform.position, hammerHitboxRange, hammerHitboxLayer);
+
+            if (hammers.Length > 1)
+            {
+                //on contre
+                //Debug.Log("Blocage à Gauche");
+
+                didAttackedBlockedL = true;
+            }
+
+        }
+        //3) applyAttack
+        if (isAttackRunningL && Time.time >= attackDurationActu)
+        {
+            //Debug.Log("Attaque gauche3");
+            //Animation / Attack hitbox Apparition (pour test)
+
+            //Detection des player dans la zone
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointL.position, attackRange, enemyLayer);
+
+            if (!didAttackedBlockedL)
+            {
+                //On leur applique une velocit� (effet de l'attaque)
+                foreach (Collider2D enemy in hitEnemies)
+                {
+                    //Appliquer une velocit�
+                    //Attention: check la direction pour coord x
+                    enemy.GetComponent<PlayerController>().applyAttack(-hammerProjection, 0);
+                    lastTimeAttackHit = Time.time;
+                }
+            }
+            else
+            {
+                // apply self blockProjection
+                applyBlock(hammerBlockProjection, 0);
+            }
+            //reset var
+            didAttackedBlockedL = false;
+            isAttackRunningL = false;
+            //disparition hammerHitBox
+            hammerPointL.SetActive(false);
+
+        }
+
+        //Droite
+        //2) animation attaque + verif block
+        if (isAttackRunningR && Time.time < attackDurationActu)
+        {
+            //Detection d'un blocage
+            Collider2D[] hammers = Physics2D.OverlapCircleAll(hammerPointR.transform.position, hammerHitboxRange, hammerHitboxLayer);
+            if (hammers.Length > 1)
+            {
+                //on contre
+                didAttackedBlockedR = true;
+            }
+        }
+        //3) applyAttack
+        if (isAttackRunningR && Time.time >= attackDurationActu)
+        {
+            //reset timeAttack
+            nextAttackTime = Time.time + 1f / attackRate;
+
+            //Animation / Attack hitbox Apparition (pour test)
+
+            //Detection des player dans la zone
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointR.position, attackRange, enemyLayer);
+
+            if (!didAttackedBlockedR)
+            {
+                //On leur applique une velocit� (effet de l'attaque)
+                foreach (Collider2D enemy in hitEnemies)
+                {
+                    //Appliquer une velocit�
+                    //Attention: check la direction pour coord x
+                    enemy.GetComponent<PlayerController>().applyAttack(hammerProjection, 0);
+                    lastTimeAttackHit = Time.time;
+                }
+            }
+            else
+            {
+                // apply self blockProjection
+                applyBlock(-hammerBlockProjection, 0);
+            }
+            //reset var
+            didAttackedBlockedR = false;
+            isAttackRunningR = false;
+            //disparition hammerHitBox
+            hammerPointR.SetActive(false);
+        }
+    }
+
+    void move()
+    {
+        //Gauche + Droite
+        if ((movementInput.x < -0.3) && (!isGrippingLeft || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
+        {
+            //gauche
+            //rb.velocity = new Vector2(-speed, rb.velocity.y);
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
+            attackDirection = true;
+
+            //anim
+            playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            if (playerAnimScript.playerAnimator != null)
+            {
+                playerAnimScript.Running(true);
+            }
+        }
+        else if ((movementInput.x > 0.3) && (!isGrippingRight || jumpState == JumpState.Grounded) && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
+        {
+            //droite
+            rb.velocity = new Vector2(speed, rb.velocity.y);
+            attackDirection = false;
+
+            //anim
+            playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            if (playerAnimScript.playerAnimator != null)
+            {
+                playerAnimScript.Running(true);
+            }
+        }
+        else if (jumpState != JumpState.InFlight)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+
+            //anim
+            playerAnimScript.Running(false);
+            playerAnimScript.Idle(true);
+        }
+
+        //Hauteur max
+        if (transform.position.y > startJumpPosition + maxJumpHigh)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - 0.05f);
+        }
+        //hauteur max wall jump
+        if (transform.position.y > startWallJumpPosition + maxWallJumpHigh)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - 0.05f);
+        }
+
+        //Colision Sol
+        if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Plateform")))
+        {
+            //le perso touche le sol
+            jumpState = JumpState.Grounded;
+            startJumpPosition = transform.position.y;
+            numberMaxWalljumpActu = 0; //reset nb de walljump
+
+            //reset var for walljump
+            wallJumpMovementFreezeActuL = Time.time;
+            wallJumpMovementFreezeActuR = Time.time;
+
+            //anim
+            if (playerAnimScript.playerAnimator != null)
+            {
+                playerAnimScript.Jumping(false);
+            }
+        }
+        else
+        {
+            jumpState = JumpState.InFlight;
+        }
+    }
+
+    void verifProjectionMax()
+    {
+        //Distance de projection max
+        //gauche
+        if ((transform.position.x <= startProjectedPostion + -HammerSideProjectionMaxDistance) && isBeingProjected)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            isBeingProjected = false;
+            /*
+            Debug.Log("OUI gauche");
+            Debug.Log("Dist max : " + -HammerSideProjectionMaxDistance);
+            Debug.Log("1: " + transform.position.x + " >= " + startProjectedPostion + " + " + -HammerSideProjectionMaxDistance);
+            */
+
+        } //droite
+        else if ((transform.position.x >= startProjectedPostion + HammerSideProjectionMaxDistance) && isBeingProjected)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            isBeingProjected = false;
+            /*
+            Debug.Log("OUI droite");
+            Debug.Log("Dist max : " + HammerSideProjectionMaxDistance);
+            Debug.Log("1: " + transform.position.x + " <= " + startProjectedPostion + " + " + HammerSideProjectionMaxDistance);
+            */
+        }
+    }
+
+    void computeJump()
     {
         //Saut + wall jump
         if (jumpState == JumpState.Grounded && !isAttackRunningL && !isAttackRunningR)
@@ -397,7 +411,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void attack()
+    void computeAttack()
     {
         //Gauche
         if (attackDirection && Time.time >= nextAttackTime)
