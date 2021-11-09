@@ -9,6 +9,9 @@ using UnityEngine;
 
 public class DetructCrate_Rules : MonoBehaviour
 {
+    public int cratesNumber = 0;
+
+    [Space]
     public Score scoreScript;
     public Timer timerScript;
 
@@ -44,13 +47,6 @@ public class DetructCrate_Rules : MonoBehaviour
     {
         if (timerScript.miniGameTimer <= 0)
         {
-            /*int[] scores = new int[4];
-            scores[0] = scorePlayer0;
-            scores[1] = scorePlayer1;
-            scores[2] = scorePlayer2;
-            scores[3] = scorePlayer3;
-            Array.Sort(scores);*/
-
             int maxVal = 0;
             int joueurValMax = 0;
             if (scoreScript.scorePlayer0 > maxVal)
@@ -89,6 +85,12 @@ public class DetructCrate_Rules : MonoBehaviour
                     GameManager.Instance.addScores(0, 0, 0, 10);
                     break;
             }
+        }
+
+        //End the mini-game
+        if (cratesNumber <= 0)
+        {
+            GameManager.Instance.Score();
         }
     }
 }
