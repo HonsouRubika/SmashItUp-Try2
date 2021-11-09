@@ -100,6 +100,8 @@ MonoBehaviour:
   hammerLayer:
     serializedVersion: 2
     m_Bits: 512
+  pointsToAdd: 1
+  floatingPoint: {fileID: 7282320832305823009, guid: 4bc20005aa040d34b8ab27c51b74bc12, type: 3}
 --- !u!61 &2492257469899866974
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -170,12 +172,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95e7b409f566cc43ada025b28f9485b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorePlayer0: 0
-  scorePlayer1: 0
-  scorePlayer2: 0
-  scorePlayer3: 0
-  durationMiniGame: 30
-  miniGameTimer: 0
+  cratesNumber: 0
+  scoreScript: {fileID: 0}
+  timerScript: {fileID: 0}
+  tpPoints0: {fileID: 0}
+  tpPoints1: {fileID: 0}
+  tpPoints2: {fileID: 0}
+  tpPoints3: {fileID: 0}
 --- !u!1 &5361489175681341122
 GameObject:
   m_ObjectHideFlags: 0

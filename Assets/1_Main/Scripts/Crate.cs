@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Crate : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Crate : MonoBehaviour
 
     [Header("Score")]
     public int pointsToAdd = 1;
+    public GameObject floatingPoint;
 
     private Collider2D hammerCollider = null;
     private BoxCollider2D crateCollider;
@@ -50,19 +52,21 @@ public class Crate : MonoBehaviour
             switch (hammerCollider.GetComponentInParent<PlayerController>().playerID)
             {
                 case 0:
-                    scoreScript.AddScore(1, 0, 0, 0);
+                    scoreScript.AddScore(pointsToAdd, 0, 0, 0);
                     break;
                 case 1:
-                    scoreScript.AddScore(0, 1, 0, 0);
+                    scoreScript.AddScore(0, pointsToAdd, 0, 0);
                     break;
                 case 2:
-                    scoreScript.AddScore(0, 0, 1, 0);
+                    scoreScript.AddScore(0, 0, pointsToAdd, 0);
                     break;
                 case 3:
-                    scoreScript.AddScore(0, 0, 0, 1);
+                    scoreScript.AddScore(0, 0, 0, pointsToAdd);
                     break;
             }
 
+            GameObject floatPoint = Instantiate(floatingPoint, transform.position, Quaternion.identity);
+            floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
             detructCrateScript.cratesNumber--;
             Destroy(gameObject);
             destructSoundScript.PlayerDestroy();
