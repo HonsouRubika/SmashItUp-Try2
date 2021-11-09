@@ -9,8 +9,6 @@ using UnityEngine;
 
 public class CaptureTheFlag_Rules : MonoBehaviour
 {
-    private GameManager GM;
-
     [Header("TP Points")]
     public Transform tpPoints0;
     public Transform tpPoints1;
@@ -22,8 +20,6 @@ public class CaptureTheFlag_Rules : MonoBehaviour
 
     private void Start()
     {
-        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
             switch (player.GetComponent<PlayerController>().playerID)
@@ -49,20 +45,20 @@ public class CaptureTheFlag_Rules : MonoBehaviour
         switch (playerWin)
         {
             case 0:
-                GM.addScores(winPoints, 0, 0, 0);
+                GameManager.Instance.addScores(winPoints, 0, 0, 0);
                 break;
             case 1:
-                GM.addScores(0, winPoints, 0, 0);
+                GameManager.Instance.addScores(0, winPoints, 0, 0);
                 break;
             case 2:
-                GM.addScores(0, 0, winPoints, 0);
+                GameManager.Instance.addScores(0, 0, winPoints, 0);
                 break;
             case 3:
-                GM.addScores(0, 0, 0, winPoints);
+                GameManager.Instance.addScores(0, 0, 0, winPoints);
                 break;
         }
 
-        //GM.NextMap();
-        GM.Score();
+        //GameManager.Instance.NextMap();
+        GameManager.Instance.Score();
     }
 }

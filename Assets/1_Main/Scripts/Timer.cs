@@ -5,7 +5,6 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    private GameManager GM;
     public TextMeshProUGUI timerUI;
 
     [Space]
@@ -15,16 +14,14 @@ public class Timer : MonoBehaviour
     private void Start()
     {
         miniGameTimer = durationMiniGame;
-
-        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     public void Update()
     {
         if (miniGameTimer <= 0)
         {
-            //GM.NextMap();
-            GM.Score();
+            //GameManager.Instance.NextMap();
+            GameManager.Instance.Score();
         }
         else
         {

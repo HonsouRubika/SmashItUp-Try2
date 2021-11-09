@@ -5,12 +5,29 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
     private int[] _selectedGameModes;
     private int[] _teamCompo;
     int _nbManches;
     int _nbMancheActu = 0;
 
     int _scoreP1 = 0, _scoreP2 = 0, _scoreP3 = 0, _scoreP4 = 0;
+
+    void Awake()
+    {
+        #region Make Singleton
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        #endregion
+    }
 
     private void Start()
     {
