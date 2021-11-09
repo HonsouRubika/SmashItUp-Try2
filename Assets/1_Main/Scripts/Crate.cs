@@ -25,6 +25,8 @@ public class Crate : MonoBehaviour
     private void Start()
     {
         detructCrateScript = GetComponentInParent<DetructCrate_Rules>();
+        detructCrateScript.cratesNumber++;
+
         scoreScript = detructCrateScript.scoreScript;
 
         crateCollider = GetComponent<BoxCollider2D>();
@@ -61,6 +63,7 @@ public class Crate : MonoBehaviour
                     break;
             }
 
+            detructCrateScript.cratesNumber--;
             Destroy(gameObject);
             destructSoundScript.PlayerDestroy();
         }
