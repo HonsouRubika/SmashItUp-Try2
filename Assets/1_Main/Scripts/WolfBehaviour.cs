@@ -31,8 +31,6 @@ public class WolfBehaviour : MonoBehaviour
 
     private float timer = 20f, timerActu;
 
-    private GameManager GM;
-
     [Header("TP Points")]
     public Transform tpPoints0;
     public Transform tpPoints1;
@@ -41,8 +39,6 @@ public class WolfBehaviour : MonoBehaviour
 
     private void Start()
     {
-        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
             switch (player.GetComponent<PlayerController>().playerID)

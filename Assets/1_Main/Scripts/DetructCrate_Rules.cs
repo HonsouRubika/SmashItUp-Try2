@@ -12,8 +12,6 @@ public class DetructCrate_Rules : MonoBehaviour
     public Score scoreScript;
     public Timer timerScript;
 
-    private GameManager GM;
-
     [Header("TP Points")]
     public Transform tpPoints0;
     public Transform tpPoints1;
@@ -22,8 +20,6 @@ public class DetructCrate_Rules : MonoBehaviour
 
     private void Start()
     {
-        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
             switch (player.GetComponent<PlayerController>().playerID)
@@ -81,16 +77,16 @@ public class DetructCrate_Rules : MonoBehaviour
             switch (joueurValMax)
             {
                 case 0:
-                    GM.addScores(10, 0, 0, 0);
+                    GameManager.Instance.addScores(10, 0, 0, 0);
                     break;
                 case 1:
-                    GM.addScores(0, 10, 0, 0);
+                    GameManager.Instance.addScores(0, 10, 0, 0);
                     break;
                 case 2:
-                    GM.addScores(0, 0, 10, 0);
+                    GameManager.Instance.addScores(0, 0, 10, 0);
                     break;
                 case 3:
-                    GM.addScores(0, 0, 0, 10);
+                    GameManager.Instance.addScores(0, 0, 0, 10);
                     break;
             }
         }

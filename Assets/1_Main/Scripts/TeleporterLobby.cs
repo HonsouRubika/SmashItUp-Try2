@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TeleporterLobby : MonoBehaviour
 {
-    public GameManager gameManager;
     public int nbPlayerInZone = 0;
     public int nbPlayerInGame = 0;
 
@@ -42,7 +41,7 @@ public class TeleporterLobby : MonoBehaviour
         {
             isTimerInitiated = false;
             Debug.Log("doit débuter le compte à rebour avant lancement du jeu");
-            gameManager.initializeGameModes(5);
+            GameManager.Instance.initializeGameModes(5);
         }
     }
 }
