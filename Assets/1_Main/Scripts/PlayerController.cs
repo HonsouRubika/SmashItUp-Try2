@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     //public uint health; 
 
     //Player Controll Asignation
-    [System.NonSerialized] public uint playerID = 0;
+    /*[System.NonSerialized]*/ public uint playerID = 0;
 
     //Sprite et animation
     private Rigidbody2D rb;
@@ -74,6 +74,10 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized] public float lastTimeAttackHit = 0;
     [System.NonSerialized] public float lastTimeGotHit = 0;
 
+    [HideInInspector] public int playerIDHit;
+    private float timeAttack = 0;
+    [HideInInspector] public bool hitPlayer = false;
+
     //Animation
     private PlayerAnim playerAnimScript;
     private Transform playerAnim;
@@ -127,6 +131,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        PlayerAttacked();
+
         verifProjectionMax();
 
         //stun
@@ -167,7 +173,7 @@ public class PlayerController : MonoBehaviour
             else if (transform.position.x >= startProjectedPostion)
             {
                 playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
-            }  
+            }
         }
     }
 
@@ -208,6 +214,7 @@ public class PlayerController : MonoBehaviour
                     //Attention: check la direction pour coord x
                     enemy.GetComponent<PlayerController>().applyAttack(-hammerProjection, 0);
                     lastTimeAttackHit = Time.time;
+                    playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
                 }
             }
             else
@@ -255,6 +262,7 @@ public class PlayerController : MonoBehaviour
                     //Attention: check la direction pour coord x
                     enemy.GetComponent<PlayerController>().applyAttack(hammerProjection, 0);
                     lastTimeAttackHit = Time.time;
+                    playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
                 }
             }
             else
@@ -267,6 +275,19 @@ public class PlayerController : MonoBehaviour
             isAttackRunningR = false;
             //disparition hammerHitBox
             hammerPointR.SetActive(false);
+        }
+    }
+
+    private void PlayerAttacked()
+    {
+        if (lastTimeAttackHit > timeAttack)
+        {
+            timeAttack = lastTimeAttackHit;
+            hitPlayer = true;
+        }
+        else
+        {
+            hitPlayer = false;
         }
     }
 
@@ -522,5 +543,4 @@ public class PlayerController : MonoBehaviour
         InFlight,
         Landed
     }
-
 }

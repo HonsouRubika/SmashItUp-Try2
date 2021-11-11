@@ -58,6 +58,16 @@ public class Score : MonoBehaviour
         DisplayScore();
     }
 
+    public void SetScore(int scoreP0, int scoreP1, int scoreP2, int scoreP3)
+    {
+        scorePlayer0 = scoreP0;
+        scorePlayer1 = scoreP1;
+        scorePlayer2 = scoreP2;
+        scorePlayer3 = scoreP3;
+
+        DisplayScore();
+    }
+
     //Use this function to set a position to a player, like last place in wolf mini-game
     public void AddPosition(int positionP0, int positionP1, int positionP2, int positionP3)
     {
