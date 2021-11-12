@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (!PauseMenu.isPaused)
+        if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
         {
             movementInput = context.ReadValue<Vector2>();
         }     
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (!PauseMenu.isPaused)
+        if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
         {
             //stun
             if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
     }
     public void OnAttacked(InputAction.CallbackContext context)
     {
-        if (!PauseMenu.isPaused)
+        if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
         {
             //stun
             if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
@@ -314,7 +314,7 @@ public class PlayerController : MonoBehaviour
             attackDirection = true;
             
             //anim
-            if (!PauseMenu.isPaused)
+            if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
             {
                 playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
             }
@@ -331,7 +331,7 @@ public class PlayerController : MonoBehaviour
             attackDirection = false;
             
             //anim
-            if (!PauseMenu.isPaused)
+            if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
             {
                 playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
             }
