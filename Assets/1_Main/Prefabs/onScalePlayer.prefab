@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &914953804377141570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 636998578509708529}
+  m_Layer: 8
+  m_Name: GripLeftCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &636998578509708529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914953804377141570}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.446, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2170699915047179841}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3070312787403988158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +108,36 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!1 &8354760856664687097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3080269201383479953}
+  m_Layer: 8
+  m_Name: GripRightCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3080269201383479953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8354760856664687097}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.445, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2170699915047179841}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3045740378985301340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138,9 +198,17 @@ PrefabInstance:
       value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 1511692558748255088, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: gripLeftCheck
+      value: 
+      objectReference: {fileID: 636998578509708529}
+    - target: {fileID: 1511692558748255088, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
       propertyPath: wallJumpSpeed
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 1511692558748255088, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: gripRightCheck
+      value: 
+      objectReference: {fileID: 3080269201383479953}
     - target: {fileID: 1511692558748255088, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
       propertyPath: maxWallJumpHigh
       value: 2.5
@@ -172,6 +240,18 @@ PrefabInstance:
     - target: {fileID: 2667096732795377823, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
       propertyPath: m_Bounds.m_Center.y
       value: -0.0021355152
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891069041967839364, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: 0.0011359453
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891069041967839364, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: m_Bounds.m_Center.y
+      value: -0.00000071525574
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891069041967839364, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: m_Bounds.m_Extent.y
+      value: 2.0350006
       objectReference: {fileID: 0}
     - target: {fileID: 3772684629145893172, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
       propertyPath: m_RootOrder
@@ -293,6 +373,34 @@ PrefabInstance:
       propertyPath: m_Bounds.m_Center.y
       value: -0.000561744
       objectReference: {fileID: 0}
+    - target: {fileID: 7473338456743592776, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: 0.0011358261
+      objectReference: {fileID: 0}
+    - target: {fileID: 7473338456743592776, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: m_Bounds.m_Center.y
+      value: -0.00000071525574
+      objectReference: {fileID: 0}
+    - target: {fileID: 7473338456743592776, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: m_Bounds.m_Extent.y
+      value: 2.0350006
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989966158687459340, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: -0.00047504902
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989966158687459340, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: m_Bounds.m_Center.y
+      value: -0.00000071525574
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989966158687459340, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: m_Bounds.m_Extent.x
+      value: 1.981155
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989966158687459340, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+      propertyPath: m_Bounds.m_Extent.y
+      value: 2.0350006
+      objectReference: {fileID: 0}
     - target: {fileID: 8349701544027494006, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
       propertyPath: m_Bounds.m_Center.x
       value: 0.0017209053
@@ -326,6 +434,11 @@ PrefabInstance:
 --- !u!1 &778284062386766064 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2344582686100866476, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
+  m_PrefabInstance: {fileID: 3045740378985301340}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2170699915047179841 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3772684629939589917, guid: 9e2acb22dc8f90148aad580c143b5c93, type: 3}
   m_PrefabInstance: {fileID: 3045740378985301340}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &4521113626264798764 stripped
