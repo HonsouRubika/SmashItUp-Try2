@@ -33,6 +33,11 @@ public class PlayerController : MonoBehaviour
     public float numberMaxWalljump = 2;
     private float numberMaxWalljumpActu;
     private bool isFalling = false;
+    public float jumpHoldTimer = 0.1f;
+    private float jumpHoldTimerActu = 0;
+    private bool isJumpHoldTimerSetted = false;
+    private bool isWallJumpHoldTimerSetted = false;
+
 
     //Colision checks
     [Header("GroundCheck")]
@@ -311,17 +316,34 @@ public class PlayerController : MonoBehaviour
         }
 
         //Hauteur max
-        if (transform.position.y > startJumpPosition + maxJumpHigh && !isFalling)
+        if(transform.position.y > startJumpPosition + maxJumpHigh && !isJumpHoldTimerSetted)
         {
-            rb.velocity = new Vector2(rb.velocity.x, -5f);
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            jumpHoldTimerActu = Time.time + jumpHoldTimer;
+            isJumpHoldTimerSetted = true;
+            Debug.Log("hold");
+        }
+        if (!isFalling && Time.time >= jumpHoldTimerActu && (isJumpHoldTimerSetted && !isWallJumpHoldTimerSetted))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             isFalling = true;
+            jumpHoldTimerActu = 0;
             Debug.Log("max height");
         }
+
         //hauteur max wall jump
-        if (transform.position.y > startWallJumpPosition + maxWallJumpHigh && !isFalling)
+        if (transform.position.y > startWallJumpPosition + maxWallJumpHigh && !isWallJumpHoldTimerSetted)
         {
-            rb.velocity = new Vector2(rb.velocity.x, -5f);
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+            jumpHoldTimerActu = Time.time + jumpHoldTimer;
+            isWallJumpHoldTimerSetted = true;
+            Debug.Log("hold wall jump");
+        }
+        if (!isFalling && Time.time >= jumpHoldTimerActu && isWallJumpHoldTimerSetted)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             isFalling = true;
+            jumpHoldTimerActu = 0;
             Debug.Log("max wall jump height");
         }
 
@@ -334,6 +356,9 @@ public class PlayerController : MonoBehaviour
             startJumpPosition = transform.position.y;
             numberMaxWalljumpActu = 0; //reset nb de walljump
             isFalling = false;
+            isJumpHoldTimerSetted = false;
+            isWallJumpHoldTimerSetted = false;
+            jumpHoldTimerActu = 0;
 
             //reset var for walljump
             wallJumpMovementFreezeActuL = Time.time;
@@ -355,8 +380,8 @@ public class PlayerController : MonoBehaviour
             Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Plateform")) || 
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x , gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform"))||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.1f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.1f), 1 << LayerMask.NameToLayer("Plateform")) ||
             ((Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")) ) 
             && jumpState == JumpState.InFlight ) ||
@@ -364,6 +389,7 @@ public class PlayerController : MonoBehaviour
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
         {
             isGrippingLeft = true;
+            isWallJumpHoldTimerSetted = false;
         }
         else
         {
@@ -373,8 +399,8 @@ public class PlayerController : MonoBehaviour
             Physics2D.Linecast(transform.position, gripRightCheck.position, 1 << LayerMask.NameToLayer("Plateform")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.1f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.1f), 1 << LayerMask.NameToLayer("Plateform")) ||
             ((Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")) ) 
             && jumpState == JumpState.InFlight ) ||
@@ -382,7 +408,9 @@ public class PlayerController : MonoBehaviour
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
         {
             isGrippingRight = true;
-        } else
+            isWallJumpHoldTimerSetted = false;
+        }
+        else
         {
             isGrippingRight = false;
         }
@@ -425,7 +453,6 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
             jumpState = JumpState.InFlight;
             startJumpPosition = transform.position.y;
-            isFalling = false;
 
             //anim
             playerAnimScript.Jumping(true);
@@ -438,7 +465,6 @@ public class PlayerController : MonoBehaviour
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
             numberMaxWalljumpActu++;
-            isFalling = false;
 
             //freeze movement for small time
             wallJumpMovementFreezeActuR = wallJumpMovementFreeze + Time.time;
@@ -451,7 +477,6 @@ public class PlayerController : MonoBehaviour
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
             numberMaxWalljumpActu++;
-            isFalling = false;
 
             //freeze movement for small time
             wallJumpMovementFreezeActuL = wallJumpMovementFreeze + Time.time;
@@ -530,36 +555,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(hammerPointR.transform.position, hammerHitboxRange);
     }
 
-    void OnCollisionStay2D(Collision2D col)
-    {
-        //Exception anti "grip" sur le cot� des plateforme
-        //Bug: Le grip ne s'effectue pas au niveau des pieds. Solution : Changer la HitBox (� faire apr�s changement du sprite et animations)
-
-        if (jumpState == JumpState.InFlight && col.gameObject.tag == "Plateform")
-        {
-            if (col.gameObject.transform.position.x <= transform.position.x)
-            {
-                isGrippingLeft = true;
-                //Debug.Log("Gripping Left");
-            }
-            else
-            {
-                isGrippingRight = true;
-                //Debug.Log("Gripping Right");
-            }
-
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Plateform" && jumpState == JumpState.InFlight)
-        {
-            isGrippingLeft = false;
-            isGrippingRight = false;
-            //Debug.Log("Just stopped gripping");
-        }
-    }
 
     public enum JumpState
     {
