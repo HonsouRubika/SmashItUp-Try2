@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private float wallJumpMovementFreezeActuL, wallJumpMovementFreezeActuR;
     public float numberMaxWalljump = 2;
     private float numberMaxWalljumpActu;
+    private bool isFalling = false;
 
     //Colision checks
     [Header("GroundCheck")]
@@ -310,14 +311,18 @@ public class PlayerController : MonoBehaviour
         }
 
         //Hauteur max
-        if (transform.position.y > startJumpPosition + maxJumpHigh)
+        if (transform.position.y > startJumpPosition + maxJumpHigh && !isFalling)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - 0.05f);
+            rb.velocity = new Vector2(rb.velocity.x, -5f);
+            isFalling = true;
+            Debug.Log("max height");
         }
         //hauteur max wall jump
-        if (transform.position.y > startWallJumpPosition + maxWallJumpHigh)
+        if (transform.position.y > startWallJumpPosition + maxWallJumpHigh && !isFalling)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - 0.05f);
+            rb.velocity = new Vector2(rb.velocity.x, -5f);
+            isFalling = true;
+            Debug.Log("max wall jump height");
         }
 
         //Colision Sol
@@ -328,6 +333,7 @@ public class PlayerController : MonoBehaviour
             jumpState = JumpState.Grounded;
             startJumpPosition = transform.position.y;
             numberMaxWalljumpActu = 0; //reset nb de walljump
+            isFalling = false;
 
             //reset var for walljump
             wallJumpMovementFreezeActuL = Time.time;
@@ -343,6 +349,44 @@ public class PlayerController : MonoBehaviour
         {
             jumpState = JumpState.InFlight;
         }
+
+        //Colision Side GripCheck
+        if (Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Plateform")) || 
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x , gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform"))||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            ((Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")) ) 
+            && jumpState == JumpState.InFlight ) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
+        {
+            isGrippingLeft = true;
+        }
+        else
+        {
+            isGrippingLeft = false;
+        }
+        if (Physics2D.Linecast(transform.position, gripRightCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, gripRightCheck.position, 1 << LayerMask.NameToLayer("Plateform")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            ((Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")) ) 
+            && jumpState == JumpState.InFlight ) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
+        {
+            isGrippingRight = true;
+        } else
+        {
+            isGrippingRight = false;
+        }
+
     }
 
     void verifProjectionMax()
@@ -381,6 +425,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
             jumpState = JumpState.InFlight;
             startJumpPosition = transform.position.y;
+            isFalling = false;
 
             //anim
             playerAnimScript.Jumping(true);
@@ -393,6 +438,7 @@ public class PlayerController : MonoBehaviour
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
             numberMaxWalljumpActu++;
+            isFalling = false;
 
             //freeze movement for small time
             wallJumpMovementFreezeActuR = wallJumpMovementFreeze + Time.time;
@@ -405,6 +451,7 @@ public class PlayerController : MonoBehaviour
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
             numberMaxWalljumpActu++;
+            isFalling = false;
 
             //freeze movement for small time
             wallJumpMovementFreezeActuL = wallJumpMovementFreeze + Time.time;
