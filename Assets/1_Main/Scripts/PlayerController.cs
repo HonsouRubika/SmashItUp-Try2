@@ -105,23 +105,32 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        movementInput = context.ReadValue<Vector2>();
+        if (!PauseMenu.isPaused)
+        {
+            movementInput = context.ReadValue<Vector2>();
+        }     
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        //stun
-        if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
+        if (!PauseMenu.isPaused)
         {
-            if (context.started) computeJump();
+            //stun
+            if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
+            {
+                if (context.started) computeJump();
+            }
         }
     }
     public void OnAttacked(InputAction.CallbackContext context)
     {
-        //stun
-        if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
+        if (!PauseMenu.isPaused)
         {
-            if (context.started) computeAttack();
+            //stun
+            if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
+            {
+                if (context.started) computeAttack();
+            }
         }
     }
 
@@ -281,7 +290,11 @@ public class PlayerController : MonoBehaviour
             attackDirection = true;
 
             //anim
-            playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            if (!PauseMenu.isPaused)
+            {
+                playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            }
+            
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
@@ -294,7 +307,11 @@ public class PlayerController : MonoBehaviour
             attackDirection = false;
 
             //anim
-            playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            if (!PauseMenu.isPaused)
+            {
+                playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            }
+            
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
