@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class DontBeTheWolfManager : MonoBehaviour
 {
+    private GameObject[] playersUnsorted;
     public GameObject[] players;
     private PlayerController[] playersControllers;
 
@@ -30,7 +32,8 @@ public class DontBeTheWolfManager : MonoBehaviour
 
     private void Start()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
+        playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
+        players = playersUnsorted.OrderBy(go => go.name).ToArray();
 
         playersControllers = new PlayerController[players.Length];
         for (int i = 0; i < players.Length; i++)
@@ -55,14 +58,17 @@ public class DontBeTheWolfManager : MonoBehaviour
         if (playersControllers[wolfPlayerNumber].hitPlayer)
         {
             wolfPlayerNumber = playersControllers[wolfPlayerNumber].playerIDHit;
-            
+
             NewPlayerIsWolf(wolfPlayerNumber);
             SpawnWolfHead(wolfPlayerNumber);
         }
 
         IncrementPlayerScore(wolfPlayerNumber);
 
-        SortPlayers();
+        if (timerScript.miniGameTimer <= 0)
+        {
+            SortPlayers();
+        }
     }
 
     private void NewPlayerIsWolf(int playerNumber)
@@ -129,46 +135,43 @@ public class DontBeTheWolfManager : MonoBehaviour
 
     private void SortPlayers()
     {
-        if (timerScript.miniGameTimer <= 0)
+        float maxVal = 0;
+        int joueurValMax = 0;
+        if (scorePlayer0 > maxVal)
         {
-            float maxVal = 0;
-            int joueurValMax = 0;
-            if (scorePlayer0 > maxVal)
-            {
-                maxVal = scorePlayer0;
-                joueurValMax = 0;
-            }
-            if (scorePlayer1 > maxVal)
-            {
-                maxVal = scorePlayer1;
-                joueurValMax = 1;
-            }
-            if (scorePlayer2 > maxVal)
-            {
-                maxVal = scorePlayer2;
-                joueurValMax = 2;
-            }
-            if (scorePlayer3 > maxVal)
-            {
-                maxVal = scorePlayer3;
-                joueurValMax = 3;
-            }
+            maxVal = scorePlayer0;
+            joueurValMax = 0;
+        }
+        if (scorePlayer1 > maxVal)
+        {
+            maxVal = scorePlayer1;
+            joueurValMax = 1;
+        }
+        if (scorePlayer2 > maxVal)
+        {
+            maxVal = scorePlayer2;
+            joueurValMax = 2;
+        }
+        if (scorePlayer3 > maxVal)
+        {
+            maxVal = scorePlayer3;
+            joueurValMax = 3;
+        }
 
-            switch (joueurValMax)
-            {
-                case 0:
-                    GameManager.Instance.addScores(0, 10, 10, 10);
-                    break;
-                case 1:
-                    GameManager.Instance.addScores(10, 0, 10, 10);
-                    break;
-                case 2:
-                    GameManager.Instance.addScores(10, 10, 0, 10);
-                    break;
-                case 3:
-                    GameManager.Instance.addScores(10, 10, 10, 0);
-                    break;
-            }
+        switch (joueurValMax)
+        {
+            case 0:
+                GameManager.Instance.addScores(0, 10, 10, 10);
+                break;
+            case 1:
+                GameManager.Instance.addScores(10, 0, 10, 10);
+                break;
+            case 2:
+                GameManager.Instance.addScores(10, 10, 0, 10);
+                break;
+            case 3:
+                GameManager.Instance.addScores(10, 10, 10, 0);
+                break;
         }
     }
 }

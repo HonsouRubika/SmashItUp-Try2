@@ -134,6 +134,25 @@ public class GameManager : MonoBehaviour
         Debug.Log("ajout des scores");
     }
 
+    public void addSpecificScore(int player, int score)
+    {
+        switch (player)
+        {
+            case 1:
+                _scoreP1 += score;
+                break;
+            case 2:
+                _scoreP2 += score;
+                break;
+            case 3:
+                _scoreP3 += score;
+                break;
+            case 4:
+                _scoreP4 += score;
+                break;
+        }
+    }
+
     //renvoie le score d'un joueur en particulier
     public int getScorePlayer(int numJoueur)
     {
