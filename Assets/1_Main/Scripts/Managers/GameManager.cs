@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
 
     int _scoreP1 = 0, _scoreP2 = 0, _scoreP3 = 0, _scoreP4 = 0;
 
+    public bool isPaused;
+    public bool isShowingPlayers;
+
     void Awake()
     {
         #region Make Singleton
