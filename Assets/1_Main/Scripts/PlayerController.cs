@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     //public uint health; 
 
     //Player Controll Asignation
-    [System.NonSerialized] public uint playerID = 0;
+    /*[System.NonSerialized]*/ public uint playerID = 0;
 
     //Sprite et animation
     private Rigidbody2D rb;
@@ -364,7 +364,7 @@ public class PlayerController : MonoBehaviour
             attackDirection = true;
 
             //anim
-            if (!PauseMenu.isPaused)
+            if (!GameManager.Instance.isPaused)
             {
                 playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
             }
@@ -381,7 +381,7 @@ public class PlayerController : MonoBehaviour
             attackDirection = false;
 
             //anim
-            if (!PauseMenu.isPaused)
+            if (!GameManager.Instance.isPaused)
             {
                 playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
             }
