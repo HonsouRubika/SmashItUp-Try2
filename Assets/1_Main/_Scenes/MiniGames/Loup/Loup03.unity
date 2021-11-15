@@ -579,6 +579,7 @@ Transform:
   m_LocalPosition: {x: 7.157506, y: -23.403128, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1306612012}
   - {fileID: 2082527266}
   - {fileID: 1629069328}
   - {fileID: 1169043781}
@@ -1144,7 +1145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8601189962888810710, guid: f8bf031d41b81b34a9c2d278e75a1c0f, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8601189962888810710, guid: f8bf031d41b81b34a9c2d278e75a1c0f, type: 3}
       propertyPath: m_LocalScale.x
@@ -1594,7 +1595,7 @@ Transform:
   m_Children:
   - {fileID: 978338571}
   m_Father: {fileID: 444951299}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1169043782
 MonoBehaviour:
@@ -1830,15 +1831,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1306612011}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -7.157506, y: 23.403128, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1282406727}
   - {fileID: 924989316}
   - {fileID: 122767552}
   - {fileID: 1062034883}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 444951299}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1410014490
 PrefabInstance:
@@ -2146,7 +2147,7 @@ Transform:
   - {fileID: 598662813}
   - {fileID: 352976672}
   m_Father: {fileID: 444951299}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1727346182
 PrefabInstance:
@@ -2161,7 +2162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1646328300780651939, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5731845609180687474, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
       propertyPath: m_fontAsset
@@ -2449,5 +2450,5 @@ Transform:
   - {fileID: 1414287815}
   - {fileID: 54724183}
   m_Father: {fileID: 444951299}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
