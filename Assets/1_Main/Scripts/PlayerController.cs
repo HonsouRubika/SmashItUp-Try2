@@ -10,12 +10,13 @@ public class PlayerController : MonoBehaviour
     [Header("Déplacement")]
     public float speed = 3;
     public float jumpSpeed = 3;
+    public float movementJumpSpeed = 3;
 
     //TODO : GameMode avec Hp
     //public uint health; 
 
     //Player Controll Asignation
-    /*[System.NonSerialized]*/ public uint playerID = 0;
+    [System.NonSerialized] public uint playerID = 0;
 
     //Sprite et animation
     private Rigidbody2D rb;
@@ -57,7 +58,8 @@ public class PlayerController : MonoBehaviour
     public float hammerHitboxRange = 0.75f;
     public LayerMask enemyLayer, hammerHitboxLayer;
     //Force et Distance de projection
-    public float hammerProjection = 3;
+    public float hammerXProjection = 3;
+    public float hammerYProjection = 3;
     public float hammerBlockProjection = 1.5f;
     public float HammerSideProjectionMaxDistance = 1;
     private float startProjectedPostion = 0;
@@ -131,6 +133,10 @@ public class PlayerController : MonoBehaviour
             if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
             {
                 if (context.started) computeJump();
+                else if (context.canceled)
+                {
+                    startJumpPosition = transform.position.y - maxJumpHigh;
+                }
             }
         }
     }
@@ -229,7 +235,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //Appliquer une velocit�
                     //Attention: check la direction pour coord x
-                    enemy.GetComponent<PlayerController>().applyAttack(-hammerProjection, 0);
+                    enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
                     lastTimeAttackHit = Time.time;
                     playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
                 }
@@ -277,7 +283,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //Appliquer une velocit�
                     //Attention: check la direction pour coord x
-                    enemy.GetComponent<PlayerController>().applyAttack(hammerProjection, 0);
+                    enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                     lastTimeAttackHit = Time.time;
                     playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
                 }
@@ -311,7 +317,8 @@ public class PlayerController : MonoBehaviour
     void move()
     {
         //Gauche + Droite
-        if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR)
+        //au sol
+        if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && jumpState != JumpState.InFlight)
         {
             //gauche
             //rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -329,7 +336,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.Running(true);
             }
         }
-        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR)
+        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && jumpState != JumpState.InFlight)
         {
             //droite
             rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -341,6 +348,44 @@ public class PlayerController : MonoBehaviour
                 playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
             }
             
+            if (playerAnimScript.playerAnimator != null)
+            {
+                playerAnimScript.Running(true);
+            }
+        }
+        //movementJumpSpeed
+        else if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && jumpState == JumpState.InFlight)
+        {
+            //gauche
+            //rb.velocity = new Vector2(-speed, rb.velocity.y);
+            //TODO : temp de pause quand changement de direction lors d'un saut
+            //  Voir Bloc note "to do SUI" sur le bureau
+            rb.velocity = new Vector2(-movementJumpSpeed, rb.velocity.y);
+            attackDirection = true;
+
+            //anim
+            if (!PauseMenu.isPaused)
+            {
+                playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            }
+
+            if (playerAnimScript.playerAnimator != null)
+            {
+                playerAnimScript.Running(true);
+            }
+        }
+        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && jumpState == JumpState.InFlight)
+        {
+            //droite
+            rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
+            attackDirection = false;
+
+            //anim
+            if (!PauseMenu.isPaused)
+            {
+                playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            }
+
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
@@ -361,14 +406,14 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0);
             jumpHoldTimerActu = Time.time + jumpHoldTimer;
             isJumpHoldTimerSetted = true;
-            Debug.Log("hold");
+            //Debug.Log("hold");
         }
         if (!isFalling && Time.time >= jumpHoldTimerActu && (isJumpHoldTimerSetted && !isWallJumpHoldTimerSetted))
         {
             rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             isFalling = true;
             jumpHoldTimerActu = 0;
-            Debug.Log("max height");
+            //Debug.Log("max height");
         }
 
         //hauteur max wall jump
@@ -377,14 +422,14 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0);
             jumpHoldTimerActu = Time.time + jumpHoldTimer;
             isWallJumpHoldTimerSetted = true;
-            Debug.Log("hold wall jump");
+            //Debug.Log("hold wall jump");
         }
         if (!isFalling && Time.time >= jumpHoldTimerActu && isWallJumpHoldTimerSetted)
         {
             rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             isFalling = true;
             jumpHoldTimerActu = 0;
-            Debug.Log("max wall jump height");
+            //Debug.Log("max wall jump height");
         }
 
         //Colision Sol

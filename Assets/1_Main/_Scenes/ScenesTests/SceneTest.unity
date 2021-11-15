@@ -1196,7 +1196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2421639252033214298, guid: 06a2f0558b6d7db42b5a22209438098e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.3
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2421639252033214298, guid: 06a2f0558b6d7db42b5a22209438098e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13738,12 +13738,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 18
   jumpSpeed: 23
+  movementJumpSpeed: 18
   playerID: 0
   maxJumpHigh: 5
   maxWallJumpHigh: 5
   wallJumpSpeed: 12
   wallJumpMovementFreeze: 0.2
   numberMaxWalljump: 3
+  jumpHoldTimer: 0.1
   groundCheck: {fileID: 7488028258825302296}
   gripLeftCheck: {fileID: 8152114286371221889}
   gripRightCheck: {fileID: 6001717831236655073}
@@ -15437,12 +15439,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 18
   jumpSpeed: 23
+  movementJumpSpeed: 18
   playerID: 1
   maxJumpHigh: 5
   maxWallJumpHigh: 5
   wallJumpSpeed: 12
   wallJumpMovementFreeze: 0.2
   numberMaxWalljump: 3
+  jumpHoldTimer: 0.1
   groundCheck: {fileID: 5755017472996201727}
   gripLeftCheck: {fileID: 6419071071132030054}
   gripRightCheck: {fileID: 8898371178225840646}
