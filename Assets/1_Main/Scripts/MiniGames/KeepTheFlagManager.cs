@@ -30,7 +30,8 @@ public class KeepTheFlagManager : MonoBehaviour
     public bool player2HaveFlag = false;
     public bool player3HaveFlag = false;
     public float[] scorePlayers;
-    public float[] finalScores;
+    private float[] finalScores;
+    private int[] playersPosition;
 
     public int currentPlayerHaveFlag = 0;
 
@@ -48,10 +49,17 @@ public class KeepTheFlagManager : MonoBehaviour
             playersControllers[i] = players[i].GetComponent<PlayerController>();
         }
 
-        players[0].transform.position = tpPoints0.position;
+        finalScores = new float[players.Length];
+        playersPosition = new int[players.Length];
+        for (int i = 0; i < players.Length; i++)
+        {
+            playersPosition[i] = i;
+        }
+
+        /*players[0].transform.position = tpPoints0.position;
         players[1].transform.position = tpPoints1.position;
         players[2].transform.position = tpPoints2.position;
-        players[3].transform.position = tpPoints3.position;
+        players[3].transform.position = tpPoints3.position;*/
     }
 
     private void Update()
@@ -146,9 +154,16 @@ public class KeepTheFlagManager : MonoBehaviour
 
     private void SortPlayers()
     {
-        finalScores = scorePlayers.OrderBy(f => f).ToArray();
+        for (int i = 0; i < finalScores.Length; i++)
+        {
+            finalScores[i] = scorePlayers[i];
+        }
 
-        //GameManager.Instance.addScores(0, 10, 10, 10);
-        //GameManager.Instance.addSpecificScore(player, 10);
+        System.Array.Sort(finalScores, playersPosition);
+
+        GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, 10);
+        GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 8);
+        GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, 6);
+        GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 4] + 1, 4);
     }
 }
