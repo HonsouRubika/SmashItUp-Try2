@@ -442,26 +442,25 @@ public class PlayerController : MonoBehaviour
         {
             if (Time.time > shaitanerieDUnityActu)
             {
+                //le perso touche le sol
+                jumpState = JumpState.Grounded;
+                startJumpPosition = transform.position.y;
+                numberMaxWalljumpActu = 0; //reset nb de walljump
+                isFalling = false;
+                isJumpHoldTimerSetted = false;
+                isWallJumpHoldTimerSetted = false;
+                jumpHoldTimerActu = 0;
+                coyoteTimeCheck = true;
+                Debug.Log("t niquer");
+                //reset var for walljump
+                wallJumpMovementFreezeActuL = Time.time;
+                wallJumpMovementFreezeActuR = Time.time;
 
-            }
-            //le perso touche le sol
-            jumpState = JumpState.Grounded;
-            startJumpPosition = transform.position.y;
-            numberMaxWalljumpActu = 0; //reset nb de walljump
-            isFalling = false;
-            isJumpHoldTimerSetted = false;
-            isWallJumpHoldTimerSetted = false;
-            jumpHoldTimerActu = 0;
-            coyoteTimeCheck = true;
-            Debug.Log("t niquer");
-            //reset var for walljump
-            wallJumpMovementFreezeActuL = Time.time;
-            wallJumpMovementFreezeActuR = Time.time;
-
-            //anim
-            if (playerAnimScript.playerAnimator != null)
-            {
-                playerAnimScript.Jumping(false);
+                //anim
+                if (playerAnimScript.playerAnimator != null)
+                {
+                    playerAnimScript.Jumping(false);
+                }
             }
         }
         else
