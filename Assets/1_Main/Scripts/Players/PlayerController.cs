@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private float jumpHoldTimerActu = 0;
     private bool isJumpHoldTimerSetted = false;
     private bool isWallJumpHoldTimerSetted = false;
+    private bool coyoteTimeCheck = false;
 
 
     //Colision checks
@@ -444,6 +445,8 @@ public class PlayerController : MonoBehaviour
             isJumpHoldTimerSetted = false;
             isWallJumpHoldTimerSetted = false;
             jumpHoldTimerActu = 0;
+            coyoteTimeCheck = true;
+            //Debug.Log("touche le sol");
 
             //reset var for walljump
             wallJumpMovementFreezeActuL = Time.time;
@@ -532,13 +535,15 @@ public class PlayerController : MonoBehaviour
     void computeJump()
     {
         //Saut + wall jump
-        if (jumpState == JumpState.Grounded && !isAttackRunningL && !isAttackRunningR)
+        if ((jumpState == JumpState.Grounded || (jumpState == JumpState.InFlight && coyoteTimeCheck == true)) && !isAttackRunningL && !isAttackRunningR)
         {
+            //Coyot time check
+            coyoteTimeCheck = false;
+
             //Debug.Log("Jump");
             rb.velocity = new Vector2(0, jumpSpeed);
             jumpState = JumpState.InFlight;
             startJumpPosition = transform.position.y;
-
             //anim
             playerAnimScript.Jumping(true);
         }
