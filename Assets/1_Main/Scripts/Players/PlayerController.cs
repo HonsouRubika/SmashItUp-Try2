@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     private bool isJumpHoldTimerSetted = false;
     private bool isWallJumpHoldTimerSetted = false;
     private bool coyoteTimeCheck = false;
+    private float shaitanerieDUnity = 1f;
+    private float shaitanerieDUnityActu = 0;
 
 
     //Colision checks
@@ -92,6 +94,7 @@ public class PlayerController : MonoBehaviour
     //Animation
     private PlayerAnim playerAnimScript;
     private Transform playerAnim;
+
 
     void Start()
     {
@@ -434,9 +437,13 @@ public class PlayerController : MonoBehaviour
         }
 
         //Colision Sol
-        if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Plateform")))
+        if ((Physics2D.Linecast(transform.position, groundCheck.transform.position, 1 << LayerMask.NameToLayer("Ground"))) ||
+            (Physics2D.Linecast(transform.position, groundCheck.transform.position, 1 << LayerMask.NameToLayer("Plateform"))))
         {
+            if (Time.time > shaitanerieDUnityActu)
+            {
+
+            }
             //le perso touche le sol
             jumpState = JumpState.Grounded;
             startJumpPosition = transform.position.y;
@@ -446,8 +453,7 @@ public class PlayerController : MonoBehaviour
             isWallJumpHoldTimerSetted = false;
             jumpHoldTimerActu = 0;
             coyoteTimeCheck = true;
-            //Debug.Log("touche le sol");
-
+            Debug.Log("t niquer");
             //reset var for walljump
             wallJumpMovementFreezeActuL = Time.time;
             wallJumpMovementFreezeActuR = Time.time;
@@ -462,6 +468,7 @@ public class PlayerController : MonoBehaviour
         {
             jumpState = JumpState.InFlight;
         }
+        //Debug.Log(" 1 from " + transform.position + " to " + groundCheck.transform.position);
 
         //Colision Side GripCheck
         if (Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
@@ -534,15 +541,18 @@ public class PlayerController : MonoBehaviour
 
     void computeJump()
     {
-        //Saut + wall jump
+        Debug.Log("JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
+
         if ((jumpState == JumpState.Grounded || (jumpState == JumpState.InFlight && coyoteTimeCheck == true)) && !isAttackRunningL && !isAttackRunningR)
         {
             //Coyot time check
             coyoteTimeCheck = false;
+            //block le check du ground
+            shaitanerieDUnityActu = Time.time + shaitanerieDUnity;
 
             //Debug.Log("Jump");
             rb.velocity = new Vector2(0, jumpSpeed);
-            jumpState = JumpState.InFlight;
+            //jumpState = JumpState.InFlight;
             startJumpPosition = transform.position.y;
             //anim
             playerAnimScript.Jumping(true);
@@ -551,10 +561,12 @@ public class PlayerController : MonoBehaviour
         {
             //jump to the left w/ 45� angle
             rb.velocity = new Vector2(-wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
-            jumpState = JumpState.InFlight;
+            //jumpState = JumpState.InFlight;
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
             numberMaxWalljumpActu++;
+            //block le check du ground
+            shaitanerieDUnityActu = Time.time + shaitanerieDUnity;
 
             //freeze movement for small time
             wallJumpMovementFreezeActuR = wallJumpMovementFreeze + Time.time;
@@ -563,14 +575,17 @@ public class PlayerController : MonoBehaviour
         {
             //jump to the right w/ 45� angle
             rb.velocity = new Vector2(wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
-            jumpState = JumpState.InFlight;
+            //jumpState = JumpState.InFlight;
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
             numberMaxWalljumpActu++;
-
+            //block le check du ground
+            shaitanerieDUnityActu = Time.time + 10;
             //freeze movement for small time
             wallJumpMovementFreezeActuL = wallJumpMovementFreeze + Time.time;
         }
+
+        Debug.Log(" 2) JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
     }
 
     void computeAttack()
