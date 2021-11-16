@@ -5,6 +5,13 @@ using TMPro;
 
 public class Mole : MonoBehaviour
 {
+    private WhackAMoleManager whackAWholeScript;
+    private Score scoreScript;
+
+    [HideInInspector] public CheckPlayerIsClose currentTpScript;
+    [HideInInspector] public float moleTimeStay;
+    private float timer;
+
     [Header("Hammer")]
     public LayerMask hammerLayer;
 
@@ -15,7 +22,6 @@ public class Mole : MonoBehaviour
     private float moleColliderBoundsY;
 
     [Header("Score")]
-    private Score scoreScript;
     public int pointsToAdd = 1;
     public GameObject floatingPoint;
     public Color player0Color;
@@ -27,7 +33,8 @@ public class Mole : MonoBehaviour
 
     private void Start()
     {
-        scoreScript = transform.parent.GetComponentInParent<WhackAMoleManager>().scoreScript;
+        whackAWholeScript = transform.parent.GetComponentInParent<WhackAMoleManager>();
+        scoreScript = whackAWholeScript.scoreScript;
 
         moleCollider = GetComponent<BoxCollider2D>();
 
@@ -53,22 +60,41 @@ public class Mole : MonoBehaviour
                 case 0:
                     floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().color = player0Color;
                     scoreScript.AddScore(pointsToAdd, 0, 0, 0);
+                    whackAWholeScript.scorePlayers[0]++;
                     break;
                 case 1:
                     floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().color = player1Color;
                     scoreScript.AddScore(0, pointsToAdd, 0, 0);
+                    whackAWholeScript.scorePlayers[1]++;
                     break;
                 case 2:
                     floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().color = player2Color;
                     scoreScript.AddScore(0, 0, pointsToAdd, 0);
+                    whackAWholeScript.scorePlayers[2]++;
                     break;
                 case 3:
                     floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().color = player3Color;
                     scoreScript.AddScore(0, 0, 0, pointsToAdd);
+                    whackAWholeScript.scorePlayers[3]++;
                     break;
             }
 
             DestroyCrate();
+            whackAWholeScript.MoleInScene--;
+            //whackAWholeScript.moleDestroyed++;
+            currentTpScript.alreadyMole = false;
+        }
+
+        if (timer <= moleTimeStay)
+        {
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            DestroyCrate();
+            whackAWholeScript.MoleInScene--;
+            //whackAWholeScript.moleDestroyed++;
+            currentTpScript.alreadyMole = false;
         }
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CheckPlayerIsClose : MonoBehaviour
 {
     public bool playerIsClose = false;
+    public bool alreadyMole = false;
 
     [Header("Hammer")]
     public LayerMask playerLayer;

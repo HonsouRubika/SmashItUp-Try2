@@ -56,10 +56,10 @@ public class KeepTheFlagManager : MonoBehaviour
             playersPosition[i] = i;
         }
 
-        /*players[0].transform.position = tpPoints0.position;
+        players[0].transform.position = tpPoints0.position;
         players[1].transform.position = tpPoints1.position;
         players[2].transform.position = tpPoints2.position;
-        players[3].transform.position = tpPoints3.position;*/
+        players[3].transform.position = tpPoints3.position;
     }
 
     private void Update()
