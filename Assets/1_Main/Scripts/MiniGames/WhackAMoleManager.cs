@@ -8,11 +8,8 @@ public class WhackAMoleManager : MonoBehaviour
     private GameObject[] playersUnsorted;
     public GameObject[] players;
 
-    [Header("TP Points")]
-    public Transform tpPoints0;
-    public Transform tpPoints1;
-    public Transform tpPoints2;
-    public Transform tpPoints3;
+    public List<Transform> tpPoints = new List<Transform>();
+    private List<int> randomNumbers = new List<int>();
 
     [Space]
     public Transform TpFolder;
@@ -52,11 +49,6 @@ public class WhackAMoleManager : MonoBehaviour
             playersPosition[i] = i;
         }
 
-        /*players[0].transform.position = tpPoints0.position;
-        players[1].transform.position = tpPoints1.position;
-        players[2].transform.position = tpPoints2.position;
-        players[3].transform.position = tpPoints3.position;*/
-
         for (int i = 0; i < TpFolder.childCount; i++)
         {
             if (TpFolder.GetChild(i).GetComponent<CheckPlayerIsClose>() != null)
@@ -69,6 +61,8 @@ public class WhackAMoleManager : MonoBehaviour
         {
             spawnMole();
         }
+
+        SpawnPlayerRandomly();
     }
 
     private void Update()
@@ -135,5 +129,36 @@ public class WhackAMoleManager : MonoBehaviour
         GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 8);
         GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, 6);
         GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 4] + 1, 4);
+    }
+
+    private void SpawnPlayerRandomly()
+    {
+        randomNumbers = GenerateRandomNumbers(4, 0, 4);
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i].transform.position = tpPoints[randomNumbers[i]].position;
+        }
+    }
+
+    private List<int> GenerateRandomNumbers(int count, int minValue, int maxValue)
+    {
+        //maxValue is exclusive
+
+        List<int> possibleNumbers = new List<int>();
+        List<int> chosenNumbers = new List<int>();
+
+        for (int i = minValue; i < maxValue; i++)
+        {
+            possibleNumbers.Add(i);
+        }
+            
+        while (chosenNumbers.Count < count)
+        {
+            int position = Random.Range(0, possibleNumbers.Count);
+            chosenNumbers.Add(possibleNumbers[position]);
+            possibleNumbers.RemoveAt(position);
+        }
+        return chosenNumbers;
     }
 }
