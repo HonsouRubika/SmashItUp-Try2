@@ -35,4 +35,14 @@ public class PlayerAnim : MonoBehaviour
     {
         playerAnimator.SetTrigger("isAttacking");
     }
+
+    public void WallSlide(bool wallRide)
+    {
+        playerAnimator.SetBool("isWallSliding", wallRide);
+    }
+
+    public void Falling(bool fall)
+    {
+        playerAnimator.SetBool("isFalling", fall);
+    }
 }
