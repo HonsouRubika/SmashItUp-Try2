@@ -323,7 +323,7 @@ public class PlayerController : MonoBehaviour
     {
         //Gauche + Droite
         //au sol
-        if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && jumpState != JumpState.InFlight)
+        if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //gauche
             //rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -341,7 +341,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.Running(true);
             }
         }
-        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && jumpState != JumpState.InFlight)
+        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //droite
             rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -359,7 +359,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         //movementJumpSpeed
-        else if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && jumpState == JumpState.InFlight)
+        else if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
             //gauche
             //rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -379,7 +379,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.Running(true);
             }
         }
-        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && jumpState == JumpState.InFlight)
+        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
             //droite
             rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
@@ -396,7 +396,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.Running(true);
             }
         }
-        else if (jumpState != JumpState.InFlight)
+        else if (jumpState == JumpState.Grounded)
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
 
@@ -404,6 +404,12 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.Running(false);
             playerAnimScript.Idle(true);
         }
+        /* DEBUG
+        else if (isGrippingLeft || isGrippingLeft)
+        {
+            Debug.Log("le perso doit glisser du mur");
+        }
+        */
 
         //Hauteur max
         if(transform.position.y > startJumpPosition + maxJumpHigh && !isJumpHoldTimerSetted)
@@ -411,14 +417,12 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0);
             jumpHoldTimerActu = Time.time + jumpHoldTimer;
             isJumpHoldTimerSetted = true;
-            //Debug.Log("hold");
         }
         if (jumpState != JumpState.Falling && Time.time >= jumpHoldTimerActu && (isJumpHoldTimerSetted && !isWallJumpHoldTimerSetted))
         {
             rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             jumpState = JumpState.Falling;
             jumpHoldTimerActu = 0;
-            //Debug.Log("max height");
         }
 
         //hauteur max wall jump
@@ -427,14 +431,12 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0);
             jumpHoldTimerActu = Time.time + jumpHoldTimer;
             isWallJumpHoldTimerSetted = true;
-            //Debug.Log("hold wall jump");
         }
         if (jumpState != JumpState.Falling && Time.time >= jumpHoldTimerActu && isWallJumpHoldTimerSetted)
         {
             rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             jumpState = JumpState.Falling;
             jumpHoldTimerActu = 0;
-            //Debug.Log("max wall jump height");
         }
 
         //Colision Sol
@@ -464,7 +466,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            jumpState = JumpState.InFlight;
+            if(jumpState == JumpState.Grounded) jumpState = JumpState.InFlight;
         }
         //Debug.Log(" 1 from " + transform.position + " to " + groundCheck.transform.position);
 
@@ -539,7 +541,8 @@ public class PlayerController : MonoBehaviour
 
     void computeJump()
     {
-        Debug.Log("JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
+        //Debug.Log("JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
+        //Debug.Log(" Grip left : " + isGrippingLeft + ", right : " + isGrippingRight);
 
         if ((jumpState == JumpState.Grounded || (jumpState != JumpState.Grounded && coyoteTimeCheck == true)) && !isAttackRunningL && !isAttackRunningR)
         {
@@ -583,7 +586,7 @@ public class PlayerController : MonoBehaviour
             wallJumpMovementFreezeActuL = wallJumpMovementFreeze + Time.time;
         }
 
-        Debug.Log(" 2) JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
+        //Debug.Log(" 2) JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
     }
 
     void computeAttack()
