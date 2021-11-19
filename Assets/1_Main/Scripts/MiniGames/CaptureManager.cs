@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using System.Linq;
 
 public class CaptureManager : MonoBehaviour
 {
+    private GameObject[] playersUnsorted;
+    public GameObject[] players;
+
     public int scorePlayer0 = 0;
     public int scorePlayer1 = 0;
     public int scorePlayer2 = 0;
@@ -17,36 +20,19 @@ public class CaptureManager : MonoBehaviour
     public Timer timerScript;
     private bool zoneSound = false;
 
-    [Header("TP Points")]
-    public Transform tpPoints0;
-    public Transform tpPoints1;
-    public Transform tpPoints2;
-    public Transform tpPoints3;
+    public List<Transform> tpPoints = new List<Transform>();
+    private List<int> randomNumbers = new List<int>();
 
     private void Start()
     {
+        playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
+        players = playersUnsorted.OrderBy(go => go.name).ToArray();
+
         zoneScript = GetComponentInChildren<Zone>();
 
         captureSoundScript = GetComponentInChildren<CaptureSound>();
 
-        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
-        {
-            switch (player.GetComponent<PlayerController>().playerID)
-            {
-                case 0:
-                    player.transform.position = tpPoints0.position;
-                    break;
-                case 1:
-                    player.transform.position = tpPoints1.position;
-                    break;
-                case 2:
-                    player.transform.position = tpPoints2.position;
-                    break;
-                case 3:
-                    player.transform.position = tpPoints3.position;
-                    break;
-            }
-        }
+        SpawnPlayerRandomly();
     }
 
     private void Update()
@@ -193,5 +179,36 @@ public class CaptureManager : MonoBehaviour
             captureSoundScript.PlayerOutZone();
             zoneSound = false;
         }
+    }
+
+    private void SpawnPlayerRandomly()
+    {
+        randomNumbers = GenerateRandomNumbers(4, 0, 4);
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i].transform.position = tpPoints[randomNumbers[i]].position;
+        }
+    }
+
+    private List<int> GenerateRandomNumbers(int count, int minValue, int maxValue)
+    {
+        //maxValue is exclusive
+
+        List<int> possibleNumbers = new List<int>();
+        List<int> chosenNumbers = new List<int>();
+
+        for (int i = minValue; i < maxValue; i++)
+        {
+            possibleNumbers.Add(i);
+        }
+
+        while (chosenNumbers.Count < count)
+        {
+            int position = Random.Range(0, possibleNumbers.Count);
+            chosenNumbers.Add(possibleNumbers[position]);
+            possibleNumbers.RemoveAt(position);
+        }
+        return chosenNumbers;
     }
 }

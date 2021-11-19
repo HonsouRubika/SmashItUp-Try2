@@ -7,7 +7,12 @@ public class ContaminationManager : MonoBehaviour
 {
     private GameObject[] playersUnsorted;
     public GameObject[] players;
+    private List<GameObject> playersNotWolf;
     private PlayerController[] playersControllers;
+
+    public Transform wolfTpPoint;
+    public List<Transform> tpPoints = new List<Transform>();
+    private List<int> randomNumbers = new List<int>();
 
     [Header("Who is Wolf ?")]
     public bool player0IsWolf = false;
@@ -35,6 +40,7 @@ public class ContaminationManager : MonoBehaviour
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
+        playersNotWolf = players.ToList();
 
         wolfHeadInstances = new GameObject[players.Length];
 
@@ -45,11 +51,14 @@ public class ContaminationManager : MonoBehaviour
         }
 
         ChooseRandomWolf();
+        SpawnPlayerRandomly();
     }
 
     private void ChooseRandomWolf()
     {
         wolfPlayerNumber = Random.Range(0, players.Length);
+
+        playersNotWolf.Remove(players[wolfPlayerNumber]);
 
         NewPlayerIsWolf(wolfPlayerNumber);
 
@@ -160,5 +169,38 @@ public class ContaminationManager : MonoBehaviour
                     break;
             }
         }     
+    }
+
+    private void SpawnPlayerRandomly()
+    {
+        randomNumbers = GenerateRandomNumbers(3, 0, 3);
+
+        for (int i = 0; i < playersNotWolf.Count; i++)
+        {
+            playersNotWolf[i].transform.position = tpPoints[randomNumbers[i]].position;
+        }
+
+        players[wolfPlayerNumber].transform.position = wolfTpPoint.position;
+    }
+
+    private List<int> GenerateRandomNumbers(int count, int minValue, int maxValue)
+    {
+        //maxValue is exclusive
+
+        List<int> possibleNumbers = new List<int>();
+        List<int> chosenNumbers = new List<int>();
+
+        for (int i = minValue; i < maxValue; i++)
+        {
+            possibleNumbers.Add(i);
+        }
+
+        while (chosenNumbers.Count < count)
+        {
+            int position = Random.Range(0, possibleNumbers.Count);
+            chosenNumbers.Add(possibleNumbers[position]);
+            possibleNumbers.RemoveAt(position);
+        }
+        return chosenNumbers;
     }
 }
