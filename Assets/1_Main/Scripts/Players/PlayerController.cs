@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     private float startWallJumpPosition;
     public float maxWallJumpHigh = 1;
     public float wallJumpSpeed = 1;
-    private JumpState jumpState = JumpState.InFlight;
+    public JumpState jumpState = JumpState.InFlight;
     public float wallJumpMovementFreeze = 0.2f;
     private float wallJumpMovementFreezeActuL, wallJumpMovementFreezeActuR;
     public float numberMaxWalljump = 2;
@@ -422,6 +422,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             jumpState = JumpState.Falling;
+            playerAnimScript.Falling(true);
             jumpHoldTimerActu = 0;
         }
 
@@ -436,6 +437,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             jumpState = JumpState.Falling;
+            playerAnimScript.Falling(true);
             jumpHoldTimerActu = 0;
         }
 
@@ -447,6 +449,7 @@ public class PlayerController : MonoBehaviour
             {
                 //le perso touche le sol
                 jumpState = JumpState.Grounded;
+                playerAnimScript.Falling(false);
                 startJumpPosition = transform.position.y;
                 numberMaxWalljumpActu = 0; //reset nb de walljump
                 isJumpHoldTimerSetted = false;
@@ -466,7 +469,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if(jumpState == JumpState.Grounded) jumpState = JumpState.InFlight;
+            if(jumpState == JumpState.Grounded)
+            {
+                jumpState = JumpState.InFlight;
+            }        
         }
         //Debug.Log(" 1 from " + transform.position + " to " + groundCheck.transform.position);
 
