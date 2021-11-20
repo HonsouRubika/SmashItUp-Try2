@@ -36,6 +36,8 @@ public class SoundManager : MonoBehaviour
     public AudioSource voiceSource;
     public AudioSource zoneSource;
 
+    private bool fadeOut = false;
+
     #endregion
 
     void Awake()
@@ -53,6 +55,7 @@ public class SoundManager : MonoBehaviour
         #endregion
     }
 
+    #region SetVolume
     public void SetVolumeGlobal(float vol)
     {
         globalDefaultVolume = vol;
@@ -72,13 +75,37 @@ public class SoundManager : MonoBehaviour
     {
         voiceDefaultVolume = vol;
     }
+    #endregion
 
+    #region FunctionsPlaySound
     // Start playing a given music.
     public void PlayMusic(AudioClip music, float volume = 1f)
     {
         musicSource.clip = music;
         musicSource.volume = (musicDefaultVolume * volume) * globalDefaultVolume;
         musicSource.Play();
+
+        return;
+    }
+
+    // Fade in a given music.
+    public void FadeInMusic(AudioClip music, float volume = 1f, float fadeTime = 1f)
+    {
+        StopAllCoroutines();
+        fadeOut = false;
+
+        musicSource.Stop();
+        StartCoroutine(FadeIn(music, volume, fadeTime));
+
+        return;
+    }
+
+    public void FadeOutMusic(float fadeTime = 1f)
+    {
+        StopAllCoroutines();
+        fadeOut = false;
+
+        StartCoroutine(FadeOut(fadeTime));
 
         return;
     }
@@ -138,4 +165,38 @@ public class SoundManager : MonoBehaviour
 
         return;
     }
+    #endregion
+
+    #region Coroutine
+    IEnumerator FadeIn(AudioClip music, float volume, float fadeTime)
+    {
+        PlayMusic(music, volume);
+        musicSource.volume = 0f;
+
+        float currentTime = 0;
+        while (currentTime < fadeTime)
+        {
+            currentTime += Time.deltaTime;
+            musicSource.volume = Mathf.Lerp(0, (musicDefaultVolume * volume) * globalDefaultVolume, currentTime / fadeTime);
+
+            yield return null;
+        }
+    }
+
+    IEnumerator FadeOut(float fadeTime)
+    {
+        fadeOut = true;
+        float currentVolume = musicSource.volume;
+        float currentTime = 0;
+        while (currentTime < fadeTime)
+        {
+            currentTime += Time.unscaledDeltaTime;
+            musicSource.volume = Mathf.Lerp(currentVolume, 0, currentTime / fadeTime);
+
+            yield return null;
+        }
+        musicSource.Stop();
+        fadeOut = false;
+    }
+    #endregion
 }
