@@ -624,53 +624,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1 &438428276
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 438428277}
-  - component: {fileID: 438428278}
-  m_Layer: 0
-  m_Name: Sound
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &438428277
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 438428276}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1696861608}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &438428278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 438428276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d7a902e489f5a1408ef61ba3e0260be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wolfScream: {fileID: 8300000, guid: 92f60b88ae9b30b4e99124fae4051360, type: 3}
-  screamVolume: 0.5
-  wolfAttack: {fileID: 8300000, guid: 20d86537b2b0fd34180711ccec435194, type: 3}
-  attackVolume: 0.5
 --- !u!1001 &478027538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1300,6 +1253,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2421639252033214298, guid: bd82a6960994ff8458f7a8036bf3ab5e, type: 3}
   m_PrefabInstance: {fileID: 1003340891}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1021049405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1021049406}
+  - component: {fileID: 1021049407}
+  m_Layer: 0
+  m_Name: Sound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1021049406
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021049405}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1317714882}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1021049407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021049405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d7a902e489f5a1408ef61ba3e0260be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wolfScream: {fileID: 8300000, guid: 92f60b88ae9b30b4e99124fae4051360, type: 3}
+  screamVolume: 0.5
+  wolfAttack: {fileID: 8300000, guid: 20d86537b2b0fd34180711ccec435194, type: 3}
+  attackVolume: 0.5
 --- !u!1001 &1046319688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1732,6 +1732,65 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2421639252033214298, guid: bd82a6960994ff8458f7a8036bf3ab5e, type: 3}
   m_PrefabInstance: {fileID: 1207709884}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1317714880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1317714882}
+  - component: {fileID: 1317714881}
+  m_Layer: 0
+  m_Name: --DontBeTheWolfManager--
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1317714881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317714880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11bb31ed7d37b094a96425f6662f6a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players: []
+  wolfTpPoint: {fileID: 0}
+  tpPoints: []
+  player0IsWolf: 0
+  scorePlayer0: 0
+  player1IsWolf: 0
+  scorePlayer1: 0
+  player2IsWolf: 0
+  scorePlayer2: 0
+  player3IsWolf: 0
+  scorePlayer3: 0
+  wolfHeadPrefab: {fileID: 6889850006632513405, guid: 40878748e2f6be44aaac33fdc710c9b9, type: 3}
+  positionYHead: 1.3
+  scoreScript: {fileID: 0}
+  timerScript: {fileID: 0}
+--- !u!4 &1317714882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317714880}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1021049406}
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1558278830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1916,68 +1975,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8601189962888810710, guid: f8bf031d41b81b34a9c2d278e75a1c0f, type: 3}
   m_PrefabInstance: {fileID: 1596192730}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1696861607
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1696861608}
-  - component: {fileID: 1696861609}
-  m_Layer: 0
-  m_Name: Wolf_Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1696861608
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696861607}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.157506, y: 23.403128, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 438428277}
-  m_Father: {fileID: 1797863080}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1696861609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696861607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4caa7c591f158fa40aa653be916612bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wolfScore: {fileID: 1886367661}
-  player0isWolf: 0
-  player0Sprite: {fileID: 0}
-  player1isWolf: 0
-  player1Sprite: {fileID: 0}
-  player2isWolf: 0
-  player2Sprite: {fileID: 0}
-  player3isWolf: 0
-  player3Sprite: {fileID: 0}
-  wolfColor: {r: 0.990566, g: 0.15312773, b: 0.08877712, a: 1}
-  p0: {fileID: 0}
-  p1: {fileID: 0}
-  p2: {fileID: 0}
-  p3: {fileID: 0}
-  tpPoints0: {fileID: 793332947}
-  tpPoints1: {fileID: 1786354885}
-  tpPoints2: {fileID: 797693259}
-  tpPoints3: {fileID: 2028523262}
 --- !u!1 &1743541699
 GameObject:
   m_ObjectHideFlags: 0
@@ -2131,7 +2128,6 @@ Transform:
   - {fileID: 1875635503}
   - {fileID: 2107483341}
   - {fileID: 486665499775096828}
-  - {fileID: 1696861608}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2283,17 +2279,6 @@ Transform:
   m_Father: {fileID: 1797863080}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1886367661 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4151503575342458534, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
-  m_PrefabInstance: {fileID: 904351660}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2794cd33c311db24a89c01ca87daedc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1920965378
 PrefabInstance:
   m_ObjectHideFlags: 0

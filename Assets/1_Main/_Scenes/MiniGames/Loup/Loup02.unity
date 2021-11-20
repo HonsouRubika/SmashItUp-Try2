@@ -446,17 +446,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
---- !u!114 &114705303 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4151503575342458534, guid: 4ccb029ce76c77e43bc802b4247b4c27, type: 3}
-  m_PrefabInstance: {fileID: 114705302}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2794cd33c311db24a89c01ca87daedc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &115171963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -672,7 +661,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &266325063
+--- !u!1 &301682364
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -680,60 +669,57 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 266325064}
-  - component: {fileID: 266325065}
+  - component: {fileID: 301682366}
+  - component: {fileID: 301682365}
   m_Layer: 0
-  m_Name: Wolf_Manager
+  m_Name: --DontBeTheWolfManager--
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &266325064
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266325063}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.157506, y: 23.403128, z: 138.58751}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1864754093}
-  m_Father: {fileID: 1522849989}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &266325065
+--- !u!114 &301682365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266325063}
+  m_GameObject: {fileID: 301682364}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4caa7c591f158fa40aa653be916612bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 11bb31ed7d37b094a96425f6662f6a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wolfScore: {fileID: 114705303}
-  player0isWolf: 0
-  player0Sprite: {fileID: 0}
-  player1isWolf: 0
-  player1Sprite: {fileID: 0}
-  player2isWolf: 0
-  player2Sprite: {fileID: 0}
-  player3isWolf: 0
-  player3Sprite: {fileID: 0}
-  wolfColor: {r: 0.990566, g: 0.15312773, b: 0.08877712, a: 1}
-  p0: {fileID: 0}
-  p1: {fileID: 0}
-  p2: {fileID: 0}
-  p3: {fileID: 0}
-  tpPoints0: {fileID: 946736237}
-  tpPoints1: {fileID: 1976896807}
-  tpPoints2: {fileID: 1766383233}
-  tpPoints3: {fileID: 934852987}
+  players: []
+  wolfTpPoint: {fileID: 0}
+  tpPoints: []
+  player0IsWolf: 0
+  scorePlayer0: 0
+  player1IsWolf: 0
+  scorePlayer1: 0
+  player2IsWolf: 0
+  scorePlayer2: 0
+  player3IsWolf: 0
+  scorePlayer3: 0
+  wolfHeadPrefab: {fileID: 6889850006632513405, guid: 40878748e2f6be44aaac33fdc710c9b9, type: 3}
+  positionYHead: 1.3
+  scoreScript: {fileID: 0}
+  timerScript: {fileID: 0}
+--- !u!4 &301682366
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301682364}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1148637428}
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &387293206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1612,6 +1598,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2421639252033214298, guid: bd82a6960994ff8458f7a8036bf3ab5e, type: 3}
   m_PrefabInstance: {fileID: 1081092928}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1148637427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1148637428}
+  - component: {fileID: 1148637429}
+  m_Layer: 0
+  m_Name: Sound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1148637428
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148637427}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 301682366}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1148637429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148637427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d7a902e489f5a1408ef61ba3e0260be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wolfScream: {fileID: 8300000, guid: 92f60b88ae9b30b4e99124fae4051360, type: 3}
+  screamVolume: 0.5
+  wolfAttack: {fileID: 8300000, guid: 20d86537b2b0fd34180711ccec435194, type: 3}
+  attackVolume: 0.5
 --- !u!1001 &1269746043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1713,7 +1746,6 @@ Transform:
   - {fileID: 1745962295}
   - {fileID: 2015966498}
   - {fileID: 713961552}
-  - {fileID: 266325064}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1987,53 +2019,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1249070900062698812, guid: 0d15be481360b3849a79a1a4a07c8e9f, type: 3}
   m_PrefabInstance: {fileID: 1766383232}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1864754092
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1864754093}
-  - component: {fileID: 1864754094}
-  m_Layer: 0
-  m_Name: Sound
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1864754093
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1864754092}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 266325064}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1864754094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1864754092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d7a902e489f5a1408ef61ba3e0260be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wolfScream: {fileID: 8300000, guid: 92f60b88ae9b30b4e99124fae4051360, type: 3}
-  screamVolume: 0.5
-  wolfAttack: {fileID: 8300000, guid: 20d86537b2b0fd34180711ccec435194, type: 3}
-  attackVolume: 0.5
 --- !u!1001 &1951305743
 PrefabInstance:
   m_ObjectHideFlags: 0
