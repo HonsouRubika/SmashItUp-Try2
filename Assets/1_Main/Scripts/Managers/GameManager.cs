@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Initialisation des gameMode pour la partie");
         _nbManches = nbManches;
         _selectedGameModes = new int[nbManches];
+        _teamCompo = new int[nbManches];
 
         _scoreP1 = 0;
         _scoreP2 = 0;
