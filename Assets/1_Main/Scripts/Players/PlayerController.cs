@@ -409,12 +409,8 @@ public class PlayerController : MonoBehaviour
         }
         else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling)
         {
-            Debug.Log("le perso doit glisser du mur");
+            Debug.Log("le perso doit glisser du mur : " + rb.velocity.y);
             rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
-        }
-        else if (isGrippingLeft || isGrippingRight)
-        {
-            Debug.Log("le perso doit glisser du mur");
         }
 
         //Hauteur max
@@ -478,11 +474,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if(jumpState == JumpState.Grounded && rb.velocity.y < 0)
+            if(rb.velocity.y < 0)
             {
                 jumpState = JumpState.Falling;
             }
-            else // ne change pas si jumpState = JumpState.Falling
+            else if (jumpState == JumpState.Grounded) // ne change pas si jumpState = JumpState.Falling
             {
                 jumpState = JumpState.InFlight;
             }
