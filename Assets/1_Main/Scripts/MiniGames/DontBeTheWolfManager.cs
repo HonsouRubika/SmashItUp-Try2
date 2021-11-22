@@ -9,6 +9,7 @@ public class DontBeTheWolfManager : MonoBehaviour
     public GameObject[] players;
     private List<GameObject> playersNotWolf;
     private PlayerController[] playersControllers;
+    private WolfSound WolfSoundScript;
 
     public Transform wolfTpPoint;
     public List<Transform> tpPoints = new List<Transform>();
@@ -40,6 +41,7 @@ public class DontBeTheWolfManager : MonoBehaviour
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
         playersNotWolf = players.ToList();
+        WolfSoundScript = GetComponentInChildren<WolfSound>();
 
         playersControllers = new PlayerController[players.Length];
         for (int i = 0; i < players.Length; i++)
@@ -60,6 +62,7 @@ public class DontBeTheWolfManager : MonoBehaviour
         NewPlayerIsWolf(wolfPlayerNumber);
 
         SpawnWolfHead(wolfPlayerNumber);
+        WolfSoundScript.WolfScream();
     }
 
     private void Update()
@@ -70,6 +73,7 @@ public class DontBeTheWolfManager : MonoBehaviour
 
             NewPlayerIsWolf(wolfPlayerNumber);
             SpawnWolfHead(wolfPlayerNumber);
+            WolfSoundScript.WolfAttack();
         }
 
         IncrementPlayerScore(wolfPlayerNumber);

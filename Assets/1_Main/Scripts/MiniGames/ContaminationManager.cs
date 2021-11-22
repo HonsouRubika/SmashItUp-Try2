@@ -9,6 +9,7 @@ public class ContaminationManager : MonoBehaviour
     public GameObject[] players;
     private List<GameObject> playersNotWolf;
     private PlayerController[] playersControllers;
+    private WolfSound WolfSoundScript;
 
     public Transform wolfTpPoint;
     public List<Transform> tpPoints = new List<Transform>();
@@ -41,6 +42,7 @@ public class ContaminationManager : MonoBehaviour
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
         playersNotWolf = players.ToList();
+        WolfSoundScript = GetComponentInChildren<WolfSound>();
 
         wolfHeadInstances = new GameObject[players.Length];
 
@@ -63,6 +65,7 @@ public class ContaminationManager : MonoBehaviour
         NewPlayerIsWolf(wolfPlayerNumber);
 
         SpawnWolfHead(wolfPlayerNumber);
+        WolfSoundScript.WolfScream();
     }
 
     private void Update()
@@ -73,6 +76,7 @@ public class ContaminationManager : MonoBehaviour
 
             NewPlayerIsWolf(wolfPlayerNumber);
             SpawnWolfHead(wolfPlayerNumber);
+            WolfSoundScript.WolfAttack();
         }
 
 
