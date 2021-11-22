@@ -84,22 +84,30 @@ public class GameManager : MonoBehaviour
             switch (_selectedGameModes[_nbMancheActu])
             {
                 case (int)GameMode.CaptureTheFlag:
-                    //TODO : necessite nomenclature pour le nom des maps
                     _nbMancheActu++;
                     SceneManager.LoadScene("CaptureTheFlag0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.Loup:
-                    //TODO : necessite nomenclature pour le nom des maps
                     _nbMancheActu++;
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.CaptureDeZone:
-                    //TODO : necessite nomenclature pour le nom des maps
                     _nbMancheActu++;
                     SceneManager.LoadScene("CaptureZone0" + Random.Range(1, 3));
                     break;
+                case (int)GameMode.Contamination:
+                _nbMancheActu++;
+                SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
+                break;
+                case (int)GameMode.KeepTheFlag:
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("KeepTheFlag0" + Random.Range(1, 3));
+                    break;
+                /*case (int)GameMode.CaptureDeZoneMouvante:
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("ZoneMouvante0" + Random.Range(1, 3));
+                    break;*/
                 /*case (int)GameMode.DestrucBox:
-                    //TODO : necessite nomenclature pour le nom des maps
                     _nbMancheActu++;
                     SceneManager.LoadScene("DestrucCaisse0" + Random.Range(1, 3));
                     break;*/
@@ -184,7 +192,10 @@ public class GameManager : MonoBehaviour
         CaptureTheFlag,
         Loup,
         CaptureDeZone,
+        //CaptureDeZoneMouvante,
         //DestrucBox,
+        Contamination,
+        KeepTheFlag,
         total //egal au nombre d'élément dans l'enum
     }
 
