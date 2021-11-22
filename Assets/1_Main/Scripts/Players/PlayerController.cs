@@ -346,6 +346,7 @@ public class PlayerController : MonoBehaviour
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
+                playerAnimScript.WallSlide(false);
                 PlayerSoundScript.Run();
             }
         }
@@ -364,6 +365,7 @@ public class PlayerController : MonoBehaviour
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
+                playerAnimScript.WallSlide(false);
                 PlayerSoundScript.Run();
             }
         }
@@ -386,6 +388,7 @@ public class PlayerController : MonoBehaviour
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
+                playerAnimScript.WallSlide(false);
                 PlayerSoundScript.Run();
             }
         }
@@ -404,6 +407,7 @@ public class PlayerController : MonoBehaviour
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
+                playerAnimScript.WallSlide(false);
                 PlayerSoundScript.Run();
             }
         }
@@ -414,15 +418,28 @@ public class PlayerController : MonoBehaviour
             //anim
             playerAnimScript.Running(false);
             playerAnimScript.Idle(true);
+            playerAnimScript.WallSlide(false);
         }
         else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling)
         {
-            Debug.Log("le perso doit glisser du mur");
+            //Debug.Log("le perso doit glisser du mur");
             rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
         }
-        else if (isGrippingLeft || isGrippingRight)
+        else if (isGrippingLeft)
         {
-            Debug.Log("le perso doit glisser du mur");
+            //Debug.Log("le perso doit glisser du mur");
+            playerAnimScript.WallSlide(true);
+            playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+        }
+        else if (isGrippingRight)
+        {
+            //Debug.Log("le perso doit glisser du mur");
+            playerAnimScript.WallSlide(true);
+            playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+        }
+        else
+        {
+            playerAnimScript.WallSlide(false);
         }
 
         //Hauteur max
@@ -584,6 +601,7 @@ public class PlayerController : MonoBehaviour
             startJumpPosition = transform.position.y;
             //anim
             playerAnimScript.Jumping(true);
+            playerAnimScript.WallSlide(false);
 
             //jump or walljump
             isJump = true;
