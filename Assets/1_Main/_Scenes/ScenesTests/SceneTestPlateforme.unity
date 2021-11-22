@@ -14478,13 +14478,14 @@ MonoBehaviour:
   wallJumpMovementFreeze: 0.2
   numberMaxWalljump: 3
   jumpHoldTimer: 0.1
-  groundCheck: {fileID: 7905755886865404897}
-  gripLeftCheck: {fileID: 8898569502695199608}
-  gripRightCheck: {fileID: 6419410133087139096}
-  attackPointL: {fileID: 7905755886437217633}
-  attackPointR: {fileID: 7905755886202003636}
-  hammerPointL: {fileID: 7905755887926807902}
-  hammerPointR: {fileID: 7905755886629471760}
+  wallGripFallSpeed: 20
+  groundCheck: {fileID: 7488028258825302296}
+  gripLeftCheck: {fileID: 8152114286371221889}
+  gripRightCheck: {fileID: 6001717831236655073}
+  attackPointL: {fileID: 7488028258412631960}
+  attackPointR: {fileID: 7488028258110833229}
+  hammerPointL: {fileID: 7488028259877793703}
+  hammerPointR: {fileID: 7488028258522260713}
   attackRange: 1.25
   hammerHitboxRange: 1.875
   enemyLayer:

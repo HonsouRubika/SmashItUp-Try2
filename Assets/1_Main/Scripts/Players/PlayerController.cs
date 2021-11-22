@@ -41,6 +41,9 @@ public class PlayerController : MonoBehaviour
     private bool coyoteTimeCheck = false;
     private float shaitanerieDUnity = 1f;
     private float shaitanerieDUnityActu = 0;
+    public float wallGripFallSpeed = 0;
+    private bool isJump = false;
+    private bool isWallJump = false;
 
 
     //Colision checks
@@ -412,21 +415,24 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.Running(false);
             playerAnimScript.Idle(true);
         }
-        /* DEBUG
-        else if (isGrippingLeft || isGrippingLeft)
+        else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling)
+        {
+            Debug.Log("le perso doit glisser du mur");
+            rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
+        }
+        else if (isGrippingLeft || isGrippingRight)
         {
             Debug.Log("le perso doit glisser du mur");
         }
-        */
 
         //Hauteur max
-        if(transform.position.y > startJumpPosition + maxJumpHigh && !isJumpHoldTimerSetted)
+        if (transform.position.y > startJumpPosition + maxJumpHigh && !isJumpHoldTimerSetted && isJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, 0);
             jumpHoldTimerActu = Time.time + jumpHoldTimer;
             isJumpHoldTimerSetted = true;
         }
-        if (jumpState != JumpState.Falling && Time.time >= jumpHoldTimerActu && (isJumpHoldTimerSetted && !isWallJumpHoldTimerSetted))
+        if (jumpState != JumpState.Falling && Time.time >= jumpHoldTimerActu && (isJumpHoldTimerSetted && !isWallJumpHoldTimerSetted) && isJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             jumpState = JumpState.Falling;
@@ -435,13 +441,13 @@ public class PlayerController : MonoBehaviour
         }
 
         //hauteur max wall jump
-        if (transform.position.y > startWallJumpPosition + maxWallJumpHigh && !isWallJumpHoldTimerSetted)
+        if (transform.position.y > startWallJumpPosition + maxWallJumpHigh && !isWallJumpHoldTimerSetted && isWallJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, 0);
             jumpHoldTimerActu = Time.time + jumpHoldTimer;
             isWallJumpHoldTimerSetted = true;
         }
-        if (jumpState != JumpState.Falling && Time.time >= jumpHoldTimerActu && isWallJumpHoldTimerSetted)
+        if (jumpState != JumpState.Falling && Time.time >= jumpHoldTimerActu && isWallJumpHoldTimerSetted && isWallJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             jumpState = JumpState.Falling;
@@ -468,6 +474,9 @@ public class PlayerController : MonoBehaviour
                 wallJumpMovementFreezeActuL = Time.time;
                 wallJumpMovementFreezeActuR = Time.time;
 
+                isJump = false;
+                isWallJump = false;
+
                 //anim
                 if (playerAnimScript.playerAnimator != null)
                 {
@@ -477,10 +486,14 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if(jumpState == JumpState.Grounded)
+            if(jumpState == JumpState.Grounded && rb.velocity.y < 0)
+            {
+                jumpState = JumpState.Falling;
+            }
+            else // ne change pas si jumpState = JumpState.Falling
             {
                 jumpState = JumpState.InFlight;
-            }        
+            }
         }
         //Debug.Log(" 1 from " + transform.position + " to " + groundCheck.transform.position);
 
@@ -571,10 +584,14 @@ public class PlayerController : MonoBehaviour
             startJumpPosition = transform.position.y;
             //anim
             playerAnimScript.Jumping(true);
-            PlayerSoundScript.Jump();
+
+            //jump or walljump
+            isJump = true;
+            isWallJump = false;
         }
         else if (isGrippingRight && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
         {
+            jumpState = JumpState.InFlight;
             //jump to the left w/ 45� angle
             rb.velocity = new Vector2(-wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
             //jumpState = JumpState.InFlight;
@@ -586,9 +603,14 @@ public class PlayerController : MonoBehaviour
 
             //freeze movement for small time
             wallJumpMovementFreezeActuR = wallJumpMovementFreeze + Time.time;
+
+            //jump or walljump
+            isJump = false;
+            isWallJump = true;
         }
         else if (isGrippingLeft && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
         {
+            jumpState = JumpState.InFlight;
             //jump to the right w/ 45� angle
             rb.velocity = new Vector2(wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
             //jumpState = JumpState.InFlight;
@@ -599,6 +621,10 @@ public class PlayerController : MonoBehaviour
             shaitanerieDUnityActu = Time.time + 10;
             //freeze movement for small time
             wallJumpMovementFreezeActuL = wallJumpMovementFreeze + Time.time;
+
+            //jump or walljump
+            isJump = false;
+            isWallJump = true;
         }
 
         //Debug.Log(" 2) JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
