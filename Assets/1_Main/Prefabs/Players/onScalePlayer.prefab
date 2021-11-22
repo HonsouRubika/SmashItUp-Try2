@@ -6772,16 +6772,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2e900c500a405246a60e13d188388b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 18
-  jumpSpeed: 23
-  movementJumpSpeed: 18
+  speed: 20
+  jumpSpeed: 20
+  movementJumpSpeed: 20
   playerID: 0
-  maxJumpHigh: 8
-  maxWallJumpHigh: 8
-  wallJumpSpeed: 12
+  maxJumpHigh: 70
+  maxWallJumpHigh: 15
+  wallJumpSpeed: 10
   jumpState: 3
   wallJumpMovementFreeze: 0.2
-  numberMaxWalljump: 3
+  numberMaxWalljump: 50
   jumpHoldTimer: 0.1
   groundCheck: {fileID: 7944750135165682167}
   gripLeftCheck: {fileID: 8685648045550649710}
@@ -6798,8 +6798,8 @@ MonoBehaviour:
   hammerHitboxLayer:
     serializedVersion: 2
     m_Bits: 512
-  hammerXProjection: 3
-  hammerYProjection: 3
+  hammerXProjection: 25
+  hammerYProjection: 10
   hammerBlockProjection: 5
   HammerSideProjectionMaxDistance: 15
   attackRate: 2
