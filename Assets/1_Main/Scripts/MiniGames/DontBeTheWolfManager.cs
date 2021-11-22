@@ -81,6 +81,7 @@ public class DontBeTheWolfManager : MonoBehaviour
         if (timerScript.miniGameTimer <= 0)
         {
             SortPlayers();
+            Destroy(wolfHeadInstance);
         }
     }
 

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    [HideInInspector] public FocusPlayers focusPlayersScript;
 
     private int[] _selectedGameModes;
     private int[] _teamCompo;
@@ -35,14 +36,16 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(this);
+
+        focusPlayersScript = GetComponentInChildren<FocusPlayers>();
     }
 
     //fonction à call depuis le menu suite au clic() du bouton play;
     public void initializeGameModes(int nbManches)
     {
-        Debug.Log("Initialisation des gameMode pour la partie");
         _nbManches = nbManches;
         _selectedGameModes = new int[nbManches];
+        _teamCompo = new int[nbManches];
 
         _scoreP1 = 0;
         _scoreP2 = 0;
@@ -82,34 +85,30 @@ public class GameManager : MonoBehaviour
             {
                 case (int)GameMode.CaptureTheFlag:
                     //TODO : necessite nomenclature pour le nom des maps
-                    Debug.Log("CaptureTheFlag");
                     _nbMancheActu++;
                     SceneManager.LoadScene("CaptureTheFlag0" + Random.Range(1, 5));
                     break;
-                /*
                 case (int)GameMode.Loup:
                     //TODO : necessite nomenclature pour le nom des maps
-                    Debug.Log("Loup");
                     _nbMancheActu++;
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 5));
                     break;
-                */
                 case (int)GameMode.CaptureDeZone:
                     //TODO : necessite nomenclature pour le nom des maps
-                    Debug.Log("CaptureZone");
                     _nbMancheActu++;
                     SceneManager.LoadScene("CaptureZone0" + Random.Range(1, 5));
                     break;
-                case (int)GameMode.DestrucBox:
+                /*case (int)GameMode.DestrucBox:
                     //TODO : necessite nomenclature pour le nom des maps
-                    Debug.Log("DestrucCaisse");
                     _nbMancheActu++;
                     SceneManager.LoadScene("DestrucCaisse0" + Random.Range(1, 5));
-                    break;
+                    break;*/
                 default:
                     Debug.Log("Error, GameMode not found");
                     break;
             }
+
+            focusPlayersScript.EnableFocus();
         }
         else
         {
@@ -134,7 +133,6 @@ public class GameManager : MonoBehaviour
         _scoreP2 += scoreP2;
         _scoreP3 += scoreP3;
         _scoreP4 += scoreP4;
-        Debug.Log("ajout des scores");
     }
 
     public void addSpecificScore(int player, int score)
@@ -162,19 +160,14 @@ public class GameManager : MonoBehaviour
         switch (numJoueur)
         {
             case 1:
-                Debug.Log("get score P1");
                 return _scoreP1;
             case 2:
-                Debug.Log("get score P2");
                 return _scoreP2;
             case 3:
-                Debug.Log("get score P3");
                 return _scoreP3;
             case 4:
-                Debug.Log("get score P4");
                 return _scoreP4;
             default:
-                Debug.Log("Erreur : id de joueur inconnu");
                 return -1;
         } 
     }
@@ -189,9 +182,9 @@ public class GameManager : MonoBehaviour
     enum GameMode
     {
         CaptureTheFlag,
-        //Loup,
+        Loup,
         CaptureDeZone,
-        DestrucBox,
+        //DestrucBox,
         total //egal au nombre d'élément dans l'enum
     }
 
