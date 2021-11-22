@@ -50,6 +50,6 @@ public class PlayerSound : MonoBehaviour
 
     public void Ejection()
     {
-        SoundManager.Instance.PlaySfx(ejection, ejectionVolume);
+        //SoundManager.Instance.PlaySfx(ejection, ejectionVolume);
     }
 }

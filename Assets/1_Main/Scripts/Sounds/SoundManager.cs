@@ -89,6 +89,13 @@ public class SoundManager : MonoBehaviour
         return;
     }
 
+    public void StopMusic()
+    {
+        musicSource.Stop();
+
+        return;
+    }
+
     // Fade in a given music.
     public void FadeInMusic(AudioClip music, float volume = 1f, float fadeTime = 1f)
     {

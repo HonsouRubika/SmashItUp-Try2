@@ -13,10 +13,10 @@ public class ScoreManager : MonoBehaviour
     private void Start()
     {
         //appel de la fonction setScore du ScoreManager
-        p1.text = "Player 1 : " + GameManager.Instance.GetComponent<GameManager>().getScorePlayer(1);
-        p2.text = "Player 2 : " + GameManager.Instance.GetComponent<GameManager>().getScorePlayer(2);
-        p3.text = "Player 3 : " + GameManager.Instance.GetComponent<GameManager>().getScorePlayer(3);
-        p4.text = "Player 4 : " + GameManager.Instance.GetComponent<GameManager>().getScorePlayer(4);
+        p1.text = "Player 1 : " + GameManager.Instance.getScorePlayer(1);
+        p2.text = "Player 2 : " + GameManager.Instance.getScorePlayer(2);
+        p3.text = "Player 3 : " + GameManager.Instance.getScorePlayer(3);
+        p4.text = "Player 4 : " + GameManager.Instance.getScorePlayer(4);
 
         TimerNextMapActu = Time.time + TimerNextMap;
 
@@ -27,7 +27,7 @@ public class ScoreManager : MonoBehaviour
         if (Time.time >= TimerNextMapActu)
         {
             //Next Map
-            GameManager.Instance.GetComponent<GameManager>().NextMap();
+            GameManager.Instance.NextMap();
         }
     }
 

@@ -13,13 +13,11 @@ public class TeleporterLobby : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("player enter in tp zone");
         nbPlayerInZone++;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("player exit tp zone");
         nbPlayerInZone--;
     }
 
@@ -40,7 +38,6 @@ public class TeleporterLobby : MonoBehaviour
         if (Time.time >= timerBeforeTeleportationActu && isTimerInitiated)
         {
             isTimerInitiated = false;
-            Debug.Log("doit débuter le compte à rebour avant lancement du jeu");
             GameManager.Instance.initializeGameModes(5);
         }
     }

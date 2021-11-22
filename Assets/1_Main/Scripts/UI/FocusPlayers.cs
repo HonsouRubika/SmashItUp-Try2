@@ -18,11 +18,25 @@ public class FocusPlayers : MonoBehaviour
     public GameObject hideScreen;
     public Color colorHideScreen;
 
+    private Canvas canvas;
+
     private void Start()
+    {
+        hideScreen.GetComponent<SpriteRenderer>().color = colorHideScreen;
+        canvas = GetComponentInChildren<Canvas>();
+
+        //EnableFocus();
+    }
+
+    public void FindPlayers()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
         cercles = new GameObject[players.Length];
-        hideScreen.GetComponent<SpriteRenderer>().color = colorHideScreen;
+    }
+
+    public void EnableFocus()
+    {
+        StartCoroutine(GetReference());
 
         StartCoroutine(IncrementTimer());
     }
@@ -51,6 +65,8 @@ public class FocusPlayers : MonoBehaviour
 
     private IEnumerator IncrementTimer()
     {
+        yield return new WaitForSecondsRealtime(0.0001f);
+
         SpawnCercle();
         GameManager.Instance.isShowingPlayers = true;
 
@@ -58,5 +74,13 @@ public class FocusPlayers : MonoBehaviour
 
         DestroyCercle();
         GameManager.Instance.isShowingPlayers = false;
+    }
+
+    private IEnumerator GetReference()
+    {
+        yield return new WaitForSecondsRealtime(0.0001f);
+
+        canvas.worldCamera = Camera.main;
+        FindPlayers();
     }
 }
