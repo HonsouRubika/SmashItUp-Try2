@@ -45,7 +45,7 @@ public class PlayerSound : MonoBehaviour
 
     public void Run()
     {
-        SoundManager.Instance.PlaySfx(run, runVolume);
+        SoundManager.Instance.PlayFootSteps(run, runVolume);
     }
 
     public void Ejection()

@@ -35,6 +35,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource sfxSource;
     public AudioSource voiceSource;
     public AudioSource zoneSource;
+    public AudioSource footStepsSource;
 
     private bool fadeOut = false;
 
@@ -159,9 +160,23 @@ public class SoundManager : MonoBehaviour
 
         return;
     }
+
     public void StopZone()
     {
         zoneSource.Stop();
+
+        return;
+    }
+
+    public void PlayFootSteps(AudioClip footSteps, float volume = 1f, float pitch = 1f)
+    {
+        footStepsSource.pitch = pitch;
+        if (!footStepsSource.isPlaying)
+        {
+            footStepsSource.PlayOneShot(footSteps, (sfxDefaultVolume * volume) * globalDefaultVolume);
+        }
+
+        footStepsSource.pitch = 1;
 
         return;
     }
