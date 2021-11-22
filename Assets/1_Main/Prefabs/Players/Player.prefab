@@ -37,6 +37,7 @@ Transform:
   - {fileID: 3772684629446831298}
   - {fileID: 3772684630198937480}
   - {fileID: 4759725586641185275}
+  - {fileID: 8295277702257708496}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52,19 +53,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2e900c500a405246a60e13d188388b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftKey: 113
-  rightkey: 100
-  jumpKey: 122
-  attackKey: 32
   speed: 10
   jumpSpeed: 10
-  health: 0
-  controlEnabled: 1
+  movementJumpSpeed: 3
   playerID: 0
   maxJumpHigh: 2.5
+  maxWallJumpHigh: 1
   wallJumpSpeed: 12
+  jumpState: 3
   wallJumpMovementFreeze: 0.2
+  numberMaxWalljump: 2
+  jumpHoldTimer: 0.1
   groundCheck: {fileID: 3772684629145893172}
+  gripLeftCheck: {fileID: 0}
+  gripRightCheck: {fileID: 0}
   attackPointL: {fileID: 3772684629791399860}
   attackPointR: {fileID: 3772684630093187681}
   hammerPointL: {fileID: 3772684630198937483}
@@ -77,14 +79,16 @@ MonoBehaviour:
   hammerHitboxLayer:
     serializedVersion: 2
     m_Bits: 512
-  hammerProjection: 3
+  hammerXProjection: 3
+  hammerYProjection: 3
   hammerBlockProjection: 1.5
   HammerSideProjectionMaxDistance: 3
   attackRate: 2
   attackDuration: 0.1
   stunTime: 0.5
-  lastTimeAttackHit: 0
-  lastTimeGotHit: 0
+  blockStunTime: 0.5
+  playerIDHit: 0
+  hitPlayer: 0
 --- !u!212 &1739112760499538138
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -133,7 +137,7 @@ SpriteRenderer:
   m_Size: {x: 0.2, y: 0.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &2969272779926683273
@@ -214,6 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59dfd0de2c32eb5479e494af7282de23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 0}
 --- !u!1 &3772684629145893175
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,6 +403,63 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!1 &9055799394873137665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8295277702257708496}
+  - component: {fileID: 6567040075940267778}
+  m_Layer: 0
+  m_Name: Sound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8295277702257708496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9055799394873137665}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3772684629939589917}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6567040075940267778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9055799394873137665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8d827c26718944c94c89784d7f05de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hammerPouet:
+  - {fileID: 8300000, guid: 943bc84ac7c101b488613bd786c48b85, type: 3}
+  - {fileID: 8300000, guid: fde01e7091b7c19498205ba708490bd3, type: 3}
+  pouetVolume: 0.5
+  hammerWoosh: {fileID: 0}
+  wooshVolume: 0.5
+  hammerHit: []
+  hitVolume: 0.5
+  jump: {fileID: 8300000, guid: 4a33e77443d3999449b2f227db3447f9, type: 3}
+  jumpVolume: 0.5
+  run: {fileID: 8300000, guid: 7f1f9a4bca6048347b89c99d7c1a686a, type: 3}
+  runVolume: 0.5
+  ejection: {fileID: 8300000, guid: 98c3cb6cadaeead4ca3de891724d3405, type: 3}
+  ejectionVolume: 0.5
 --- !u!1001 &282370102130227937
 PrefabInstance:
   m_ObjectHideFlags: 0

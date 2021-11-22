@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     //new input
     private CharacterController controller;
     private Vector2 movementInput = Vector2.zero;
+    private PlayerSound PlayerSoundScript;
 
     [Header("Déplacement")]
     public float speed = 3;
@@ -118,6 +119,8 @@ public class PlayerController : MonoBehaviour
         //get anim script
         playerAnimScript = GetComponentInChildren<PlayerAnim>();
         playerAnim = playerAnimScript.transform;
+
+        PlayerSoundScript = GetComponentInChildren<PlayerSound>();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -193,6 +196,7 @@ public class PlayerController : MonoBehaviour
         {
             //anim
             playerAnimScript.Expulsion(true);
+            PlayerSoundScript.Ejection();
 
             if (transform.position.x <= startProjectedPostion)
             {
@@ -339,6 +343,7 @@ public class PlayerController : MonoBehaviour
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
+                PlayerSoundScript.Run();
             }
         }
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
@@ -356,6 +361,7 @@ public class PlayerController : MonoBehaviour
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
+                PlayerSoundScript.Run();
             }
         }
         //movementJumpSpeed
@@ -377,6 +383,7 @@ public class PlayerController : MonoBehaviour
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
+                PlayerSoundScript.Run();
             }
         }
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
@@ -394,6 +401,7 @@ public class PlayerController : MonoBehaviour
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
+                PlayerSoundScript.Run();
             }
         }
         else if (jumpState == JumpState.Grounded)
@@ -563,6 +571,7 @@ public class PlayerController : MonoBehaviour
             startJumpPosition = transform.position.y;
             //anim
             playerAnimScript.Jumping(true);
+            PlayerSoundScript.Jump();
         }
         else if (isGrippingRight && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
         {
@@ -611,6 +620,7 @@ public class PlayerController : MonoBehaviour
 
             //anim
             playerAnimScript.Attack();
+            PlayerSoundScript.HammerPouet();
         }
         //Droite
         else if (!attackDirection && Time.time >= nextAttackTime)
@@ -625,6 +635,7 @@ public class PlayerController : MonoBehaviour
 
             //anim
             playerAnimScript.Attack();
+            PlayerSoundScript.HammerPouet();
         }
     }
 

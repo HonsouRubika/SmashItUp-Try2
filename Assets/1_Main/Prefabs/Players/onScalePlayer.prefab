@@ -6628,6 +6628,63 @@ Transform:
   m_Father: {fileID: 3033609572137110583}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8169175262244951268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6487281736711119920}
+  - component: {fileID: 6250241685462588533}
+  m_Layer: 0
+  m_Name: Sound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6487281736711119920
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8169175262244951268}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.8423996, y: 3.684, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7944750134887754718}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6250241685462588533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8169175262244951268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8d827c26718944c94c89784d7f05de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hammerPouet:
+  - {fileID: 8300000, guid: 943bc84ac7c101b488613bd786c48b85, type: 3}
+  - {fileID: 8300000, guid: fde01e7091b7c19498205ba708490bd3, type: 3}
+  pouetVolume: 0.5
+  hammerWoosh: {fileID: 0}
+  wooshVolume: 0.5
+  hammerHit: []
+  hitVolume: 0.5
+  jump: {fileID: 8300000, guid: 4a33e77443d3999449b2f227db3447f9, type: 3}
+  jumpVolume: 0.5
+  run: {fileID: 8300000, guid: 7f1f9a4bca6048347b89c99d7c1a686a, type: 3}
+  runVolume: 0.5
+  ejection: {fileID: 8300000, guid: 98c3cb6cadaeead4ca3de891724d3405, type: 3}
+  ejectionVolume: 0.5
 --- !u!1 &8602178050535774018
 GameObject:
   m_ObjectHideFlags: 0
@@ -6699,6 +6756,7 @@ Transform:
   - {fileID: 3464730087039004344}
   - {fileID: 8685648045550649710}
   - {fileID: 6548757986954372878}
+  - {fileID: 6487281736711119920}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6721,6 +6779,7 @@ MonoBehaviour:
   maxJumpHigh: 8
   maxWallJumpHigh: 8
   wallJumpSpeed: 12
+  jumpState: 3
   wallJumpMovementFreeze: 0.2
   numberMaxWalljump: 3
   jumpHoldTimer: 0.1
