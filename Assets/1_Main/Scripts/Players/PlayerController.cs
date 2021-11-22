@@ -389,7 +389,11 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimScript.Running(true);
                 playerAnimScript.WallSlide(false);
-                PlayerSoundScript.Run();
+
+                if (jumpState == JumpState.Grounded)
+                {
+                    PlayerSoundScript.Run();
+                }
             }
         }
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
@@ -408,7 +412,11 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimScript.Running(true);
                 playerAnimScript.WallSlide(false);
-                PlayerSoundScript.Run();
+
+                if (jumpState == JumpState.Grounded)
+                {
+                    PlayerSoundScript.Run();
+                }
             }
         }
         else if (jumpState == JumpState.Grounded)
@@ -602,6 +610,7 @@ public class PlayerController : MonoBehaviour
             //anim
             playerAnimScript.Jumping(true);
             playerAnimScript.WallSlide(false);
+            PlayerSoundScript.Jump();
 
             //jump or walljump
             isJump = true;

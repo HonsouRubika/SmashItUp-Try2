@@ -172,20 +172,50 @@ public class DontBeTheWolfManager : MonoBehaviour
             joueurValMax = 3;
         }
 
-        switch (joueurValMax)
+        if (players.Length == 2)
         {
-            case 0:
-                GameManager.Instance.addScores(0, 10, 10, 10);
-                break;
-            case 1:
-                GameManager.Instance.addScores(10, 0, 10, 10);
-                break;
-            case 2:
-                GameManager.Instance.addScores(10, 10, 0, 10);
-                break;
-            case 3:
-                GameManager.Instance.addScores(10, 10, 10, 0);
-                break;
+            switch (joueurValMax)
+            {
+                case 0:
+                    GameManager.Instance.addScores(0, 10, 0, 0);
+                    break;
+                case 1:
+                    GameManager.Instance.addScores(10, 0, 0, 0);
+                    break;
+            }
+        }
+        else if (players.Length == 3)
+        {
+            switch (joueurValMax)
+            {
+                case 0:
+                    GameManager.Instance.addScores(0, 10, 10, 0);
+                    break;
+                case 1:
+                    GameManager.Instance.addScores(10, 0, 10, 0);
+                    break;
+                case 2:
+                    GameManager.Instance.addScores(10, 10, 0, 0);
+                    break;
+            }
+        }
+        else if (players.Length == 4)
+        {
+            switch (joueurValMax)
+            {
+                case 0:
+                    GameManager.Instance.addScores(0, 10, 10, 10);
+                    break;
+                case 1:
+                    GameManager.Instance.addScores(10, 0, 10, 10);
+                    break;
+                case 2:
+                    GameManager.Instance.addScores(10, 10, 0, 10);
+                    break;
+                case 3:
+                    GameManager.Instance.addScores(10, 10, 10, 0);
+                    break;
+            }
         }
     }
 

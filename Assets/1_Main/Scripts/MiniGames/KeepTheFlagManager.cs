@@ -155,10 +155,25 @@ public class KeepTheFlagManager : MonoBehaviour
 
         System.Array.Sort(finalScores, playersPosition);
 
-        GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, 10);
-        GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 8);
-        GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, 6);
-        GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 4] + 1, 4);
+        switch (playersPosition.Length)
+        {
+            case 2:
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, 10);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 5);
+                break;
+            case 3:
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, 10);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 6);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, 3);
+                break;
+            case 4:
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, 10);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 8);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, 6);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 4] + 1, 4);
+                break;
+        }
+        
     }
 
     private void SpawnPlayerRandomly()
