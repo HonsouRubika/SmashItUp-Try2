@@ -8,10 +8,17 @@ public class PlayerController : MonoBehaviour
     private Vector2 movementInput = Vector2.zero;
     private PlayerSound PlayerSoundScript;
 
+    //Action
+    private Action actionState = Action.Jump;
+
     [Header("Déplacement")]
     public float speed = 3;
     public float jumpSpeed = 3;
     public float movementJumpSpeed = 3;
+    //addForce
+    public float jumpChangeInDirectionSpeed = 1;
+    private float movementActu = 0;
+    public float ratioMovementChange = 1;
 
     //TODO : GameMode avec Hp
     //public uint health; 
@@ -24,12 +31,12 @@ public class PlayerController : MonoBehaviour
 
     //jump variable
     [Header("Jump")]
+    public JumpState jumpState = JumpState.InFlight;
     public float maxJumpHigh = 1;
     private float startJumpPosition;
     private float startWallJumpPosition;
     public float maxWallJumpHigh = 1;
     public float wallJumpSpeed = 1;
-    public JumpState jumpState = JumpState.InFlight;
     public float wallJumpMovementFreeze = 0.2f;
     private float wallJumpMovementFreezeActuL, wallJumpMovementFreezeActuR;
     public float numberMaxWalljump = 2;
@@ -336,7 +343,10 @@ public class PlayerController : MonoBehaviour
             //rb.velocity = new Vector2(-speed, rb.velocity.y);
             rb.velocity = new Vector2(-speed, rb.velocity.y);
             attackDirection = true;
-            
+
+            //Action (anim)
+            actionState = Action.Run;
+
             //anim
             if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
             {
@@ -355,7 +365,10 @@ public class PlayerController : MonoBehaviour
             //droite
             rb.velocity = new Vector2(speed, rb.velocity.y);
             attackDirection = false;
-            
+
+            //Action (anim)
+            actionState = Action.Run;
+
             //anim
             if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
             {
@@ -378,6 +391,9 @@ public class PlayerController : MonoBehaviour
             //  Voir Bloc note "to do SUI" sur le bureau
             rb.velocity = new Vector2(-movementJumpSpeed, rb.velocity.y);
             attackDirection = true;
+
+            //Action (anim)
+            actionState = Action.Jump;
 
             //anim
             if (!GameManager.Instance.isPaused)
@@ -402,6 +418,9 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
             attackDirection = false;
 
+            //Action (anim)
+            actionState = Action.Jump;
+
             //anim
             if (!GameManager.Instance.isPaused)
             {
@@ -423,6 +442,9 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("x axe stop cause grounded");
             rb.velocity = new Vector2(0, rb.velocity.y);
+
+            //Action (anim)
+            actionState = Action.Idle;
 
             //anim
             playerAnimScript.Running(false);
@@ -540,6 +562,9 @@ public class PlayerController : MonoBehaviour
             isGrippingLeft = true;
             isWallJumpHoldTimerSetted = false;
             isBeingProjected = false;
+
+            //Action (anim)
+            actionState = Action.GripLeft;
         }
         else
         {
@@ -560,6 +585,9 @@ public class PlayerController : MonoBehaviour
             isGrippingRight = true;
             isWallJumpHoldTimerSetted = false;
             isBeingProjected = false;
+
+            //Action (anim)
+            actionState = Action.GripRight;
         }
         else
         {
@@ -577,7 +605,12 @@ public class PlayerController : MonoBehaviour
             Debug.Log("stop gauche");
             rb.velocity = new Vector2(rb.velocity.x + projectionStopSpeed, rb.velocity.y);
             //end projection
-            if (rb.velocity.x + projectionStopSpeed >= 0) isBeingProjected = false;
+            if (rb.velocity.x + projectionStopSpeed >= 0)
+            {
+                isBeingProjected = false;
+                //Action (anim)
+                actionState = Action.Idle;
+            }
 
         } //droite
         else if ((transform.position.x >= startProjectedPostion + HammerSideProjectionMaxDistance) && isBeingProjected)
@@ -585,7 +618,12 @@ public class PlayerController : MonoBehaviour
             Debug.Log("stop droite");
             rb.velocity = new Vector2(rb.velocity.x - projectionStopSpeed, rb.velocity.y);
             //end projection
-            if (rb.velocity.x + projectionStopSpeed <= 0) isBeingProjected = false;
+            if (rb.velocity.x + projectionStopSpeed <= 0)
+            {
+                isBeingProjected = false;
+                //Action (anim)
+                actionState = Action.Idle;
+            }
         }
     }
 
@@ -603,7 +641,7 @@ public class PlayerController : MonoBehaviour
 
             //Debug.Log("Jump");
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-            //jumpState = JumpState.InFlight;
+            actionState = Action.Jump;
             startJumpPosition = transform.position.y;
             //anim
             playerAnimScript.Jumping(true);
@@ -619,7 +657,7 @@ public class PlayerController : MonoBehaviour
             jumpState = JumpState.InFlight;
             //jump to the left w/ 45� angle
             rb.velocity = new Vector2(-wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
-            //jumpState = JumpState.InFlight;
+            actionState = Action.Jump;
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
             numberMaxWalljumpActu++;
@@ -638,7 +676,7 @@ public class PlayerController : MonoBehaviour
             jumpState = JumpState.InFlight;
             //jump to the right w/ 45� angle
             rb.velocity = new Vector2(wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
-            //jumpState = JumpState.InFlight;
+            actionState = Action.Jump;
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
             numberMaxWalljumpActu++;
@@ -692,6 +730,9 @@ public class PlayerController : MonoBehaviour
 
     void applyAttack(float velocityX, float velocityY)
     {
+        //Action (anim)
+        actionState = Action.Projected;
+
         //Stun
         stunTimeActu = stunTime + Time.time;
 
@@ -707,6 +748,9 @@ public class PlayerController : MonoBehaviour
     }
     void applyBlock(float velocityX, float velocityY)
     {
+        //Action (anim)
+        actionState = Action.Projected;
+
         //Stun
         blockStunTimeActu = blockStunTime + Time.time;
 
@@ -737,5 +781,16 @@ public class PlayerController : MonoBehaviour
         InFlight,
         Falling,
         Landed
+    }
+
+    public enum Action
+    {
+        Idle,
+        Run,
+        Jump,
+        Attack,
+        GripLeft,
+        GripRight,
+        Projected
     }
 }
