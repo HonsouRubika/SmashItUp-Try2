@@ -103,10 +103,10 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
                     SceneManager.LoadScene("KeepTheFlag0" + Random.Range(1, 3));
                     break;
-                /*case (int)GameMode.CaptureDeZoneMouvante:
+                case (int)GameMode.CaptureDeZoneMouvante:
                     _nbMancheActu++;
                     SceneManager.LoadScene("ZoneMouvante0" + Random.Range(1, 3));
-                    break;*/
+                    break;
                 /*case (int)GameMode.DestrucBox:
                     _nbMancheActu++;
                     SceneManager.LoadScene("DestrucCaisse0" + Random.Range(1, 3));
@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour
         CaptureTheFlag,
         Loup,
         CaptureDeZone,
-        //CaptureDeZoneMouvante,
+        CaptureDeZoneMouvante,
         //DestrucBox,
         Contamination,
         KeepTheFlag,

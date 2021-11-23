@@ -10,6 +10,9 @@ public class ScoreManager : MonoBehaviour
     public float TimerNextMap = 3;
     public float TimerNextMapActu = 0;
 
+    private GameObject[] players;
+    public List<Transform> tpPoints = new List<Transform>();
+
     private void Start()
     {
         //appel de la fonction setScore du ScoreManager
@@ -19,7 +22,7 @@ public class ScoreManager : MonoBehaviour
         p4.text = "Player 4 : " + GameManager.Instance.getScorePlayer(4);
 
         TimerNextMapActu = Time.time + TimerNextMap;
-
+        SpawnPlayer();
     }
 
     private void Update()
@@ -53,4 +56,13 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    private void SpawnPlayer()
+    {
+        players = GameObject.FindGameObjectsWithTag("Player");
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i].transform.position = tpPoints[i].position;
+        }
+    }
 }

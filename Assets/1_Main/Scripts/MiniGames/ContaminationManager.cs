@@ -25,7 +25,7 @@ public class ContaminationManager : MonoBehaviour
     public bool player3IsWolf = false;
     public int player3ContaminationOrder = 0;
 
-    private int contaminationOrder = 0;
+    public int contaminationOrder = 0;
     private int wolfPlayerNumber;
 
     [Header("Wolf visual")]
@@ -83,6 +83,9 @@ public class ContaminationManager : MonoBehaviour
         if (timerScript.miniGameTimer <= 0 || contaminationOrder == players.Length)
         {
             //DestroyWolfHead();
+
+            GameManager.Instance.Score();
+            DestroyWolfHead();
             SortPlayers(1, player0ContaminationOrder);
             SortPlayers(2, player1ContaminationOrder);
             SortPlayers(3, player2ContaminationOrder);
