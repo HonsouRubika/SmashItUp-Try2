@@ -420,7 +420,7 @@ public class PlayerController : MonoBehaviour
             jumpHoldTimerActu = Time.time + jumpHoldTimer;
             isJumpHoldTimerSetted = true;
         }
-        if (jumpState != JumpState.Falling && Time.time >= jumpHoldTimerActu && (isJumpHoldTimerSetted && !isWallJumpHoldTimerSetted) && isJump)
+        if (jumpState == JumpState.Falling && Time.time >= jumpHoldTimerActu && (isJumpHoldTimerSetted && !isWallJumpHoldTimerSetted) && isJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             jumpState = JumpState.Falling;
@@ -435,7 +435,7 @@ public class PlayerController : MonoBehaviour
             jumpHoldTimerActu = Time.time + jumpHoldTimer;
             isWallJumpHoldTimerSetted = true;
         }
-        if (jumpState != JumpState.Falling && Time.time >= jumpHoldTimerActu && isWallJumpHoldTimerSetted && isWallJump)
+        if (jumpState == JumpState.Falling && Time.time >= jumpHoldTimerActu && isWallJumpHoldTimerSetted && isWallJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             jumpState = JumpState.Falling;
