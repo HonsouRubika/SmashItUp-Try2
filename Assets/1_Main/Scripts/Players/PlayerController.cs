@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
     public float hammerBlockProjection = 1.5f;
     public float HammerSideProjectionMaxDistance = 1;
     private float startProjectedPostion = 0;
-    //private bool selfProjectionDirection = false;
+    public float projectionStopSpeed = 0.5f; //ralentissement après distance de projection atteinte
     [System.NonSerialized] public bool isBeingProjected = false;
                            //false = droite; true = gauche
     //Paramètre vitesse
@@ -369,7 +369,7 @@ public class PlayerController : MonoBehaviour
                 PlayerSoundScript.Run();
             }
         }
-        //movementJumpSpeed
+        //en l'air
         else if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
             //gauche
@@ -419,8 +419,9 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else if (jumpState == JumpState.Grounded)
+        else if (jumpState == JumpState.Grounded && !isBeingProjected)
         {
+            Debug.Log("x axe stop cause grounded");
             rb.velocity = new Vector2(0, rb.velocity.y);
 
             //anim
@@ -494,6 +495,7 @@ public class PlayerController : MonoBehaviour
                 isJumpHoldTimerSetted = false;
                 isWallJumpHoldTimerSetted = false;
                 jumpHoldTimerActu = 0;
+                isBeingProjected = false;
                 coyoteTimeCheck = true;
                 //reset var for walljump
                 wallJumpMovementFreezeActuL = Time.time;
@@ -537,6 +539,7 @@ public class PlayerController : MonoBehaviour
         {
             isGrippingLeft = true;
             isWallJumpHoldTimerSetted = false;
+            isBeingProjected = false;
         }
         else
         {
@@ -556,6 +559,7 @@ public class PlayerController : MonoBehaviour
         {
             isGrippingRight = true;
             isWallJumpHoldTimerSetted = false;
+            isBeingProjected = false;
         }
         else
         {
@@ -570,24 +574,18 @@ public class PlayerController : MonoBehaviour
         //gauche
         if ((transform.position.x <= startProjectedPostion + -HammerSideProjectionMaxDistance) && isBeingProjected)
         {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            isBeingProjected = false;
-            /*
-            Debug.Log("OUI gauche");
-            Debug.Log("Dist max : " + -HammerSideProjectionMaxDistance);
-            Debug.Log("1: " + transform.position.x + " >= " + startProjectedPostion + " + " + -HammerSideProjectionMaxDistance);
-            */
+            Debug.Log("stop gauche");
+            rb.velocity = new Vector2(rb.velocity.x + projectionStopSpeed, rb.velocity.y);
+            //end projection
+            if (rb.velocity.x + projectionStopSpeed >= 0) isBeingProjected = false;
 
         } //droite
         else if ((transform.position.x >= startProjectedPostion + HammerSideProjectionMaxDistance) && isBeingProjected)
         {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            isBeingProjected = false;
-            /*
-            Debug.Log("OUI droite");
-            Debug.Log("Dist max : " + HammerSideProjectionMaxDistance);
-            Debug.Log("1: " + transform.position.x + " <= " + startProjectedPostion + " + " + HammerSideProjectionMaxDistance);
-            */
+            Debug.Log("stop droite");
+            rb.velocity = new Vector2(rb.velocity.x - projectionStopSpeed, rb.velocity.y);
+            //end projection
+            if (rb.velocity.x + projectionStopSpeed <= 0) isBeingProjected = false;
         }
     }
 
@@ -604,7 +602,7 @@ public class PlayerController : MonoBehaviour
             shaitanerieDUnityActu = Time.time + shaitanerieDUnity;
 
             //Debug.Log("Jump");
-            rb.velocity = new Vector2(0, jumpSpeed);
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
             //jumpState = JumpState.InFlight;
             startJumpPosition = transform.position.y;
             //anim
