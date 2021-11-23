@@ -51,6 +51,7 @@ public class DontBeTheWolfManager : MonoBehaviour
 
         ChooseRandomWolf();
         SpawnPlayerRandomly();
+        GameManager.Instance.focusPlayersScript.SetGameTitle("DontBeWolf");
     }
 
     private void ChooseRandomWolf()

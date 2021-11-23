@@ -54,6 +54,7 @@ public class KeepTheFlagManager : MonoBehaviour
         }
 
         SpawnPlayerRandomly();
+        GameManager.Instance.focusPlayersScript.SetGameTitle("KeepTheFlag");
     }
 
     private void Update()
@@ -75,6 +76,7 @@ public class KeepTheFlagManager : MonoBehaviour
         if (timerScript.miniGameTimer <= 0)
         {
             SortPlayers();
+            keepingFlagScript.ResetFlag();
         }
     }
 
