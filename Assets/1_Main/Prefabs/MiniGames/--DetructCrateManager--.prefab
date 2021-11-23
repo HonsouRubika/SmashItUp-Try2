@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2492257469899866975}
   - component: {fileID: 2492257469899866973}
   - component: {fileID: 2492257469899866974}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Crate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2492257470413821587}
   - component: {fileID: 2492257470413821586}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: --DetructCrateManager--
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,13 +176,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95e7b409f566cc43ada025b28f9485b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players: []
   cratesNumber: 0
   scoreScript: {fileID: 0}
   timerScript: {fileID: 0}
-  tpPoints0: {fileID: 0}
-  tpPoints1: {fileID: 0}
-  tpPoints2: {fileID: 0}
-  tpPoints3: {fileID: 0}
+  tpPoints: []
 --- !u!1 &5361489175681341122
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2890623347530986061}
   - component: {fileID: 7328488811109269324}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
