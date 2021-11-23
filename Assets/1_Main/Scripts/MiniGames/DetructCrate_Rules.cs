@@ -28,6 +28,7 @@ public class DetructCrate_Rules : MonoBehaviour
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
 
         SpawnPlayerRandomly();
+        GameManager.Instance.focusPlayersScript.SetGameTitle("DestroyCrates");
     }
 
     private void Update()

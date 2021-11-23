@@ -48,7 +48,7 @@ public class KeepingFlag : MonoBehaviour
         transform.SetParent(player);
     }
 
-    private void ResetFlag()
+    public void ResetFlag()
     {
         transform.position = flagInitialPos.position;
     }

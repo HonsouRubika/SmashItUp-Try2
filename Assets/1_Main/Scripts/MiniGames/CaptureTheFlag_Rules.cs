@@ -25,6 +25,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
 
         SpawnPlayerRandomly();
+        GameManager.Instance.focusPlayersScript.SetGameTitle("CaptureTheFlag");
     }
 
     public void FlagCaptured(int playerWin)

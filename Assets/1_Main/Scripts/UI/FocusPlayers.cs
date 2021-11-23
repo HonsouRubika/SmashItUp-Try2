@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FocusPlayers : MonoBehaviour
 {
@@ -15,17 +16,26 @@ public class FocusPlayers : MonoBehaviour
     public Vector2 cercleSize;
 
     [Header("Hider Settings")]
+    public GameObject canvasRef;
     public GameObject hideScreen;
     public Color colorHideScreen;
+
+    public Image minigameTitleImage;
+
+    [Header("Mini-game title")]
+    public Sprite captureTheFlagSprite;
+    public Sprite keepTheFlagSprite;
+    public Sprite dontBeWolfSprite;
+    public Sprite contaminationSprite;
+    public Sprite zoneSprite;
+    public Sprite destroyCratesSprite;
 
     private Canvas canvas;
 
     private void Start()
     {
         hideScreen.GetComponent<SpriteRenderer>().color = colorHideScreen;
-        canvas = GetComponentInChildren<Canvas>();
-
-        //EnableFocus();
+        canvas = canvasRef.GetComponent<Canvas>();
     }
 
     public void FindPlayers()
@@ -43,7 +53,7 @@ public class FocusPlayers : MonoBehaviour
 
     private void SpawnCercle()
     {
-        hideScreen.SetActive(true);
+        canvasRef.SetActive(true);
         Time.timeScale = 0f;
 
         for (int i = 0; i < players.Length; i++)
@@ -54,12 +64,37 @@ public class FocusPlayers : MonoBehaviour
 
     private void DestroyCercle()
     {
-        hideScreen.SetActive(false);
+        canvasRef.SetActive(false);
         Time.timeScale = 1f;
 
         for (int i = 0; i < cercles.Length; i++)
         {
             Destroy(cercles[i]);
+        }
+    }
+
+    public void SetGameTitle(string minigameName)
+    {
+        switch (minigameName)
+        {
+            case "CaptureTheFlag":
+                minigameTitleImage.sprite = captureTheFlagSprite;
+                break;
+            case "KeepTheFlag":
+                minigameTitleImage.sprite = keepTheFlagSprite;
+                break;
+            case "DontBeWolf":
+                minigameTitleImage.sprite = dontBeWolfSprite;
+                break;
+            case "Contamination":
+                minigameTitleImage.sprite = contaminationSprite;
+                break;
+            case "Zone":
+                minigameTitleImage.sprite = zoneSprite;
+                break;
+            case "DestroyCrates":
+                minigameTitleImage.sprite = destroyCratesSprite;
+                break;
         }
     }
 

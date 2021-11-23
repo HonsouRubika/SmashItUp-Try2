@@ -33,6 +33,7 @@ public class CaptureManager : MonoBehaviour
         captureSoundScript = GetComponentInChildren<CaptureSound>();
 
         SpawnPlayerRandomly();
+        GameManager.Instance.focusPlayersScript.SetGameTitle("Zone");
     }
 
     private void Update()
