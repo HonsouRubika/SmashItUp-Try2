@@ -75,8 +75,8 @@ public class KeepTheFlagManager : MonoBehaviour
 
         if (timerScript.miniGameTimer <= 0)
         {
-            SortPlayers();
             keepingFlagScript.ResetFlag();
+            SortPlayers();
         }
     }
 
