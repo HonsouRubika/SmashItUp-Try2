@@ -50,6 +50,7 @@ public class KeepingFlag : MonoBehaviour
 
     public void ResetFlag()
     {
-        transform.position = flagInitialPos.position;
+        Destroy(this.gameObject);
+        //transform.position = flagInitialPos.position;
     }
 }

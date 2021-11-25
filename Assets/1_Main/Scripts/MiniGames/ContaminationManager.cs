@@ -85,8 +85,9 @@ public class ContaminationManager : MonoBehaviour
         {
             //DestroyWolfHead();
 
-            GameManager.Instance.Score();
             DestroyWolfHead();
+            GameManager.Instance.Score();
+            
             SortPlayers(1, player0ContaminationOrder);
             SortPlayers(2, player1ContaminationOrder);
             SortPlayers(3, player2ContaminationOrder);
