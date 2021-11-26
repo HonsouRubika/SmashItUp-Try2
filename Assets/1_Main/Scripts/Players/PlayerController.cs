@@ -16,10 +16,10 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed = 3;
     public float movementJumpSpeed = 3;
     //addForce
-    public float jumpChangeInDirectionSpeed = 1;
+    [Range(0.01f, 1f)]
+    public float ratioAddForce = 1;
     private float movementActu = 0;
-    public float ratioMovementChange = 1;
-
+    
     //TODO : GameMode avec Hp
     //public uint health; 
 
@@ -341,8 +341,12 @@ public class PlayerController : MonoBehaviour
         {
             //gauche
             //rb.velocity = new Vector2(-speed, rb.velocity.y);
-            rb.velocity = new Vector2(-speed, rb.velocity.y);
             attackDirection = true;
+
+            movementActu -= ratioAddForce;
+            if (movementActu < -1) movementActu = -1;
+            rb.velocity = new Vector2(movementActu * speed, rb.velocity.y);
+
 
             //Action (anim)
             actionState = Action.Run;
@@ -363,8 +367,12 @@ public class PlayerController : MonoBehaviour
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //droite
-            rb.velocity = new Vector2(speed, rb.velocity.y);
+            //rb.velocity = new Vector2(speed, rb.velocity.y);
             attackDirection = false;
+
+            movementActu += ratioAddForce;
+            if (movementActu > 1) movementActu = 1;
+            rb.velocity = new Vector2(movementActu * speed, rb.velocity.y);
 
             //Action (anim)
             actionState = Action.Run;
@@ -389,8 +397,12 @@ public class PlayerController : MonoBehaviour
             //rb.velocity = new Vector2(-speed, rb.velocity.y);
             //TODO : temp de pause quand changement de direction lors d'un saut
             //  Voir Bloc note "to do SUI" sur le bureau
-            rb.velocity = new Vector2(-movementJumpSpeed, rb.velocity.y);
+            //rb.velocity = new Vector2(-movementJumpSpeed, rb.velocity.y);
             attackDirection = true;
+
+            movementActu -= ratioAddForce;
+            if (movementActu < -1) movementActu = -1;
+            rb.velocity = new Vector2(movementActu * movementJumpSpeed, rb.velocity.y);
 
             //Action (anim)
             actionState = Action.Jump;
@@ -415,8 +427,12 @@ public class PlayerController : MonoBehaviour
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
             //droite
-            rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
+            //rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
             attackDirection = false;
+
+            movementActu += ratioAddForce;
+            if (movementActu > 1) movementActu = 1;
+            rb.velocity = new Vector2(movementActu * movementJumpSpeed, rb.velocity.y);
 
             //Action (anim)
             actionState = Action.Jump;
@@ -440,8 +456,20 @@ public class PlayerController : MonoBehaviour
         }
         else if (jumpState == JumpState.Grounded && !isBeingProjected)
         {
-            Debug.Log("x axe stop cause grounded");
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            //Debug.Log("x axe stop cause grounded");
+            //rb.velocity = new Vector2(0, rb.velocity.y);
+
+            if(movementActu > 0)
+            {
+                movementActu -= ratioAddForce;
+                if (movementActu < 0) movementActu = 0;
+            } 
+            else if (movementActu < 0)
+            {
+                movementActu += ratioAddForce;
+                if (movementActu > 0) movementActu = 0;
+            }
+            rb.velocity = new Vector2(movementActu * movementJumpSpeed, rb.velocity.y);
 
             //Action (anim)
             actionState = Action.Idle;

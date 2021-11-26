@@ -6856,11 +6856,12 @@ MonoBehaviour:
   speed: 20
   jumpSpeed: 20
   movementJumpSpeed: 20
+  ratioAddForce: 0.04
   playerID: 0
+  jumpState: 3
   maxJumpHigh: 70
   maxWallJumpHigh: 15
   wallJumpSpeed: 10
-  jumpState: 3
   wallJumpMovementFreeze: 0.2
   numberMaxWalljump: 50
   jumpHoldTimer: 0.1
@@ -6884,6 +6885,7 @@ MonoBehaviour:
   hammerYProjection: 10
   hammerBlockProjection: 5
   HammerSideProjectionMaxDistance: 15
+  projectionStopSpeed: 0.5
   attackRate: 2
   attackDuration: 0.1
   stunTime: 0.75
