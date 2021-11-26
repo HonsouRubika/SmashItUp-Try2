@@ -82,6 +82,7 @@ public class SoundManager : MonoBehaviour
     // Start playing a given music.
     public void PlayMusic(AudioClip music, float volume = 1f)
     {
+        musicSource.Stop();
         musicSource.clip = music;
         musicSource.volume = (musicDefaultVolume * volume) * globalDefaultVolume;
         musicSource.Play();
