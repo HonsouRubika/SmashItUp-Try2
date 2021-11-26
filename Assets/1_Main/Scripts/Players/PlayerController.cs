@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
     /*[System.NonSerialized]*/ public uint playerID = 0;
 
     //Sprite et animation
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
+    public BoxCollider2D bc;
 
     //jump variable
     [Header("Jump")]
@@ -109,7 +110,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         //init var
-        rb = GetComponent<Rigidbody2D>();
         startJumpPosition = transform.position.y;
         stunTimeActu = 0;
         blockStunTimeActu = 0;
@@ -340,12 +340,16 @@ public class PlayerController : MonoBehaviour
         if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //gauche
-            //rb.velocity = new Vector2(-speed, rb.velocity.y);
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
+            movementActu = -1;
             attackDirection = true;
 
+            /* 
+            //AddForce
             movementActu -= ratioAddForce;
             if (movementActu < -1) movementActu = -1;
             rb.velocity = new Vector2(movementActu * speed, rb.velocity.y);
+            */
 
 
             //Action (anim)
@@ -367,12 +371,16 @@ public class PlayerController : MonoBehaviour
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //droite
-            //rb.velocity = new Vector2(speed, rb.velocity.y);
+            rb.velocity = new Vector2(speed, rb.velocity.y);
+            movementActu = 1;
             attackDirection = false;
 
+            /*
+            //AddForce
             movementActu += ratioAddForce;
             if (movementActu > 1) movementActu = 1;
             rb.velocity = new Vector2(movementActu * speed, rb.velocity.y);
+            */
 
             //Action (anim)
             actionState = Action.Run;
@@ -575,15 +583,16 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(" 1 from " + transform.position + " to " + groundCheck.transform.position);
 
         //Colision Side GripCheck
+        float height = bc.size.y;
         if (Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Plateform")) || 
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x , gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform"))||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.1f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.1f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform")) ||
             ((Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")) ) 
-            && jumpState == JumpState.InFlight ) ||
+            && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling )) ||
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
         {
@@ -602,11 +611,11 @@ public class PlayerController : MonoBehaviour
             Physics2D.Linecast(transform.position, gripRightCheck.position, 1 << LayerMask.NameToLayer("Plateform")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.1f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.1f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform")) ||
             ((Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")) ) 
-            && jumpState == JumpState.InFlight ) ||
+            && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling)) ||
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
         {
@@ -799,6 +808,18 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPointL.position, attackRange);
         Gizmos.DrawWireSphere(hammerPointL.transform.position, hammerHitboxRange);
         Gizmos.DrawWireSphere(hammerPointR.transform.position, hammerHitboxRange);
+        /* DRAW RAYCASR
+        Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f));
+        Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f));
+        Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 0.5f));
+        Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.2f));
+        Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f));
+        Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f));
+        Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 0.5f));
+        Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 2.2f));
+        // Test
+        Gizmos.DrawLine(new Vector2(transform.position.x, gripLeftCheck.position.y + 2.15f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.15f));
+        */
     }
 
     public enum JumpState
