@@ -9,6 +9,7 @@ public class ContaminationManager : MonoBehaviour
     public GameObject[] players;
     private List<GameObject> playersNotWolf;
     private PlayerController[] playersControllers;
+    public List<int> playersTransformedWolf = new List<int>();
     private WolfSound WolfSoundScript;
 
     public Transform wolfTpPoint;
@@ -71,15 +72,26 @@ public class ContaminationManager : MonoBehaviour
 
     private void Update()
     {
-        if (playersControllers[wolfPlayerNumber].hitPlayer)
+        for (int i = 0; i < playersTransformedWolf.Count; i++)
+        {
+            if (playersControllers[playersTransformedWolf[i]].hitPlayer)
+            {
+                wolfPlayerNumber = playersControllers[playersTransformedWolf[i]].playerIDHit;
+
+                NewPlayerIsWolf(wolfPlayerNumber);
+                SpawnWolfHead(wolfPlayerNumber);
+                WolfSoundScript.WolfAttack();
+            }
+        }
+
+        /*if (playersControllers[wolfPlayerNumber].hitPlayer)
         {
             wolfPlayerNumber = playersControllers[wolfPlayerNumber].playerIDHit;
 
             NewPlayerIsWolf(wolfPlayerNumber);
             SpawnWolfHead(wolfPlayerNumber);
             WolfSoundScript.WolfAttack();
-        }
-
+        }*/
 
         if (timerScript.miniGameTimer <= 0 || contaminationOrder == players.Length)
         {
@@ -97,6 +109,7 @@ public class ContaminationManager : MonoBehaviour
 
     private void NewPlayerIsWolf(int playerNumber)
     {
+        playersTransformedWolf.Add(playerNumber);
         contaminationOrder++;
 
         switch (playerNumber)

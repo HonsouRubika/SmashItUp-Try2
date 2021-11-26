@@ -13,12 +13,18 @@ public class TeleporterLobby : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        nbPlayerInZone++;
+        if (collision.CompareTag("Player"))
+        {
+            nbPlayerInZone++;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        nbPlayerInZone--;
+        if (collision.CompareTag("Player"))
+        {
+            nbPlayerInZone--;
+        }   
     }
 
     private void Update()

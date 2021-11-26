@@ -107,10 +107,10 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
                     SceneManager.LoadScene("ZoneMouvante0" + Random.Range(1, 3));
                     break;
-                /*case (int)GameMode.DestrucBox:
+                case (int)GameMode.DestrucBox:
                     _nbMancheActu++;
                     SceneManager.LoadScene("DestrucCaisse0" + Random.Range(1, 3));
-                    break;*/
+                    break;
                 default:
                     Debug.Log("Error, GameMode not found");
                     break;
@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
         Loup,
         CaptureDeZone,
         CaptureDeZoneMouvante,
-        //DestrucBox,
+        DestrucBox,
         Contamination,
         KeepTheFlag,
         total //egal au nombre d'élément dans l'enum
