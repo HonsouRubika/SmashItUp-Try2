@@ -6853,14 +6853,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2e900c500a405246a60e13d188388b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  jumpSpeed: 30
-  movementJumpSpeed: 30
+  speed: 20
+  jumpSpeed: 20
+  movementJumpSpeed: 20
+  ratioAddForce: 0.04
   playerID: 0
-  maxJumpHigh: 12
+  jumpState: 3
+  maxJumpHigh: 70
   maxWallJumpHigh: 15
   wallJumpSpeed: 10
-  jumpState: 3
   wallJumpMovementFreeze: 0.2
   numberMaxWalljump: 50
   jumpHoldTimer: 0.05
