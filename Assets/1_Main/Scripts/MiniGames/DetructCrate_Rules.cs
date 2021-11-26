@@ -13,6 +13,10 @@ public class DetructCrate_Rules : MonoBehaviour
     private GameObject[] playersUnsorted;
     public GameObject[] players;
 
+    public float[] scorePlayers;
+    private float[] finalScores;
+    private int[] playersPosition;
+
     public int cratesNumber = 0;
 
     [Space]
@@ -29,50 +33,23 @@ public class DetructCrate_Rules : MonoBehaviour
 
         SpawnPlayerRandomly();
         GameManager.Instance.focusPlayersScript.SetGameTitle("DestroyCrates");
+
+        scorePlayers = new float[players.Length];
+        finalScores = new float[players.Length];
+        playersPosition = new int[players.Length];
+        for (int i = 0; i < players.Length; i++)
+        {
+            playersPosition[i] = i;
+        }
     }
 
     private void Update()
     {
+        IncrementPlayerScore();
+
         if (timerScript.miniGameTimer <= 0)
         {
-            int maxVal = 0;
-            int joueurValMax = 0;
-            if (scoreScript.scorePlayer0 > maxVal)
-            {
-                maxVal = scoreScript.scorePlayer0;
-                joueurValMax = 0;
-            }
-            if (scoreScript.scorePlayer1 > maxVal) 
-            {
-                maxVal = scoreScript.scorePlayer1;
-                joueurValMax = 1;
-            }
-            if (scoreScript.scorePlayer2 > maxVal)
-            {
-                maxVal = scoreScript.scorePlayer2;
-                joueurValMax = 2;
-            }
-            if (scoreScript.scorePlayer3 > maxVal)
-            {
-                maxVal = scoreScript.scorePlayer3;
-                joueurValMax = 3;
-            }
-
-            switch (joueurValMax)
-            {
-                case 0:
-                    GameManager.Instance.addScores(10, 0, 0, 0);
-                    break;
-                case 1:
-                    GameManager.Instance.addScores(0, 10, 0, 0);
-                    break;
-                case 2:
-                    GameManager.Instance.addScores(0, 0, 10, 0);
-                    break;
-                case 3:
-                    GameManager.Instance.addScores(0, 0, 0, 10);
-                    break;
-            }
+            SortPlayers();        
         }
 
         //End the mini-game
@@ -111,5 +88,57 @@ public class DetructCrate_Rules : MonoBehaviour
             possibleNumbers.RemoveAt(position);
         }
         return chosenNumbers;
+    }
+
+    private void IncrementPlayerScore()
+    {
+        if (scorePlayers.Length == 2)
+        {
+            scorePlayers[0] = scoreScript.scorePlayer0;
+            scorePlayers[1] = scoreScript.scorePlayer1;
+        }
+        else if (scorePlayers.Length == 3)
+        {
+            scorePlayers[0] = scoreScript.scorePlayer0;
+            scorePlayers[1] = scoreScript.scorePlayer1;
+            scorePlayers[2] = scoreScript.scorePlayer2;
+        }
+        else if (scorePlayers.Length == 4)
+        {
+            scorePlayers[0] = scoreScript.scorePlayer0;
+            scorePlayers[1] = scoreScript.scorePlayer1;
+            scorePlayers[2] = scoreScript.scorePlayer2;
+            scorePlayers[3] = scoreScript.scorePlayer3;
+        }
+    }
+
+    private void SortPlayers()
+    {
+        for (int i = 0; i < finalScores.Length; i++)
+        {
+            finalScores[i] = scorePlayers[i];
+        }
+
+        System.Array.Sort(finalScores, playersPosition);
+
+        switch (playersPosition.Length)
+        {
+            case 2:
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, 10);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 5);
+                break;
+            case 3:
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, 10);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 6);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, 3);
+                break;
+            case 4:
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, 10);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 8);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, 6);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 4] + 1, 4);
+                break;
+        }
+
     }
 }

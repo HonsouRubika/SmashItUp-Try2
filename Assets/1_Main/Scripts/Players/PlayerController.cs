@@ -421,7 +421,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (jumpState == JumpState.Grounded && !isBeingProjected)
         {
-            Debug.Log("x axe stop cause grounded");
+            //Debug.Log("x axe stop cause grounded");
             rb.velocity = new Vector2(0, rb.velocity.y);
 
             //anim
@@ -574,7 +574,7 @@ public class PlayerController : MonoBehaviour
         //gauche
         if ((transform.position.x <= startProjectedPostion + -HammerSideProjectionMaxDistance) && isBeingProjected)
         {
-            Debug.Log("stop gauche");
+            //Debug.Log("stop gauche");
             rb.velocity = new Vector2(rb.velocity.x + projectionStopSpeed, rb.velocity.y);
             //end projection
             if (rb.velocity.x + projectionStopSpeed >= 0) isBeingProjected = false;
@@ -582,7 +582,7 @@ public class PlayerController : MonoBehaviour
         } //droite
         else if ((transform.position.x >= startProjectedPostion + HammerSideProjectionMaxDistance) && isBeingProjected)
         {
-            Debug.Log("stop droite");
+            //Debug.Log("stop droite");
             rb.velocity = new Vector2(rb.velocity.x - projectionStopSpeed, rb.velocity.y);
             //end projection
             if (rb.velocity.x + projectionStopSpeed <= 0) isBeingProjected = false;
