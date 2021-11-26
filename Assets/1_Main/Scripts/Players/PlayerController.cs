@@ -340,12 +340,16 @@ public class PlayerController : MonoBehaviour
         if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //gauche
-            //rb.velocity = new Vector2(-speed, rb.velocity.y);
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
+            movementActu = -1;
             attackDirection = true;
 
+            /* 
+            //AddForce
             movementActu -= ratioAddForce;
             if (movementActu < -1) movementActu = -1;
             rb.velocity = new Vector2(movementActu * speed, rb.velocity.y);
+            */
 
 
             //Action (anim)
@@ -367,12 +371,16 @@ public class PlayerController : MonoBehaviour
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //droite
-            //rb.velocity = new Vector2(speed, rb.velocity.y);
+            rb.velocity = new Vector2(speed, rb.velocity.y);
+            movementActu = 1;
             attackDirection = false;
 
+            /*
+            //AddForce
             movementActu += ratioAddForce;
             if (movementActu > 1) movementActu = 1;
             rb.velocity = new Vector2(movementActu * speed, rb.velocity.y);
+            */
 
             //Action (anim)
             actionState = Action.Run;
