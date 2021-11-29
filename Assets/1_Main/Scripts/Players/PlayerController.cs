@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump")]
     public JumpState jumpState = JumpState.InFlight;
     public float maxJumpHigh = 1;
+    public float minJumpHeigh = 0.5f;
     private float startJumpPosition;
     private float startWallJumpPosition;
     public float maxWallJumpHigh = 1;
@@ -148,12 +149,21 @@ public class PlayerController : MonoBehaviour
             //stun
             if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
             {
-                if (context.started) computeJump();
-                else if (context.canceled)
+                if (context.started)
                 {
-                    shaitanerieDUnityActu = Time.time;
+                    computeJump();
+                }
+                else if (context.canceled && transform.position.y >= (minJumpHeigh + startJumpPosition))
+                {
+                    shaitanerieDUnityActu = Time.time; //ne touche pas à ça
                     //le perso descend car il relache la touche de saut
                     startJumpPosition = transform.position.y - maxJumpHigh;
+                }
+                else if (context.canceled && transform.position.y < (minJumpHeigh + startJumpPosition))
+                {
+                    //dois s'arreter au minimum de saut
+                    shaitanerieDUnityActu = Time.time;
+                    startJumpPosition = transform.position.y - maxJumpHigh + minJumpHeigh;
                 }
             }
         }
@@ -515,6 +525,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0);
             jumpHoldTimerActu = Time.time + jumpHoldTimer;
             isJumpHoldTimerSetted = true;
+            Debug.Log("going down");
         }
         if (jumpState == JumpState.Falling && Time.time >= jumpHoldTimerActu && (isJumpHoldTimerSetted && !isWallJumpHoldTimerSetted) && isJump)
         {
