@@ -56,7 +56,16 @@ public class GameManager : MonoBehaviour
         Random.InitState((int)Time.time);
         for (int i = 0; i < nbManches; ++i)
         {
-            _selectedGameModes[i] = Random.Range(0, (int)GameMode.total);
+            int nextGameMode = Random.Range(0, (int)GameMode.total);
+            //on s'assure que le prochain game mode choisi soit différent du premier
+            Debug.Log(_selectedGameModes[0]);
+            if (i > 0)
+            {
+                Debug.Log(_selectedGameModes.Length);
+                while (nextGameMode == _selectedGameModes[i - 1]) nextGameMode = Random.Range(0, (int)GameMode.total);
+            }
+            Debug.Log("oui");
+            _selectedGameModes[i] = nextGameMode;
             _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
             //Debug.Log(i + " : " +_selectedGameModes[i]);
         }

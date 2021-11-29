@@ -771,7 +771,11 @@ public class PlayerController : MonoBehaviour
             hammerPointR.SetActive(true);
 
             //anim
-            playerAnimScript.Attack();
+            playerAnimScript.Attack(); ///ToDO : corriger error :
+            /*
+             * NullReferenceException: Object reference not set to an instance of an object
+             * PlayerController.computeAttack () (at Assets/1_Main/Scripts/Players/PlayerController.cs:774)
+            */
             PlayerSoundScript.HammerPouet();
         }
     }
@@ -831,7 +835,7 @@ public class PlayerController : MonoBehaviour
         // Test
         Gizmos.DrawLine(new Vector2(transform.position.x, gripLeftCheck.position.y + 2.15f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.15f));
         */
-    }
+        }
 
     public enum JumpState
     {
