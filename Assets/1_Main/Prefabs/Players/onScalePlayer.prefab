@@ -6855,13 +6855,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 30
   jumpSpeed: 30
-  movementJumpSpeed: 203
-  ratioAddForce: 0.02
+  movementJumpSpeed: 20
+  ratioAddForce: 0.04
   playerID: 0
   rb: {fileID: 8299801329159407178}
   bc: {fileID: 6809023613868175522}
   jumpState: 3
   maxJumpHigh: 12
+  minJumpHeigh: 3
   maxWallJumpHigh: 15
   wallJumpSpeed: 10
   wallJumpMovementFreeze: 0.2

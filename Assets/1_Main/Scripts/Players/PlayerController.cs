@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump")]
     public JumpState jumpState = JumpState.InFlight;
     public float maxJumpHigh = 1;
+    public float minJumpHeigh = 0.5f;
     private float startJumpPosition;
     private float startWallJumpPosition;
     public float maxWallJumpHigh = 1;
@@ -148,12 +149,21 @@ public class PlayerController : MonoBehaviour
             //stun
             if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
             {
-                if (context.started) computeJump();
-                else if (context.canceled)
+                if (context.started)
                 {
-                    shaitanerieDUnityActu = Time.time;
+                    computeJump();
+                }
+                else if (context.canceled && transform.position.y >= (minJumpHeigh + startJumpPosition))
+                {
+                    shaitanerieDUnityActu = Time.time; //ne touche pas à ça
                     //le perso descend car il relache la touche de saut
                     startJumpPosition = transform.position.y - maxJumpHigh;
+                }
+                else if (context.canceled && transform.position.y < (minJumpHeigh + startJumpPosition))
+                {
+                    //dois s'arreter au minimum de saut
+                    shaitanerieDUnityActu = Time.time;
+                    startJumpPosition = transform.position.y - maxJumpHigh + minJumpHeigh;
                 }
             }
         }
@@ -760,7 +770,11 @@ public class PlayerController : MonoBehaviour
             hammerPointR.SetActive(true);
 
             //anim
-            playerAnimScript.Attack();
+            playerAnimScript.Attack(); ///ToDO : corriger error :
+            /*
+             * NullReferenceException: Object reference not set to an instance of an object
+             * PlayerController.computeAttack () (at Assets/1_Main/Scripts/Players/PlayerController.cs:774)
+            */
             PlayerSoundScript.HammerPouet();
         }
     }
@@ -820,7 +834,7 @@ public class PlayerController : MonoBehaviour
         // Test
         Gizmos.DrawLine(new Vector2(transform.position.x, gripLeftCheck.position.y + 2.15f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.15f));
         */
-    }
+        }
 
     public enum JumpState
     {
