@@ -84,6 +84,12 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("CaptureTheFlag01");
     }
 
+    public void FinaleScore()
+    {
+        //TODO : changer le nom de la scène avec celle des cores finaux
+        //SceneManager.LoadScene("ScoreFinal");
+    }
+
     public void NextMap()
     {
         //affichage game over
@@ -213,7 +219,7 @@ public class GameManager : MonoBehaviour
         FFA,
         OneVSThree,
         TwoVSTwo,
-        Coop,
+        Coop, //pas pris en compte actuellement
         total //egal au nombre d'élément dans l'enum
     }
 }

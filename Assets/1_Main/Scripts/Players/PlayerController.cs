@@ -525,7 +525,6 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0);
             jumpHoldTimerActu = Time.time + jumpHoldTimer;
             isJumpHoldTimerSetted = true;
-            Debug.Log("going down");
         }
         if (jumpState == JumpState.Falling && Time.time >= jumpHoldTimerActu && (isJumpHoldTimerSetted && !isWallJumpHoldTimerSetted) && isJump)
         {
