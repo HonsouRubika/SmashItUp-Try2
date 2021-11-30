@@ -550,8 +550,15 @@ public class PlayerController : MonoBehaviour
         }
 
         //Colision Sol
-        if ((Physics2D.Linecast(transform.position, groundCheck.transform.position, 1 << LayerMask.NameToLayer("Ground"))) ||
-            (Physics2D.Linecast(transform.position, groundCheck.transform.position, 1 << LayerMask.NameToLayer("Plateform"))))
+        if ((Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Ground"))) || /*gauche*/
+            (Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Plateform"))) ||
+            (Physics2D.Linecast(transform.position, groundCheck.transform.position, 1 << LayerMask.NameToLayer("Ground"))) || /*milieu*/
+            (Physics2D.Linecast(transform.position, groundCheck.transform.position, 1 << LayerMask.NameToLayer("Plateform"))) ||
+            (Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Ground"))) || /*droite*/
+            (Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Plateform"))) ||
+            (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))) || /*Gauche*/
+            (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))) || /*Milieu*/
+            (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x +1f, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))))   /*Droite*/
         {
             if (Time.time >= shaitanerieDUnityActu)
             {
@@ -583,7 +590,10 @@ public class PlayerController : MonoBehaviour
         {
             if(rb.velocity.y < 0)
             {
+                //le perso chute
+                //vitesse de chute constante
                 jumpState = JumpState.Falling;
+                rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             }
             else if (jumpState == JumpState.Grounded) // ne change pas si jumpState = JumpState.Falling
             {
@@ -714,6 +724,9 @@ public class PlayerController : MonoBehaviour
             //freeze movement for small time
             wallJumpMovementFreezeActuR = wallJumpMovementFreeze + Time.time;
 
+            //addForce
+            movementActu = -1;
+
             //jump or walljump
             isJump = false;
             isWallJump = true;
@@ -731,6 +744,9 @@ public class PlayerController : MonoBehaviour
             shaitanerieDUnityActu = Time.time + 10;
             //freeze movement for small time
             wallJumpMovementFreezeActuL = wallJumpMovementFreeze + Time.time;
+
+            //addForce
+            movementActu = 1;
 
             //jump or walljump
             isJump = false;
@@ -822,6 +838,9 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPointL.position, attackRange);
         Gizmos.DrawWireSphere(hammerPointL.transform.position, hammerHitboxRange);
         Gizmos.DrawWireSphere(hammerPointR.transform.position, hammerHitboxRange);
+        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y - 0.1f));
+        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - 0.1f));
+        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y - 0.1f));
         /* DRAW RAYCASR
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f));
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f));
