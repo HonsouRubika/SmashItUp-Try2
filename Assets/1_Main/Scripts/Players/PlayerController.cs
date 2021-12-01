@@ -786,12 +786,28 @@ public class PlayerController : MonoBehaviour
             hammerPointR.SetActive(true);
 
             //anim
-            playerAnimScript.Attack(); ///ToDO : corriger error :
+            if(playerAnimScript != null)
+            {
+                playerAnimScript.Attack();
+            }
+            else
+            {
+                Debug.LogWarning("Error: Le PlayerAnimScript est null");
+            }
+             ///ToDO : corriger error :
             /*
              * NullReferenceException: Object reference not set to an instance of an object
              * PlayerController.computeAttack () (at Assets/1_Main/Scripts/Players/PlayerController.cs:774)
             */
-            PlayerSoundScript.HammerPouet();
+            if(PlayerSoundScript != null)
+            {
+                PlayerSoundScript.HammerPouet();
+            }
+            else
+            {
+                Debug.LogWarning("Error: Le PlayerSoundScript est null");
+            }
+            
         }
     }
 
