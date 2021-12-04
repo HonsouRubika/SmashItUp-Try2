@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
     //Animation
     private PlayerAnim playerAnimScript;
-    private Transform playerAnim;
+    [HideInInspector] public Transform playerAnimator;
 
 
     void Start()
@@ -129,7 +129,6 @@ public class PlayerController : MonoBehaviour
 
         //get anim script
         playerAnimScript = GetComponentInChildren<PlayerAnim>();
-        playerAnim = playerAnimScript.transform;
 
         PlayerSoundScript = GetComponentInChildren<PlayerSound>();
     }
@@ -220,11 +219,11 @@ public class PlayerController : MonoBehaviour
 
             if (transform.position.x <= startProjectedPostion)
             {
-                playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+                playerAnimator.localScale = new Vector2(-Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
             }
             else if (transform.position.x >= startProjectedPostion)
             {
-                playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+                playerAnimator.localScale = new Vector2(Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
             }
         }
     }
@@ -368,7 +367,7 @@ public class PlayerController : MonoBehaviour
             //anim
             if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
             {
-                playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+                playerAnimator.localScale = new Vector2(Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
             }
             
             if (playerAnimScript.playerAnimator != null)
@@ -398,7 +397,7 @@ public class PlayerController : MonoBehaviour
             //anim
             if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
             {
-                playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+                playerAnimator.localScale = new Vector2(-Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
             }
             
             if (playerAnimScript.playerAnimator != null)
@@ -428,7 +427,7 @@ public class PlayerController : MonoBehaviour
             //anim
             if (!GameManager.Instance.isPaused)
             {
-                playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+                playerAnimator.localScale = new Vector2(Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
             }
 
             if (playerAnimScript.playerAnimator != null)
@@ -458,7 +457,7 @@ public class PlayerController : MonoBehaviour
             //anim
             if (!GameManager.Instance.isPaused)
             {
-                playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+                playerAnimator.localScale = new Vector2(-Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
             }
 
             if (playerAnimScript.playerAnimator != null)
@@ -506,13 +505,13 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("le perso doit glisser du mur");
             playerAnimScript.WallSlide(true);
-            playerAnim.localScale = new Vector2(-Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            playerAnimator.localScale = new Vector2(-Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
         }
         else if (isGrippingRight)
         {
             //Debug.Log("le perso doit glisser du mur");
             playerAnimScript.WallSlide(true);
-            playerAnim.localScale = new Vector2(Mathf.Abs(playerAnim.localScale.x), playerAnim.localScale.y);
+            playerAnimator.localScale = new Vector2(Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
         }
         else
         {
