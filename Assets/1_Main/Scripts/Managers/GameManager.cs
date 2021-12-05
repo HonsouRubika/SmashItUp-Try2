@@ -99,7 +99,9 @@ public class GameManager : MonoBehaviour
         else if (transitionState == TransitionState.FOCUS && Time.time >= focusPlayerTimerActu)
         {
             //7) Timer "1,2,3,GO"
-            //transitionAnimScript.Counstdown();
+
+            /// TODO : transitionAnimScript.Counstdown();
+            
             countdownTimerActu = countdownTimer + Time.time;
             transitionState = TransitionState.COUNTDOWN;
             Debug.Log("Countdown");
