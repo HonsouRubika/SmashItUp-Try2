@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     //Animation
     [HideInInspector] public TransitionAnim transitionAnimScript;
     public GameObject Curtain;
+    private GameObject transition;
 
     private enum TransitionState {OPENING, OPEN, CLOSING, CLOSE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED}
 
@@ -108,6 +109,7 @@ public class GameManager : MonoBehaviour
             //8) unfreeze scène2
             transitionState = TransitionState.FINISHED;
             Debug.Log("Transition finished");
+            Destroy(transition);
         }
     }
 
@@ -169,7 +171,7 @@ public class GameManager : MonoBehaviour
         //1) freeze scène1
 
         //2) pop gameObject rideau(NotDestroyOnLoad)
-        GameObject transition = Instantiate<GameObject>(Curtain);
+        transition = Instantiate<GameObject>(Curtain);
         DontDestroyOnLoad(transition);
         ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
 
