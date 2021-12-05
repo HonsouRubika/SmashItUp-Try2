@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [HideInInspector] public FocusPlayers focusPlayersScript;
+    [HideInInspector] public ScoreValuesManager scoreValuesManagerScript;
 
     private int[] _selectedGameModes;
     private int[] _teamCompo;
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         focusPlayersScript = GetComponentInChildren<FocusPlayers>();
+        scoreValuesManagerScript = GetComponent<ScoreValuesManager>();
     }
 
     //fonction à call depuis le menu suite au clic() du bouton play;
@@ -58,13 +60,10 @@ public class GameManager : MonoBehaviour
         {
             int nextGameMode = Random.Range(0, (int)GameMode.total);
             //on s'assure que le prochain game mode choisi soit différent du premier
-            Debug.Log(_selectedGameModes[0]);
             if (i > 0)
             {
-                Debug.Log(_selectedGameModes.Length);
                 while (nextGameMode == _selectedGameModes[i - 1]) nextGameMode = Random.Range(0, (int)GameMode.total);
             }
-            Debug.Log("oui");
             _selectedGameModes[i] = nextGameMode;
             _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
             //Debug.Log(i + " : " +_selectedGameModes[i]);

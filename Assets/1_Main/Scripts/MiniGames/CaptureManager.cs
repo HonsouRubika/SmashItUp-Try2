@@ -8,6 +8,10 @@ public class CaptureManager : MonoBehaviour
     private GameObject[] playersUnsorted;
     public GameObject[] players;
 
+    public float[] scorePlayers;
+    private float[] finalScores;
+    private int[] playersPosition;
+
     public int scorePlayer0 = 0;
     public int scorePlayer1 = 0;
     public int scorePlayer2 = 0;
@@ -28,8 +32,15 @@ public class CaptureManager : MonoBehaviour
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
 
-        zoneScript = GetComponentInChildren<Zone>();
+        scorePlayers = new float[players.Length];
+        finalScores = new float[players.Length];
+        playersPosition = new int[players.Length];
+        for (int i = 0; i < players.Length; i++)
+        {
+            playersPosition[i] = i;
+        }
 
+        zoneScript = GetComponentInChildren<Zone>();
         captureSoundScript = GetComponentInChildren<CaptureSound>();
 
         SpawnPlayerRandomly();
@@ -38,53 +49,11 @@ public class CaptureManager : MonoBehaviour
 
     private void Update()
     {
+        IncrementPlayerScore();
+
         if (timerScript.miniGameTimer <= 0)
         {
-            /*int[] scores = new int[4];
-            scores[0] = scorePlayer0;
-            scores[1] = scorePlayer1;
-            scores[2] = scorePlayer2;
-            scores[3] = scorePlayer3;
-            Array.Sort(scores);*/
-
-            int maxVal = 0;
-            int joueurValMax = 0;
-            if(scorePlayer0 > maxVal)
-            {
-                maxVal = scorePlayer0;
-                joueurValMax = 0;
-            }
-            if(scorePlayer1 > maxVal)
-            {
-                maxVal = scorePlayer1;
-                joueurValMax = 1;
-            }
-            if(scorePlayer2 > maxVal)
-            {
-                maxVal = scorePlayer2;
-                joueurValMax = 2;
-            }
-            if(scorePlayer3 > maxVal)
-            {
-                maxVal = scorePlayer3;
-                joueurValMax = 3;
-            }
-
-            switch (joueurValMax)
-            {
-                case 0:
-                    GameManager.Instance.addScores(10, 0, 0, 0);
-                    break;
-                case 1:
-                    GameManager.Instance.addScores(0, 10, 0, 0);
-                    break;
-                case 2:
-                    GameManager.Instance.addScores(0, 0, 10, 0);
-                    break;
-                case 3:
-                    GameManager.Instance.addScores(0, 0, 0, 10);
-                    break;
-            }
+            SortPlayers();
         }
 
         if (zoneScript.counterPlayerinZone >= 2)
@@ -211,5 +180,97 @@ public class CaptureManager : MonoBehaviour
             possibleNumbers.RemoveAt(position);
         }
         return chosenNumbers;
+    }
+
+    private void IncrementPlayerScore()
+    {
+        if (scorePlayers.Length == 2)
+        {
+            scorePlayers[0] = scoreScript.scorePlayer0;
+            scorePlayers[1] = scoreScript.scorePlayer1;
+        }
+        else if (scorePlayers.Length == 3)
+        {
+            scorePlayers[0] = scoreScript.scorePlayer0;
+            scorePlayers[1] = scoreScript.scorePlayer1;
+            scorePlayers[2] = scoreScript.scorePlayer2;
+        }
+        else if (scorePlayers.Length == 4)
+        {
+            scorePlayers[0] = scoreScript.scorePlayer0;
+            scorePlayers[1] = scoreScript.scorePlayer1;
+            scorePlayers[2] = scoreScript.scorePlayer2;
+            scorePlayers[3] = scoreScript.scorePlayer3;
+        }
+    }
+
+    private void SortPlayers()
+    {
+        for (int i = 0; i < finalScores.Length; i++)
+        {
+            finalScores[i] = scorePlayers[i];
+        }
+
+        System.Array.Sort(finalScores, playersPosition);
+
+        switch (playersPosition.Length)
+        {
+            case 4:
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
+                break;
+            case 3:
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                break;
+            case 2:
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                break;
+        }
+    }
+    private void SortPlayerWithOneWinner()
+    {
+        int maxVal = 0;
+        int joueurValMax = 0;
+        if (scorePlayer0 > maxVal)
+        {
+            maxVal = scorePlayer0;
+            joueurValMax = 0;
+        }
+        if (scorePlayer1 > maxVal)
+        {
+            maxVal = scorePlayer1;
+            joueurValMax = 1;
+        }
+        if (scorePlayer2 > maxVal)
+        {
+            maxVal = scorePlayer2;
+            joueurValMax = 2;
+        }
+        if (scorePlayer3 > maxVal)
+        {
+            maxVal = scorePlayer3;
+            joueurValMax = 3;
+        }
+
+        switch (joueurValMax)
+        {
+            case 0:
+                GameManager.Instance.addScores(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0, 0);
+                break;
+            case 1:
+                GameManager.Instance.addScores(0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0);
+                break;
+            case 2:
+                GameManager.Instance.addScores(0, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0);
+                break;
+            case 3:
+                GameManager.Instance.addScores(0, 0, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                break;
+        }
     }
 }

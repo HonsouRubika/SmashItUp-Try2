@@ -56,6 +56,28 @@ public class SoundManager : MonoBehaviour
         #endregion
     }
 
+    #region PauseSettings
+    public void PauseGame(bool isPause)
+    {
+        if (!isPause)
+        {
+            musicSource.UnPause();
+            sfxSource.volume = 1f;
+            zoneSource.volume = 1f;
+            footStepsSource.volume = 1f;
+            voiceSource.volume = 1f;
+        }
+        else
+        {
+            musicSource.Pause();
+            sfxSource.volume = 0f;
+            zoneSource.volume = 0f;
+            footStepsSource.volume = 0f;
+            voiceSource.volume = 0f;
+        }
+    }
+    #endregion
+
     #region SetVolume
     public void SetVolumeGlobal(float vol)
     {

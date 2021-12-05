@@ -119,22 +119,21 @@ public class CollectThePiecesManager : MonoBehaviour
 
         switch (playersPosition.Length)
         {
-            case 2:
-                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, 10);
-                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 5);
+            case 4:
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
                 break;
             case 3:
-                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, 10);
-                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 6);
-                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, 3);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
                 break;
-            case 4:
-                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, 10);
-                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, 8);
-                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 3] + 1, 6);
-                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 4] + 1, 4);
+            case 2:
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                GameManager.Instance.addSpecificScore(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
                 break;
         }
-
     }
 }

@@ -33,16 +33,16 @@ public class CaptureTheFlag_Rules : MonoBehaviour
         switch (playerWin)
         {
             case 0:
-                GameManager.Instance.addScores(winPoints, 0, 0, 0);
+                GameManager.Instance.addScores(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0, 0);
                 break;
             case 1:
-                GameManager.Instance.addScores(0, winPoints, 0, 0);
+                GameManager.Instance.addScores(0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0);
                 break;
             case 2:
-                GameManager.Instance.addScores(0, 0, winPoints, 0);
+                GameManager.Instance.addScores(0, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0);
                 break;
             case 3:
-                GameManager.Instance.addScores(0, 0, 0, winPoints);
+                GameManager.Instance.addScores(0, 0, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
                 break;
         }
 
