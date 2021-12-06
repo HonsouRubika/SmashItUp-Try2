@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-/// <summary>
-/// By Antoine LEROUX
-/// This script reference the rules of mini-game Detruct Crate
-/// </summary>
-
-public class DetructCrate_Rules : MonoBehaviour
+public class CollectThePiecesManager : MonoBehaviour
 {
     private GameObject[] playersUnsorted;
     public GameObject[] players;
@@ -17,7 +12,7 @@ public class DetructCrate_Rules : MonoBehaviour
     private float[] finalScores;
     private int[] playersPosition;
 
-    public int cratesNumber = 0;
+    public int piecesNumber = 0;
 
     [Space]
     public Score scoreScript;
@@ -31,8 +26,8 @@ public class DetructCrate_Rules : MonoBehaviour
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
 
-        SpawnPlayerRandomly();
-        GameManager.Instance.focusPlayersScript.SetGameTitle("DestroyCrates");
+        //SpawnPlayerRandomly();
+        GameManager.Instance.focusPlayersScript.SetGameTitle("CollectThePieces");
 
         scorePlayers = new float[players.Length];
         finalScores = new float[players.Length];
@@ -49,11 +44,11 @@ public class DetructCrate_Rules : MonoBehaviour
 
         if (timerScript.miniGameTimer <= 0)
         {
-            SortPlayers();        
+            SortPlayers();
         }
 
         //End the mini-game
-        if (cratesNumber <= 0)
+        if (piecesNumber <= 0)
         {
             GameManager.Instance.Score();
             SortPlayers();

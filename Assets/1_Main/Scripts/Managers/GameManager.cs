@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [HideInInspector] public FocusPlayers focusPlayersScript;
+    [HideInInspector] public ScoreValuesManager scoreValuesManagerScript;
 
     private int[] _selectedGameModes;
     private int[] _teamCompo;
@@ -58,6 +59,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         focusPlayersScript = GetComponentInChildren<FocusPlayers>();
+        scoreValuesManagerScript = GetComponent<ScoreValuesManager>();
     }
 
     private void Update()
@@ -108,14 +110,14 @@ public class GameManager : MonoBehaviour
         } else if (transitionState == TransitionState.COUNTDOWN && Time.time >= countdownTimerActu)
         {
             //transition finiched
-            //8) unfreeze scène2
+            //8) unfreeze scï¿½ne2
             transitionState = TransitionState.FINISHED;
             Debug.Log("Transition finished");
             Destroy(transition);
         }
     }
 
-    //fonction à call depuis le menu suite au clic() du bouton play;
+    //fonction ï¿½ call depuis le menu suite au clic() du bouton play;
     public void initializeGameModes(int nbManches)
     {
         _nbManches = nbManches;
@@ -132,20 +134,17 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < nbManches; ++i)
         {
             int nextGameMode = Random.Range(0, (int)GameMode.total);
-            //on s'assure que le prochain game mode choisi soit différent du premier
-            //Debug.Log(_selectedGameModes[0]);
+            //on s'assure que le prochain game mode choisi soit diffï¿½rent du premier
             if (i > 0)
             {
-                //Debug.Log(_selectedGameModes.Length);
                 while (nextGameMode == _selectedGameModes[i - 1]) nextGameMode = Random.Range(0, (int)GameMode.total);
             }
-            //Debug.Log("oui");
             _selectedGameModes[i] = nextGameMode;
             _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
             //Debug.Log(i + " : " +_selectedGameModes[i]);
         }
 
-        //on passe à la première manche
+        //on passe ï¿½ la premiï¿½re manche
         NextMap();
     }
 
@@ -161,7 +160,7 @@ public class GameManager : MonoBehaviour
 
     public void FinaleScore()
     {
-        //TODO : changer le nom de la scène avec celle des cores finaux
+        //TODO : changer le nom de la scï¿½ne avec celle des cores finaux
         //SceneManager.LoadScene("ScoreFinal");
     }
 
@@ -170,7 +169,7 @@ public class GameManager : MonoBehaviour
         //affichage game over
         //Debug.Log("Call fct Next map");
 
-        //1) freeze scène1
+        //1) freeze scï¿½ne1
 
         //2) pop gameObject rideau(NotDestroyOnLoad)
         transition = Instantiate<GameObject>(Curtain);
@@ -190,7 +189,7 @@ public class GameManager : MonoBehaviour
 
     public void goToNextScene()
     {
-        //4) LoadScene(scène2)
+        //4) LoadScene(scï¿½ne2)
 
         if (_nbMancheActu < _nbManches)
         {
@@ -234,7 +233,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            //partie terminé, affichage des cores finals
+            //partie terminï¿½, affichage des cores finals
             //SceneManager.LoadScene("Scores");
             Debug.Log("Affichage des scores");
         }
@@ -247,8 +246,8 @@ public class GameManager : MonoBehaviour
     }
 
     //actualise le nouveau score de tout les joueurs
-    //dois être appelé avant nextMap()
-    //scoreP[x] = nombre de point gagné dans cette manche
+    //dois ï¿½tre appelï¿½ avant nextMap()
+    //scoreP[x] = nombre de point gagnï¿½ dans cette manche
     public void addScores(int scoreP1, int scoreP2, int scoreP3, int scoreP4)
     {
         _scoreP1 += scoreP1;
@@ -294,13 +293,13 @@ public class GameManager : MonoBehaviour
         } 
     }
 
-    //renvoie la compo d'equipe pour une manche précise
+    //renvoie la compo d'equipe pour une manche prï¿½cise
     public int getTeamCompo()
     {
         return _teamCompo[_nbMancheActu];
     }
 
-    //liste des gameMode présent dans le jeu (jouable)
+    //liste des gameMode prï¿½sent dans le jeu (jouable)
     enum GameMode
     {
         CaptureTheFlag,
@@ -310,7 +309,7 @@ public class GameManager : MonoBehaviour
         DestrucBox,
         Contamination,
         KeepTheFlag,
-        total //egal au nombre d'élément dans l'enum
+        total //egal au nombre d'ï¿½lï¿½ment dans l'enum
     }
 
     public enum TeamCompo
@@ -319,6 +318,6 @@ public class GameManager : MonoBehaviour
         OneVSThree,
         TwoVSTwo,
         Coop, //pas pris en compte actuellement
-        total //egal au nombre d'élément dans l'enum
+        total //egal au nombre d'ï¿½lï¿½ment dans l'enum
     }
 }

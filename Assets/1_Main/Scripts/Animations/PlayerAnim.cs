@@ -6,11 +6,6 @@ public class PlayerAnim : MonoBehaviour
 {
     [HideInInspector] public Animator playerAnimator;
 
-    private void Awake()
-    {
-        playerAnimator = GetComponent<Animator>();
-    }
-
     public void Idle(bool idle)
     {
         playerAnimator.SetBool("isIdle", idle);

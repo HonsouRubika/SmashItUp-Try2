@@ -55,6 +55,7 @@ public class PauseMenu : MonoBehaviour
         
         Time.timeScale = 0f;
         GameManager.Instance.isPaused = true;
+        SoundManager.Instance.PauseGame(true);
     }
 
     public void Resume()
@@ -65,6 +66,7 @@ public class PauseMenu : MonoBehaviour
         videoMenu.SetActive(false);
         Time.timeScale = 1f;
         GameManager.Instance.isPaused = false;
+        SoundManager.Instance.PauseGame(false);
     }
 
     public void QuitGame()

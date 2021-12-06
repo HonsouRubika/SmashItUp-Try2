@@ -38,41 +38,17 @@ public class CaptureTheFlag_Rules : MonoBehaviour
         // Point Distribution By Team Composition
         switch (GameManager.Instance.getTeamCompo())
         {
-            case (int)GameManager.TeamCompo.FFA:
-                GameManager.Instance.addSpecificScore(playerWin, winPoints);
-                break;
-            case (int)GameManager.TeamCompo.Coop:
-                //if win
-                GameManager.Instance.addScores(winPoints, winPoints, winPoints, winPoints);
-                //if loose
-                //GameManager.Instance.addScores(0, 0, 0, 0);
-                break;
-            case (int)GameManager.TeamCompo.OneVSThree:
-                for(int i = 0; i< players.Length; i++)
-                {
-                    if (playersTeam[i] == playersTeam[playerWin]) GameManager.Instance.addSpecificScore(i, winPoints);
-                }
-                break;
-            case (int)GameManager.TeamCompo.TwoVSTwo:
-                for (int i = 0; i < players.Length; i++)
-                {
-                    if (playersTeam[i] == playersTeam[playerWin]) GameManager.Instance.addSpecificScore(i, winPoints);
-                }
-                break;
-        }
-
-        /* OLD SWITCH Content
-         * case 0:
-                GameManager.Instance.addScores(winPoints, 0, 0, 0);
+            case 0:
+                GameManager.Instance.addScores(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0, 0);
                 break;
             case 1:
-                GameManager.Instance.addScores(0, winPoints, 0, 0);
+                GameManager.Instance.addScores(0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0);
                 break;
             case 2:
-                GameManager.Instance.addScores(0, 0, winPoints, 0);
+                GameManager.Instance.addScores(0, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0);
                 break;
             case 3:
-                GameManager.Instance.addScores(0, 0, 0, winPoints);
+                GameManager.Instance.addScores(0, 0, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
                 break;
         */
 
@@ -82,7 +58,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
 
     private void AssignPlayerTeam()
     {
-        /// TODO : Attribution aléatoire pour la compp des equipes 1 et 2
+        /// TODO : Attribution alï¿½atoire pour la compp des equipes 1 et 2
 
         for (int i = 0; i <players.Length; i++) 
         {
@@ -90,7 +66,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
             {
                 case (int)GameManager.TeamCompo.FFA:
                     playersTeam[i] = i;
-                    //pas d'équipe
+                    //pas d'ï¿½quipe
                     break;
                 case (int)GameManager.TeamCompo.Coop:
                     playersTeam[i] = 0;

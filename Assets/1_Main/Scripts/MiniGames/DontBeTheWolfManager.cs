@@ -178,10 +178,10 @@ public class DontBeTheWolfManager : MonoBehaviour
             switch (joueurValMax)
             {
                 case 0:
-                    GameManager.Instance.addScores(0, 10, 0, 0);
+                    GameManager.Instance.addScores(0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0);
                     break;
                 case 1:
-                    GameManager.Instance.addScores(10, 0, 0, 0);
+                    GameManager.Instance.addScores(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0, 0);
                     break;
             }
         }
@@ -190,13 +190,13 @@ public class DontBeTheWolfManager : MonoBehaviour
             switch (joueurValMax)
             {
                 case 0:
-                    GameManager.Instance.addScores(0, 10, 10, 0);
+                    GameManager.Instance.addScores(0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0);
                     break;
                 case 1:
-                    GameManager.Instance.addScores(10, 0, 10, 0);
+                    GameManager.Instance.addScores(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0);
                     break;
                 case 2:
-                    GameManager.Instance.addScores(10, 10, 0, 0);
+                    GameManager.Instance.addScores(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0);
                     break;
             }
         }
@@ -205,16 +205,16 @@ public class DontBeTheWolfManager : MonoBehaviour
             switch (joueurValMax)
             {
                 case 0:
-                    GameManager.Instance.addScores(0, 10, 10, 10);
+                    GameManager.Instance.addScores(0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
                     break;
                 case 1:
-                    GameManager.Instance.addScores(10, 0, 10, 10);
+                    GameManager.Instance.addScores(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
                     break;
                 case 2:
-                    GameManager.Instance.addScores(10, 10, 0, 10);
+                    GameManager.Instance.addScores(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
                     break;
                 case 3:
-                    GameManager.Instance.addScores(10, 10, 10, 0);
+                    GameManager.Instance.addScores(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0);
                     break;
             }
         }
