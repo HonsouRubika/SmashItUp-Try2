@@ -13,6 +13,9 @@ public class CaptureTheFlag_Rules : MonoBehaviour
     private GameObject[] playersUnsorted;
     public GameObject[] players;
 
+    //team compo
+    public int[] playersTeam;
+
     public List<Transform> tpPoints = new List<Transform>();
     private List<int> randomNumbers = new List<int>();
 
@@ -30,9 +33,36 @@ public class CaptureTheFlag_Rules : MonoBehaviour
 
     public void FlagCaptured(int playerWin)
     {
-        switch (playerWin)
+        //GameManager.Instance.getTeamCompo
+
+        // Point Distribution By Team Composition
+        switch (GameManager.Instance.getTeamCompo())
         {
-            case 0:
+            case (int)GameManager.TeamCompo.FFA:
+                GameManager.Instance.addSpecificScore(playerWin, winPoints);
+                break;
+            case (int)GameManager.TeamCompo.Coop:
+                //if win
+                GameManager.Instance.addScores(winPoints, winPoints, winPoints, winPoints);
+                //if loose
+                //GameManager.Instance.addScores(0, 0, 0, 0);
+                break;
+            case (int)GameManager.TeamCompo.OneVSThree:
+                for(int i = 0; i< players.Length; i++)
+                {
+                    if (playersTeam[i] == playersTeam[playerWin]) GameManager.Instance.addSpecificScore(i, winPoints);
+                }
+                break;
+            case (int)GameManager.TeamCompo.TwoVSTwo:
+                for (int i = 0; i < players.Length; i++)
+                {
+                    if (playersTeam[i] == playersTeam[playerWin]) GameManager.Instance.addSpecificScore(i, winPoints);
+                }
+                break;
+        }
+
+        /* OLD SWITCH Content
+         * case 0:
                 GameManager.Instance.addScores(winPoints, 0, 0, 0);
                 break;
             case 1:
@@ -44,10 +74,39 @@ public class CaptureTheFlag_Rules : MonoBehaviour
             case 3:
                 GameManager.Instance.addScores(0, 0, 0, winPoints);
                 break;
-        }
+        */
 
         //GameManager.Instance.NextMap();
         GameManager.Instance.Score();
+    }
+
+    private void AssignPlayerTeam()
+    {
+        /// TODO : Attribution aléatoire pour la compp des equipes 1 et 2
+
+        for (int i = 0; i <players.Length; i++) 
+        {
+            switch (GameManager.Instance.getTeamCompo())
+            {
+                case (int)GameManager.TeamCompo.FFA:
+                    playersTeam[i] = i;
+                    //pas d'équipe
+                    break;
+                case (int)GameManager.TeamCompo.Coop:
+                    playersTeam[i] = 0;
+                    //tous ensemble equipe 0
+                    break;
+                case (int)GameManager.TeamCompo.OneVSThree:
+                    if (i == 0) playersTeam[i] = 0;
+                    else playersTeam[i] = 1;
+                    break;
+                case (int)GameManager.TeamCompo.TwoVSTwo:
+                    if (i <= 2) playersTeam[i] = 0;
+                    else playersTeam[i] = 1;
+                    break;
+            }
+        }
+        
     }
 
     private void SpawnPlayerRandomly()

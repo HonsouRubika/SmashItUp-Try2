@@ -295,7 +295,7 @@ public class GameManager : MonoBehaviour
     }
 
     //renvoie la compo d'equipe pour une manche précise
-    public int getTeamCompo(int laManche)
+    public int getTeamCompo()
     {
         return _teamCompo[_nbMancheActu];
     }
@@ -313,7 +313,7 @@ public class GameManager : MonoBehaviour
         total //egal au nombre d'élément dans l'enum
     }
 
-    enum TeamCompo
+    public enum TeamCompo
     {
         FFA,
         OneVSThree,
