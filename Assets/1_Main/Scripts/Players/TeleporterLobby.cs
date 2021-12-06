@@ -12,6 +12,8 @@ public class TeleporterLobby : MonoBehaviour
     private bool isTimerInitiated = false;
     private bool isGameInitialized = false;
 
+    public bool isDebug = false;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -42,8 +44,10 @@ public class TeleporterLobby : MonoBehaviour
             isTimerInitiated = false;
         }
 
-        if (Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized)
+        if ((Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized) || isDebug)
         {
+            isDebug = false; //reset
+
             isTimerInitiated = false;
             isGameInitialized = true; //for debug purpuses: play fnct only once
             GameManager.Instance.initializeGameModes(5);
