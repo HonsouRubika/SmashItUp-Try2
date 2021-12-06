@@ -50,10 +50,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
             case 3:
                 GameManager.Instance.addScores(0, 0, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
                 break;
-        */
-
-        //GameManager.Instance.NextMap();
-        GameManager.Instance.Score();
+        }
     }
 
     private void AssignPlayerTeam()
