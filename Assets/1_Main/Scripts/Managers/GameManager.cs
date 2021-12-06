@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     private float countdownTimer = 3f;
     private float countdownTimerActu;
     private TransitionState transitionState;
+    private bool didTransitionStarted = false;
 
     //Animation
     [HideInInspector] public TransitionAnim transitionAnimScript;
@@ -112,6 +113,7 @@ public class GameManager : MonoBehaviour
             //transition finiched
             //8) unfreeze sc�ne2
             transitionState = TransitionState.FINISHED;
+            didTransitionStarted = false;
             Debug.Log("Transition finished");
             Destroy(transition);
         }
@@ -166,25 +168,28 @@ public class GameManager : MonoBehaviour
 
     public void NextMap()
     {
-        //affichage game over
-        //Debug.Log("Call fct Next map");
+        if (!didTransitionStarted)
+        {
+            didTransitionStarted = true;
+            Debug.Log("call fnct next map");
+            //reset transition state
+            transitionState = TransitionState.OPEN;
 
-        //1) freeze sc�ne1
+            //2) pop gameObject rideau(NotDestroyOnLoad)
+            transition = Instantiate<GameObject>(Curtain);
+            DontDestroyOnLoad(transition);
+            ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
 
-        //2) pop gameObject rideau(NotDestroyOnLoad)
-        transition = Instantiate<GameObject>(Curtain);
-        DontDestroyOnLoad(transition);
-        ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
+            //get anim script
+            transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
 
-        //get anim script
-        transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
-
-        //3) play anim "fermer rideau"
-        Debug.Log("fermer le rideau");
-        transitionAnimScript.Close();
-        //dois attendre que l'animation de fermeture ce termine avant de loadScene
-        transitionState = TransitionState.CLOSING;
-        closeCurtainTimerActu = closeCurtainTimer + Time.time;
+            //3) play anim "fermer rideau"
+            Debug.Log("fermer le rideau");
+            transitionAnimScript.Close();
+            //dois attendre que l'animation de fermeture ce termine avant de loadScene
+            transitionState = TransitionState.CLOSING;
+            closeCurtainTimerActu = closeCurtainTimer + Time.time;
+        }
     }
 
     public void goToNextScene()
