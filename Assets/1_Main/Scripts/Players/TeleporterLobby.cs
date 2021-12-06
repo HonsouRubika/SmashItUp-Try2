@@ -10,6 +10,7 @@ public class TeleporterLobby : MonoBehaviour
     public float timerBeforeTeleportation = 2;
     public float timerBeforeTeleportationActu = 0;
     private bool isTimerInitiated = false;
+    private bool isGameInitialized = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -41,9 +42,10 @@ public class TeleporterLobby : MonoBehaviour
             isTimerInitiated = false;
         }
 
-        if (Time.time >= timerBeforeTeleportationActu && isTimerInitiated)
+        if (Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized)
         {
             isTimerInitiated = false;
+            isGameInitialized = true; //for debug purpuses: play fnct only once
             GameManager.Instance.initializeGameModes(5);
         }
     }

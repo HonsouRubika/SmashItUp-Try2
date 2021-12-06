@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
         if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
         {
             movementInput = context.ReadValue<Vector2>();
-        }     
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)

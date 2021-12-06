@@ -18,6 +18,24 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
     public bool isShowingPlayers;
 
+    //Transition
+    private float openCurtainTimer = 3f;
+    private float openCurtainTimerActu;
+    private float closeCurtainTimer = 3f;
+    private float closeCurtainTimerActu;
+    private float focusPlayerTimer = 3f;
+    private float focusPlayerTimerActu;
+    private float countdownTimer = 3f;
+    private float countdownTimerActu;
+    private TransitionState transitionState;
+
+    //Animation
+    [HideInInspector] public TransitionAnim transitionAnimScript;
+    public GameObject Curtain;
+    private GameObject transition;
+
+    private enum TransitionState {OPENING, OPEN, CLOSING, CLOSE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED}
+
     void Awake()
     {
         #region Make Singleton
@@ -35,9 +53,66 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        transitionState = TransitionState.OPEN;
+
         DontDestroyOnLoad(this);
 
         focusPlayersScript = GetComponentInChildren<FocusPlayers>();
+    }
+
+    private void Update()
+    {
+        //Transition
+
+        //TODO : Take off timers && fully use animator
+        //https://stackoverflow.com/questions/34846287/get-name-of-current-animation-state/55933542
+        //https://forum.unity.com/threads/current-animator-state-name.331803/
+        //transitionState == TransitionState.CLOSING && Time.time >= closeCurtainTimerActu
+        //                                  ==========
+        //transitionAnimScript.GetAnimator().GetCurrentAnimatorStateInfo(0).IsName("AnimationName")
+
+        if (transitionState == TransitionState.CLOSING && Time.time >= closeCurtainTimerActu)
+        {
+            Debug.Log("Loading scene");
+            //on charge la prochaine scene
+            transitionState = TransitionState.LOADING;
+            goToNextScene();
+
+            /// TODO : WAIT LOADED ?
+
+            Debug.Log("on ouvre les rideaux");
+            //Scene is loaded
+            transitionState = TransitionState.OPENING;
+            openCurtainTimerActu = openCurtainTimer + Time.time;
+            //5) open curtains animation
+            transitionAnimScript.Open();
+        }
+        else if (transitionState == TransitionState.OPENING && Time.time >= openCurtainTimerActu)
+        {
+            Debug.Log("focus player");
+            //6) Show Players && goal
+            transitionState = TransitionState.FOCUS;
+            focusPlayerTimerActu = focusPlayerTimer + Time.time;
+            focusPlayersScript.EnableFocus();
+            ///BUG: Temps de latente via la fonction focusPlayersScript.EnableFocus();
+        }
+        else if (transitionState == TransitionState.FOCUS && Time.time >= focusPlayerTimerActu)
+        {
+            //7) Timer "1,2,3,GO"
+
+            /// TODO : transitionAnimScript.Counstdown();
+            
+            countdownTimerActu = countdownTimer + Time.time;
+            transitionState = TransitionState.COUNTDOWN;
+            Debug.Log("Countdown");
+        } else if (transitionState == TransitionState.COUNTDOWN && Time.time >= countdownTimerActu)
+        {
+            //transition finiched
+            //8) unfreeze scène2
+            transitionState = TransitionState.FINISHED;
+            Debug.Log("Transition finished");
+            Destroy(transition);
+        }
     }
 
     //fonction à call depuis le menu suite au clic() du bouton play;
@@ -58,13 +133,13 @@ public class GameManager : MonoBehaviour
         {
             int nextGameMode = Random.Range(0, (int)GameMode.total);
             //on s'assure que le prochain game mode choisi soit différent du premier
-            Debug.Log(_selectedGameModes[0]);
+            //Debug.Log(_selectedGameModes[0]);
             if (i > 0)
             {
-                Debug.Log(_selectedGameModes.Length);
+                //Debug.Log(_selectedGameModes.Length);
                 while (nextGameMode == _selectedGameModes[i - 1]) nextGameMode = Random.Range(0, (int)GameMode.total);
             }
-            Debug.Log("oui");
+            //Debug.Log("oui");
             _selectedGameModes[i] = nextGameMode;
             _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
             //Debug.Log(i + " : " +_selectedGameModes[i]);
@@ -94,6 +169,29 @@ public class GameManager : MonoBehaviour
     {
         //affichage game over
         //Debug.Log("Call fct Next map");
+
+        //1) freeze scène1
+
+        //2) pop gameObject rideau(NotDestroyOnLoad)
+        transition = Instantiate<GameObject>(Curtain);
+        DontDestroyOnLoad(transition);
+        ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
+
+        //get anim script
+        transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
+
+        //3) play anim "fermer rideau"
+        Debug.Log("fermer le rideau");
+        transitionAnimScript.Close();
+        //dois attendre que l'animation de fermeture ce termine avant de loadScene
+        transitionState = TransitionState.CLOSING;
+        closeCurtainTimerActu = closeCurtainTimer + Time.time;
+    }
+
+    public void goToNextScene()
+    {
+        //4) LoadScene(scène2)
+
         if (_nbMancheActu < _nbManches)
         {
             switch (_selectedGameModes[_nbMancheActu])
@@ -111,9 +209,9 @@ public class GameManager : MonoBehaviour
                     SceneManager.LoadScene("CaptureZone0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.Contamination:
-                _nbMancheActu++;
-                SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
-                break;
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
+                    break;
                 case (int)GameMode.KeepTheFlag:
                     _nbMancheActu++;
                     SceneManager.LoadScene("KeepTheFlag0" + Random.Range(1, 3));
@@ -131,7 +229,8 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
-            focusPlayersScript.EnableFocus();
+            //Old order :
+            //focusPlayersScript.EnableFocus();
         }
         else
         {

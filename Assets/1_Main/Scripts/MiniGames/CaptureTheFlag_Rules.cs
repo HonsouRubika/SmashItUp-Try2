@@ -23,7 +23,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
-
+        
         SpawnPlayerRandomly();
         GameManager.Instance.focusPlayersScript.SetGameTitle("CaptureTheFlag");
     }
