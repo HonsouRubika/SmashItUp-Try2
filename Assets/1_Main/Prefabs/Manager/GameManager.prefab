@@ -51,6 +51,8 @@ MonoBehaviour:
   scoreValuesManagerScript: {fileID: 0}
   isPaused: 0
   isShowingPlayers: 0
+  transitionAnimScript: {fileID: 0}
+  Curtain: {fileID: 5805044401616752714, guid: 154f523b5d2657d4ebbababc2837f91c, type: 3}
 --- !u!114 &7698355189767790221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +78,7 @@ MonoBehaviour:
   ThreePlayersPointsThirdPlace: 3
   TwoPlayersPointsFirstPlace: 10
   TwoPlayersSecondPlace: 5
+  players: []
 --- !u!1001 &90052783
 PrefabInstance:
   m_ObjectHideFlags: 0
