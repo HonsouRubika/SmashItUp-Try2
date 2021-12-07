@@ -11,8 +11,6 @@ public class Timer : MonoBehaviour
     public float durationMiniGame = 30;
     public float miniGameTimer = 0;
 
-    private bool isTimerStarted = false;
-
     private void Start()
     {
         miniGameTimer = durationMiniGame;
@@ -20,21 +18,16 @@ public class Timer : MonoBehaviour
 
     public void Update()
     {
-        if (isTimerStarted && miniGameTimer <= 0)
+        if (miniGameTimer <= 0)
         {
             //GameManager.Instance.NextMap();
             GameManager.Instance.Score();
         }
-        else if (isTimerStarted)
+        else
         {
             miniGameTimer -= Time.deltaTime;
             DisplayTimer();
         }
-    }
-
-    public void StartTimer()
-    {
-        isTimerStarted = true;
     }
 
     private void DisplayTimer()
