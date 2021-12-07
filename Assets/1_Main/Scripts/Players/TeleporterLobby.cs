@@ -12,7 +12,7 @@ public class TeleporterLobby : MonoBehaviour
     private bool isTimerInitiated = false;
     private bool isGameInitialized = false;
 
-    public bool isDebug = false;
+    public bool isDebug;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -28,6 +28,11 @@ public class TeleporterLobby : MonoBehaviour
         {
             nbPlayerInZone--;
         }   
+    }
+
+    private void Start()
+    {
+        isDebug = false;
     }
 
     private void Update()
