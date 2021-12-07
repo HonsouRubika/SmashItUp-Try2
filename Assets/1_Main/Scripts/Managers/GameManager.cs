@@ -30,11 +30,13 @@ public class GameManager : MonoBehaviour
     private float countdownTimerActu;
     private TransitionState transitionState;
     private bool didTransitionStarted = false;
+    private bool animatorLoaded = true;
 
     //Animation
     [HideInInspector] public TransitionAnim transitionAnimScript;
-    public GameObject Curtain;
+    public GameObject curtain;
     private GameObject transition;
+    Animator transitionAnimator;
 
     private enum TransitionState {OPENING, OPEN, CLOSING, CLOSE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED}
 
@@ -61,6 +63,7 @@ public class GameManager : MonoBehaviour
 
         focusPlayersScript = GetComponentInChildren<FocusPlayers>();
         scoreValuesManagerScript = GetComponent<ScoreValuesManager>();
+
     }
 
     private void Update()
@@ -73,49 +76,67 @@ public class GameManager : MonoBehaviour
         //transitionState == TransitionState.CLOSING && Time.time >= closeCurtainTimerActu
         //                                  ==========
         //transitionAnimScript.GetAnimator().GetCurrentAnimatorStateInfo(0).IsName("AnimationName")
-
-        if (transitionState == TransitionState.CLOSING && Time.time >= closeCurtainTimerActu)
+        //SAVE: if (transitionState == TransitionState.CLOSING && Time.time >= closeCurtainTimerActu)
+        if (didTransitionStarted && !animatorLoaded)
         {
-            Debug.Log("Loading scene");
-            //on charge la prochaine scene
-            transitionState = TransitionState.LOADING;
-            goToNextScene();
+            transitionAnimator = transition.GetComponent<Animator>();
+            animatorLoaded = true;
 
-            /// TODO : WAIT LOADED ?
+            //closeCurtainTimerActu = transitionAnimator.
 
-            Debug.Log("on ouvre les rideaux");
-            //Scene is loaded
-            transitionState = TransitionState.OPENING;
-            openCurtainTimerActu = openCurtainTimer + Time.time;
-            //5) open curtains animation
-            transitionAnimScript.Open();
         }
-        else if (transitionState == TransitionState.OPENING && Time.time >= openCurtainTimerActu)
-        {
-            Debug.Log("focus player");
-            //6) Show Players && goal
-            transitionState = TransitionState.FOCUS;
-            focusPlayerTimerActu = focusPlayerTimer + Time.time;
-            focusPlayersScript.EnableFocus();
-            ///BUG: Temps de latente via la fonction focusPlayersScript.EnableFocus();
-        }
-        else if (transitionState == TransitionState.FOCUS && Time.time >= focusPlayerTimerActu)
-        {
-            //7) Timer "1,2,3,GO"
 
-            /// TODO : transitionAnimScript.Counstdown();
-            
-            countdownTimerActu = countdownTimer + Time.time;
-            transitionState = TransitionState.COUNTDOWN;
-            Debug.Log("Countdown");
-        } else if (transitionState == TransitionState.COUNTDOWN && Time.time >= countdownTimerActu)
+        if (didTransitionStarted && animatorLoaded)
         {
-            //transition finiched
-            //8) unfreeze sc�ne2
-            transitionState = TransitionState.FINISHED;
-            didTransitionStarted = false;
-            Debug.Log("Transition finished");
-            Destroy(transition);
+            //if (transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close")) ////// Works but repeats everytime => requires bool isStarted to limit read on fnct
+            /// TODO : souviens toi, je pense que c'est la meilleur solution
+            if (transitionState == TransitionState.CLOSING && Time.time >= closeCurtainTimerActu)
+            {
+                Debug.Log("Loading scene");
+                //on charge la prochaine scene
+                transitionState = TransitionState.LOADING;
+                goToNextScene();
+
+                /// TODO : WAIT LOADED ?
+
+                Debug.Log("on ouvre les rideaux");
+                //Scene is loaded
+                transitionState = TransitionState.OPENING;
+                openCurtainTimerActu = openCurtainTimer + Time.time;
+                //5) open curtains animation
+                transitionAnimScript.Open();
+            }
+            else if (transitionState == TransitionState.OPENING && Time.time >= openCurtainTimerActu)
+            {
+                Debug.Log("focus player");
+                //6) Show Players && goal
+                transitionState = TransitionState.FOCUS;
+                focusPlayerTimerActu = focusPlayerTimer + Time.time;
+                focusPlayersScript.EnableFocus();
+                ///BUG: Temps de latente via la fonction focusPlayersScript.EnableFocus();
+            }
+            else if (transitionState == TransitionState.FOCUS && Time.time >= focusPlayerTimerActu)
+            {
+                //7) Timer "1,2,3,GO"
+
+                /// TODO : transitionAnimScript.Counstdown();
+
+                countdownTimerActu = 0.001f + Time.time;
+                transitionState = TransitionState.COUNTDOWN;
+                Debug.Log("Countdown");
+            }
+            else if (transitionState == TransitionState.COUNTDOWN && Time.time >= countdownTimerActu)
+            {
+                //transition finiched
+                //8) unfreeze sc�ne2
+                transitionState = TransitionState.FINISHED;
+                didTransitionStarted = false;
+                Debug.Log("Transition finished");
+                //start minigame timer
+                //Timer.StartTimer();
+
+                Destroy(transition);
+            }
         }
     }
 
@@ -176,8 +197,9 @@ public class GameManager : MonoBehaviour
             transitionState = TransitionState.OPEN;
 
             //2) pop gameObject rideau(NotDestroyOnLoad)
-            transition = Instantiate<GameObject>(Curtain);
+            transition = Instantiate<GameObject>(curtain);
             DontDestroyOnLoad(transition);
+            animatorLoaded = false;
             ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
 
             //get anim script
