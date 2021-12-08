@@ -34,6 +34,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
     public void FlagCaptured(int playerWin)
     {
         //GameManager.Instance.getTeamCompo
+        AssignPlayerTeam();
 
         // Point Distribution By Team Composition
         switch (GameManager.Instance.getTeamCompo())
@@ -59,6 +60,8 @@ public class CaptureTheFlag_Rules : MonoBehaviour
     private void AssignPlayerTeam()
     {
         /// TODO : Attribution al�atoire pour la compp des equipes 1 et 2
+        Debug.Log("In Game : " + GameManager.Instance.getTeamCompo());
+        playersTeam = new int[players.Length];
 
         for (int i = 0; i <players.Length; i++) 
         {
@@ -66,6 +69,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
             {
                 case (int)GameManager.TeamCompo.FFA:
                     playersTeam[i] = i;
+                    Debug.Log("In switch FFA");
                     //pas d'�quipe
                     break;
                 case (int)GameManager.TeamCompo.Coop:
