@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
             }
             _selectedGameModes[i] = nextGameMode;
             _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
-            Debug.Log("Team compo : " +_teamCompo[i]);
+            //Debug.Log("Team compo : " +_teamCompo[i]);
             //Debug.Log(i + " : " +_selectedGameModes[i]);
         }
 
