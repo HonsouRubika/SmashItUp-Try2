@@ -118,8 +118,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseSkin: {fileID: 9020392905332927874}
-  currentSkin: {fileID: 0}
   skinPosition: {fileID: 1478593312613046960}
+  currentSkin: {fileID: 0}
   skins:
   - {fileID: 1672598699052452905, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
   - {fileID: 7864038903626718067, guid: 8b5a8f15ba3f9de49b54eda18f8040dd, type: 3}
@@ -464,6 +464,7 @@ MonoBehaviour:
   blockStunTime: 0.5
   playerIDHit: 0
   hitPlayer: 0
+  playerAnimator: {fileID: 0}
 --- !u!212 &4771767619851399193
 SpriteRenderer:
   m_ObjectHideFlags: 0

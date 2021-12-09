@@ -797,7 +797,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Error: Le PlayerAnimScript est null");
+                //Debug.LogWarning("Error: Le PlayerAnimScript est null");
             }
              ///ToDO : corriger error :
             /*
