@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5071838313760626318}
-  - component: {fileID: 5071838313760626319}
   m_Layer: 7
   m_Name: PlatformGrassHill
   m_TagString: Plateform
@@ -32,50 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &5071838313760626319
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5071838313760626320}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 5.628529, y: 3.0581934}
-      - {x: 2.368815, y: 3.5677202}
-      - {x: -1.6313186, y: 3.684176}
-      - {x: -4.7395787, y: 3.255836}
-      - {x: -7.6747775, y: 2.0535169}
-      - {x: -9.749688, y: 0.765748}
-      - {x: -11.366226, y: -0.637153}
-      - {x: -12.544147, y: -2.2112195}
-      - {x: -12.138872, y: -3.119234}
-      - {x: -12.33372, y: -3.9049675}
-      - {x: -12.491949, y: -4.8036666}
-      - {x: -12.246421, y: -5.5025196}
-      - {x: 12.394528, y: -5.5302753}
-      - {x: 12.687573, y: -4.7733326}
-      - {x: 12.593412, y: -3.4897768}
-      - {x: 12.749266, y: -2.847402}
-      - {x: 12.3720255, y: -1.4754696}
-      - {x: 10.752742, y: 0.115069866}
-      - {x: 8.21774, y: 2.031179}
 --- !u!1 &5071838315140463198
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +101,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -4
   m_Sprite: {fileID: 21300000, guid: 2c2b9c06bf9fec246af6138c37b2648a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

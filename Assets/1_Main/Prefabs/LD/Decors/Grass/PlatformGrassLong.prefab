@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -4
   m_Sprite: {fileID: 21300000, guid: 021b4f647362c4749b159c2744209678, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -91,7 +91,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 482162908945907159}
-  - component: {fileID: 482162908945907158}
   m_Layer: 7
   m_Name: PlatformGrassLong
   m_TagString: Plateform
@@ -111,23 +110,55 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 482162908877325468}
+  - {fileID: 5222860403878637370}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &482162908945907158
-PolygonCollider2D:
+--- !u!1 &537935937198339524
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482162908945907153}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5222860403878637370}
+  - component: {fileID: 8458740668711390985}
+  m_Layer: 7
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5222860403878637370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537935937198339524}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 482162908945907159}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &8458740668711390985
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537935937198339524}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.1359024, y: -0.45300806}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -137,23 +168,6 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 41.917896, y: 0.602674}
-      - {x: 41.266216, y: 1.4138337}
-      - {x: -41.25386, y: 1.6340406}
-      - {x: -42.10088, y: 0.4312688}
-      - {x: -41.78916, y: -0.69755065}
-      - {x: -42.14751, y: -1.8331292}
-      - {x: -42.045788, y: -2.4855027}
-      - {x: -41.104103, y: -2.924446}
-      - {x: -38.345745, y: -3.1498954}
-      - {x: -37.158794, y: -2.6228387}
-      - {x: -30.65933, y: -2.9056473}
-      - {x: -27.831402, y: -2.6011958}
-      - {x: -20.551186, y: -2.5134523}
-      - {x: 3.1646056, y: -2.7727191}
-      - {x: 40.416504, y: -3.187653}
-      - {x: 41.90527, y: -2.6736798}
-      - {x: 42.215847, y: -1.5906417}
-      - {x: 42.12397, y: -0.23730618}
+  serializedVersion: 2
+  m_Size: {x: 83.71927, y: 4.2616577}
+  m_EdgeRadius: 0

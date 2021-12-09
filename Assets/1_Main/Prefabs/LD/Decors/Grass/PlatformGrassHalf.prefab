@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2992026209616205436}
-  - component: {fileID: 2992026209616205315}
   m_Layer: 7
   m_Name: PlatformGrassHalf
   m_TagString: Plateform
@@ -29,61 +28,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2992026210341794423}
+  - {fileID: 1355156042080562865}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &2992026209616205315
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2992026209616205314}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -20.291222, y: 1.4547055}
-      - {x: -21.185442, y: 0.30901697}
-      - {x: -21.060637, y: -0.58118165}
-      - {x: -20.901138, y: -1.0490475}
-      - {x: -21.582207, y: -2.234578}
-      - {x: -20.902658, y: -2.6768224}
-      - {x: -18.645039, y: -3.1369233}
-      - {x: -16.833292, y: -3.02436}
-      - {x: -15.6483755, y: -2.6870937}
-      - {x: -13.656166, y: -2.7438452}
-      - {x: -8.948807, y: -2.9412606}
-      - {x: -7.387369, y: -2.6555939}
-      - {x: -0.78760195, y: -2.6966646}
-      - {x: 3.4477243, y: -2.6846771}
-      - {x: 6.374174, y: -2.8619323}
-      - {x: 7.4652023, y: -2.9688675}
-      - {x: 8.206761, y: -2.7462056}
-      - {x: 9.2758875, y: -3.0031714}
-      - {x: 12.230363, y: -2.9091604}
-      - {x: 15.55118, y: -2.7278051}
-      - {x: 17.527267, y: -3.1818414}
-      - {x: 20.295395, y: -2.787788}
-      - {x: 21.405672, y: -2.3073037}
-      - {x: 21.491, y: -1.7375873}
-      - {x: 21.017372, y: -1.3107277}
-      - {x: 21.275633, y: -0.05664134}
-      - {x: 20.621359, y: 1.3978592}
 --- !u!1 &2992026210341794422
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +102,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -4
   m_Sprite: {fileID: 21300000, guid: dccc16e4f2d215b4195db6717fdb6adf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -166,3 +114,60 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &6283485436843965684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1355156042080562865}
+  - component: {fileID: 1664927179493469722}
+  m_Layer: 7
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1355156042080562865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6283485436843965684}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2992026209616205436}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1664927179493469722
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6283485436843965684}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.061317444, y: -0.4292252}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 42.082977, y: 4.065894}
+  m_EdgeRadius: 0
