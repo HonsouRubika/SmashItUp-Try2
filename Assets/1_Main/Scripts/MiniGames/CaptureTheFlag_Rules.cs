@@ -26,7 +26,10 @@ public class CaptureTheFlag_Rules : MonoBehaviour
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
-        
+
+        //à toujours mettre dans le start
+        AssignPlayerTeam();
+
         SpawnPlayerRandomly();
         GameManager.Instance.focusPlayersScript.SetGameTitle("CaptureTheFlag");
     }
@@ -59,13 +62,21 @@ public class CaptureTheFlag_Rules : MonoBehaviour
     private void AssignPlayerTeam()
     {
         /// TODO : Attribution al�atoire pour la compp des equipes 1 et 2
+        //Debug.Log("In Game : " + GameManager.Instance.getTeamCompo());
+        playersTeam = new int[players.Length];
+
+        //verif si nb players insufisant
+        int teamCompo = GameManager.Instance.getTeamCompo();
+        if (players.Length <= 2 && teamCompo ==1 ) teamCompo = 0; //coop to 1v3
+        if (players.Length <= 2 && teamCompo ==2 ) teamCompo = 3; //coop to 1v3
 
         for (int i = 0; i <players.Length; i++) 
         {
-            switch (GameManager.Instance.getTeamCompo())
+            switch (teamCompo)
             {
                 case (int)GameManager.TeamCompo.FFA:
                     playersTeam[i] = i;
+                    //Debug.Log("In switch FFA");
                     //pas d'�quipe
                     break;
                 case (int)GameManager.TeamCompo.Coop:
@@ -82,7 +93,35 @@ public class CaptureTheFlag_Rules : MonoBehaviour
                     break;
             }
         }
-        
+        //Debug.Log("in switch alea : " + playersTeam.Length);
+
+        //aléa team players
+        switch (teamCompo)
+        {
+            case (int)GameManager.TeamCompo.OneVSThree:
+                Debug.Log("in switch alea : " + playersTeam.Length);
+                for (int i = 0; i < playersTeam.Length; i++)
+                {
+                    int temp = playersTeam[i];
+                    int randomIndex = Random.Range(i, playersTeam.Length);
+                    playersTeam[i] = playersTeam[randomIndex];
+                    playersTeam[randomIndex] = temp;
+                    //Debug.Log(playersTeam[randomIndex]);
+                }
+                break;
+            case (int)GameManager.TeamCompo.TwoVSTwo:
+                Debug.Log("in switch alea : " + playersTeam.Length);
+                for (int i = 0; i < playersTeam.Length; i++)
+                {
+                    int temp = playersTeam[i];
+                    int randomIndex = Random.Range(i, playersTeam.Length);
+                    playersTeam[i] = playersTeam[randomIndex];
+                    playersTeam[randomIndex] = temp;
+                    //Debug.Log(playersTeam[randomIndex]);
+                }
+                break;
+        }
+
     }
 
     private void SpawnPlayerRandomly()

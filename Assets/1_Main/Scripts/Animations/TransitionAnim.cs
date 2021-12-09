@@ -11,13 +11,33 @@ public class TransitionAnim : MonoBehaviour
         transitionAnimator = GetComponent<Animator>();
     }
 
-    public void Open()
+    public void OpenRed()
     {
         transitionAnimator.SetTrigger("opening");
     }
 
-    public void Close()
+    public void CloseRed()
     {
         transitionAnimator.SetTrigger("closing");
+    }
+
+    public void OpenYellow()
+    {
+        transitionAnimator.SetTrigger("openYellow");
+    }
+
+    public void CloseYellow()
+    {
+        transitionAnimator.SetTrigger("closeYellow");
+    }
+    public void OpenBlue()
+    {
+        transitionAnimator.SetTrigger("openBlue");
+        Debug.Log("enter OpenBlue() function");
+    }
+
+    public void CloseBlue()
+    {
+        transitionAnimator.SetTrigger("closeBlue");
     }
 }

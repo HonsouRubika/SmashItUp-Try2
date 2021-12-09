@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
         verifProjectionMax();
 
         //stun
-        if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
+        if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu && playerAnimScript != null && PlayerSoundScript != null && playerAnimator != null)
         {
             //anim
             if (playerAnimScript.playerAnimator != null)
@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
             attack();
             
         }
-        else //player is stun
+        else if (playerAnimScript != null && PlayerSoundScript != null && playerAnimator != null) //player is stun
         {
             //anim
             playerAnimScript.Expulsion(true);
@@ -225,6 +225,12 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimator.localScale = new Vector2(Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
             }
+        }
+        else
+        {
+            //error ce produit seulement lors de la frame d'apparition de l'entité, on peux l'ignorer
+            //l'un des scipt n'est pas attaché
+            //Debug.Log("l'un des script n'est pas attaché");
         }
     }
 
@@ -791,7 +797,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Error: Le PlayerAnimScript est null");
+                //Debug.LogWarning("Error: Le PlayerAnimScript est null");
             }
              ///ToDO : corriger error :
             /*
