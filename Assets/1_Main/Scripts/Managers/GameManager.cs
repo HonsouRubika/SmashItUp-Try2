@@ -20,10 +20,6 @@ public class GameManager : MonoBehaviour
     public bool isShowingPlayers;
 
     //Transition
-    private float openCurtainTimer = 3f;
-    private float openCurtainTimerActu;
-    private float closeCurtainTimer = 3f;
-    private float closeCurtainTimerActu;
     private float focusPlayerTimer = 3f;
     private float focusPlayerTimerActu;
     private float countdownTimer = 3f;
@@ -38,7 +34,7 @@ public class GameManager : MonoBehaviour
     private GameObject transition;
     Animator transitionAnimator;
 
-    private enum TransitionState {OPENING, OPEN, CLOSING, CLOSE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED}
+    private enum TransitionState {OPENING, OPEN, CLOSING, CLOSE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED}
 
     void Awake()
     {
@@ -90,31 +86,84 @@ public class GameManager : MonoBehaviour
         {
             //if (transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close")) ////// Works but repeats everytime => requires bool isStarted to limit read on fnct
             /// TODO : souviens toi, je pense que c'est la meilleur solution
-            if (transitionState == TransitionState.CLOSING && Time.time >= closeCurtainTimerActu)
+            // OLD : if (transitionState == TransitionState.CLOSING && Time.time >= closeCurtainTimerActu)
+
+            //yellow = ScoreFinal
+            if (transitionState == TransitionState.CLOSE_YELLOW && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"))
+            {
+                Debug.Log("Loading scene");
+                //on charge la prochaine scene
+                transitionState = TransitionState.LOADING;
+                //SceneManager.LoadScene("FinalScore");
+
+                Debug.Log("on ouvre les rideaux");
+                //Scene is loaded
+                transitionState = TransitionState.OPEN_YELLOW;
+                //5) open curtains animation
+                transitionAnimScript.OpenYellow();
+            }
+            else if (transitionState == TransitionState.OPEN_YELLOW && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
+            {
+                Debug.Log("yellow curtain open");
+                //6) Show Players && goal
+                transitionState = TransitionState.FINISHED;
+                didTransitionStarted = false;
+
+                //on suprr les rideaux
+                Destroy(transition);
+            }
+
+            //blue = Score
+            if (transitionState == TransitionState.CLOSE_BLUE && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"))
+            {
+                Debug.Log("Loading scene");
+                //on charge la prochaine scene
+                transitionState = TransitionState.LOADING;
+                SceneManager.LoadScene("Score");
+
+                Debug.Log("on ouvre les rideaux");
+                //Scene is loaded
+                transitionState = TransitionState.CLOSE_BLUE;
+                //5) open curtains animation
+                transitionAnimScript.OpenBlue();
+            }
+            else if (transitionState == TransitionState.CLOSE_BLUE && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
+            {
+                Debug.Log("blue curtain open");
+                //6) Show Players && goal
+                transitionState = TransitionState.FINISHED;
+                didTransitionStarted = false;
+
+                //on suprr les rideaux
+                Destroy(transition);
+            }
+
+            //red = NextMap
+            if (transitionState == TransitionState.CLOSING && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"))
             {
                 Debug.Log("Loading scene");
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
                 goToNextScene();
 
-                /// TODO : WAIT LOADED ?
-
                 Debug.Log("on ouvre les rideaux");
                 //Scene is loaded
                 transitionState = TransitionState.OPENING;
-                openCurtainTimerActu = openCurtainTimer + Time.time;
                 //5) open curtains animation
-                transitionAnimScript.Open();
+                transitionAnimScript.OpenRed();
             }
-            else if (transitionState == TransitionState.OPENING && Time.time >= openCurtainTimerActu)
+            else if (transitionState == TransitionState.OPENING && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
             {
                 Debug.Log("focus player");
                 //6) Show Players && goal
                 transitionState = TransitionState.FOCUS;
                 focusPlayerTimerActu = focusPlayerTimer + Time.time;
                 focusPlayersScript.EnableFocus();
-                ///BUG: Temps de latente via la fonction focusPlayersScript.EnableFocus();
+
+                //on suprr les rideaux
+                Destroy(transition);
             }
+            ///BUG: Temps de latente via la fonction focusPlayersScript.EnableFocus();
             else if (transitionState == TransitionState.FOCUS && Time.time >= focusPlayerTimerActu)
             {
                 //7) Timer "1,2,3,GO"
@@ -125,6 +174,8 @@ public class GameManager : MonoBehaviour
                 transitionState = TransitionState.COUNTDOWN;
                 Debug.Log("Countdown");
             }
+            /// TODO : switch quand l'anim sera prete
+            //else if (transitionState == TransitionState.COUNTDOWN && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
             else if (transitionState == TransitionState.COUNTDOWN && Time.time >= countdownTimerActu)
             {
                 //transition finiched
@@ -134,8 +185,6 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Transition finished");
                 //start minigame timer
                 //Timer.StartTimer();
-
-                Destroy(transition);
             }
         }
     }
@@ -169,12 +218,34 @@ public class GameManager : MonoBehaviour
         }
 
         //on passe � la premi�re manche
-        TestMap();
+        NextMap();
     }
 
     public void Score()
     {
-        SceneManager.LoadScene("Score");
+        Debug.Log("call fnct score");
+        if (!didTransitionStarted)
+        {
+            didTransitionStarted = true;
+            Debug.Log("call fnct score");
+            //reset transition state
+            transitionState = TransitionState.OPEN;
+
+            //2) pop gameObject rideau(NotDestroyOnLoad)
+            transition = Instantiate<GameObject>(curtain);
+            DontDestroyOnLoad(transition);
+            animatorLoaded = false;
+            ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
+
+            //get anim script
+            transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
+
+            //3) play anim "fermer rideau"
+            Debug.Log("fermer le rideau");
+            transitionAnimScript.CloseBlue();
+            //dois attendre que l'animation de fermeture ce termine avant de loadScene
+            transitionState = TransitionState.CLOSE_BLUE;
+        }
     }
 
     public void TestMap()
@@ -184,8 +255,28 @@ public class GameManager : MonoBehaviour
 
     public void FinaleScore()
     {
-        //TODO : changer le nom de la sc�ne avec celle des cores finaux
-        //SceneManager.LoadScene("ScoreFinal");
+        if (!didTransitionStarted)
+        {
+            didTransitionStarted = true;
+            Debug.Log("call fnct score");
+            //reset transition state
+            transitionState = TransitionState.OPEN;
+
+            //2) pop gameObject rideau(NotDestroyOnLoad)
+            transition = Instantiate<GameObject>(curtain);
+            DontDestroyOnLoad(transition);
+            animatorLoaded = false;
+            ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
+
+            //get anim script
+            transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
+
+            //3) play anim "fermer rideau"
+            Debug.Log("fermer le rideau");
+            transitionAnimScript.CloseYellow();
+            //dois attendre que l'animation de fermeture ce termine avant de loadScene
+            transitionState = TransitionState.CLOSE_YELLOW;
+        }
     }
 
     public void NextMap()
@@ -208,10 +299,9 @@ public class GameManager : MonoBehaviour
 
             //3) play anim "fermer rideau"
             Debug.Log("fermer le rideau");
-            transitionAnimScript.Close();
+            transitionAnimScript.CloseRed();
             //dois attendre que l'animation de fermeture ce termine avant de loadScene
             transitionState = TransitionState.CLOSING;
-            closeCurtainTimerActu = closeCurtainTimer + Time.time;
         }
     }
 
