@@ -321,7 +321,7 @@ public class GameManager : MonoBehaviour
             {
                 case (int)GameMode.CaptureTheFlag:
                     _nbMancheActu++;
-                    SceneManager.LoadScene("CaptureTheFlag0" + Random.Range(1, 3));
+                    SceneManager.LoadScene("FlagCapture" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.Loup:
                     _nbMancheActu++;
