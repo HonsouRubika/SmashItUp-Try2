@@ -41,6 +41,8 @@ public class Flag : MonoBehaviour
                     captureTheFlagRulesScript.FlagCaptured(3);
                     break;
             }
+
+            Destroy(gameObject);
         }
     }
 }

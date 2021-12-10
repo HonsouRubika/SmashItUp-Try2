@@ -8,6 +8,8 @@ public class KeepingFlag : MonoBehaviour
 
     private Transform flagInitialPos;
 
+    public float flagAttachedPlayerPosY;
+
     //Security for trigger only one time
     private bool flagIsCaptured = false;
 
@@ -44,7 +46,7 @@ public class KeepingFlag : MonoBehaviour
 
     public void AttachFlagToPlayer(Transform player)
     {
-        transform.position = player.position;
+        transform.position = new Vector2(player.position.x, player.position.y + flagAttachedPlayerPosY);
         transform.SetParent(player);
     }
 
