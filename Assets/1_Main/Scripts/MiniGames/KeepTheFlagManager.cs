@@ -32,6 +32,8 @@ public class KeepTheFlagManager : MonoBehaviour
 
     public int currentPlayerHaveFlag = 0;
 
+    private bool playOneTime = false;
+
     private void Start()
     {
         keepingFlagScript = GetComponentInChildren<KeepingFlag>();
@@ -73,10 +75,12 @@ public class KeepTheFlagManager : MonoBehaviour
             }
         }
 
-        if (timerScript.miniGameTimer <= 0)
+        if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
             keepingFlagScript.ResetFlag();
             SortPlayers();
+
+            playOneTime = true;
         }
     }
 

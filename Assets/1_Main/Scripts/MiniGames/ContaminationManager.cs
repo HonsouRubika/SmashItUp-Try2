@@ -38,6 +38,8 @@ public class ContaminationManager : MonoBehaviour
     public Score scoreScript;
     public Timer timerScript;
 
+    private bool playOneTime = false;
+
     private void Start()
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
@@ -93,7 +95,7 @@ public class ContaminationManager : MonoBehaviour
             WolfSoundScript.WolfAttack();
         }*/
 
-        if (timerScript.miniGameTimer <= 0 || contaminationOrder == players.Length)
+        if ((timerScript.miniGameTimer <= 0 || contaminationOrder == players.Length) && !playOneTime)
         {
             //DestroyWolfHead();
 
@@ -104,6 +106,8 @@ public class ContaminationManager : MonoBehaviour
             SortPlayers(2, player1ContaminationOrder);
             SortPlayers(3, player2ContaminationOrder);
             SortPlayers(4, player3ContaminationOrder);
+
+            playOneTime = true;
         }      
     }
 
