@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerSkins : MonoBehaviour
 {
@@ -33,16 +34,19 @@ public class PlayerSkins : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.enterKey.wasPressedThisFrame)
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Test"))
         {
-            ChangeSkin();
-        }
-
-        if (Gamepad.current != null)
-        {
-            if (Gamepad.current.rightShoulder.wasPressedThisFrame)
+            if (Keyboard.current.enterKey.wasPressedThisFrame)
             {
                 ChangeSkin();
+            }
+
+            if (Gamepad.current != null)
+            {
+                if (Gamepad.current.rightShoulder.wasPressedThisFrame)
+                {
+                    ChangeSkin();
+                }
             }
         }
     }

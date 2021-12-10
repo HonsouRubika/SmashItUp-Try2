@@ -22,6 +22,8 @@ public class CaptureTheFlag_Rules : MonoBehaviour
     [Header("CaptureTheFlag Rules")]
     public int winPoints;
 
+    private bool playOneTime = false;
+
     private void Start()
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
@@ -36,7 +38,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
         AssignPlayerTeam();
     }
 
-    public void FlagCaptured(int playerWin)
+    /*public void FlagCaptured(int playerWin)
     {
         //GameManager.Instance.getTeamCompo
 
@@ -68,6 +70,33 @@ public class CaptureTheFlag_Rules : MonoBehaviour
 
         //GameManager.Instance.NextMap();
         GameManager.Instance.Score();
+    }*/
+
+    public void FlagCaptured(int playerWin)
+    {
+        if (!playOneTime)
+        {
+            switch (playerWin)
+            {
+                case 0:
+                    GameManager.Instance.addScores(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0, 0);
+                    break;
+                case 1:
+                    GameManager.Instance.addScores(0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0);
+                    break;
+                case 2:
+                    GameManager.Instance.addScores(0, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0);
+                    break;
+                case 3:
+                    GameManager.Instance.addScores(0, 0, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                    break;
+            }
+
+            //GameManager.Instance.NextMap();
+            GameManager.Instance.Score();
+
+            playOneTime = true;
+        }
     }
 
     private void AssignPlayerTeam()

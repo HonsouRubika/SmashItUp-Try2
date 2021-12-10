@@ -35,6 +35,8 @@ public class WhackAMoleManager : MonoBehaviour
 
     public List<Transform> allTpPoints;
 
+    private bool playOneTime = false;
+
     private void Start()
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
@@ -85,9 +87,11 @@ public class WhackAMoleManager : MonoBehaviour
             }
         }
 
-        if (timerScript.miniGameTimer <= 0)
+        if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
             SortPlayers();
+
+            playOneTime = true;
         }
     }
 

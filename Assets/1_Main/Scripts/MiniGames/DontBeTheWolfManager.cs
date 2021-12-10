@@ -36,6 +36,8 @@ public class DontBeTheWolfManager : MonoBehaviour
     public Score scoreScript;
     public Timer timerScript;
 
+    private bool playOneTime = false;
+
     private void Start()
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
@@ -79,10 +81,12 @@ public class DontBeTheWolfManager : MonoBehaviour
 
         IncrementPlayerScore(wolfPlayerNumber);
 
-        if (timerScript.miniGameTimer <= 0)
+        if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
             Destroy(wolfHeadInstance);
             SortPlayers();
+
+            playOneTime = true;
         }
     }
 

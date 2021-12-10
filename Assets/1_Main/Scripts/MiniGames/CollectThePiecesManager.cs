@@ -21,6 +21,8 @@ public class CollectThePiecesManager : MonoBehaviour
     public List<Transform> tpPoints = new List<Transform>();
     private List<int> randomNumbers = new List<int>();
 
+    private bool playOneTime = false;
+
     private void Start()
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
@@ -42,16 +44,20 @@ public class CollectThePiecesManager : MonoBehaviour
     {
         IncrementPlayerScore();
 
-        if (timerScript.miniGameTimer <= 0)
+        if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
             SortPlayers();
+
+            playOneTime = true;
         }
 
         //End the mini-game
-        if (piecesNumber <= 0)
+        if (piecesNumber <= 0 && !playOneTime)
         {
             GameManager.Instance.Score();
             SortPlayers();
+
+            playOneTime = true;
         }
     }
 

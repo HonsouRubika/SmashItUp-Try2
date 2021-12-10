@@ -32,7 +32,7 @@ public class PlayerManagerScript : MonoBehaviour
                 playerInput.GetComponent<PlayerController>().playerID = 0;
                 playerInput.transform.GetChild(6).GetComponent<SpriteRenderer>().sprite = P1;
 
-                SpriteRenderer[] spritesP1 = spritesP1 = playerInput.GetComponentInChildren<PlayerAnim>().GetComponentsInChildren<SpriteRenderer>();
+                SpriteRenderer[] spritesP1 = spritesP1 = playerInput.GetComponentInChildren<Animator>().GetComponentsInChildren<SpriteRenderer>();
                 for (int i = 0; i < spritesP1.Length; i++)
                 {
                     spritesP1[i].material.SetColor("_Color", colorP1);
@@ -45,7 +45,7 @@ public class PlayerManagerScript : MonoBehaviour
                 playerInput.GetComponent<PlayerController>().playerID = 1;
                 playerInput.transform.GetChild(6).GetComponent<SpriteRenderer>().sprite = P2;
 
-                SpriteRenderer[] spritesP2 = spritesP2 = playerInput.GetComponentInChildren<PlayerAnim>().GetComponentsInChildren<SpriteRenderer>();
+                SpriteRenderer[] spritesP2 = spritesP2 = playerInput.GetComponentInChildren<Animator>().GetComponentsInChildren<SpriteRenderer>();
                 for (int i = 0; i < spritesP2.Length; i++)
                 {
                     spritesP2[i].material.SetColor("_Color", colorP2);
@@ -58,7 +58,7 @@ public class PlayerManagerScript : MonoBehaviour
                 playerInput.GetComponent<PlayerController>().playerID = 2;
                 playerInput.transform.GetChild(6).GetComponent<SpriteRenderer>().sprite = P3;
 
-                SpriteRenderer[] spritesP3 = spritesP3 = playerInput.GetComponentInChildren<PlayerAnim>().GetComponentsInChildren<SpriteRenderer>();
+                SpriteRenderer[] spritesP3 = spritesP3 = playerInput.GetComponentInChildren<Animator>().GetComponentsInChildren<SpriteRenderer>();
                 for (int i = 0; i < spritesP3.Length; i++)
                 {
                     spritesP3[i].material.SetColor("_Color", colorP3);
@@ -71,7 +71,7 @@ public class PlayerManagerScript : MonoBehaviour
                 playerInput.GetComponent<PlayerController>().playerID = 3;
                 playerInput.transform.GetChild(6).GetComponent<SpriteRenderer>().sprite = P4;
 
-                SpriteRenderer[] spritesP4 = spritesP4 = playerInput.GetComponentInChildren<PlayerAnim>().GetComponentsInChildren<SpriteRenderer>();
+                SpriteRenderer[] spritesP4 = spritesP4 = playerInput.GetComponentInChildren<Animator>().GetComponentsInChildren<SpriteRenderer>();
                 for (int i = 0; i < spritesP4.Length; i++)
                 {
                     spritesP4[i].material.SetColor("_Color", colorP4);
