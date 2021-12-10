@@ -187,6 +187,7 @@ public class GameManager : MonoBehaviour
                 didTransitionStarted = false;
                 //Debug.Log("Transition finished");
                 //start minigame timer
+                GameObject.Find("--UI--").GetComponent<Timer>().StartTimer();
                 //Timer.StartTimer();
 
             }
