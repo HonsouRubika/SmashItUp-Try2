@@ -58,71 +58,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7944750134887754718}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5539770541781341265
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8716035257415266488}
-  - component: {fileID: 8938637372772267903}
-  - component: {fileID: 4996484993519072118}
-  m_Layer: 8
-  m_Name: PlayerAnimations
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8716035257415266488
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5539770541781341265}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7944750134887754718}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8938637372772267903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5539770541781341265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59dfd0de2c32eb5479e494af7282de23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 0}
---- !u!114 &4996484993519072118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5539770541781341265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b08f685be05249043989dba7055bafa4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseSkin: {fileID: 9020392905332927874}
-  skinPosition: {fileID: 1478593312613046960}
-  currentSkin: {fileID: 0}
-  skins:
-  - {fileID: 1672598699052452905, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
-  - {fileID: 7864038903626718067, guid: 8b5a8f15ba3f9de49b54eda18f8040dd, type: 3}
 --- !u!1 &7944750134738446196
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,6 +314,8 @@ GameObject:
   - component: {fileID: 8299801329159407178}
   - component: {fileID: 6809023613868175522}
   - component: {fileID: 2682600549178744541}
+  - component: {fileID: 2338296994736085340}
+  - component: {fileID: 1789542739471898128}
   m_Layer: 8
   m_Name: onScalePlayer
   m_TagString: Player
@@ -405,7 +344,6 @@ Transform:
   - {fileID: 8685648045550649710}
   - {fileID: 6548757986954372878}
   - {fileID: 6487281736711119920}
-  - {fileID: 8716035257415266488}
   - {fileID: 1478593312613046960}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -636,11 +574,58 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5b3b3a60-4421-4dad-b585-c9d05a7d6be3
     m_ActionName: Player/Attaquer[/XInputControllerWindows/rightTrigger,/XInputControllerWindows/leftTrigger,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2338296994736085340}
+        m_TargetAssemblyTypeName: PlayerSkins, Assembly-CSharp
+        m_MethodName: ChangeSkin
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9220a066-2e23-4f2d-b708-0957e79f0f7b
+    m_ActionName: Player/Skin[/Keyboard/r,/XInputControllerWindows/rightShoulder]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2338296994736085340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8832553990740409711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b08f685be05249043989dba7055bafa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSkin: {fileID: 9020392905332927874}
+  skinPosition: {fileID: 1478593312613046960}
+  currentSkin: {fileID: 0}
+  skins:
+  - {fileID: 9020392905332927874}
+  - {fileID: 7864038903626718067, guid: 8b5a8f15ba3f9de49b54eda18f8040dd, type: 3}
+--- !u!114 &1789542739471898128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8832553990740409711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59dfd0de2c32eb5479e494af7282de23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 0}
 --- !u!1 &9001602288957623517
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,13 +795,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
---- !u!4 &1736095577852956984 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8218864344013910163, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
-  m_PrefabInstance: {fileID: 7645032069585691051}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9020392905332927874 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1672598699052452905, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
+  m_PrefabInstance: {fileID: 7645032069585691051}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1736095577852956984 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8218864344013910163, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
   m_PrefabInstance: {fileID: 7645032069585691051}
   m_PrefabAsset: {fileID: 0}
