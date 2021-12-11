@@ -30,6 +30,8 @@ public class ScoreValuesManager : MonoBehaviour
 
     private void Update()
     {
+        ///TODO: Lire ça qu'une seule fois
+
         players = GameObject.FindGameObjectsWithTag("Player");
 
         PointsDependingPlayersNumber();

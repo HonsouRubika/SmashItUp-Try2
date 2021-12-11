@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
     public GameObject curtain;
     private GameObject transition;
     Animator transitionAnimator;
-
     private enum TransitionState {OPENING, OPEN, CLOSING, CLOSE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED}
 
     void Awake()
@@ -66,13 +65,6 @@ public class GameManager : MonoBehaviour
     {
         //Transition
 
-        //TODO : Take off timers && fully use animator
-        //https://stackoverflow.com/questions/34846287/get-name-of-current-animation-state/55933542
-        //https://forum.unity.com/threads/current-animator-state-name.331803/
-        //transitionState == TransitionState.CLOSING && Time.time >= closeCurtainTimerActu
-        //                                  ==========
-        //transitionAnimScript.GetAnimator().GetCurrentAnimatorStateInfo(0).IsName("AnimationName")
-        //SAVE: if (transitionState == TransitionState.CLOSING && Time.time >= closeCurtainTimerActu)
         if (didTransitionStarted && !animatorLoaded)
         {
             transitionAnimator = transition.GetComponent<Animator>();
@@ -84,12 +76,6 @@ public class GameManager : MonoBehaviour
 
         if (didTransitionStarted && animatorLoaded)
         {
-            //Debug.Log("in transition state affection");
-            //Debug.Log(transitionState + " et bool :" + transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"));
-            //Debug.Log("open : " + transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"));
-            //if (transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close")) ////// Works but repeats everytime => requires bool isStarted to limit read on fnct
-            /// TODO : souviens toi, je pense que c'est la meilleur solution
-            // OLD : if (transitionState == TransitionState.CLOSING && Time.time >= closeCurtainTimerActu)
 
             //yellow = ScoreFinal
             if (transitionState == TransitionState.CLOSE_YELLOW && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"))
@@ -113,6 +99,12 @@ public class GameManager : MonoBehaviour
                 didTransitionStarted = false;
 
                 //on suprr les rideaux
+                /// TODO: Unfreeze players
+                for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
+                {
+                    scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = false;
+                }
+
                 Destroy(transition);
             }
 
@@ -138,6 +130,12 @@ public class GameManager : MonoBehaviour
                 didTransitionStarted = false;
 
                 //on suprr les rideaux
+                /// TODO: Unfreeze players
+                for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
+                {
+                    scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = false;
+                }
+
                 Destroy(transition);
             }
 
@@ -160,7 +158,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("focus player");
                 //6) Show Players && goal
                 transitionState = TransitionState.FOCUS;
-                focusPlayerTimerActu = focusPlayerTimer + Time.time;
+                //focusPlayerTimerActu = focusPlayerTimer + Time.time;
                 focusPlayersScript.EnableFocus();
 
                 //on suprr les rideaux
@@ -182,7 +180,13 @@ public class GameManager : MonoBehaviour
             else if (transitionState == TransitionState.COUNTDOWN && Time.time >= countdownTimerActu)
             {
                 //transition finiched
-                //8) unfreeze sc�ne2
+                //8) unfreeze sc�ne
+                /// TODO: Unfreeze players
+                for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
+                {
+                    scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = false;
+                }
+
                 transitionState = TransitionState.FINISHED;
                 didTransitionStarted = false;
                 //Debug.Log("Transition finished");
@@ -232,6 +236,13 @@ public class GameManager : MonoBehaviour
         if (!didTransitionStarted)
         {
             didTransitionStarted = true;
+
+            /// TODO: Freeze players
+            for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
+            {
+                scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
+            }
+
             //Debug.Log("call fnct score");
             //reset transition state
             transitionState = TransitionState.OPEN;
@@ -264,6 +275,13 @@ public class GameManager : MonoBehaviour
         if (!didTransitionStarted)
         {
             didTransitionStarted = true;
+
+            /// TODO: Freeze players
+            for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
+            {
+                scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
+            }
+
             //Debug.Log("call fnct score");
             //reset transition state
             transitionState = TransitionState.OPEN;
@@ -290,6 +308,13 @@ public class GameManager : MonoBehaviour
         if (!didTransitionStarted)
         {
             didTransitionStarted = true;
+
+            /// TODO: Freeze players
+            for (int i=0; i< scoreValuesManagerScript.players.Length; i++)
+            {
+                scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
+            }
+
             //Debug.Log("call fnct next map");
             //reset transition state
             transitionState = TransitionState.OPEN;
