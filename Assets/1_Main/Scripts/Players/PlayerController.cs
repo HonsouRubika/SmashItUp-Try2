@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
     [Header("Stun")]
     public float stunTime = 0.5f;
     private float stunTimeActu;
+    public bool isFrozen = false;
     public float blockStunTime = 0.5f;
     private float blockStunTimeActu;
 
@@ -146,7 +147,7 @@ public class PlayerController : MonoBehaviour
         if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
         {
             //stun
-            if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu)
+            if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu && !isFrozen)
             {
                 if (context.started)
                 {
@@ -186,7 +187,7 @@ public class PlayerController : MonoBehaviour
         verifProjectionMax();
 
         //stun
-        if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu && playerAnimScript != null && PlayerSoundScript != null && playerAnimator != null)
+        if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu && playerAnimScript != null && PlayerSoundScript != null && playerAnimator != null && !isFrozen)
         {
             //anim
             if (playerAnimScript.playerAnimator != null)
@@ -210,6 +211,12 @@ public class PlayerController : MonoBehaviour
 
             attack();
             
+        }
+        else if (isFrozen)
+        {
+            rb.velocity = new Vector2(0, 0);
+            //do nothing
+            //player is frozen during TRANSITION
         }
         else if (playerAnimScript != null && PlayerSoundScript != null && playerAnimator != null) //player is stun
         {
