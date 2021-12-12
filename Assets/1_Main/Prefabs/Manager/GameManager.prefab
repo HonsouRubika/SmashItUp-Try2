@@ -51,6 +51,7 @@ MonoBehaviour:
   scoreValuesManagerScript: {fileID: 0}
   isPaused: 0
   isShowingPlayers: 0
+  pauseScript: {fileID: 2040467285552887625}
   transitionAnimScript: {fileID: 0}
   curtain: {fileID: 5805044401616752714, guid: 154f523b5d2657d4ebbababc2837f91c, type: 3}
 --- !u!114 &7698355189767790221
@@ -225,6 +226,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2040467285607542759, guid: 4a17a89bf371a7c4d8aa56e08cbd439a, type: 3}
   m_PrefabInstance: {fileID: 90052783}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2040467285552887625 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2040467285607542758, guid: 4a17a89bf371a7c4d8aa56e08cbd439a, type: 3}
+  m_PrefabInstance: {fileID: 90052783}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4eca32753ba08d4ea98892fe6afead8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2164746140518048386
 PrefabInstance:
   m_ObjectHideFlags: 0

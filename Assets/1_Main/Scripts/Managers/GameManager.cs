@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
     public bool isShowingPlayers;
 
+    //Pause
+    public PauseMenu pauseScript;
+
     //Transition
     private float focusPlayerTimer = 3f;
     private float focusPlayerTimerActu;
@@ -387,6 +390,11 @@ public class GameManager : MonoBehaviour
             //SceneManager.LoadScene("Scores");
             Debug.Log("Affichage des scores");
         }
+    }
+
+    public void PauseGame(uint playerID)
+    {
+        pauseScript.GamePause(playerID);
     }
 
     public void RetourMenu()

@@ -21,21 +21,42 @@ public class PlayerSkins : MonoBehaviour
     private Transform parent;
     private PlayerController playerControllerScript;
 
+    //timer pour debug
+    private float changerSkinTimer = 1;
+    private float changerSkinTimerActu;
+
     private void Start()
     {
+        changerSkinTimerActu = Time.time;
+
         parent = GetComponentInParent<PlayerController>().transform;
         playerAnimScript = GetComponent<PlayerAnim>();
         playerControllerScript = parent.GetComponent<PlayerController>();
 
-        currentSkin = baseSkin;
+        Transform[] children = gameObject.GetComponentsInChildren<Transform>(true);
+        foreach (Transform item in children)
+        {
+            if (item.tag == "skin")
+            {
+                currentSkin = item.gameObject;
+            }
+        }
+
         playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
         playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
     }
 
     public void ChangeSkin(InputAction.CallbackContext context)
     {
-        if (context.started)
+        //https://issuetracker.unity3d.com/issues/input-system-unity-events-called-twice-when-using-player-input-manager-and-player-input
+        //je dois utiliser un timer parce que le new input system est buggé => la fonction est call deux fois
+
+        if (context.started && Time.time >= changerSkinTimerActu)
         {
+            changerSkinTimerActu = Time.time + changerSkinTimer;
+
+
+            Debug.Log("fnct called");
             skinNumber++;
 
             if (skinNumber >= skins.Count)
@@ -43,12 +64,17 @@ public class PlayerSkins : MonoBehaviour
                 skinNumber = 0;
             }
 
+            //on supprime le skin actuel
             Destroy(currentSkin);
-            GameObject InstanceSkin = Instantiate(skins[skinNumber], skinPosition.position, Quaternion.identity, parent);
 
-            currentSkin = InstanceSkin;
+            //on ajoute le nouveau skin
+            currentSkin = Instantiate(skins[skinNumber], skinPosition.position, Quaternion.identity, parent);
+
+            if (currentSkin.GetComponent<Animator>() == null) Debug.Log("error");
+            ///TODO : add un animator au deuxième skin
             playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
+
         }
     }
 }

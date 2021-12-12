@@ -23,6 +23,7 @@ public class Timer : MonoBehaviour
         if (isTimerStarted && miniGameTimer <= 0)
         {
             //GameManager.Instance.NextMap();
+            StopTimer();
             GameManager.Instance.Score();
         }
         else if (isTimerStarted)
@@ -35,6 +36,11 @@ public class Timer : MonoBehaviour
     public void StartTimer()
     {
         isTimerStarted = true;
+    }
+
+    public void StopTimer()
+    {
+        isTimerStarted = false;
     }
 
     private void DisplayTimer()

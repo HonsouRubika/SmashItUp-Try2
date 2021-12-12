@@ -11,6 +11,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject audioMenu;
     public GameObject videoMenu;
 
+    private uint playerThatPausedID;
+
     private void Start()
     {
         pauseMenu.SetActive(false);
@@ -21,6 +23,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             GamePause();
@@ -35,15 +38,17 @@ public class PauseMenu : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
             }
         }
+        */
     }
 
-    public void GamePause()
+    public void GamePause(uint playerID)
     {
         if (!GameManager.Instance.isPaused)
         {
             Pause();
+            playerThatPausedID = playerID;
         }
-        else
+        else if (playerThatPausedID == playerID)
         {
             Resume();
         }
