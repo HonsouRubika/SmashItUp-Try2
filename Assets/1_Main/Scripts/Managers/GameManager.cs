@@ -31,6 +31,10 @@ public class GameManager : MonoBehaviour
     private bool didTransitionStarted = false;
     private bool animatorLoaded = true;
 
+    //Bonus
+    private BonusManager bonusManagerScript;
+    public int BonusRound = 3;
+
     //Animation
     [HideInInspector] public TransitionAnim transitionAnimScript;
     public GameObject curtain;
@@ -61,6 +65,7 @@ public class GameManager : MonoBehaviour
 
         focusPlayersScript = GetComponentInChildren<FocusPlayers>();
         scoreValuesManagerScript = GetComponent<ScoreValuesManager>();
+        bonusManagerScript = GetComponent<BonusManager>();
 
     }
 
@@ -109,6 +114,9 @@ public class GameManager : MonoBehaviour
                 }
 
                 Destroy(transition);
+
+                //Bonus fin de partie
+                bonusManagerScript.ApplyBonusEndGame();
             }
 
             //blue = Score
@@ -140,6 +148,16 @@ public class GameManager : MonoBehaviour
                 }
 
                 Destroy(transition);
+
+                //ApplyBonus
+                if(_nbMancheActu == BonusRound)
+                {
+                    bonusManagerScript.ApplyBonusInGame();
+                }
+                else if (_nbMancheActu == BonusRound + 1)
+                {
+                    bonusManagerScript.DisableBonusInGame();
+                }
             }
 
             //red = NextMap
@@ -395,6 +413,16 @@ public class GameManager : MonoBehaviour
     public void PauseGame(uint playerID)
     {
         pauseScript.GamePause(playerID);
+    }
+
+    public int getNbPlayer()
+    {
+        return scoreValuesManagerScript.players.Length;
+    }
+
+    public GameObject getSpecificPlayer(int id)
+    {
+        return scoreValuesManagerScript.players[id];
     }
 
     public void RetourMenu()

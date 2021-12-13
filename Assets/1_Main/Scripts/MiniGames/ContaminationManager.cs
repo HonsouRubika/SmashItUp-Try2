@@ -100,7 +100,6 @@ public class ContaminationManager : MonoBehaviour
             //DestroyWolfHead();
 
             DestroyWolfHead();
-            Debug.Log("call fonction score");
             GameManager.Instance.Score();
             
             SortPlayers(1, player0ContaminationOrder);

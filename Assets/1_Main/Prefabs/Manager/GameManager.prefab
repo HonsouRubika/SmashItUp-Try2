@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7456126453511074885}
   - component: {fileID: 512891308522117509}
   - component: {fileID: 7698355189767790221}
+  - component: {fileID: -7457545614664295728}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -52,6 +53,7 @@ MonoBehaviour:
   isPaused: 0
   isShowingPlayers: 0
   pauseScript: {fileID: 2040467285552887625}
+  BonusRound: 3
   transitionAnimScript: {fileID: 0}
   curtain: {fileID: 5805044401616752714, guid: 154f523b5d2657d4ebbababc2837f91c, type: 3}
 --- !u!114 &7698355189767790221
@@ -80,6 +82,18 @@ MonoBehaviour:
   TwoPlayersPointsFirstPlace: 10
   TwoPlayersSecondPlace: 5
   players: []
+--- !u!114 &-7457545614664295728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393110260777838759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77fdcd01d14fa064f9e560cc6b49fc8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &90052783
 PrefabInstance:
   m_ObjectHideFlags: 0
