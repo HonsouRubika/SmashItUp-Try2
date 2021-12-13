@@ -13,9 +13,13 @@ public class Timer : MonoBehaviour
 
     private bool isTimerStarted = false;
 
+    private Score scoresScript;
+
     private void Start()
     {
         miniGameTimer = durationMiniGame;
+
+        scoresScript = GetComponent<Score>();
     }
 
     public void Update()
@@ -36,11 +40,14 @@ public class Timer : MonoBehaviour
     public void StartTimer()
     {
         isTimerStarted = true;
+        scoresScript.EnableAddScore();
     }
 
     public void StopTimer()
     {
+        Debug.Log("timer stopped");
         isTimerStarted = false;
+        scoresScript.DisableAddScore();
     }
 
     private void DisplayTimer()

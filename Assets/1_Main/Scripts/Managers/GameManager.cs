@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     //Pause
     public PauseMenu pauseScript;
 
+    //Timer
+    private bool isFirstLoadDone = false;
+
     //Transition
     private float focusPlayerTimer = 3f;
     private float focusPlayerTimerActu;
@@ -331,11 +334,17 @@ public class GameManager : MonoBehaviour
         {
             didTransitionStarted = true;
 
-            /// TODO: Freeze players
+            // Freeze players
             for (int i=0; i< scoreValuesManagerScript.players.Length; i++)
             {
                 scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
             }
+            //Stop Clock
+            //if (isFirstLoadDone == true) GameObject.Find("--UI--").GetComponent<Timer>().StopTimer();
+            //else isFirstLoadDone = true;
+            GameObject ui = GameObject.Find("--UI--");
+            if (ui !=null) ui.GetComponent<Timer>().StopTimer();
+
 
             //Debug.Log("call fnct next map");
             //reset transition state
