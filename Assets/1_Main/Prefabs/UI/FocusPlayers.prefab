@@ -150,7 +150,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.9019608}
   m_FlipX: 0
@@ -221,7 +221,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 1068097179
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &5353233393490438533
 MonoBehaviour:
@@ -311,6 +311,7 @@ MonoBehaviour:
   timeShowingPlayers: 3
   cerclePrefab: {fileID: 6512645652985789786, guid: e81b82b37581264408d9974c698ecc7f, type: 3}
   cercleSize: {x: 12, y: 12}
+  canvasRef: {fileID: 0}
   hideScreen: {fileID: 5353233393079816576}
   colorHideScreen: {r: 0, g: 0, b: 0, a: 0.9019608}
   minigameTitleImage: {fileID: 0}

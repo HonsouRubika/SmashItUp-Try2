@@ -24,7 +24,7 @@ public class Teleporter : MonoBehaviour
             if (collision.CompareTag("Player"))
             {
                 TeleportPlayer(collision);
-                teleportSoundScript.PlayerTeleported();
+                //teleportSoundScript.PlayerTeleported();
             }
         }
     }
