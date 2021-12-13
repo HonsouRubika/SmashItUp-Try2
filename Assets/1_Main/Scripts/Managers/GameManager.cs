@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     int _nbManches;
     int _nbMancheActu = 0;
 
-    int _scoreP1 = 0, _scoreP2 = 0, _scoreP3 = 0, _scoreP4 = 0;
+    public int _scoreP1 = 0, _scoreP2 = 0, _scoreP3 = 0, _scoreP4 = 0;
+    public int _addingScoreP1 = 0, _addingScoreP2 = 0, _addingScoreP3 = 0, _addingScoreP4 = 0;
 
     public bool isPaused;
     public bool isShowingPlayers;
@@ -448,31 +449,48 @@ public class GameManager : MonoBehaviour
     //actualise le nouveau score de tout les joueurs
     //dois �tre appel� avant nextMap()
     //scoreP[x] = nombre de point gagn� dans cette manche
-    public void addScores(int scoreP1, int scoreP2, int scoreP3, int scoreP4)
+    public void addScoresPoints(int scoreP1, int scoreP2, int scoreP3, int scoreP4)
     {
-        _scoreP1 += scoreP1;
-        _scoreP2 += scoreP2;
-        _scoreP3 += scoreP3;
-        _scoreP4 += scoreP4;
+        _addingScoreP1 = scoreP1;
+        _addingScoreP2 = scoreP2;
+        _addingScoreP3 = scoreP3;
+        _addingScoreP4 = scoreP4;
     }
 
-    public void addSpecificScore(int player, int score)
+    public void addSpecificScorePoints(int player, int score)
     {
         switch (player)
         {
             case 1:
-                _scoreP1 += score;
+                _addingScoreP1 = score;
                 break;
             case 2:
-                _scoreP2 += score;
+                _addingScoreP2 = score;
                 break;
             case 3:
-                _scoreP3 += score;
+                _addingScoreP3 = score;
                 break;
             case 4:
-                _scoreP4 += score;
+                _addingScoreP4 = score;
                 break;
         }
+    }
+
+    //Security to reset earn points when changing scene
+    public void resetScorePoints()
+    {
+        _addingScoreP1 = 0;
+        _addingScoreP2 = 0;
+        _addingScoreP3 = 0;
+        _addingScoreP4 = 0;
+    }
+
+    public void UpdatePlayerScore()
+    {
+        _scoreP1 += _addingScoreP1;
+        _scoreP2 += _addingScoreP2;
+        _scoreP3 += _addingScoreP3;
+        _scoreP4 += _addingScoreP4;
     }
 
     //renvoie le score d'un joueur en particulier
@@ -491,6 +509,24 @@ public class GameManager : MonoBehaviour
             default:
                 return -1;
         } 
+    }
+
+    //return earn points to add to player score
+    public int getAddedPointsPlayer(int numJoueur)
+    {
+        switch (numJoueur)
+        {
+            case 1:
+                return _addingScoreP1;
+            case 2:
+                return _addingScoreP2;
+            case 3:
+                return _addingScoreP3;
+            case 4:
+                return _addingScoreP4;
+            default:
+                return -1;
+        }
     }
 
     //renvoie la compo d'equipe pour une manche pr�cise
