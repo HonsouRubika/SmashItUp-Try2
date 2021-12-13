@@ -87,7 +87,7 @@ public class Crate : MonoBehaviour
         destructSoundScript.PlayerDestroy();
     }
 
-    /* Renderer the overlappBox 
+    /*Renderer the overlappBox 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
