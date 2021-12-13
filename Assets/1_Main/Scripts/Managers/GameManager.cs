@@ -131,6 +131,12 @@ public class GameManager : MonoBehaviour
                 transitionState = TransitionState.LOADING;
                 SceneManager.LoadScene("Score");
 
+                /// TODO: Unfreeze players
+                for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
+                {
+                    scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = false;
+                }
+
                 //Debug.Log("on ouvre les rideaux");
                 //Scene is loaded
                 transitionState = TransitionState.OPEN_BLUE;
@@ -145,12 +151,6 @@ public class GameManager : MonoBehaviour
                 didTransitionStarted = false;
 
                 //on suprr les rideaux
-                /// TODO: Unfreeze players
-                for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
-                {
-                    scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = false;
-                }
-
                 Destroy(transition);
 
                 //ApplyBonus
@@ -261,6 +261,10 @@ public class GameManager : MonoBehaviour
         if (!didTransitionStarted)
         {
             didTransitionStarted = true;
+
+            //stop le timer
+            GameObject ui = GameObject.Find("--UI--");
+            if (ui != null) ui.GetComponent<Timer>().StopTimer();
 
             /// TODO: Freeze players
             for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
