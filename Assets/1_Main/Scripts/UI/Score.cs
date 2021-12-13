@@ -6,6 +6,7 @@ using TMPro;
 public class Score : MonoBehaviour
 {
     public bool enableDisplayScore = true;
+    private bool enableAddScore = false;
 
     public TextMeshProUGUI score0;
     public TextMeshProUGUI score1;
@@ -50,32 +51,51 @@ public class Score : MonoBehaviour
     //Use this function to add a score to players, like in destruct crate mini-game
     public void AddScore(int scoreP0, int scoreP1, int scoreP2, int scoreP3)
     {
-        scorePlayer0 += scoreP0;
-        scorePlayer1 += scoreP1;
-        scorePlayer2 += scoreP2;
-        scorePlayer3 += scoreP3;
+        if (enableAddScore)
+        {
+            scorePlayer0 += scoreP0;
+            scorePlayer1 += scoreP1;
+            scorePlayer2 += scoreP2;
+            scorePlayer3 += scoreP3;
 
-        DisplayScore();
+            DisplayScore();
+        }
     }
 
     public void SetScore(int scoreP0, int scoreP1, int scoreP2, int scoreP3)
     {
-        scorePlayer0 = scoreP0;
-        scorePlayer1 = scoreP1;
-        scorePlayer2 = scoreP2;
-        scorePlayer3 = scoreP3;
+        if (enableAddScore)
+        {
+            scorePlayer0 = scoreP0;
+            scorePlayer1 = scoreP1;
+            scorePlayer2 = scoreP2;
+            scorePlayer3 = scoreP3;
 
-        DisplayScore();
+            DisplayScore();
+        }
     }
 
     //Use this function to set a position to a player, like last place in wolf mini-game
     public void AddPosition(int positionP0, int positionP1, int positionP2, int positionP3)
     {
-        scorePlayer0 = positionP0;
-        scorePlayer1 = positionP1;
-        scorePlayer2 = positionP2;
-        scorePlayer3 = positionP3;
+        if (enableAddScore)
+        {
+            scorePlayer0 = positionP0;
+            scorePlayer1 = positionP1;
+            scorePlayer2 = positionP2;
+            scorePlayer3 = positionP3;
 
-        DisplayScore();
+            DisplayScore();
+        }
+    }
+
+    public void DisableAddScore()
+    {
+        enableAddScore = false;
+    }
+
+    public void EnableAddScore()
+    {
+        enableAddScore = true;
     }
 }

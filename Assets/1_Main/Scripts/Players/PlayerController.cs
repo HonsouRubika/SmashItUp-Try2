@@ -108,6 +108,9 @@ public class PlayerController : MonoBehaviour
     private PlayerAnim playerAnimScript;
     [HideInInspector] public Transform playerAnimator;
 
+    //Bonus
+    [System.NonSerialized] public bool isUnbreakable = false;
+
 
     void Start()
     {

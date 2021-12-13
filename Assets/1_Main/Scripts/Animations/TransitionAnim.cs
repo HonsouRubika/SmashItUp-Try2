@@ -33,7 +33,6 @@ public class TransitionAnim : MonoBehaviour
     public void OpenBlue()
     {
         transitionAnimator.SetTrigger("openBlue");
-        Debug.Log("enter OpenBlue() function");
     }
 
     public void CloseBlue()

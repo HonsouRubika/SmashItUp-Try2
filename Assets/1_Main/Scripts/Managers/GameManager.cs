@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     //Pause
     public PauseMenu pauseScript;
 
+    //Timer
+    private bool isFirstLoadDone = false;
+
     //Transition
     private float focusPlayerTimer = 3f;
     private float focusPlayerTimerActu;
@@ -30,6 +33,10 @@ public class GameManager : MonoBehaviour
     private TransitionState transitionState;
     private bool didTransitionStarted = false;
     private bool animatorLoaded = true;
+
+    //Bonus
+    private BonusManager bonusManagerScript;
+    public int BonusRound = 3;
 
     //Animation
     [HideInInspector] public TransitionAnim transitionAnimScript;
@@ -61,6 +68,7 @@ public class GameManager : MonoBehaviour
 
         focusPlayersScript = GetComponentInChildren<FocusPlayers>();
         scoreValuesManagerScript = GetComponent<ScoreValuesManager>();
+        bonusManagerScript = GetComponent<BonusManager>();
 
     }
 
@@ -83,6 +91,10 @@ public class GameManager : MonoBehaviour
             //yellow = ScoreFinal
             if (transitionState == TransitionState.CLOSE_YELLOW && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"))
             {
+                //Bonus fin de partie
+                bonusManagerScript.ApplyBonusEndGame();
+
+
                 //Debug.Log("Loading scene");
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
@@ -140,6 +152,16 @@ public class GameManager : MonoBehaviour
                 }
 
                 Destroy(transition);
+
+                //ApplyBonus
+                if(_nbMancheActu == BonusRound)
+                {
+                    bonusManagerScript.ApplyBonusInGame();
+                }
+                else if (_nbMancheActu == BonusRound + 1)
+                {
+                    bonusManagerScript.DisableBonusInGame();
+                }
             }
 
             //red = NextMap
@@ -312,11 +334,17 @@ public class GameManager : MonoBehaviour
         {
             didTransitionStarted = true;
 
-            /// TODO: Freeze players
+            // Freeze players
             for (int i=0; i< scoreValuesManagerScript.players.Length; i++)
             {
                 scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
             }
+            //Stop Clock
+            //if (isFirstLoadDone == true) GameObject.Find("--UI--").GetComponent<Timer>().StopTimer();
+            //else isFirstLoadDone = true;
+            GameObject ui = GameObject.Find("--UI--");
+            if (ui !=null) ui.GetComponent<Timer>().StopTimer();
+
 
             //Debug.Log("call fnct next map");
             //reset transition state
@@ -395,6 +423,16 @@ public class GameManager : MonoBehaviour
     public void PauseGame(uint playerID)
     {
         pauseScript.GamePause(playerID);
+    }
+
+    public int getNbPlayer()
+    {
+        return scoreValuesManagerScript.players.Length;
+    }
+
+    public GameObject getSpecificPlayer(int id)
+    {
+        return scoreValuesManagerScript.players[id];
     }
 
     public void RetourMenu()

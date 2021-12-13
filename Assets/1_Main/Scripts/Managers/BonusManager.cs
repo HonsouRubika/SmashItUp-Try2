@@ -5,6 +5,7 @@ using UnityEngine;
 public class BonusManager : MonoBehaviour
 {
     private int player;
+    private int selectedBonus;
 
     /// <summary>
     /// TO:
@@ -18,37 +19,108 @@ public class BonusManager : MonoBehaviour
         
     }
 
-    public void ApplyBonus()
+    public void ApplyBonusInGame()
     {
         //randomize depuis une liste de gameMode possible
         Random.InitState((int)Time.time);
         //pick a random bonus
-        int bonus = Random.Range(0, (int)Bonus.total);
+        selectedBonus = Random.Range(0, (int)BonusInGame.total);
 
         //get le joueur le plus nul
         player = 0;
-        int playerScore;
-        //for (int i = 0; i< numberOfPlayer; i++)
+        int playerScore = GameManager.Instance.getScorePlayer(0);
+
+        for (int i = 0; i< GameManager.Instance.getNbPlayer(); i++)
+        {
+            if (GameManager.Instance.getScorePlayer(i) < playerScore)
+            {
+                playerScore = GameManager.Instance.getScorePlayer(i);
+                player = i;
+            }
+        }
 
         //on apply l'effet sur le joueur (le temps de la game)
-        switch (bonus)
+        switch (selectedBonus)
         {
-            case (int)Bonus.Giga_Hit:
-
+            case (int)BonusInGame.Giga_Hit:
+                GameManager.Instance.getSpecificPlayer(player).GetComponent<PlayerController>().hammerXProjection *= 2;
+                GameManager.Instance.getSpecificPlayer(player).GetComponent<PlayerController>().hammerYProjection *= 2;
+                break;
+            case (int)BonusInGame.Unbreakable:
+                GameManager.Instance.getSpecificPlayer(player).GetComponent<PlayerController>().isUnbreakable = true;
                 break;
         }
     }
 
-    public void DisableBonus()
+    public void DisableBonusInGame()
     {
-        //reset les paramètres du PlayerController du player
+        switch (selectedBonus)
+        {
+            case (int)BonusInGame.Giga_Hit:
+                GameManager.Instance.getSpecificPlayer(player).GetComponent<PlayerController>().hammerXProjection /= 2;
+                GameManager.Instance.getSpecificPlayer(player).GetComponent<PlayerController>().hammerYProjection /= 2;
+                break;
+            case (int)BonusInGame.Unbreakable:
+                GameManager.Instance.getSpecificPlayer(player).GetComponent<PlayerController>().isUnbreakable = true;
+                break;
+        }
+    }
+
+    public void ApplyBonusEndGame()
+    {
+        //randomize depuis une liste de gameMode possible
+        Random.InitState((int)Time.time);
+        //pick a random bonus
+        int selectedBonus = Random.Range(0, (int)BonusEndGame.total);
+
+        //get le joueur le plus nul
+        int worstPlayer = 0;
+        int playerScore = GameManager.Instance.getScorePlayer(0);
+
+        //get le meilleur joueur
+        int bestPlayer = 0;
+        int bestPlayerSpread = GameManager.Instance.getScorePlayer(0);
+
+        //get des players avec les stats approprié
+        for (int i = 0; i < GameManager.Instance.getNbPlayer(); i++)
+        {
+            if (GameManager.Instance.getScorePlayer(i) < playerScore)
+            {
+                playerScore = GameManager.Instance.getScorePlayer(i);
+                worstPlayer = i;
+            }
+
+            if (GameManager.Instance.getScorePlayer(i) > bestPlayerSpread)
+            {
+                bestPlayerSpread = GameManager.Instance.getScorePlayer(i);
+                bestPlayer = i;
+            }
+        }
+
+        //on apply l'effet sur le joueur (le temps de la game)
+        switch (selectedBonus)
+        {
+            case (int)BonusEndGame.Duffer:
+                GameManager.Instance.addSpecificScore(worstPlayer, 75); // add 75 points au pire joueur
+                break;
+            case (int)BonusEndGame.Bootlicker:
+                GameManager.Instance.addSpecificScore(bestPlayer, -25); // on retire 25 points au meilleur joueur
+                break;
+        }
     }
 
 
-    enum Bonus
+    enum BonusInGame
     {
         Giga_Hit,
         Unbreakable,
+        total
+    }
+
+    enum BonusEndGame
+    {
+        Duffer,
+        Bootlicker,
         total
     }
 }
