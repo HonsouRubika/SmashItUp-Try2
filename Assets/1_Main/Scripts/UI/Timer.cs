@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
     public float durationMiniGame = 30;
     public float miniGameTimer = 0;
 
-    private bool isTimerStarted = false;
+    public bool isTimerStarted = false;
 
     private Score scoresScript;
 
@@ -39,6 +39,7 @@ public class Timer : MonoBehaviour
 
     public void StartTimer()
     {
+        Debug.Log("start timer");
         isTimerStarted = true;
         scoresScript.EnableAddScore();
     }
