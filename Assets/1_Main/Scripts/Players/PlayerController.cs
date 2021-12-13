@@ -180,6 +180,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void PlayerPausesGame(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            GameManager.Instance.PauseGame(playerID);
+        }
+    }
+
     private void Update()
     {
         PlayerAttacked();
