@@ -88,6 +88,10 @@ public class GameManager : MonoBehaviour
             //yellow = ScoreFinal
             if (transitionState == TransitionState.CLOSE_YELLOW && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"))
             {
+                //Bonus fin de partie
+                bonusManagerScript.ApplyBonusEndGame();
+
+
                 //Debug.Log("Loading scene");
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
@@ -114,9 +118,6 @@ public class GameManager : MonoBehaviour
                 }
 
                 Destroy(transition);
-
-                //Bonus fin de partie
-                bonusManagerScript.ApplyBonusEndGame();
             }
 
             //blue = Score
