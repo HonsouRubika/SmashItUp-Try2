@@ -58,7 +58,7 @@ public class TeleporterLobby : MonoBehaviour
             isTimerInitiated = false;
             isGameInitialized = true; //for debug purpuses: play fnct only once
             //doesnt work
-            GameManager.Instance.initializeGameModes(5);
+            GameManager.Instance.initializeGameModes();
         }
         else if (((Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized) || isDebug) && isSendingToLobby)
         {
