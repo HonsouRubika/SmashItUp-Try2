@@ -29,8 +29,6 @@ public class GameManager : MonoBehaviour
     //Transition
     private float focusPlayerTimer = 3f;
     private float focusPlayerTimerActu;
-    private float countdownTimer = 3f;
-    private float countdownTimerActu;
     private TransitionState transitionState;
     private bool didTransitionStarted = false;
     private bool animatorLoaded = true;
@@ -42,8 +40,11 @@ public class GameManager : MonoBehaviour
     //Animation
     [HideInInspector] public TransitionAnim transitionAnimScript;
     public GameObject curtain;
+    public GameObject countdown;
     private GameObject transition;
+    private GameObject countdownInstance;
     Animator transitionAnimator;
+    Animation countdownAnimation;
     private enum TransitionState {OPENING, OPEN, CLOSING, CLOSE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED}
 
     void Awake()
@@ -184,30 +185,28 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("focus player");
                 //6) Show Players && goal
                 transitionState = TransitionState.FOCUS;
-                //focusPlayerTimerActu = focusPlayerTimer + Time.time;
+
                 focusPlayersScript.EnableFocus();
 
                 //on suprr les rideaux
                 Destroy(transition);
             }
-            ///BUG: Temps de latente via la fonction focusPlayersScript.EnableFocus();
             else if (transitionState == TransitionState.FOCUS && Time.time >= focusPlayerTimerActu)
             {
                 //7) Timer "1,2,3,GO"
-
-                /// TODO : transitionAnimScript.Counstdown();
-
-                countdownTimerActu = 0.001f + Time.time;
+                countdownInstance = Instantiate<GameObject>(countdown);
+                countdownAnimation = countdownInstance.GetComponent<Animation>();
+                countdownAnimation.Play();
+                
                 transitionState = TransitionState.COUNTDOWN;
                 Debug.Log("Countdown");
             }
-            /// TODO : switch quand l'anim sera prete
-            //else if (transitionState == TransitionState.COUNTDOWN && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
-            else if (transitionState == TransitionState.COUNTDOWN && Time.time >= countdownTimerActu)
+            else if (transitionState == TransitionState.COUNTDOWN && !countdownAnimation.isPlaying)
             {
-                //transition finiched
+                //countdown finiched
+                Destroy(countdownInstance);
+
                 //8) unfreeze sc�ne
-                /// TODO: Unfreeze players
                 for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
                 {
                     scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = false;
@@ -215,10 +214,8 @@ public class GameManager : MonoBehaviour
 
                 transitionState = TransitionState.FINISHED;
                 didTransitionStarted = false;
-                //Debug.Log("Transition finished");
                 //start minigame timer
                 GameObject.Find("--UI--").GetComponent<Timer>().StartTimer();
-                //Timer.StartTimer();
 
             }
         }
