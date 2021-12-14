@@ -36,6 +36,7 @@ public class WhackAMoleManager : MonoBehaviour
     public List<Transform> allTpPoints;
 
     public List<int> previousRandomNumber;
+    //public int[] previousRandomNumberVector;
 
     private bool playOneTime = false;
 
@@ -108,6 +109,10 @@ public class WhackAMoleManager : MonoBehaviour
     {
         int randomNumberChosen = ChooseRandomNumber(0, allTpPoints.Count);
 
+        //test
+        if (allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>() == null) Debug.Log("c'est null");
+
+        /*
         if (!previousRandomNumber.Contains(randomNumberChosen) && !allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole)
         {
 
@@ -115,16 +120,18 @@ public class WhackAMoleManager : MonoBehaviour
 
             allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole = true;
             GameObject moleInstance = Instantiate(molePrefab, allTpPoints[randomNumberChosen].position, Quaternion.identity, molesFolder);
-            moleInstance.GetComponent<Mole>().currentTpScript = allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>();
-            moleInstance.GetComponent<Mole>().moleTimeStay = moleTimeStay;
+            Mole moleScript = moleInstance.GetComponent<Mole>();
+            moleScript.currentTpScript = allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>();
+            moleScript.moleTimeStay = moleTimeStay;
+            moleScript.moleID = randomNumberChosen;
+            moleScript.whackAMoleScript = this;
             MoleInScene++;
         }
         else
         {
             spawnMole();
         }
-
-        
+        */
 
         /*if (!allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole)
         {
@@ -138,6 +145,13 @@ public class WhackAMoleManager : MonoBehaviour
         {
             spawnMole();
         } */
+    }
+
+    public void despawnMole(int moleID)
+    {
+        allTpPoints[moleID].GetComponent<CheckPlayerIsClose>().alreadyMole = false;
+        previousRandomNumber.Remove(moleID);
+        MoleInScene--;
     }
 
     private void SortPlayers()
