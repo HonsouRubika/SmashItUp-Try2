@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TeleporterLobby : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class TeleporterLobby : MonoBehaviour
     private bool isGameInitialized = false;
 
     public bool isDebug;
+    public bool isSendingToLobby = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -49,13 +51,21 @@ public class TeleporterLobby : MonoBehaviour
             isTimerInitiated = false;
         }
 
-        if ((Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized) || isDebug)
+        if (((Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized) || isDebug) && !isSendingToLobby)
         {
             isDebug = false; //reset
 
             isTimerInitiated = false;
             isGameInitialized = true; //for debug purpuses: play fnct only once
             GameManager.Instance.initializeGameModes(5);
+        }
+        else if (((Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized) || isDebug) && isSendingToLobby)
+        {
+            isDebug = false; //reset
+
+            isTimerInitiated = false;
+            isGameInitialized = true;
+            SceneManager.LoadScene("Test"); //return to lobby
         }
     }
 }
