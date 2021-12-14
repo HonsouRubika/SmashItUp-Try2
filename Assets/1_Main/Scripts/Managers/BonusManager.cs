@@ -107,6 +107,8 @@ public class BonusManager : MonoBehaviour
                 GameManager.Instance.addSpecificScorePoints(bestPlayer, -25); // on retire 25 points au meilleur joueur
                 break;
         }
+
+        GameManager.Instance.UpdatePlayerScore();
     }
 
 
