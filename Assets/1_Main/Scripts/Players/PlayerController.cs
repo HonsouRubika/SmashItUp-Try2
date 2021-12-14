@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started)
         {
-            GameManager.Instance.PauseGame(playerID);
+            GameManager.Instance.PauseGame(playerID, context);
         }
     }
 
