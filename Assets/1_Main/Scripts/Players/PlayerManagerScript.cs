@@ -13,11 +13,34 @@ public class PlayerManagerScript : MonoBehaviour
 
     private GameObject[] playersUnsorted;
     public GameObject[] players;
+    public int[] finalPlayerScore;
 
     public void Start()
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
+        finalPlayerScore = new int[players.Length];
+
+        switch (players.Length)
+        {
+            case 2:
+                finalPlayerScore[0] = GameManager.Instance._scoreP1;
+                finalPlayerScore[1] = GameManager.Instance._scoreP2;
+                break;
+            case 3:
+                finalPlayerScore[0] = GameManager.Instance._scoreP1;
+                finalPlayerScore[1] = GameManager.Instance._scoreP2;
+                finalPlayerScore[2] = GameManager.Instance._scoreP3;
+                break;
+            case 4:
+                finalPlayerScore[0] = GameManager.Instance._scoreP1;
+                finalPlayerScore[1] = GameManager.Instance._scoreP2;
+                finalPlayerScore[2] = GameManager.Instance._scoreP3;
+                finalPlayerScore[3] = GameManager.Instance._scoreP4;
+                break;
+        }
+
+        System.Array.Sort(finalPlayerScore, players);
 
         if (playerPositionByScore)
         {
@@ -80,14 +103,14 @@ public class PlayerManagerScript : MonoBehaviour
                 break;
             case 3:
                 players[0].transform.position = spawner3.position;
-                players[1].transform.position = spawner1.position;
-                players[2].transform.position = spawner2.position;
+                players[1].transform.position = spawner2.position;
+                players[2].transform.position = spawner1.position;
                 break;
             case 4:
-                players[0].transform.position = spawner2.position;
-                players[1].transform.position = spawner1.position;
-                players[2].transform.position = spawner4.position;
-                players[3].transform.position = spawner3.position;
+                players[0].transform.position = spawner4.position;
+                players[1].transform.position = spawner3.position;
+                players[2].transform.position = spawner2.position;
+                players[3].transform.position = spawner1.position;
                 break;
         }     
     }
