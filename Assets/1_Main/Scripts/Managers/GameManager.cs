@@ -46,6 +46,12 @@ public class GameManager : MonoBehaviour
     private GameObject countdownInstance;
     Animator transitionAnimator;
     Animation countdownAnimation;
+
+    //Test/Debug
+    [Header("DEBUG")]
+    public bool isTest = false;
+    public string testSceneName = "Contamination01";
+
     private enum TransitionState {OPENING, OPEN, CLOSING, CLOSE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED}
 
     void Awake()
@@ -83,9 +89,6 @@ public class GameManager : MonoBehaviour
         {
             transitionAnimator = transition.GetComponent<Animator>();
             animatorLoaded = true;
-            //Debug.Log("animator loaded");
-            //closeCurtainTimerActu = transitionAnimator.
-
         }
 
         if (didTransitionStarted && animatorLoaded)
@@ -95,15 +98,12 @@ public class GameManager : MonoBehaviour
             if (transitionState == TransitionState.CLOSE_YELLOW && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"))
             {
                 //Bonus fin de partie
+                /// TODO: Verifier apply des bonus/scores
                 bonusManagerScript.ApplyBonusEndGame();
 
-
-                //Debug.Log("Loading scene");
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
-                SceneManager.LoadScene("ScoreFinal");
 
-                //Debug.Log("on ouvre les rideaux");
                 //Scene is loaded
                 transitionState = TransitionState.OPEN_YELLOW;
                 //5) open curtains animation
@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
                 Destroy(transition);
 
                 //ApplyBonus
+                /// TODO: Verifier efficacité des bonus
                 if(_nbMancheActu == BonusRound)
                 {
                     bonusManagerScript.ApplyBonusInGame();
@@ -252,7 +253,8 @@ public class GameManager : MonoBehaviour
         }
 
         //on passe � la premi�re manche
-        TestMap();
+        if (isTest) TestMap();
+        else NextMap();
     }
 
     public void Score()
@@ -299,7 +301,8 @@ public class GameManager : MonoBehaviour
 
     public void TestMap()
     {
-        SceneManager.LoadScene("WackAMole01");
+        isTest = true;
+        NextMap();
     }
 
     public void FinaleScore()
@@ -346,14 +349,11 @@ public class GameManager : MonoBehaviour
             {
                 scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
             }
+
             //Stop Clock
-            //if (isFirstLoadDone == true) GameObject.Find("--UI--").GetComponent<Timer>().StopTimer();
-            //else isFirstLoadDone = true;
             GameObject ui = GameObject.Find("--UI--");
             if (ui !=null) ui.GetComponent<Timer>().StopTimer();
 
-
-            //Debug.Log("call fnct next map");
             //reset transition state
             transitionState = TransitionState.OPEN;
 
@@ -361,14 +361,12 @@ public class GameManager : MonoBehaviour
             transition = Instantiate<GameObject>(curtain);
             DontDestroyOnLoad(transition);
             animatorLoaded = false;
-            ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
 
             //get anim script
             transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
             transitionAnimator = transition.GetComponent<Animator>();
 
             //3) play anim "fermer rideau"
-            //Debug.Log("fermer le rideau");
             transitionAnimScript.CloseRed();
             //dois attendre que l'animation de fermeture ce termine avant de loadScene
             transitionState = TransitionState.CLOSING;
@@ -379,7 +377,7 @@ public class GameManager : MonoBehaviour
     {
         //4) LoadScene(sc�ne2)
 
-        if (_nbMancheActu < _nbManches)
+        if (_nbMancheActu < _nbManches && !isTest)
         {
             switch (_selectedGameModes[_nbMancheActu])
             {
@@ -416,12 +414,15 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
-            //Old order :
-            //focusPlayersScript.EnableFocus();
+        }
+        else if (isTest)
+        {
+            _nbMancheActu++;
+            SceneManager.LoadScene(testSceneName);
         }
         else
         {
-            //partie termin�, affichage des cores finals
+            //partie termin�, affichage des scores finals
             //SceneManager.LoadScene("Scores");
             Debug.Log("Affichage des scores");
         }

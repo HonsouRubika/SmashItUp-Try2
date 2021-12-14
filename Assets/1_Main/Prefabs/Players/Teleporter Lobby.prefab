@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1875996384336299559}
+  - component: {fileID: 4101149393318138798}
   - component: {fileID: 1875996384336299552}
   - component: {fileID: 1875996384336299558}
-  - component: {fileID: 4101149393318138798}
   m_Layer: 0
   m_Name: Teleporter Lobby
   m_TagString: Untagged
@@ -33,6 +33,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4101149393318138798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875996384336299553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7b0faa761800a48a86927738133065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nbPlayerInZone: 0
+  nbPlayerInGame: 0
+  timerBeforeTeleportation: 2
+  timerBeforeTeleportationActu: 0
+  isDebug: 0
+  isSendingToLobby: 0
 --- !u!212 &1875996384336299552
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -110,19 +128,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4101149393318138798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875996384336299553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b7b0faa761800a48a86927738133065, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nbPlayerInZone: 0
-  nbPlayerInGame: 0
-  timerBeforeTeleportation: 2
-  timerBeforeTeleportationActu: 0
