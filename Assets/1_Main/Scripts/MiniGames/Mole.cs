@@ -30,6 +30,8 @@ public class Mole : MonoBehaviour
     public Color player3Color;
 
     private Vector2 pos;
+    public int moleID;
+    public WhackAMoleManager whackAMoleScript;
 
     private void Start()
     {
@@ -100,6 +102,7 @@ public class Mole : MonoBehaviour
 
     private void DestroyCrate()
     {
+        whackAMoleScript.despawnMole(moleID);
         Destroy(gameObject);
     }
 
