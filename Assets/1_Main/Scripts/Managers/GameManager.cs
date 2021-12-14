@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private int[] _selectedGameModes;
     private int[] _teamCompo;
     public int _nbManches;
-    int _nbMancheActu = 0;
+    public int _nbMancheActu = 0;
 
     public int _scoreP1 = 0, _scoreP2 = 0, _scoreP3 = 0, _scoreP4 = 0;
     public int _addingScoreP1 = 0, _addingScoreP2 = 0, _addingScoreP3 = 0, _addingScoreP4 = 0;

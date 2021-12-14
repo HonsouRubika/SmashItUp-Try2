@@ -56,7 +56,6 @@ public class ScoreManager : MonoBehaviour
             {
                 playerAddedPoints[i].enabled = true;
             }
-            Debug.Log("show added points");
         }
 
         if (Time.time >= timerBeforeUpdateScore && !flagUpdateScore)
