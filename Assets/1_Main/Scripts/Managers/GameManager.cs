@@ -227,7 +227,7 @@ public class GameManager : MonoBehaviour
         //test
         _nbMancheActu = 0;
         transitionState = TransitionState.OPEN;
-        _nbManches = 1;
+        _nbManches = nbManches;
         _selectedGameModes = new int[nbManches];
         _teamCompo = new int[nbManches];
 
