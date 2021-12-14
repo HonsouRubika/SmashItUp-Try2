@@ -35,6 +35,8 @@ public class WhackAMoleManager : MonoBehaviour
 
     public List<Transform> allTpPoints;
 
+    public List<int> previousRandomNumber;
+
     private bool playOneTime = false;
 
     private void Start()
@@ -106,7 +108,25 @@ public class WhackAMoleManager : MonoBehaviour
     {
         int randomNumberChosen = ChooseRandomNumber(0, allTpPoints.Count);
 
-        if (!allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().playerIsClose && !allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole)
+        if (!previousRandomNumber.Contains(randomNumberChosen) && !allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole)
+        {
+
+            previousRandomNumber.Add(randomNumberChosen);
+
+            allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole = true;
+            GameObject moleInstance = Instantiate(molePrefab, allTpPoints[randomNumberChosen].position, Quaternion.identity, molesFolder);
+            moleInstance.GetComponent<Mole>().currentTpScript = allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>();
+            moleInstance.GetComponent<Mole>().moleTimeStay = moleTimeStay;
+            MoleInScene++;
+        }
+        else
+        {
+            spawnMole();
+        }
+
+        
+
+        /*if (!allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole)
         {
             allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole = true;
             GameObject moleInstance = Instantiate(molePrefab, allTpPoints[randomNumberChosen].position, Quaternion.identity, molesFolder);
@@ -117,7 +137,7 @@ public class WhackAMoleManager : MonoBehaviour
         else
         {
             spawnMole();
-        } 
+        } */
     }
 
     private void SortPlayers()
