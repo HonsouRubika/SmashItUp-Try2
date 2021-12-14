@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     private int[] _selectedGameModes;
     private int[] _teamCompo;
-    int _nbManches;
+    public int _nbManches;
     int _nbMancheActu = 0;
 
     public int _scoreP1 = 0, _scoreP2 = 0, _scoreP3 = 0, _scoreP4 = 0;
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("Loading scene");
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
-                //SceneManager.LoadScene("FinalScore");
+                SceneManager.LoadScene("ScoreFinal");
 
                 //Debug.Log("on ouvre les rideaux");
                 //Scene is loaded
@@ -225,7 +225,7 @@ public class GameManager : MonoBehaviour
     //fonction � call depuis le menu suite au clic() du bouton play;
     public void initializeGameModes(int nbManches)
     {
-        _nbManches = nbManches;
+        _nbManches = 1;
         _selectedGameModes = new int[nbManches];
         _teamCompo = new int[nbManches];
 
@@ -257,7 +257,7 @@ public class GameManager : MonoBehaviour
     public void Score()
     {
         //Debug.Log("call fnct score");
-        if (!didTransitionStarted)
+        if (!didTransitionStarted && _nbMancheActu !=_nbManches)
         {
             didTransitionStarted = true;
 
@@ -290,6 +290,10 @@ public class GameManager : MonoBehaviour
             transitionAnimScript.CloseBlue();
             //dois attendre que l'animation de fermeture ce termine avant de loadScene
             transitionState = TransitionState.CLOSE_BLUE;
+        } 
+        else if (!didTransitionStarted && _nbMancheActu == _nbManches)
+        {
+            FinaleScore();
         }
     }
 
