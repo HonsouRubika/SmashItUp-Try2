@@ -434,6 +434,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+--- !u!114 &227180251 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+  m_PrefabInstance: {fileID: 227180250}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7b0faa761800a48a86927738133065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &235544153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -539,6 +550,10 @@ PrefabInstance:
       propertyPath: teleporterLobby
       value: 
       objectReference: {fileID: 1546741747}
+    - target: {fileID: -2188783968860176596, guid: daab09a9625952043a4ab97a283fc69a, type: 3}
+      propertyPath: teleporterRestartGame
+      value: 
+      objectReference: {fileID: 227180251}
     - target: {fileID: 5363275386316663937, guid: daab09a9625952043a4ab97a283fc69a, type: 3}
       propertyPath: m_RootOrder
       value: 8

@@ -200,7 +200,6 @@ public class GameManager : MonoBehaviour
                 countdownAnimation.Play();
                 
                 transitionState = TransitionState.COUNTDOWN;
-                Debug.Log("Countdown");
             }
             else if (transitionState == TransitionState.COUNTDOWN && !countdownAnimation.isPlaying)
             {
@@ -225,7 +224,10 @@ public class GameManager : MonoBehaviour
     //fonction � call depuis le menu suite au clic() du bouton play;
     public void initializeGameModes(int nbManches)
     {
-        _nbManches = 1;
+        //test
+        _nbMancheActu = 0;
+        transitionState = TransitionState.OPEN;
+        _nbManches = nbManches;
         _selectedGameModes = new int[nbManches];
         _teamCompo = new int[nbManches];
 
@@ -256,7 +258,6 @@ public class GameManager : MonoBehaviour
 
     public void Score()
     {
-        //Debug.Log("call fnct score");
         if (!didTransitionStarted && _nbMancheActu !=_nbManches)
         {
             didTransitionStarted = true;

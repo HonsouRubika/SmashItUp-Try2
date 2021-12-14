@@ -39,14 +39,12 @@ public class Timer : MonoBehaviour
 
     public void StartTimer()
     {
-        Debug.Log("start timer");
         isTimerStarted = true;
         scoresScript.EnableAddScore();
     }
 
     public void StopTimer()
     {
-        Debug.Log("timer stopped");
         isTimerStarted = false;
         scoresScript.DisableAddScore();
     }
