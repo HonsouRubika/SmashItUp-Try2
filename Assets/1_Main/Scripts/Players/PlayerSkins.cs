@@ -72,8 +72,6 @@ public class PlayerSkins : MonoBehaviour
             {
                 changerSkinTimerActu = Time.time + changerSkinTimer;
 
-
-                Debug.Log("fnct called");
                 skinNumber++;
 
                 if (skinNumber >= skins.Count)
@@ -86,8 +84,11 @@ public class PlayerSkins : MonoBehaviour
 
                 //on ajoute le nouveau skin
                 currentSkin = Instantiate(skins[skinNumber], skinPosition.position, Quaternion.identity, parent);
-                SetColorToPlayer(currentSkin);
-
+                if (skinNumber == 0)
+                {
+                    SetColorToPlayer(currentSkin);
+                }
+                
                 if (currentSkin.GetComponent<Animator>() == null) Debug.Log("error");
                 ///TODO : add un animator au deuxième skin
                 playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
