@@ -21,28 +21,18 @@ public class PauseMenu : MonoBehaviour
         videoMenu.SetActive(false);
     }
 
-    private void Update()
+    public void GamePause(uint playerID, InputAction.CallbackContext context)
     {
-        /*
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (context.control == Gamepad.current.startButton)
         {
-            GamePause();
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
+        }
+        else if (context.control == Keyboard.current.escapeKey)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
         }
 
-        if (Gamepad.current != null)
-        {
-            if (Gamepad.current.startButton.wasPressedThisFrame)
-            {
-                GamePause();
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
-            }
-        }
-        */
-    }
-
-    public void GamePause(uint playerID)
-    {
         if (!GameManager.Instance.isPaused)
         {
             Pause();
@@ -51,7 +41,7 @@ public class PauseMenu : MonoBehaviour
         else if (playerThatPausedID == playerID)
         {
             Resume();
-        }
+        } 
     }
 
     private void Pause()

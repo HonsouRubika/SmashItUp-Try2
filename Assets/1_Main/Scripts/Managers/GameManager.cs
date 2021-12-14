@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -425,9 +426,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PauseGame(uint playerID)
+    public void PauseGame(uint playerID, InputAction.CallbackContext context)
     {
-        pauseScript.GamePause(playerID);
+        pauseScript.GamePause(playerID, context);
     }
 
     public int getNbPlayer()
