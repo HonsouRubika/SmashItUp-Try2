@@ -252,7 +252,7 @@ public class GameManager : MonoBehaviour
         }
 
         //on passe � la premi�re manche
-        NextMap();
+        TestMap();
     }
 
     public void Score()
@@ -299,7 +299,7 @@ public class GameManager : MonoBehaviour
 
     public void TestMap()
     {
-        SceneManager.LoadScene("CaptureTheFlag01");
+        SceneManager.LoadScene("WackAMole01");
     }
 
     public void FinaleScore()

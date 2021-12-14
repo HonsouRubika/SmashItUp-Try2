@@ -82,7 +82,6 @@ public class Mole : MonoBehaviour
             }
 
             DestroyCrate();
-            whackAWholeScript.MoleInScene--;
             //whackAWholeScript.moleDestroyed++;
             currentTpScript.alreadyMole = false;
         }
@@ -94,7 +93,6 @@ public class Mole : MonoBehaviour
         else
         {
             DestroyCrate();
-            whackAWholeScript.MoleInScene--;
             //whackAWholeScript.moleDestroyed++;
             currentTpScript.alreadyMole = false;
         }

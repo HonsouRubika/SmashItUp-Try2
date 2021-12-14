@@ -16,7 +16,7 @@ public class WhackAMoleManager : MonoBehaviour
     public Transform molesFolder;
 
     [Header("Settings")]
-    public int moleAtStart = 0;
+    public int moleAtStart = 2;
     //public int destroyedMoleToRespawn = 0;
     //public int numberMoleToRespawn = 0;
     [HideInInspector] public int MoleInScene = 0;
@@ -24,7 +24,7 @@ public class WhackAMoleManager : MonoBehaviour
 
     [Header("Mole")]
     public GameObject molePrefab;
-    public float moleTimeStay;
+    public float moleTimeStay = 2;
 
     [Header("Score")]
     public Score scoreScript;
@@ -42,6 +42,7 @@ public class WhackAMoleManager : MonoBehaviour
 
     private void Start()
     {
+        //init var
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
 
@@ -82,7 +83,7 @@ public class WhackAMoleManager : MonoBehaviour
             moleDestroyed = 0;
         }*/
 
-        if (MoleInScene <= moleAtStart)
+        if (MoleInScene < moleAtStart)
         {
             for (int i = MoleInScene; i < moleAtStart; i++)
             {
@@ -110,12 +111,11 @@ public class WhackAMoleManager : MonoBehaviour
         int randomNumberChosen = ChooseRandomNumber(0, allTpPoints.Count);
 
         //test
-        if (allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>() == null) Debug.Log("c'est null");
+        //if (allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>() == null) Debug.Log("c'est null");
 
-        /*
+        
         if (!previousRandomNumber.Contains(randomNumberChosen) && !allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole)
         {
-
             previousRandomNumber.Add(randomNumberChosen);
 
             allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole = true;
@@ -129,22 +129,10 @@ public class WhackAMoleManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("search another place");
             spawnMole();
         }
-        */
 
-        /*if (!allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole)
-        {
-            allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole = true;
-            GameObject moleInstance = Instantiate(molePrefab, allTpPoints[randomNumberChosen].position, Quaternion.identity, molesFolder);
-            moleInstance.GetComponent<Mole>().currentTpScript = allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>();
-            moleInstance.GetComponent<Mole>().moleTimeStay = moleTimeStay;
-            MoleInScene++;
-        }
-        else
-        {
-            spawnMole();
-        } */
     }
 
     public void despawnMole(int moleID)
