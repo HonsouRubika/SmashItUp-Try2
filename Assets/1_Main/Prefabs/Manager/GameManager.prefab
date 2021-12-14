@@ -50,12 +50,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focusPlayersScript: {fileID: 0}
   scoreValuesManagerScript: {fileID: 0}
+  _scoreP1: 0
+  _scoreP2: 0
+  _scoreP3: 0
+  _scoreP4: 0
+  _addingScoreP1: 0
+  _addingScoreP2: 0
+  _addingScoreP3: 0
+  _addingScoreP4: 0
   isPaused: 0
   isShowingPlayers: 0
   pauseScript: {fileID: 2040467285552887625}
   BonusRound: 3
   transitionAnimScript: {fileID: 0}
   curtain: {fileID: 5805044401616752714, guid: 154f523b5d2657d4ebbababc2837f91c, type: 3}
+  countdown: {fileID: 3046519167518943636, guid: 16fb4deaaa6dcfc488e12a8082f4d5cd, type: 3}
 --- !u!114 &7698355189767790221
 MonoBehaviour:
   m_ObjectHideFlags: 0
