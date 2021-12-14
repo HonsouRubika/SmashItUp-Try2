@@ -77,8 +77,17 @@ public class ScoreManager : MonoBehaviour
         if (Time.time >= TimerNextMapActu)
         {
             //Next Map
-            GameManager.Instance.NextMap();
-            GameManager.Instance.resetScorePoints();
+            if (GameManager.Instance._nbMancheActu < GameManager.Instance._nbManches)
+            {
+                GameManager.Instance.NextMap();
+                GameManager.Instance.resetScorePoints();
+            }
+            else
+            {
+                GameManager.Instance.FinaleScore();
+                GameManager.Instance.resetScorePoints();
+            }
+            
         }
     }
 

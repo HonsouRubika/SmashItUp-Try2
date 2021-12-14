@@ -226,6 +226,7 @@ public class PlayerController : MonoBehaviour
         else if (isFrozen)
         {
             rb.velocity = new Vector2(0, 0);
+            playerAnimScript.Expulsion(false);
             //do nothing
             //player is frozen during TRANSITION
         }

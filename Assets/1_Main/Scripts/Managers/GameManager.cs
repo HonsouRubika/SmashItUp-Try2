@@ -104,6 +104,8 @@ public class GameManager : MonoBehaviour
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
 
+                SceneManager.LoadScene("ScoreFinal");
+
                 //Scene is loaded
                 transitionState = TransitionState.OPEN_YELLOW;
                 //5) open curtains animation
@@ -111,7 +113,6 @@ public class GameManager : MonoBehaviour
             }
             else if (transitionState == TransitionState.OPEN_YELLOW && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
             {
-                //Debug.Log("yellow curtain open");
                 //6) Show Players && goal
                 transitionState = TransitionState.FINISHED;
                 didTransitionStarted = false;
@@ -171,12 +172,10 @@ public class GameManager : MonoBehaviour
             //red = NextMap
             if (transitionState == TransitionState.CLOSING && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"))
             {
-                //Debug.Log("Loading scene");
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
                 goToNextScene();
 
-                //Debug.Log("on ouvre les rideaux");
                 //Scene is loaded
                 transitionState = TransitionState.OPENING;
                 //5) open curtains animation
@@ -184,7 +183,6 @@ public class GameManager : MonoBehaviour
             }
             else if (transitionState == TransitionState.OPENING && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
             {
-                //Debug.Log("focus player");
                 //6) Show Players && goal
                 transitionState = TransitionState.FOCUS;
 
@@ -212,6 +210,12 @@ public class GameManager : MonoBehaviour
                 {
                     scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = false;
                 }
+                /*
+                 * PlayerController pcScript = scoreValuesManagerScript.players[i].GetComponent<PlayerController>();
+                    pcScript.isFrozen = false;
+                    pcScript.
+                 *
+                */
 
                 transitionState = TransitionState.FINISHED;
                 didTransitionStarted = false;
@@ -259,7 +263,7 @@ public class GameManager : MonoBehaviour
 
     public void Score()
     {
-        if (!didTransitionStarted && _nbMancheActu !=_nbManches)
+        if (!didTransitionStarted)
         {
             didTransitionStarted = true;
 
@@ -292,10 +296,6 @@ public class GameManager : MonoBehaviour
             transitionAnimScript.CloseBlue();
             //dois attendre que l'animation de fermeture ce termine avant de loadScene
             transitionState = TransitionState.CLOSE_BLUE;
-        } 
-        else if (!didTransitionStarted && _nbMancheActu == _nbManches)
-        {
-            FinaleScore();
         }
     }
 
@@ -415,17 +415,19 @@ public class GameManager : MonoBehaviour
             }
 
         }
-        else if (isTest)
+        else if (_nbMancheActu < _nbManches & isTest)
         {
-            _nbMancheActu++;
+            _nbMancheActu++; //je garde ?
             SceneManager.LoadScene(testSceneName);
         }
+        /*
         else
         {
             //partie termin�, affichage des scores finals
-            //SceneManager.LoadScene("Scores");
             Debug.Log("Affichage des scores");
+            SceneManager.LoadScene("ScoreFinal");
         }
+        */
     }
 
     public void PauseGame(uint playerID, InputAction.CallbackContext context)
