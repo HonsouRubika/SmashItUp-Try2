@@ -34,7 +34,7 @@ public class PlayerSkins : MonoBehaviour
     private PlayerController playerControllerScript;
 
     //timer pour debug
-    private float changerSkinTimer = 1;
+    private float changerSkinTimer = 0.5f;
     private float changerSkinTimerActu;
 
     private void Start()
