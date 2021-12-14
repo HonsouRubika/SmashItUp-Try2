@@ -11,7 +11,9 @@ public class Timer : MonoBehaviour
     public float durationMiniGame = 30;
     public float miniGameTimer = 0;
 
-    public bool isTimerStarted = false;
+    [HideInInspector] public bool isTimerStarted = false;
+
+    public bool debugEndTimer = false;
 
     private Score scoresScript;
 
@@ -24,6 +26,11 @@ public class Timer : MonoBehaviour
 
     public void Update()
     {
+        if (debugEndTimer)
+        {
+            miniGameTimer = 0;
+        }
+
         if (isTimerStarted && miniGameTimer <= 0)
         {
             //GameManager.Instance.NextMap();

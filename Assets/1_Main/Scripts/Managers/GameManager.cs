@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private int[] _selectedGameModes;
     private int[] _teamCompo;
     public int _nbManches;
-    int _nbMancheActu = 0;
+    public int _nbMancheActu = 0;
 
     public int _scoreP1 = 0, _scoreP2 = 0, _scoreP3 = 0, _scoreP4 = 0;
     public int _addingScoreP1 = 0, _addingScoreP2 = 0, _addingScoreP3 = 0, _addingScoreP4 = 0;
@@ -222,14 +222,13 @@ public class GameManager : MonoBehaviour
     }
 
     //fonction � call depuis le menu suite au clic() du bouton play;
-    public void initializeGameModes(int nbManches)
+    public void initializeGameModes()
     {
         //test
         _nbMancheActu = 0;
         transitionState = TransitionState.OPEN;
-        _nbManches = nbManches;
-        _selectedGameModes = new int[nbManches];
-        _teamCompo = new int[nbManches];
+        _selectedGameModes = new int[_nbManches];
+        _teamCompo = new int[_nbManches];
 
         _scoreP1 = 0;
         _scoreP2 = 0;
@@ -238,7 +237,7 @@ public class GameManager : MonoBehaviour
 
         //randomize depuis une liste de gameMode possible
         Random.InitState((int)Time.time);
-        for (int i = 0; i < nbManches; ++i)
+        for (int i = 0; i < _nbManches; ++i)
         {
             int nextGameMode = Random.Range(0, (int)GameMode.total);
             //on s'assure que le prochain game mode choisi soit diff�rent du premier

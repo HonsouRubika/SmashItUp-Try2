@@ -101,11 +101,25 @@ public class ContaminationManager : MonoBehaviour
 
             DestroyWolfHead();
             GameManager.Instance.Score();
-            
-            SortPlayers(1, player0ContaminationOrder);
-            SortPlayers(2, player1ContaminationOrder);
-            SortPlayers(3, player2ContaminationOrder);
-            SortPlayers(4, player3ContaminationOrder);
+
+            switch (players.Length)
+            {
+                case 2:
+                    SortPlayers(1, player0ContaminationOrder);
+                    SortPlayers(2, player1ContaminationOrder);
+                    break;
+                case 3:
+                    SortPlayers(1, player0ContaminationOrder);
+                    SortPlayers(2, player1ContaminationOrder);
+                    SortPlayers(3, player2ContaminationOrder);
+                    break;
+                case 4:
+                    SortPlayers(1, player0ContaminationOrder);
+                    SortPlayers(2, player1ContaminationOrder);
+                    SortPlayers(3, player2ContaminationOrder);
+                    SortPlayers(4, player3ContaminationOrder);
+                    break;
+            }
 
             playOneTime = true;
         }      
@@ -153,48 +167,105 @@ public class ContaminationManager : MonoBehaviour
 
     private void SortPlayers(int player, int playerOrder)
     {
-        if (contaminationOrder == players.Length)   //all players have been contamined
+        switch (players.Length)
         {
-            switch (playerOrder)
-            {
-                case 0: //not contamined
-
-                    break;
-                case 1: //original wolf
-                    GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                    break;
-                case 2: //first contamined
-                    GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
-                    break;
-                case 3: //second contamined
-                    GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
-                    break;
-                case 4: //third contamined
-                    GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
-                    break;
-            }
+            case 2:
+                if (contaminationOrder == players.Length)   //all players have been contamined
+                {
+                    switch (playerOrder)
+                    {
+                        case 1: //original wolf
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            break;
+                        case 2: //first contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                            break;
+                    }
+                }
+                else  //remain players not contamined
+                {
+                    switch (playerOrder)
+                    {
+                        case 0: //not contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            break;
+                        case 1: //original wolf
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                            break;
+                    }
+                }
+                break;
+            case 3:
+                if (contaminationOrder == players.Length)   //all players have been contamined
+                {
+                    switch (playerOrder)
+                    {
+                        case 1: //original wolf
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            break;
+                        case 2: //first contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case 3: //second contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                            break;
+                    }
+                }
+                else  //remain players not contamined
+                {
+                    switch (playerOrder)
+                    {
+                        case 0: //not contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            break;
+                        case 1: //original wolf
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case 2: //first contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                            break;
+                    }
+                }
+                break;
+            case 4:
+                if (contaminationOrder == players.Length)   //all players have been contamined
+                {
+                    switch (playerOrder)
+                    {
+                        case 1: //original wolf
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            break;
+                        case 2: //first contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
+                            break;
+                        case 3: //second contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case 4: //third contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                            break;
+                    }
+                }
+                else  //remain players not contamined
+                {
+                    switch (playerOrder)
+                    {
+                        case 0: //not contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            break;
+                        case 1: //original wolf
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
+                            break;
+                        case 2: //first contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case 3: //second contamined
+                            GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                            break;
+                    }
+                }
+                break;
         }
-        else  //remain players not contamined
-        {
-            switch (playerOrder)
-            {
-                case 0: //not contamined
-                    GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                    break;
-                case 1: //original wolf
-                    GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
-                    break;
-                case 2: //first contamined
-                    GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
-                    break;
-                case 3: //second contamined
-                    GameManager.Instance.addSpecificScorePoints(player, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
-                    break;
-                case 4: //third contamined
-
-                    break;
-            }
-        }     
     }
 
     private void SpawnPlayerRandomly()
