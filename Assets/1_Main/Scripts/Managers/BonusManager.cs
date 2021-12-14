@@ -101,10 +101,10 @@ public class BonusManager : MonoBehaviour
         switch (selectedBonus)
         {
             case (int)BonusEndGame.Duffer:
-                GameManager.Instance.addSpecificScore(worstPlayer, 75); // add 75 points au pire joueur
+                GameManager.Instance.addSpecificScorePoints(worstPlayer, 75); // add 75 points au pire joueur
                 break;
             case (int)BonusEndGame.Bootlicker:
-                GameManager.Instance.addSpecificScore(bestPlayer, -25); // on retire 25 points au meilleur joueur
+                GameManager.Instance.addSpecificScorePoints(bestPlayer, -25); // on retire 25 points au meilleur joueur
                 break;
         }
     }
