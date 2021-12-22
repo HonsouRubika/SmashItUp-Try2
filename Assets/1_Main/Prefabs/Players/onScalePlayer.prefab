@@ -363,7 +363,7 @@ MonoBehaviour:
   speed: 30
   jumpSpeed: 30
   movementJumpSpeed: 20
-  ratioAddForce: 1
+  ratioAddForce: 0.08
   playerID: 0
   rb: {fileID: 8299801329159407178}
   bc: {fileID: 6809023613868175522}
@@ -376,6 +376,7 @@ MonoBehaviour:
   numberMaxWalljump: 50
   jumpHoldTimer: 0.05
   wallGripFallSpeed: 20
+  jumpRatioAddForce: 0.08
   groundCheck: {fileID: 7944750135165682167}
   gripLeftCheck: {fileID: 8685648045550649710}
   gripRightCheck: {fileID: 6548757986954372878}

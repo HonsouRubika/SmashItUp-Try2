@@ -54,6 +54,12 @@ public class PlayerController : MonoBehaviour
     private bool isJump = false;
     private bool isWallJump = false;
 
+    //test sur le jump: add force
+    [Range(0.01f, 1f)]
+    public float jumpRatioAddForce = 0.1f;
+    private float jumpMovementActu = 1;
+    private bool isJumpFallSetted = false;
+
 
     //Colision checks
     [Header("GroundCheck")]
@@ -544,6 +550,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Hauteur max
+        /* OLD
         if (transform.position.y > startJumpPosition + maxJumpHigh && !isJumpHoldTimerSetted && isJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, 0);
@@ -557,10 +564,35 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.Falling(true);
             jumpHoldTimerActu = 0;
         }
+        */
+        if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && isJump)
+        {
+            //Debug.Log("add force");
+            if (!isJumpFallSetted) isJumpFallSetted = true;
+
+            //add force 
+            if (jumpMovementActu > -1)
+            {
+                jumpMovementActu -= jumpRatioAddForce;
+                //Debug.Log("oui : " + jumpMovementActu);
+            }
+            else if (jumpMovementActu < -1) jumpMovementActu = -1;
+
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * jumpMovementActu);
+
+            //check if player is falling
+            if (jumpMovementActu < 0)
+            {
+                jumpState = JumpState.Falling;
+                playerAnimScript.Falling(true);
+            }
+        }
 
         //hauteur max wall jump
         if (transform.position.y > startWallJumpPosition + maxWallJumpHigh && !isWallJumpHoldTimerSetted && isWallJump)
         {
+            Debug.Log("wall jump maw height");
+
             rb.velocity = new Vector2(rb.velocity.x, 0);
             jumpHoldTimerActu = Time.time + jumpHoldTimer;
             isWallJumpHoldTimerSetted = true;
@@ -599,6 +631,9 @@ public class PlayerController : MonoBehaviour
                 //reset var for walljump
                 wallJumpMovementFreezeActuL = Time.time;
                 wallJumpMovementFreezeActuR = Time.time;
+
+                //addForce = null
+                jumpMovementActu = 0;
 
                 isJump = false;
                 isWallJump = false;
@@ -732,6 +767,10 @@ public class PlayerController : MonoBehaviour
             //jump or walljump
             isJump = true;
             isWallJump = false;
+
+            //jumpAddForce
+            jumpMovementActu = 1;
+            isJumpFallSetted = false;
         }
         else if (isGrippingRight && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
         {
