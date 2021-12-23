@@ -361,22 +361,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 30
-  jumpSpeed: 30
+  jumpSpeed: 40
   movementJumpSpeed: 20
   ratioAddForce: 0.08
   playerID: 0
   rb: {fileID: 8299801329159407178}
   bc: {fileID: 6809023613868175522}
   jumpState: 3
-  maxJumpHigh: 13
-  minJumpHeigh: 5
+  maxJumpHigh: 10
+  minJumpHeigh: 2
   maxWallJumpHigh: 15
   wallJumpSpeed: 10
   wallJumpMovementFreeze: 0.2
   numberMaxWalljump: 50
-  jumpHoldTimer: 0.05
   wallGripFallSpeed: 20
-  jumpRatioAddForce: 0.08
+  jumpRatioAddForce: 0.005
+  wallJumpRatioAddForce: 0.005
   groundCheck: {fileID: 7944750135165682167}
   gripLeftCheck: {fileID: 8685648045550649710}
   gripRightCheck: {fileID: 6548757986954372878}
