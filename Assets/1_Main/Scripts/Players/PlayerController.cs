@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
     float nextAttackTime = 0f;
 
     [Header("Stun")]
+    public bool disableCollider = false;
     public float stunTime = 0.5f;
     private float stunTimeActu;
     public bool isFrozen = false;
@@ -200,6 +201,12 @@ public class PlayerController : MonoBehaviour
         //stun
         if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu && playerAnimScript != null && PlayerSoundScript != null && playerAnimator != null && !isFrozen)
         {
+            //Enable back collision between players 
+            if (disableCollider)
+            {
+                Physics2D.IgnoreLayerCollision(8, 8, false);
+            }
+
             //anim
             if (playerAnimScript.playerAnimator != null)
             {
@@ -234,6 +241,12 @@ public class PlayerController : MonoBehaviour
         {
             //anim
             playerAnimScript.Expulsion(true);
+
+            //Disable the collision between players when player are stunt
+            if (disableCollider)
+            {
+                Physics2D.IgnoreLayerCollision(8, 8, true);
+            }
             PlayerSoundScript.Ejection();
 
             if (transform.position.x <= startProjectedPostion)
