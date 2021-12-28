@@ -45,7 +45,11 @@ public class PlayerController : MonoBehaviour
     private float wallJumpMovementFreezeActuL, wallJumpMovementFreezeActuR;
     public float numberMaxWalljump = 2;
     private float numberMaxWalljumpActu;
+    //coyot time
     private bool coyoteTimeCheck = false;
+    private bool coyoteTimeDone = false;
+    public float coyotTime = 0.1f;
+    private float coyotTimeActu;
     private float shaitanerieDUnity = 1f;
     private float shaitanerieDUnityActu = 0;
     public float wallGripFallSpeed = 0;
@@ -550,7 +554,7 @@ public class PlayerController : MonoBehaviour
         }
 
         ///// JUMP CURVE /////
-        if (transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted)
+        if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded)
         {
             Debug.Log("Debug error : in jump curve");
             if (!isJumpFallSetted) isJumpFallSetted = true;
@@ -591,7 +595,8 @@ public class PlayerController : MonoBehaviour
                 startJumpPosition = transform.position.y;
                 numberMaxWalljumpActu = 0; //reset nb de walljump
                 isBeingProjected = false;
-                coyoteTimeCheck = true;
+                coyoteTimeCheck = false;
+                coyoteTimeDone = false;
                 //reset var for walljump
                 wallJumpMovementFreezeActuL = Time.time;
                 wallJumpMovementFreezeActuR = Time.time;
@@ -611,6 +616,13 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            //coyot time
+            if(!coyoteTimeCheck)
+            {
+                coyotTimeActu = Time.time + coyotTime;
+                coyoteTimeCheck = true;
+            }
+
             if(rb.velocity.y <= 0)
             {
                 //le perso chute
@@ -706,14 +718,15 @@ public class PlayerController : MonoBehaviour
 
     void computeJump()
     {
-        if ((jumpState == JumpState.Grounded || (jumpState != JumpState.Grounded && coyoteTimeCheck == true) || (nbJumpActu != nbJump && !isGrippingRight && !isGrippingLeft)) && !isAttackRunningL && !isAttackRunningR)
+        if ((jumpState == JumpState.Grounded || (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone && !isGrippingRight && !isGrippingLeft) || (nbJumpActu != nbJump && !isGrippingRight && !isGrippingLeft)) && !isAttackRunningL && !isAttackRunningR)
         {
+            //coyot time
+            if (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone) coyoteTimeDone = true;
+
             //double jump
             nbJumpActu++;
 
-            //Coyot time check
-            coyoteTimeCheck = false;
-            //block le check du ground
+            //block le check du ground : ne pas toucher
             shaitanerieDUnityActu = Time.time + shaitanerieDUnity;
 
             //Debug.Log("Jump");
