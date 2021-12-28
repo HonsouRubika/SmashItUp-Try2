@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     //jump variable
     [Header("Jump")]
     public JumpState jumpState = JumpState.InFlight;
+    public uint nbJump = 2;
+    private uint nbJumpActu = 0;
     public float maxJumpHigh = 1;
     public float minJumpHeigh = 0.5f;
     private float startJumpPosition;
@@ -436,6 +438,7 @@ public class PlayerController : MonoBehaviour
         //en l'air
         else if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
+            Debug.Log("Debug error : en l'air gauche");
             //gauche
             //rb.velocity = new Vector2(-speed, rb.velocity.y);
             //TODO : temp de pause quand changement de direction lors d'un saut
@@ -469,6 +472,7 @@ public class PlayerController : MonoBehaviour
         }
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
+            Debug.Log("Debug error : en l'air droite");
             //droite
             //rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
             attackDirection = false;
@@ -525,6 +529,7 @@ public class PlayerController : MonoBehaviour
         else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling)
         {
             //le perso doit glisser du mur
+            Debug.Log("Debur error : falling while grip left or right");
             rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
         }
         else if (isGrippingLeft)
@@ -547,6 +552,7 @@ public class PlayerController : MonoBehaviour
         ///// JUMP CURVE /////
         if (transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted)
         {
+            Debug.Log("Debug error : in jump curve");
             if (!isJumpFallSetted) isJumpFallSetted = true;
 
             //determine curve
@@ -580,6 +586,7 @@ public class PlayerController : MonoBehaviour
             {
                 //le perso touche le sol
                 jumpState = JumpState.Grounded;
+                nbJumpActu = 0;
                 playerAnimScript.Falling(false);
                 startJumpPosition = transform.position.y;
                 numberMaxWalljumpActu = 0; //reset nb de walljump
@@ -699,11 +706,11 @@ public class PlayerController : MonoBehaviour
 
     void computeJump()
     {
-        //Debug.Log("JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
-        //Debug.Log(" Grip left : " + isGrippingLeft + ", right : " + isGrippingRight);
-
-        if ((jumpState == JumpState.Grounded || (jumpState != JumpState.Grounded && coyoteTimeCheck == true)) && !isAttackRunningL && !isAttackRunningR)
+        if ((jumpState == JumpState.Grounded || (jumpState != JumpState.Grounded && coyoteTimeCheck == true) || (nbJumpActu != nbJump && !isGrippingRight && !isGrippingLeft)) && !isAttackRunningL && !isAttackRunningR)
         {
+            //double jump
+            nbJumpActu++;
+
             //Coyot time check
             coyoteTimeCheck = false;
             //block le check du ground
