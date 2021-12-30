@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
     private float attackDurationActu;
     private bool isAttackRunningL, isAttackRunningR;
     private bool didAttackedBlockedL, didAttackedBlockedR;
-    float nextAttackTime = 0f;
+    private float nextAttackTime = 0f;
 
     [Header("Stun")]
     public float stunTime = 0.5f;
@@ -330,7 +330,7 @@ public class PlayerController : MonoBehaviour
         if (isAttackRunningR && Time.time >= attackDurationActu)
         {
             //reset timeAttack
-            nextAttackTime = Time.time + 1f / attackRate;
+            //nextAttackTime = Time.time + 1f / attackRate;
 
             //Animation / Attack hitbox Apparition (pour test)
 
@@ -807,7 +807,7 @@ public class PlayerController : MonoBehaviour
         if (attackDirection && Time.time >= nextAttackTime)
         {
             //reset timeAttack
-            nextAttackTime = Time.time + 1f / attackRate;
+            nextAttackTime = Time.time + attackRate;
 
             isAttackRunningL = true;
             attackDurationActu = attackDuration + Time.time;
@@ -823,7 +823,7 @@ public class PlayerController : MonoBehaviour
         else if (!attackDirection && Time.time >= nextAttackTime)
         {
             //reset timeAttack
-            nextAttackTime = Time.time + 1f / attackRate;
+            nextAttackTime = Time.time + attackRate;
 
             isAttackRunningR = true;
             attackDurationActu = attackDuration + Time.time;
