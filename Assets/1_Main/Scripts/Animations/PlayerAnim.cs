@@ -33,7 +33,8 @@ public class PlayerAnim : MonoBehaviour
 
     public void WallSlide(bool wallRide)
     {
-        playerAnimator.SetBool("isWallSliding", wallRide);
+        //on évite de changer la valeur si c'est la même => sinon ça reset l'animation à zero pour rien => créer une vibration
+        if (playerAnimator.GetBool("isWallSliding") != wallRide) playerAnimator.SetBool("isWallSliding", wallRide);
     }
 
     public void Falling(bool fall)

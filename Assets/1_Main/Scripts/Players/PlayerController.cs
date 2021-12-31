@@ -442,7 +442,6 @@ public class PlayerController : MonoBehaviour
         //en l'air
         else if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
-            Debug.Log("Debug error : en l'air gauche");
             //gauche
             //rb.velocity = new Vector2(-speed, rb.velocity.y);
             //TODO : temp de pause quand changement de direction lors d'un saut
@@ -476,7 +475,6 @@ public class PlayerController : MonoBehaviour
         }
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
-            Debug.Log("Debug error : en l'air droite");
             //droite
             //rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
             attackDirection = false;
@@ -530,12 +528,14 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.Idle(true);
             playerAnimScript.WallSlide(false);
         }
+        ///TODO : Ajouter un grip fall au wall
+        /*
         else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling)
         {
             //le perso doit glisser du mur
-            Debug.Log("Debur error : falling while grip left or right");
             rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
         }
+        */
         else if (isGrippingLeft)
         {
             //Debug.Log("le perso doit glisser du mur");
