@@ -556,7 +556,6 @@ public class PlayerController : MonoBehaviour
         ///// JUMP CURVE /////
         if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded)
         {
-            Debug.Log("Debug error : in jump curve");
             if (!isJumpFallSetted) isJumpFallSetted = true;
 
             //determine curve
