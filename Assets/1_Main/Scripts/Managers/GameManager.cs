@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     //Timer
     private bool isFirstLoadDone = false;
+    public float durationMiniGame = 30;
 
     //Transition
     private float focusPlayerTimer = 3f;
