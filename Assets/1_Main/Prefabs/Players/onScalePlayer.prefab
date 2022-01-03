@@ -610,6 +610,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 24ebfe41-3469-4564-babe-e799b31b3a05
     m_ActionName: Player/Pause[/Keyboard/escape,/XInputControllerWindows/start]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2338296994736085340}
+        m_TargetAssemblyTypeName: PlayerSkins, Assembly-CSharp
+        m_MethodName: ChangeSkinMinus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c6ccdcd4-e27c-4130-b495-6b05906a19fa
+    m_ActionName: Player/Skin -[/XInputControllerWindows/dpad/left,/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2338296994736085340}
+        m_TargetAssemblyTypeName: PlayerSkins, Assembly-CSharp
+        m_MethodName: ChangeSkinPlus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 634f9ad2-9f6d-4166-a9c7-86f9976761f6
+    m_ActionName: Player/Skin +[/XInputControllerWindows/dpad/right,/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player
