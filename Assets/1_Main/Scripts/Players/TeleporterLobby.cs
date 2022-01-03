@@ -45,7 +45,7 @@ public class TeleporterLobby : MonoBehaviour
             timerBeforeTeleportationActu = timerBeforeTeleportation + Time.time;
             isTimerInitiated = true;
 
-        } else if (nbPlayerInZone == 0)
+        } else if (nbPlayerInZone < 2)
         {
             timerBeforeTeleportationActu = 0;
             isTimerInitiated = false;
