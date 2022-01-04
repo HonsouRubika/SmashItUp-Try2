@@ -846,6 +846,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
+      propertyPath: jumpRatioAddForce
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
+      propertyPath: wallJumpRatioAddForce
+      value: 0.005
+      objectReference: {fileID: 0}
     - target: {fileID: 6809023613868175522, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
       propertyPath: m_Enabled
       value: 1
