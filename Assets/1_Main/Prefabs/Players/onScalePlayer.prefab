@@ -401,6 +401,7 @@ MonoBehaviour:
   projectionStopSpeed: 0.5
   attackRate: 5
   attackDuration: 0.1
+  disableCollider: 0
   stunTime: 0.75
   isFrozen: 0
   blockStunTime: 0.5
@@ -666,14 +667,15 @@ MonoBehaviour:
   - {fileID: 1672598699052452905, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
   - {fileID: 7711389394269838525, guid: 22a7248bd936f7c44897428b140962c2, type: 3}
   - {fileID: 4632043644986785815, guid: b792a34491db75743b31c45a84c7591b, type: 3}
-  colorP1: {r: 0.5686275, g: 0.6, b: 0.88235295, a: 1}
-  colorP2: {r: 0.88235295, g: 0.5686275, b: 0.5686275, a: 1}
-  colorP3: {r: 0.58431375, g: 0.84313726, b: 0.5254902, a: 1}
-  colorP4: {r: 1, g: 0.8156863, b: 0.41960785, a: 1}
+  blue: {r: 0.5686275, g: 0.6, b: 0.88235295, a: 1}
+  red: {r: 0.88235295, g: 0.5686275, b: 0.5686275, a: 1}
+  green: {r: 0.58431375, g: 0.84313726, b: 0.5254902, a: 1}
+  yellow: {r: 1, g: 0.8156863, b: 0.41960785, a: 1}
   P1: {fileID: 21300000, guid: 4f54ce319ecaac14c96beffddbc5f3ab, type: 3}
   P2: {fileID: 21300000, guid: f8f501a70e443d849bd6c1b5e716bbc3, type: 3}
   P3: {fileID: 21300000, guid: b704292fefb9c324481dc35c8032f218, type: 3}
   P4: {fileID: 21300000, guid: 6ee436c80e410ef41aa9b99cad389470, type: 3}
+  skinSprites: []
 --- !u!114 &1789542739471898128
 MonoBehaviour:
   m_ObjectHideFlags: 0

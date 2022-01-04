@@ -122,8 +122,8 @@ public class CaptureTheFlag_Rules : MonoBehaviour
                     //tous ensemble equipe 0
                     break;
                 case (int)GameManager.TeamCompo.OneVSThree:
-                    if (i == 0) { playersTeam[i] = 0; players[i].GetComponent<PlayerSkins>().SetColorByTeam("red"); }
-                    else { playersTeam[i] = 1; players[i].GetComponent<PlayerSkins>().SetColorByTeam("blue"); }
+                    if (i == 0) playersTeam[i] = 0;
+                    else playersTeam[i] = 1;
                     break;
                 case (int)GameManager.TeamCompo.TwoVSTwo:
                     if (i <= 2) playersTeam[i] = 0;
@@ -160,6 +160,18 @@ public class CaptureTheFlag_Rules : MonoBehaviour
                 break;
         }
 
+        for (int i = 0; i < playersTeam.Length; i++)
+        {
+            switch (playersTeam[i])
+            {
+                case 0:
+                    players[i].GetComponent<PlayerSkins>().SetColorByTeam("blue");
+                    break;
+                case 1:
+                    players[i].GetComponent<PlayerSkins>().SetColorByTeam("red");
+                    break;
+            }
+        }
     }
 
     private void SpawnPlayerRandomly()
