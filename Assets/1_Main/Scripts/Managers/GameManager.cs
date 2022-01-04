@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     public bool isTest = false;
     public string testSceneName = "Contamination01";
 
-    private enum TransitionState {OPENING, OPEN, CLOSING, CLOSE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED}
+    private enum TransitionState { OPENING, OPEN, CLOSING, CLOSE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED }
 
     void Awake()
     {
@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviour
 
                 //ApplyBonus
                 /// TODO: Verifier efficacité des bonus
-                if(_nbMancheActu == BonusRound)
+                if (_nbMancheActu == BonusRound)
                 {
                     bonusManagerScript.ApplyBonusInGame();
                 }
@@ -197,7 +197,7 @@ public class GameManager : MonoBehaviour
                 countdownInstance = Instantiate<GameObject>(countdown);
                 countdownAnimation = countdownInstance.GetComponent<Animation>();
                 countdownAnimation.Play();
-                
+
                 transitionState = TransitionState.COUNTDOWN;
             }
             else if (transitionState == TransitionState.COUNTDOWN && !countdownAnimation.isPlaying)
@@ -229,7 +229,6 @@ public class GameManager : MonoBehaviour
     //fonction � call depuis le menu suite au clic() du bouton play;
     public void initializeGameModes()
     {
-        //test
         _nbMancheActu = 0;
         transitionState = TransitionState.OPEN;
         _selectedGameModes = new int[_nbManches];
@@ -245,15 +244,23 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < _nbManches; ++i)
         {
             int nextGameMode = Random.Range(0, (int)GameMode.total);
-            //on s'assure que le prochain game mode choisi soit diff�rent du premier
-            if (i > 0)
+
+            ///// LIMITATIONS /////
+            if (i > 0) //pas de limitation pour le premier mini jeu choisi (logique)
             {
-                while (nextGameMode == _selectedGameModes[i - 1]) nextGameMode = Random.Range(0, (int)GameMode.total);
+
+                //on s'assure que le prochain game mode choisi soit diff�rent du premier
+                while (GameModeKind[nextGameMode] == GameModeKind[_selectedGameModes[i - 1]])
+                {
+                    nextGameMode = Random.Range(0, (int)GameMode.total);
+                }
+
             }
             _selectedGameModes[i] = nextGameMode;
             _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
             //Debug.Log("Team compo : " +_teamCompo[i]);
             //Debug.Log(i + " : " +_selectedGameModes[i]);
+            //Debug.Log(nextGameMode + " : " +GameModeKind[nextGameMode]);
         }
 
         //on passe � la premi�re manche
@@ -345,14 +352,14 @@ public class GameManager : MonoBehaviour
             didTransitionStarted = true;
 
             // Freeze players
-            for (int i=0; i< scoreValuesManagerScript.players.Length; i++)
+            for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
             {
                 scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
             }
 
             //Stop Clock
             GameObject ui = GameObject.Find("--UI--");
-            if (ui !=null) ui.GetComponent<Timer>().StopTimer();
+            if (ui != null) ui.GetComponent<Timer>().StopTimer();
 
             //reset transition state
             transitionState = TransitionState.OPEN;
@@ -515,7 +522,7 @@ public class GameManager : MonoBehaviour
                 return _scoreP4;
             default:
                 return -1;
-        } 
+        }
     }
 
     //return earn points to add to player score
@@ -554,6 +561,16 @@ public class GameManager : MonoBehaviour
         KeepTheFlag,
         total //egal au nombre d'�l�ment dans l'enum
     }
+
+    public int[] GameModeKind =
+    {
+        0, //CaptureTheFlag = Flag
+        1, //Loup = Wolf
+        2, //CaptureDeZone = Capture
+        2, //CaptureDeZoneMouvante = Capture
+        1, //Contamination = Wolf
+        0  //KeepTheFlag = Flag
+    };
 
     public enum TeamCompo
     {
