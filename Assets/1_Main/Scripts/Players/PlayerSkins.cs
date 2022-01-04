@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerSkins : MonoBehaviour
 {
+    //ChangePlayerArea
+    private bool isInArea = false;
+
     public GameObject baseSkin;
     public Transform skinPosition; 
 
@@ -90,10 +93,77 @@ public class PlayerSkins : MonoBehaviour
                 }
                 
                 if (currentSkin.GetComponent<Animator>() == null) Debug.Log("error");
-                ///TODO : add un animator au deuxième skin
                 playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
                 playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.name == "ChangeSkinArea")
+        {
+            isInArea = true;
+        }
+    }
+    
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.name == "ChangeSkinArea")
+        {
+            isInArea = false;
+        }
+    }
+
+    public void ChangeSkinPlus(InputAction.CallbackContext context)
+    {
+        if (context.started && isInArea && (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Test") || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SceneTestPlateforme")))
+        {
+            skinNumber++;
+            if (skinNumber >= skins.Count)
+            {
+                skinNumber = 0;
+            }
+
+            //on supprime le skin actuel
+            Destroy(currentSkin);
+
+            //on ajoute le nouveau skin
+            currentSkin = Instantiate(skins[skinNumber], skinPosition.position, Quaternion.identity, parent);
+            if (skinNumber == 0)
+            {
+                SetColorToPlayer(currentSkin);
+            }
+
+            if (currentSkin.GetComponent<Animator>() == null) Debug.Log("error");
+            playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
+            playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
+        }
+    }
+    
+    public void ChangeSkinMinus(InputAction.CallbackContext context)
+    {
+        if (context.started && isInArea && (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Test") || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SceneTestPlateforme")))
+        {
+            skinNumber--;
+            if (skinNumber < 0)
+            {
+                skinNumber = skins.Count - 1;
+            }
+
+            //on supprime le skin actuel
+            Destroy(currentSkin);
+
+            //on ajoute le nouveau skin
+            currentSkin = Instantiate(skins[skinNumber], skinPosition.position, Quaternion.identity, parent);
+            if (skinNumber == 0)
+            {
+                SetColorToPlayer(currentSkin);
+            }
+
+            if (currentSkin.GetComponent<Animator>() == null) Debug.Log("error");
+            playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
+            playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
         }
     }
 

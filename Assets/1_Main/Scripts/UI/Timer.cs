@@ -8,7 +8,7 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI timerUI;
 
     [Space]
-    public float durationMiniGame = 30;
+    public float durationMiniGame = 30; //not used
     public float miniGameTimer = 0;
 
     [HideInInspector] public bool isTimerStarted = false;
@@ -19,6 +19,7 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
+        durationMiniGame = GameManager.Instance.durationMiniGame;
         miniGameTimer = durationMiniGame;
 
         scoresScript = GetComponent<Score>();
