@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     //jump variable
     [Header("Jump")]
     public JumpState jumpState = JumpState.InFlight;
+    public uint nbJump = 2;
+    private uint nbJumpActu = 0;
     public float maxJumpHigh = 1;
     public float minJumpHeigh = 0.5f;
     private float startJumpPosition;
@@ -43,17 +45,24 @@ public class PlayerController : MonoBehaviour
     private float wallJumpMovementFreezeActuL, wallJumpMovementFreezeActuR;
     public float numberMaxWalljump = 2;
     private float numberMaxWalljumpActu;
-    public float jumpHoldTimer = 0.1f;
-    private float jumpHoldTimerActu = 0;
-    private bool isJumpHoldTimerSetted = false;
-    private bool isWallJumpHoldTimerSetted = false;
+    //coyot time
     private bool coyoteTimeCheck = false;
+    private bool coyoteTimeDone = false;
+    public float coyotTime = 0.1f;
+    private float coyotTimeActu;
     private float shaitanerieDUnity = 1f;
     private float shaitanerieDUnityActu = 0;
     public float wallGripFallSpeed = 0;
     private bool isJump = false;
     private bool isWallJump = false;
 
+    //test sur le jump: add force
+    [Range(0.001f, 0.1f)]
+    public float jumpRatioAddForce = 0.1f;
+    [Range(0.001f, 0.1f)]
+    public float wallJumpRatioAddForce = 0.1f;
+    private float jumpMovementActu = 1;
+    private bool isJumpFallSetted = false;
 
     //Colision checks
     [Header("GroundCheck")]
@@ -216,7 +225,6 @@ public class PlayerController : MonoBehaviour
             //reset var
             stunTimeActu = 0;
             blockStunTimeActu = 0;
-            //isBeingProjected = false;
 
             /////////////////////////////////////
             //////////// DEPLACEMENT ////////////
@@ -398,7 +406,6 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(movementActu * speed, rb.velocity.y);
             */
 
-
             //Action (anim)
             actionState = Action.Run;
 
@@ -448,6 +455,7 @@ public class PlayerController : MonoBehaviour
         //en l'air
         else if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
+            Debug.Log("Debug error : en l'air gauche");
             //gauche
             //rb.velocity = new Vector2(-speed, rb.velocity.y);
             //TODO : temp de pause quand changement de direction lors d'un saut
@@ -481,6 +489,7 @@ public class PlayerController : MonoBehaviour
         }
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
+            Debug.Log("Debug error : en l'air droite");
             //droite
             //rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
             attackDirection = false;
@@ -536,7 +545,8 @@ public class PlayerController : MonoBehaviour
         }
         else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling)
         {
-            //Debug.Log("le perso doit glisser du mur");
+            //le perso doit glisser du mur
+            Debug.Log("Debur error : falling while grip left or right");
             rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
         }
         else if (isGrippingLeft)
@@ -556,62 +566,56 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.WallSlide(false);
         }
 
-        //Hauteur max
-        if (transform.position.y > startJumpPosition + maxJumpHigh && !isJumpHoldTimerSetted && isJump)
+        ///// JUMP CURVE /////
+        if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded)
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0);
-            jumpHoldTimerActu = Time.time + jumpHoldTimer;
-            isJumpHoldTimerSetted = true;
-        }
-        if (jumpState == JumpState.Falling && Time.time >= jumpHoldTimerActu && (isJumpHoldTimerSetted && !isWallJumpHoldTimerSetted) && isJump)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
-            jumpState = JumpState.Falling;
-            playerAnimScript.Falling(true);
-            jumpHoldTimerActu = 0;
-        }
+            Debug.Log("Debug error : in jump curve");
+            if (!isJumpFallSetted) isJumpFallSetted = true;
 
-        //hauteur max wall jump
-        if (transform.position.y > startWallJumpPosition + maxWallJumpHigh && !isWallJumpHoldTimerSetted && isWallJump)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, 0);
-            jumpHoldTimerActu = Time.time + jumpHoldTimer;
-            isWallJumpHoldTimerSetted = true;
-        }
-        if (jumpState == JumpState.Falling && Time.time >= jumpHoldTimerActu && isWallJumpHoldTimerSetted && isWallJump)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
-            jumpState = JumpState.Falling;
-            playerAnimScript.Falling(true);
-            jumpHoldTimerActu = 0;
+            //determine curve
+            if (jumpMovementActu > -1 && isJump) jumpMovementActu -= jumpRatioAddForce;
+            else if (jumpMovementActu > -1 && isWallJump) jumpMovementActu -= wallJumpRatioAddForce;
+            else if (jumpMovementActu < -1) jumpMovementActu = -1;
+
+            //apply curve
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpMovementActu);
+
+            //check if player is falling
+            if (jumpMovementActu < 0 && jumpState != JumpState.Falling)
+            {
+                jumpState = JumpState.Falling;
+                playerAnimScript.Falling(true);
+            }
         }
 
         //Colision Sol
         if ((Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Ground"))) || /*gauche*/
-            (Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Plateform"))) ||
-            (Physics2D.Linecast(transform.position, groundCheck.transform.position, 1 << LayerMask.NameToLayer("Ground"))) || /*milieu*/
-            (Physics2D.Linecast(transform.position, groundCheck.transform.position, 1 << LayerMask.NameToLayer("Plateform"))) ||
-            (Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Ground"))) || /*droite*/
-            (Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Plateform"))) ||
-            (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))) || /*Gauche*/
-            (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))) || /*Milieu*/
-            (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x +1f, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))))   /*Droite*/
+        (Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Plateform"))) ||
+        (Physics2D.Linecast(transform.position, groundCheck.transform.position, 1 << LayerMask.NameToLayer("Ground"))) || /*milieu*/
+        (Physics2D.Linecast(transform.position, groundCheck.transform.position, 1 << LayerMask.NameToLayer("Plateform"))) ||
+        (Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Ground"))) || /*droite*/
+        (Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Plateform"))) ||
+        (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))) || /*Gauche*/
+        (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))) || /*Milieu*/
+        (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x +1f, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))))   /*Droite*/
         {
             if (Time.time >= shaitanerieDUnityActu)
             {
                 //le perso touche le sol
                 jumpState = JumpState.Grounded;
+                nbJumpActu = 0;
                 playerAnimScript.Falling(false);
                 startJumpPosition = transform.position.y;
                 numberMaxWalljumpActu = 0; //reset nb de walljump
-                isJumpHoldTimerSetted = false;
-                isWallJumpHoldTimerSetted = false;
-                jumpHoldTimerActu = 0;
                 isBeingProjected = false;
-                coyoteTimeCheck = true;
+                coyoteTimeCheck = false;
+                coyoteTimeDone = false;
                 //reset var for walljump
                 wallJumpMovementFreezeActuL = Time.time;
                 wallJumpMovementFreezeActuR = Time.time;
+
+                //addForce = null
+                jumpMovementActu = 0;
 
                 isJump = false;
                 isWallJump = false;
@@ -625,7 +629,14 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if(rb.velocity.y < 0)
+            //coyot time
+            if(!coyoteTimeCheck)
+            {
+                coyotTimeActu = Time.time + coyotTime;
+                coyoteTimeCheck = true;
+            }
+
+            if(rb.velocity.y <= 0)
             {
                 //le perso chute
                 //vitesse de chute constante
@@ -637,10 +648,9 @@ public class PlayerController : MonoBehaviour
                 jumpState = JumpState.InFlight;
             }
         }
-        //Debug.Log(" 1 from " + transform.position + " to " + groundCheck.transform.position);
 
         //Colision Side GripCheck
-        float height = bc.size.y;
+        //float height = bc.size.y;
         if (Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Plateform")) || 
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x , gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
@@ -654,7 +664,6 @@ public class PlayerController : MonoBehaviour
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
         {
             isGrippingLeft = true;
-            isWallJumpHoldTimerSetted = false;
             isBeingProjected = false;
 
             //Action (anim)
@@ -677,7 +686,6 @@ public class PlayerController : MonoBehaviour
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
         {
             isGrippingRight = true;
-            isWallJumpHoldTimerSetted = false;
             isBeingProjected = false;
 
             //Action (anim)
@@ -723,14 +731,15 @@ public class PlayerController : MonoBehaviour
 
     void computeJump()
     {
-        //Debug.Log("JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
-        //Debug.Log(" Grip left : " + isGrippingLeft + ", right : " + isGrippingRight);
-
-        if ((jumpState == JumpState.Grounded || (jumpState != JumpState.Grounded && coyoteTimeCheck == true)) && !isAttackRunningL && !isAttackRunningR)
+        if ((jumpState == JumpState.Grounded || (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone && !isGrippingRight && !isGrippingLeft) || (nbJumpActu != nbJump && !isGrippingRight && !isGrippingLeft)) && !isAttackRunningL && !isAttackRunningR)
         {
-            //Coyot time check
-            coyoteTimeCheck = false;
-            //block le check du ground
+            //coyot time
+            if (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone) coyoteTimeDone = true;
+
+            //double jump
+            nbJumpActu++;
+
+            //block le check du ground : ne pas toucher
             shaitanerieDUnityActu = Time.time + shaitanerieDUnity;
 
             //Debug.Log("Jump");
@@ -745,6 +754,10 @@ public class PlayerController : MonoBehaviour
             //jump or walljump
             isJump = true;
             isWallJump = false;
+
+            //Jump Curve
+            jumpMovementActu = 1;
+            isJumpFallSetted = false;
         }
         else if (isGrippingRight && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
         {
@@ -767,6 +780,10 @@ public class PlayerController : MonoBehaviour
             //jump or walljump
             isJump = false;
             isWallJump = true;
+
+            //Jump Curve
+            jumpMovementActu = 1;
+            isJumpFallSetted = false;
         }
         else if (isGrippingLeft && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
         {
@@ -788,6 +805,10 @@ public class PlayerController : MonoBehaviour
             //jump or walljump
             isJump = false;
             isWallJump = true;
+
+            //Jump Curve
+            jumpMovementActu = 1;
+            isJumpFallSetted = false;
         }
 
         //Debug.Log(" 2) JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
