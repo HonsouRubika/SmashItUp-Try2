@@ -52,6 +52,10 @@ public class PlayerController : MonoBehaviour
     private float coyotTimeActu;
     private float shaitanerieDUnity = 1f;
     private float shaitanerieDUnityActu = 0;
+    //wallgrip
+    public float wallGripTime = 2;
+    private float wallGripTimeActu;
+    private bool isWallGripStarted = false;
     public float wallGripFallSpeed = 0;
     private bool isJump = false;
     private bool isWallJump = false;
@@ -542,13 +546,23 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.WallSlide(false);
         }
         ///TODO : Ajouter un grip fall au wall
-        /*
         else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling)
         {
-            //le perso doit glisser du mur
-            rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
+            if(!isWallGripStarted)
+            {
+                //le perso s'arrete un temps
+                rb.velocity = new Vector2(0, 0);
+                wallGripTimeActu = wallGripTime + Time.time;
+                isWallGripStarted = true;
+            }
+
+            if(Time.time >= wallGripTimeActu)
+            {
+                //le perso doit glisser du mur
+                rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
+                isWallGripStarted = false;
+            }
         }
-        */
         else if (isGrippingLeft)
         {
             //Debug.Log("le perso doit glisser du mur");
