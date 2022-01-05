@@ -664,7 +664,7 @@ public class PlayerController : MonoBehaviour
                 wallJumpMovementFreezeActuR = Time.time;
 
                 //addForce = null
-                jumpMovementActu = 0;
+                //jumpMovementActu = 0;
                 isJumpFallSetted = false;
 
                 isJump = false;
@@ -822,7 +822,7 @@ public class PlayerController : MonoBehaviour
             isWallJump = false;
 
             //Jump Curve
-            jumpMovementActu = 1;
+            //jumpMovementActu = 1;
             isJumpFallSetted = false;
         }
         else if (isGrippingRight && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
@@ -852,7 +852,7 @@ public class PlayerController : MonoBehaviour
             isWallJump = true;
 
             //Jump Curve
-            jumpMovementActu = 1;
+            //jumpMovementActu = 1;
             isJumpFallSetted = false;
         }
         else if (isGrippingLeft && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
@@ -880,7 +880,7 @@ public class PlayerController : MonoBehaviour
             isWallJump = true;
 
             //Jump Curve
-            jumpMovementActu = 1;
+            //jumpMovementActu = 1;
             isJumpFallSetted = false;
         }
 
