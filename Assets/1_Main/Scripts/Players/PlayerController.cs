@@ -545,15 +545,19 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.Idle(true);
             playerAnimScript.WallSlide(false);
         }
-        ///TODO : Ajouter un grip fall au wall
+        // grip fall au wall
         else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling)
         {
             if(!isWallGripStarted)
             {
                 //le perso s'arrete un temps
-                rb.velocity = new Vector2(0, 0);
                 wallGripTimeActu = wallGripTime + Time.time;
                 isWallGripStarted = true;
+            }
+            else
+            {
+                Debug.Log("wall grip stun");
+                rb.velocity = new Vector2(0, 0);
             }
 
             if(Time.time >= wallGripTimeActu)
@@ -562,6 +566,10 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
                 isWallGripStarted = false;
             }
+        }
+        else if (!isGrippingLeft && !isGrippingRight)
+        {
+            isWallGripStarted = false;
         }
         else if (isGrippingLeft)
         {
@@ -581,7 +589,7 @@ public class PlayerController : MonoBehaviour
         }
 
         ///// JUMP CURVE /////
-        if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded)
+        if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded && !isWallGripStarted)
         {
             if (!isJumpFallSetted) isJumpFallSetted = true;
 
@@ -649,7 +657,7 @@ public class PlayerController : MonoBehaviour
                 coyoteTimeCheck = true;
             }
 
-            if(rb.velocity.y <= 0)
+            if(rb.velocity.y <= 0 && !isWallGripStarted)
             {
                 //le perso chute
                 //vitesse de chute constante
