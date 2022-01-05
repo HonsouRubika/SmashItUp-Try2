@@ -37,13 +37,18 @@ public class PlayerController : MonoBehaviour
     public uint nbJump = 2;
     private uint nbJumpActu = 0;
     public float maxJumpHigh = 1;
-    public float minJumpHeigh = 0.5f;
     private float startJumpPosition;
+    public float minJumpHeigh = 0.5f;
+    //wall jump
+
+    [Header("Wall Jump")]
     private float startWallJumpPosition;
     public float maxWallJumpHigh = 1;
     public float wallJumpSpeed = 1;
+    public float wallJumpAngleY = 40 / (Mathf.Sqrt(2) / 2);
     public float wallJumpMovementFreeze = 0.2f;
-    private float wallJumpMovementFreezeActuL, wallJumpMovementFreezeActuR;
+    private float wallJumpMovementFreezeActuL;
+    private float wallJumpMovementFreezeActuR;
     public float numberMaxWalljump = 2;
     private float numberMaxWalljumpActu;
     //coyot time
@@ -507,7 +512,28 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
+        else if ((movementInput.x < -0.3) && isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && jumpState == JumpState.Falling)
+        {
+            if (!isWallGripStarted)
+            {
+                //le perso s'arrete un temps
+                wallGripTimeActu = wallGripTime + Time.time;
+                isWallGripStarted = true;
+            }
+            else
+            {
+                //player doesnt move
+                rb.velocity = new Vector2(0, 0);
+            }
+
+            if (Time.time >= wallGripTimeActu)
+            {
+                //le perso doit glisser du mur
+                rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
+                //isWallGripStarted = false;
+            }
+        }
+        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && jumpState != JumpState.Grounded)
         {
             //droite
             //rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
@@ -540,6 +566,28 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        //wall grip right
+        else if ((movementInput.x > 0.3) && isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
+        {
+            if (!isWallGripStarted)
+            {
+                //le perso s'arrete un temps
+                wallGripTimeActu = wallGripTime + Time.time;
+                isWallGripStarted = true;
+            }
+            else
+            {
+                //player doesnt move
+                rb.velocity = new Vector2(0, 0);
+            }
+
+            if (Time.time >= wallGripTimeActu)
+            {
+                //le perso doit glisser du mur
+                rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
+                //isWallGripStarted = false;
+            }
+        }
         else if (jumpState == JumpState.Grounded && !isBeingProjected)
         {
             //Debug.Log("x axe stop cause grounded");
@@ -566,26 +614,10 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.WallSlide(false);
         }
         // grip fall au wall
-        else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling)
+        else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling && Time.time >= wallGripTimeActu)
         {
-            if (!isWallGripStarted)
-            {
-                //le perso s'arrete un temps
-                wallGripTimeActu = wallGripTime + Time.time;
-                isWallGripStarted = true;
-            }
-            else
-            {
-                //player doesnt move
-                rb.velocity = new Vector2(0, 0);
-            }
-
-            if (Time.time >= wallGripTimeActu)
-            {
-                //le perso doit glisser du mur
+            //le perso doit glisser du mur
                 rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
-                //isWallGripStarted = false;
-            }
         }
         else if (isGrippingLeft)
         {
@@ -623,7 +655,6 @@ public class PlayerController : MonoBehaviour
         {
             if (!isJumpFallSetted)
             {
-                Debug.Log("start jump curve");
                 isJumpFallSetted = true;
                 //startCurveVelocity = rb.velocity.y;
             }
@@ -830,7 +861,7 @@ public class PlayerController : MonoBehaviour
         {
             jumpState = JumpState.InFlight;
             //jump to the left w/ 45� angle
-            rb.velocity = new Vector2(-wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
+            rb.velocity = new Vector2(-wallJumpSpeed, wallJumpAngleY);
             actionState = Action.Jump;
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
@@ -860,7 +891,7 @@ public class PlayerController : MonoBehaviour
         {
             jumpState = JumpState.InFlight;
             //jump to the right w/ 45� angle
-            rb.velocity = new Vector2(wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
+            rb.velocity = new Vector2(wallJumpSpeed, wallJumpAngleY);
             actionState = Action.Jump;
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
@@ -986,9 +1017,10 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPointL.position, attackRange);
         Gizmos.DrawWireSphere(hammerPointL.transform.position, hammerHitboxRange);
         Gizmos.DrawWireSphere(hammerPointR.transform.position, hammerHitboxRange);
-        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y - 0.1f));
-        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - 0.1f));
-        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y - 0.1f));
+        //ground check
+        //Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y - 0.1f));
+        //Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - 0.1f));
+        //Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y - 0.1f));
 
         //roof check
         //Gizmos.DrawLine(new Vector2(transform.position.x - 1.175f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.2f));
@@ -1003,7 +1035,7 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 0.5f));
         Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 2.2f));
         // Test*/
-        Gizmos.DrawLine(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f));
+        //Gizmos.DrawLine(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f));
 
     }
 
