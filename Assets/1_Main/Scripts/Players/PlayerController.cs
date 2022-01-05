@@ -57,12 +57,13 @@ public class PlayerController : MonoBehaviour
     private bool isWallJump = false;
 
     //test sur le jump: add force
-    [Range(0.001f, 0.1f)]
+    [Range(0.001f, 5f)]
     public float jumpRatioAddForce = 0.1f;
-    [Range(0.001f, 0.1f)]
+    [Range(0.001f, 5f)]
     public float wallJumpRatioAddForce = 0.1f;
     private float jumpMovementActu = 1;
     private bool isJumpFallSetted = false;
+    private float startCurveVelocity;
 
     //Colision checks
     [Header("GroundCheck")]
@@ -569,7 +570,11 @@ public class PlayerController : MonoBehaviour
         ///// JUMP CURVE /////
         if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded)
         {
-            if (!isJumpFallSetted) isJumpFallSetted = true;
+            if (!isJumpFallSetted)
+            {
+                isJumpFallSetted = true;
+                startCurveVelocity = rb.velocity.y;
+            }
 
             //determine curve
             if (jumpMovementActu > -1 && isJump) jumpMovementActu -= jumpRatioAddForce;
@@ -577,7 +582,8 @@ public class PlayerController : MonoBehaviour
             else if (jumpMovementActu < -1) jumpMovementActu = -1;
 
             //apply curve
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpMovementActu);
+            if (jumpMovementActu < 0 && rb.velocity.y < 0) rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * - jumpMovementActu);
+            else rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpMovementActu);
 
             //check if player is falling
             if (jumpMovementActu < 0 && jumpState != JumpState.Falling)
@@ -615,6 +621,7 @@ public class PlayerController : MonoBehaviour
 
                 //addForce = null
                 jumpMovementActu = 0;
+                isJumpFallSetted = false;
 
                 isJump = false;
                 isWallJump = false;
@@ -635,13 +642,20 @@ public class PlayerController : MonoBehaviour
                 coyoteTimeCheck = true;
             }
 
-            if(rb.velocity.y <= 0)
+            if(rb.velocity.y <= 0  /* && !isJumpFallSetted*/)
             {
                 //le perso chute
                 //vitesse de chute constante
                 jumpState = JumpState.Falling;
                 rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             }
+            /*
+            else if (rb.velocity.y <= movementJumpSpeed-startCurveVelocity && isJumpFallSetted)
+            {
+                jumpState = JumpState.Falling;
+                rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
+            }
+            */
             else if (jumpState == JumpState.Grounded) // ne change pas si jumpState = JumpState.Falling
             {
                 jumpState = JumpState.InFlight;
