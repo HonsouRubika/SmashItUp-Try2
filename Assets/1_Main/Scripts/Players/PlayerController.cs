@@ -216,9 +216,12 @@ public class PlayerController : MonoBehaviour
         if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu && playerAnimScript != null && PlayerSoundScript != null && playerAnimator != null && !isFrozen)
         {
             //Enable back collision between players 
-            if (disableCollider)
-            {
-                Physics2D.IgnoreLayerCollision(8, 8, false);
+            if (disableCollider)
+
+            {
+
+                Physics2D.IgnoreLayerCollision(8, 8, false);
+
             }
 
             //anim
@@ -600,13 +603,16 @@ public class PlayerController : MonoBehaviour
         ///// JUMP CURVE /////
         if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded && !isWallGripStarted)
         {
-            if (!isJumpFallSetted)
+            if (!isJumpFallSetted)
+
             {
                 isJumpFallSetted = true;
                 startCurveVelocity = rb.velocity.y;
             }
-
-            //determine curve
+
+
+            //determine curve
+
             if (jumpMovementActu > -1 && isJump) jumpMovementActu -= jumpRatioAddForce;
             else if (jumpMovementActu > -1 && isWallJump) jumpMovementActu -= wallJumpRatioAddForce;
             else if (jumpMovementActu < -1) jumpMovementActu = -1;
