@@ -61,12 +61,13 @@ public class PlayerController : MonoBehaviour
     private bool isWallJump = false;
 
     //test sur le jump: add force
-    [Range(0.001f, 0.1f)]
+    [Range(0.001f, 5f)]
     public float jumpRatioAddForce = 0.1f;
-    [Range(0.001f, 0.1f)]
+    [Range(0.001f, 5f)]
     public float wallJumpRatioAddForce = 0.1f;
     private float jumpMovementActu = 1;
     private bool isJumpFallSetted = false;
+    private float startCurveVelocity;
 
     //Colision checks
     [Header("GroundCheck")]
@@ -215,9 +216,9 @@ public class PlayerController : MonoBehaviour
         if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu && playerAnimScript != null && PlayerSoundScript != null && playerAnimator != null && !isFrozen)
         {
             //Enable back collision between players 
-            if (disableCollider)
-            {
-                Physics2D.IgnoreLayerCollision(8, 8, false);
+            if (disableCollider)
+            {
+                Physics2D.IgnoreLayerCollision(8, 8, false);
             }
 
             //anim
@@ -255,9 +256,9 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.Expulsion(true);
 
             //Disable the collision between players when player are stunt
-            if (disableCollider)
-            {
-                Physics2D.IgnoreLayerCollision(8, 8, true);
+            if (disableCollider)
+            {
+                Physics2D.IgnoreLayerCollision(8, 8, true);
             }
             PlayerSoundScript.Ejection();
 
@@ -548,28 +549,28 @@ public class PlayerController : MonoBehaviour
         // grip fall au wall
         else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling)
         {
-            if(!isWallGripStarted)
-            {
+            if(!isWallGripStarted)
+            {
                 //le perso s'arrete un temps
-                wallGripTimeActu = wallGripTime + Time.time;
-                isWallGripStarted = true;
+                wallGripTimeActu = wallGripTime + Time.time;
+                isWallGripStarted = true;
             }
-            else
-            {
-                Debug.Log("wall grip stun");
-                rb.velocity = new Vector2(0, 0);
+            else
+            {
+                Debug.Log("wall grip stun");
+                rb.velocity = new Vector2(0, 0);
             }
 
-            if(Time.time >= wallGripTimeActu)
-            {
+            if(Time.time >= wallGripTimeActu)
+            {
                 //le perso doit glisser du mur
-                rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
-                isWallGripStarted = false;
+                rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
+                isWallGripStarted = false;
             }
         }
-        else if (!isGrippingLeft && !isGrippingRight)
-        {
-            isWallGripStarted = false;
+        else if (!isGrippingLeft && !isGrippingRight)
+        {
+            isWallGripStarted = false;
         }
         else if (isGrippingLeft)
         {
@@ -591,15 +592,20 @@ public class PlayerController : MonoBehaviour
         ///// JUMP CURVE /////
         if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded && !isWallGripStarted)
         {
-            if (!isJumpFallSetted) isJumpFallSetted = true;
-
-            //determine curve
+            if (!isJumpFallSetted)
+            {
+                isJumpFallSetted = true;
+                startCurveVelocity = rb.velocity.y;
+            }
+
+            //determine curve
             if (jumpMovementActu > -1 && isJump) jumpMovementActu -= jumpRatioAddForce;
             else if (jumpMovementActu > -1 && isWallJump) jumpMovementActu -= wallJumpRatioAddForce;
             else if (jumpMovementActu < -1) jumpMovementActu = -1;
 
             //apply curve
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpMovementActu);
+            if (jumpMovementActu < 0 && rb.velocity.y < 0) rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * - jumpMovementActu);
+            else rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpMovementActu);
 
             //check if player is falling
             if (jumpMovementActu < 0 && jumpState != JumpState.Falling)
@@ -637,6 +643,7 @@ public class PlayerController : MonoBehaviour
 
                 //addForce = null
                 jumpMovementActu = 0;
+                isJumpFallSetted = false;
 
                 isJump = false;
                 isWallJump = false;
@@ -664,6 +671,13 @@ public class PlayerController : MonoBehaviour
                 jumpState = JumpState.Falling;
                 rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
             }
+            /*
+            else if (rb.velocity.y <= movementJumpSpeed-startCurveVelocity && isJumpFallSetted)
+            {
+                jumpState = JumpState.Falling;
+                rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
+            }
+            */
             else if (jumpState == JumpState.Grounded) // ne change pas si jumpState = JumpState.Falling
             {
                 jumpState = JumpState.InFlight;
