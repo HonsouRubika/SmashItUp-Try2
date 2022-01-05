@@ -19,16 +19,18 @@ public class PlayerSkins : MonoBehaviour
     public List<GameObject> skins;
 
     [Header("Color players")]
-    public Color colorP1;
-    public Color colorP2;
-    public Color colorP3;
-    public Color colorP4;
+    public Color blue;
+    public Color red;
+    public Color green;
+    public Color yellow;
 
     [Header("Players Cursor")]
     public Sprite P1;
     public Sprite P2;
     public Sprite P3;
     public Sprite P4;
+
+    public SpriteRenderer[] skinSprites;
 
     private int skinNumber;
 
@@ -174,39 +176,62 @@ public class PlayerSkins : MonoBehaviour
             case 0:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P1;
 
-                SpriteRenderer[] spritesP1 =  skin.GetComponentsInChildren<SpriteRenderer>();
+                /*SpriteRenderer[] spritesP1 =  skin.GetComponentsInChildren<SpriteRenderer>();
                 for (int i = 0; i < spritesP1.Length; i++)
                 {
-                    spritesP1[i].material.SetColor("_Color", colorP1);
-                }
+                    spritesP1[i].material.SetColor("_Color", blue);
+                }*/
                 break;
             case 1:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P2;
 
                 SpriteRenderer[] spritesP2 = skin.GetComponentsInChildren<SpriteRenderer>();
-                for (int i = 0; i < spritesP2.Length; i++)
+                /*for (int i = 0; i < spritesP2.Length; i++)
                 {
-                    spritesP2[i].material.SetColor("_Color", colorP2);
-                }
+                    spritesP2[i].material.SetColor("_Color", red);
+                }*/
                 break;
             case 2:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P3;
 
                 SpriteRenderer[] spritesP3 = skin.GetComponentsInChildren<SpriteRenderer>();
-                for (int i = 0; i < spritesP3.Length; i++)
+                /*for (int i = 0; i < spritesP3.Length; i++)
                 {
-                    spritesP3[i].material.SetColor("_Color", colorP3);
-                }
+                    spritesP3[i].material.SetColor("_Color", green);
+                }*/
                 break;
             case 3:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P4;
 
                 SpriteRenderer[] spritesP4 = skin.GetComponentsInChildren<SpriteRenderer>();
-                for (int i = 0; i < spritesP4.Length; i++)
+                /*for (int i = 0; i < spritesP4.Length; i++)
                 {
-                    spritesP4[i].material.SetColor("_Color", colorP4);
-                }
+                    spritesP4[i].material.SetColor("_Color", yellow);
+                }*/
                 break;
+        }
+    }
+
+    public void SetColorByTeam(string color)
+    {
+        skinSprites = currentSkin.GetComponentsInChildren<SpriteRenderer>();
+        for (int i = 0; i < skinSprites.Length; i++)
+        {
+            switch (color)
+            {
+                case "blue":
+                    skinSprites[i].material.SetColor("_Color", blue);
+                    break;
+                case "red":
+                    skinSprites[i].material.SetColor("_Color", red);
+                    break;
+                case "green":
+                    skinSprites[i].material.SetColor("_Color", green);
+                    break;
+                case "yellow":
+                    skinSprites[i].material.SetColor("_Color", yellow);
+                    break;
+            } 
         }
     }
 }

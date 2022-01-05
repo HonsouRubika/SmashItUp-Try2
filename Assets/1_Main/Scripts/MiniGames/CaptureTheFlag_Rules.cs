@@ -30,7 +30,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
 
         //à toujours mettre dans le start
-        //AssignPlayerTeam();
+        AssignPlayerTeam();
 
         SpawnPlayerRandomly();
         GameManager.Instance.focusPlayersScript.SetGameTitle("CaptureTheFlag");
@@ -160,6 +160,18 @@ public class CaptureTheFlag_Rules : MonoBehaviour
                 break;
         }
 
+        for (int i = 0; i < playersTeam.Length; i++)
+        {
+            switch (playersTeam[i])
+            {
+                case 0:
+                    players[i].GetComponent<PlayerSkins>().SetColorByTeam("blue");
+                    break;
+                case 1:
+                    players[i].GetComponent<PlayerSkins>().SetColorByTeam("red");
+                    break;
+            }
+        }
     }
 
     private void SpawnPlayerRandomly()
