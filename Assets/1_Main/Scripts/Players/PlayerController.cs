@@ -623,6 +623,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!isJumpFallSetted)
             {
+                Debug.Log("start jump curve");
                 isJumpFallSetted = true;
                 //startCurveVelocity = rb.velocity.y;
             }
