@@ -258,7 +258,8 @@ public class GameManager : MonoBehaviour
 
             }
             _selectedGameModes[i] = nextGameMode;
-            _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
+            if (scoreValuesManagerScript.players.Length < 4) _teamCompo[i] = (int)TeamCompo.FFA;
+            else _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
             //Debug.Log("Team compo : " +_teamCompo[i]);
             //Debug.Log(i + " : " +_selectedGameModes[i]);
             //Debug.Log(nextGameMode + " : " +GameModeKind[nextGameMode]);
@@ -474,6 +475,7 @@ public class GameManager : MonoBehaviour
 
     public void addSpecificScorePoints(int player, int score)
     {
+        Debug.Log("oui " + player);
         switch (player)
         {
             case 1:
