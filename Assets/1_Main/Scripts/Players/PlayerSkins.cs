@@ -93,7 +93,14 @@ public class PlayerSkins : MonoBehaviour
                 {
                     SetColorToPlayer(currentSkin);
                 }
-                
+                //on link les points du hammer
+                GameObject hammer = GetChildWithName(currentSkin, "Hammer");
+                playerControllerScript.attackPointL = GetChildWithName(hammer, "AttackPointL").transform;
+                playerControllerScript.attackPointR = GetChildWithName(hammer, "AttackPointR").transform;
+                playerControllerScript.hammerPointL = GetChildWithName(hammer, "hammerPointL");
+                playerControllerScript.hammerPointR = GetChildWithName(hammer, "hammerPointR");
+                //playerControllerScript.attackPointL = currentSkin.GetComponentInChildren<GameObject>("").transform;
+
                 if (currentSkin.GetComponent<Animator>() == null) Debug.Log("error");
                 playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
                 playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
@@ -136,13 +143,43 @@ public class PlayerSkins : MonoBehaviour
             {
                 SetColorToPlayer(currentSkin);
             }
+            //on link les points du hammer
+            /*foreach (var point in currentSkin.GetComponentsInChildren<GameObject>())
+            {
+                if (point.name == "AttackPointL")
+                {
+                    Debug.Log("point found");
+                    playerControllerScript.attackPointL = point.transform;
+                }
+                if (point.name == "AttackPointR")
+                {
+                    playerControllerScript.attackPointR = point.transform;
+                }
+                if (point.name == "hammerPointL")
+                {
+                    playerControllerScript.hammerPointL = point;
+                }
+                if (point.name == "hammerPointR")
+                {
+                    playerControllerScript.hammerPointR = point;
+                }
+            }*/
+            //if (GetChildWithName(currentSkin, "Hammer") != null) Debug.Log("yesss");
+            GameObject hammer = GetChildWithName(currentSkin, "Hammer");
+            playerControllerScript.attackPointL = GetChildWithName(hammer, "AttackPointL").transform;
+            playerControllerScript.attackPointR = GetChildWithName(hammer, "AttackPointR").transform;
+            playerControllerScript.hammerPointL = GetChildWithName(hammer, "hammerPointL");
+            playerControllerScript.hammerPointR = GetChildWithName(hammer, "hammerPointR");
 
-            if (currentSkin.GetComponent<Animator>() == null) Debug.Log("error");
+            playerControllerScript.hammerPointL.SetActive(false);
+            playerControllerScript.hammerPointR.SetActive(false);
+
+
             playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
         }
     }
-    
+
     public void ChangeSkinMinus(InputAction.CallbackContext context)
     {
         if (context.started && isInArea && (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Test") || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SceneTestPlateforme")))
@@ -162,10 +199,50 @@ public class PlayerSkins : MonoBehaviour
             {
                 SetColorToPlayer(currentSkin);
             }
+            //on link les points du hammer
+            /*foreach (var point in currentSkin.GetComponentsInChildren<GameObject>())
+            {
+                if (point.name == "AttackPointL")
+                {
+                    Debug.Log("point found");
+                    playerControllerScript.attackPointL = point.transform;
+                }
+                if (point.name == "AttackPointR")
+                {
+                    playerControllerScript.attackPointR = point.transform;
+                }
+                if (point.name == "hammerPointL")
+                {
+                    playerControllerScript.hammerPointL = point;
+                }
+                if (point.name == "hammerPointR")
+                {
+                    playerControllerScript.hammerPointR = point;
+                }
+            }*/
+            //if (GetChildWithName(currentSkin, "Hammer") != null) Debug.Log("yesss");
+            GameObject hammer = GetChildWithName(currentSkin, "Hammer");
+            playerControllerScript.attackPointL = GetChildWithName(hammer, "AttackPointL").transform;
+            playerControllerScript.attackPointR = GetChildWithName(hammer, "AttackPointR").transform;
+            playerControllerScript.hammerPointL = GetChildWithName(hammer, "hammerPointL");
+            playerControllerScript.hammerPointR = GetChildWithName(hammer, "hammerPointR");
 
             if (currentSkin.GetComponent<Animator>() == null) Debug.Log("error");
             playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
+        }
+    }
+    GameObject GetChildWithName(GameObject obj, string name)
+    {
+        Transform trans = obj.transform;
+        Transform childTrans = trans.Find(name);
+        if (childTrans != null)
+        {
+            return childTrans.gameObject;
+        }
+        else
+        {
+            return null;
         }
     }
 
