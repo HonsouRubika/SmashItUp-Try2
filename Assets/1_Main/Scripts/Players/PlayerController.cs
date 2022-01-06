@@ -318,6 +318,7 @@ public class PlayerController : MonoBehaviour
 
             //Detection des player dans la zone
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointL.position, attackRange, enemyLayer);
+            //Physics2D.OverlapCapsuleAll
 
             if (!didAttackedBlockedL)
             {
@@ -567,7 +568,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         //wall grip right
-        else if ((movementInput.x > 0.3) && isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
+        else if ((movementInput.x > 0.3) && isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && jumpState == JumpState.Falling)
         {
             if (!isWallGripStarted)
             {
@@ -845,9 +846,12 @@ public class PlayerController : MonoBehaviour
             actionState = Action.Jump;
             startJumpPosition = transform.position.y;
             //anim
-            playerAnimScript.Jumping(true);
-            playerAnimScript.WallSlide(false);
-            PlayerSoundScript.Jump();
+            if (playerAnimScript != null)
+            {
+                playerAnimScript.Jumping(true);
+                playerAnimScript.WallSlide(false);
+                PlayerSoundScript.Jump();
+            }
 
             //jump or walljump
             isJump = true;
@@ -934,8 +938,8 @@ public class PlayerController : MonoBehaviour
             hammerPointL.SetActive(true);
 
             //anim
-            playerAnimScript.Attack();
-            PlayerSoundScript.HammerPouet();
+            if (playerAnimScript != null) playerAnimScript.Attack();
+            if(PlayerSoundScript != null) PlayerSoundScript.HammerPouet();
         }
         //Droite
         else if (!attackDirection && Time.time >= nextAttackTime)
@@ -968,9 +972,8 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Error: Le PlayerSoundScript est null");
+                //Debug.LogWarning("Error: Le PlayerSoundScript est null");
             }
-
         }
     }
 
