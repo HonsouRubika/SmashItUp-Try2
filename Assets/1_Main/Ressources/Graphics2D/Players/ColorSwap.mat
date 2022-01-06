@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: ColorSwap
   m_Shader: {fileID: -6465566751694194690, guid: 7068d4e9ad1cbb84c91e07f95ce4866a, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_10c2fb2de8454c2ab80eded17dbfdd93_Texture_1:
         m_Texture: {fileID: 2800000, guid: fd242952c59233a49bd4ac7aae23eefb, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -35,6 +39,8 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors: []
+    m_Floats:
+    - _Intensity: 0.583
+    m_Colors:
+    - _Color: {r: 0.40231013, g: 0.8867924, b: 0.34718758, a: 1}
   m_BuildTextureStacks: []
