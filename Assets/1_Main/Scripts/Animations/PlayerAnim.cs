@@ -18,7 +18,7 @@ public class PlayerAnim : MonoBehaviour
 
     public void Jumping(bool jump)
     {
-        playerAnimator.SetBool("isJumping", jump);
+        if(playerAnimator != null) playerAnimator.SetBool("isJumping", jump);
     }
 
     public void Expulsion(bool expulsed)
@@ -28,7 +28,7 @@ public class PlayerAnim : MonoBehaviour
 
     public void Attack()
     {
-        playerAnimator.SetTrigger("isAttacking");
+        if(playerAnimator != null) playerAnimator.SetTrigger("isAttacking");
     }
 
     public void WallSlide(bool wallRide)
