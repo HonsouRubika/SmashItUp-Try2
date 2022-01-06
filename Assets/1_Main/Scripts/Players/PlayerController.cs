@@ -135,6 +135,9 @@ public class PlayerController : MonoBehaviour
     //Bonus
     [System.NonSerialized] public bool isUnbreakable = false;
 
+    //FX
+    public ParticleSystem dust;
+
 
     void Start()
     {
@@ -159,6 +162,12 @@ public class PlayerController : MonoBehaviour
         playerAnimScript = GetComponentInChildren<PlayerAnim>();
 
         PlayerSoundScript = GetComponentInChildren<PlayerSound>();
+    }
+
+    //Test FX 
+    void CreateDust()
+    {
+        dust.Play();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -408,8 +417,12 @@ public class PlayerController : MonoBehaviour
 
     void move()
     {
+        //Test FX 
+        //CreateDust();
+
         //Gauche + Droite
         //au sol
+
         if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //gauche
@@ -796,6 +809,7 @@ public class PlayerController : MonoBehaviour
 
     void verifProjectionMax()
     {
+
         //Distance de projection max
         //gauche
         if ((transform.position.x <= startProjectedPostion + -HammerSideProjectionMaxDistance) && isBeingProjected)

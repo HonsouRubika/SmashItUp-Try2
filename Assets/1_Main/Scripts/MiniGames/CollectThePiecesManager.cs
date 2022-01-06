@@ -23,6 +23,9 @@ public class CollectThePiecesManager : MonoBehaviour
 
     private bool playOneTime = false;
 
+    //TestFX
+    public ParticleSystem dust;
+
     private void Start()
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
@@ -40,6 +43,11 @@ public class CollectThePiecesManager : MonoBehaviour
         }
     }
 
+    //Test FX 
+    void CreateDust()
+    {
+        dust.Play();
+    }
     private void Update()
     {
         IncrementPlayerScore();
@@ -59,6 +67,8 @@ public class CollectThePiecesManager : MonoBehaviour
 
             playOneTime = true;
         }
+        //Test FX 
+        //CreateDust();
     }
 
     private void SpawnPlayerRandomly()
@@ -112,6 +122,7 @@ public class CollectThePiecesManager : MonoBehaviour
             scorePlayers[2] = scoreScript.scorePlayer2;
             scorePlayers[3] = scoreScript.scorePlayer3;
         }
+
     }
 
     private void SortPlayers()
