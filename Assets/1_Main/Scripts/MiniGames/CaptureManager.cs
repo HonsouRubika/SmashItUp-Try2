@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -8,7 +8,7 @@ public class CaptureManager : MonoBehaviour
     private GameObject[] playersUnsorted;
     public GameObject[] players;
 
-    public float[] scorePlayers;
+    private float[] scorePlayers;
     private float[] finalScores;
     private int[] playersPosition;
 
@@ -29,6 +29,9 @@ public class CaptureManager : MonoBehaviour
 
     private bool playOneTime = false;
 
+    //team compo
+    public int[] playersTeam;
+
     private void Start()
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
@@ -47,6 +50,8 @@ public class CaptureManager : MonoBehaviour
 
         SpawnPlayerRandomly();
         GameManager.Instance.focusPlayersScript.SetGameTitle("Zone");
+
+        AssignPlayerTeam();
     }
 
     private void Update()
@@ -155,6 +160,88 @@ public class CaptureManager : MonoBehaviour
         }
     }
 
+    private void AssignPlayerTeam()
+    {
+        /// TODO : Attribution al�atoire pour la compp des equipes 1 et 2
+        //Debug.Log("In Game : " + GameManager.Instance.getTeamCompo());
+        playersTeam = new int[players.Length];
+
+        //verif si nb players insufisant
+        int teamCompo = GameManager.Instance.getTeamCompo();
+        if (players.Length <= 2 && teamCompo == 1) teamCompo = 0; //coop to 1v3
+        if (players.Length <= 2 && teamCompo == 2) teamCompo = 3; //coop to 1v3
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            switch (teamCompo)
+            {
+                case (int)GameManager.TeamCompo.FFA:
+                    playersTeam[i] = i;
+                    Debug.Log("1v1v1v1");
+                    //Debug.Log("In switch FFA");
+                    //pas d'�quipe
+                    break;
+                case (int)GameManager.TeamCompo.Coop:
+                    Debug.Log("coop");
+                    playersTeam[i] = 0;
+                    //tous ensemble equipe 0
+                    break;
+                case (int)GameManager.TeamCompo.OneVSThree:
+                    Debug.Log("1v3");
+                    if (i == 0) playersTeam[i] = 0;
+                    else playersTeam[i] = 1;
+                    break;
+                case (int)GameManager.TeamCompo.TwoVSTwo:
+                    Debug.Log("2v2");
+                    if (i < 2) playersTeam[i] = 0;
+                    else playersTeam[i] = 1;
+                    break;
+            }
+        }
+        //Debug.Log("in switch alea : " + playersTeam.Length);
+
+        //aléa team players
+        switch (teamCompo)
+        {
+            case (int)GameManager.TeamCompo.OneVSThree:
+                for (int i = 0; i < playersTeam.Length; i++)
+                {
+                    int temp = playersTeam[i];
+                    int randomIndex = Random.Range(i, playersTeam.Length);
+                    playersTeam[i] = playersTeam[randomIndex];
+                    playersTeam[randomIndex] = temp;
+                    //Debug.Log(playersTeam[randomIndex]);
+                }
+                break;
+            case (int)GameManager.TeamCompo.TwoVSTwo:
+                for (int i = 0; i < playersTeam.Length; i++)
+                {
+                    int temp = playersTeam[i];
+                    int randomIndex = Random.Range(i, playersTeam.Length);
+                    playersTeam[i] = playersTeam[randomIndex];
+                    playersTeam[randomIndex] = temp;
+                    //Debug.Log(playersTeam[randomIndex]);
+                }
+                break;
+        }
+
+        if (teamCompo == 1 || teamCompo == 2)
+        {
+            for (int i = 0; i < playersTeam.Length; i++)
+            {
+                switch (playersTeam[i])
+                {
+                    case 0:
+                        players[i].GetComponent<PlayerSkins>().SetColorByTeam("blue");
+                        break;
+                    case 1:
+                        players[i].GetComponent<PlayerSkins>().SetColorByTeam("red");
+                        break;
+                }
+            }
+        }
+    }
+
     private void SpawnPlayerRandomly()
     {
         randomNumbers = GenerateRandomNumbers(4, 0, 4);
@@ -217,24 +304,52 @@ public class CaptureManager : MonoBehaviour
 
         System.Array.Sort(finalScores, playersPosition);
 
-        switch (playersPosition.Length)
+        // Point Distribution By Team Composition
+        switch (GameManager.Instance.getTeamCompo())
         {
-            case 4:
-                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
-                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
-                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
+            case (int)GameManager.TeamCompo.FFA:
+                switch (playersPosition.Length)
+                {
+                    case 4:
+                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
+                        break;
+                    case 3:
+                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                        break;
+                    case 2:
+                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                        break;
+                }
                 break;
-            case 3:
-                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
-                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+            case (int)GameManager.TeamCompo.Coop:
+                //if win
+                GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                //if loose
+                //GameManager.Instance.addScores(0, 0, 0, 0);
                 break;
-            case 2:
-                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+            case (int)GameManager.TeamCompo.OneVSThree:
+                for (int i = 0; i < players.Length; i++)
+                {
+                    if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                    else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                }
+                break;
+            case (int)GameManager.TeamCompo.TwoVSTwo:
+                for (int i = 0; i < players.Length; i++)
+                {
+                    if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                    else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                }
                 break;
         }
+
+        playOneTime = true;
     }
     private void SortPlayerWithOneWinner()
     {

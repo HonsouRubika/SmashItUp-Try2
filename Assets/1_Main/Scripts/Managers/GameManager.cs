@@ -475,7 +475,7 @@ public class GameManager : MonoBehaviour
 
     public void addSpecificScorePoints(int player, int score)
     {
-        Debug.Log("oui " + player);
+        //Debug.Log("oui " + player);
         switch (player)
         {
             case 1:

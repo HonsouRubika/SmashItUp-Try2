@@ -114,19 +114,23 @@ public class CaptureTheFlag_Rules : MonoBehaviour
             {
                 case (int)GameManager.TeamCompo.FFA:
                     playersTeam[i] = i;
+                    Debug.Log("1v1v1v1");
                     //Debug.Log("In switch FFA");
                     //pas d'�quipe
                     break;
                 case (int)GameManager.TeamCompo.Coop:
+                    Debug.Log("coop");
                     playersTeam[i] = 0;
                     //tous ensemble equipe 0
                     break;
                 case (int)GameManager.TeamCompo.OneVSThree:
+                    Debug.Log("1v3");
                     if (i == 0) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
                     break;
                 case (int)GameManager.TeamCompo.TwoVSTwo:
-                    if (i <= 2) playersTeam[i] = 0;
+                    Debug.Log("2v2");
+                    if (i < 2) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
                     break;
             }
@@ -137,7 +141,6 @@ public class CaptureTheFlag_Rules : MonoBehaviour
         switch (teamCompo)
         {
             case (int)GameManager.TeamCompo.OneVSThree:
-                Debug.Log("in switch alea : " + playersTeam.Length);
                 for (int i = 0; i < playersTeam.Length; i++)
                 {
                     int temp = playersTeam[i];
@@ -148,7 +151,6 @@ public class CaptureTheFlag_Rules : MonoBehaviour
                 }
                 break;
             case (int)GameManager.TeamCompo.TwoVSTwo:
-                Debug.Log("in switch alea : " + playersTeam.Length);
                 for (int i = 0; i < playersTeam.Length; i++)
                 {
                     int temp = playersTeam[i];
@@ -160,16 +162,19 @@ public class CaptureTheFlag_Rules : MonoBehaviour
                 break;
         }
 
-        for (int i = 0; i < playersTeam.Length; i++)
+        if (teamCompo == 1 || teamCompo == 2)
         {
-            switch (playersTeam[i])
+            for (int i = 0; i < playersTeam.Length; i++)
             {
-                case 0:
-                    players[i].GetComponent<PlayerSkins>().SetColorByTeam("blue");
-                    break;
-                case 1:
-                    players[i].GetComponent<PlayerSkins>().SetColorByTeam("red");
-                    break;
+                switch (playersTeam[i])
+                {
+                    case 0:
+                        players[i].GetComponent<PlayerSkins>().SetColorByTeam("blue");
+                        break;
+                    case 1:
+                        players[i].GetComponent<PlayerSkins>().SetColorByTeam("red");
+                        break;
+                }
             }
         }
     }
