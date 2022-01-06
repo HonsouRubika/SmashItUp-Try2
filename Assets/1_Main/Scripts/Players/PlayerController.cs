@@ -327,9 +327,12 @@ public class PlayerController : MonoBehaviour
                 {
                     //Appliquer une velocit�
                     //Attention: check la direction pour coord x
-                    enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
-                    lastTimeAttackHit = Time.time;
-                    playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
+                    if (enemy != bc)
+                    {
+                        enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
+                        lastTimeAttackHit = Time.time;
+                        playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
+                    }
                 }
             }
             else
@@ -342,7 +345,6 @@ public class PlayerController : MonoBehaviour
             isAttackRunningL = false;
             //disparition hammerHitBox
             hammerPointL.SetActive(false);
-
         }
 
         //Droite
@@ -354,7 +356,13 @@ public class PlayerController : MonoBehaviour
             if (hammers.Length > 1)
             {
                 //on contre
+                //Debug.Log("oui : " + hammers.Length + " " + hammers[1].gameObject.name);
+                //Debug.Log("oui : " + hammers.Length + " " + hammers[0].gameObject.name);
                 didAttackedBlockedR = true;
+            }
+            else
+            {
+                //Debug.Log("non : " + hammers.Length + " " + hammers[0].gameObject.name);
             }
         }
         //3) applyAttack
@@ -375,9 +383,12 @@ public class PlayerController : MonoBehaviour
                 {
                     //Appliquer une velocit�
                     //Attention: check la direction pour coord x
-                    enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
-                    lastTimeAttackHit = Time.time;
-                    playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
+                    if(enemy != bc)
+                    {
+                        enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
+                        lastTimeAttackHit = Time.time;
+                        playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
+                    }
                 }
             }
             else
