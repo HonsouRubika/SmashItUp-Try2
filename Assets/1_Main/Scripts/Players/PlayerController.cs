@@ -19,12 +19,13 @@ public class PlayerController : MonoBehaviour
     [Range(0.01f, 1f)]
     public float ratioAddForce = 1;
     private float movementActu = 0;
-    
+
     //TODO : GameMode avec Hp
     //public uint health; 
 
     //Player Controll Asignation
-    /*[System.NonSerialized]*/ public uint playerID = 0;
+    /*[System.NonSerialized]*/
+    public uint playerID = 0;
 
     //Sprite et animation
     public Rigidbody2D rb;
@@ -36,13 +37,18 @@ public class PlayerController : MonoBehaviour
     public uint nbJump = 2;
     private uint nbJumpActu = 0;
     public float maxJumpHigh = 1;
-    public float minJumpHeigh = 0.5f;
     private float startJumpPosition;
+    public float minJumpHeigh = 0.5f;
+    //wall jump
+
+    [Header("Wall Jump")]
     private float startWallJumpPosition;
     public float maxWallJumpHigh = 1;
     public float wallJumpSpeed = 1;
+    public float wallJumpAngleY = 40 / (Mathf.Sqrt(2) / 2);
     public float wallJumpMovementFreeze = 0.2f;
-    private float wallJumpMovementFreezeActuL, wallJumpMovementFreezeActuR;
+    private float wallJumpMovementFreezeActuL;
+    private float wallJumpMovementFreezeActuR;
     public float numberMaxWalljump = 2;
     private float numberMaxWalljumpActu;
     //coyot time
@@ -50,7 +56,7 @@ public class PlayerController : MonoBehaviour
     private bool coyoteTimeDone = false;
     public float coyotTime = 0.1f;
     private float coyotTimeActu;
-    private float shaitanerieDUnity = 1f;
+    private float shaitanerieDUnity = 0.1f;
     private float shaitanerieDUnityActu = 0;
     //wallgrip
     public float wallGripTime = 1;
@@ -61,13 +67,16 @@ public class PlayerController : MonoBehaviour
     private bool isWallJump = false;
 
     //test sur le jump: add force
-    [Range(0.001f, 5f)]
-    public float jumpRatioAddForce = 0.1f;
-    [Range(0.001f, 5f)]
-    public float wallJumpRatioAddForce = 0.1f;
-    private float jumpMovementActu = 1;
+    //[Range(0.001f, 5f)]
+    //public float jumpRatioAddForce = 0.1f;
+    public float newJumpRatioAddForce = 20;
+    //[Range(0.001f, 5f)]
+    //public float wallJumpRatioAddForce = 0.1f;
+    //private float jumpMovementActu = 1;
     private bool isJumpFallSetted = false;
-    private float startCurveVelocity;
+    //private float startCurveVelocity;
+    [Range(10f, 40f)]
+    public float jumpAirIntake = 1f;
 
     //Colision checks
     [Header("GroundCheck")]
@@ -94,7 +103,7 @@ public class PlayerController : MonoBehaviour
     private float startProjectedPostion = 0;
     public float projectionStopSpeed = 0.5f; //ralentissement après distance de projection atteinte
     [System.NonSerialized] public bool isBeingProjected = false;
-                           //false = droite; true = gauche
+    //false = droite; true = gauche
     //Paramètre vitesse
     private bool attackDirection = false;
     public float attackRate = 2f;
@@ -216,9 +225,12 @@ public class PlayerController : MonoBehaviour
         if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu && playerAnimScript != null && PlayerSoundScript != null && playerAnimator != null && !isFrozen)
         {
             //Enable back collision between players 
-            if (disableCollider)
-            {
-                Physics2D.IgnoreLayerCollision(8, 8, false);
+            if (disableCollider)
+
+            {
+
+                Physics2D.IgnoreLayerCollision(8, 8, false);
+
             }
 
             //anim
@@ -226,7 +238,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimScript.Expulsion(false);
             }
-            
+
             //reset var
             stunTimeActu = 0;
             blockStunTimeActu = 0;
@@ -241,7 +253,7 @@ public class PlayerController : MonoBehaviour
             /////////////////////////////////
 
             attack();
-            
+
         }
         else if (isFrozen)
         {
@@ -422,7 +434,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimator.localScale = new Vector2(Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
             }
-            
+
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
@@ -455,7 +467,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimator.localScale = new Vector2(-Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
             }
-            
+
             if (playerAnimScript.playerAnimator != null)
             {
                 playerAnimScript.Running(true);
@@ -500,7 +512,28 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
+        else if ((movementInput.x < -0.3) && isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && jumpState == JumpState.Falling)
+        {
+            if (!isWallGripStarted)
+            {
+                //le perso s'arrete un temps
+                wallGripTimeActu = wallGripTime + Time.time;
+                isWallGripStarted = true;
+            }
+            else
+            {
+                //player doesnt move
+                rb.velocity = new Vector2(0, 0);
+            }
+
+            if (Time.time >= wallGripTimeActu)
+            {
+                //le perso doit glisser du mur
+                rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
+                //isWallGripStarted = false;
+            }
+        }
+        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && jumpState != JumpState.Grounded)
         {
             //droite
             //rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
@@ -533,16 +566,38 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        //wall grip right
+        else if ((movementInput.x > 0.3) && isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
+        {
+            if (!isWallGripStarted)
+            {
+                //le perso s'arrete un temps
+                wallGripTimeActu = wallGripTime + Time.time;
+                isWallGripStarted = true;
+            }
+            else
+            {
+                //player doesnt move
+                rb.velocity = new Vector2(0, 0);
+            }
+
+            if (Time.time >= wallGripTimeActu)
+            {
+                //le perso doit glisser du mur
+                rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
+                //isWallGripStarted = false;
+            }
+        }
         else if (jumpState == JumpState.Grounded && !isBeingProjected)
         {
             //Debug.Log("x axe stop cause grounded");
             //rb.velocity = new Vector2(0, rb.velocity.y);
 
-            if(movementActu > 0)
+            if (movementActu > 0)
             {
                 movementActu -= ratioAddForce;
                 if (movementActu < 0) movementActu = 0;
-            } 
+            }
             else if (movementActu < 0)
             {
                 movementActu += ratioAddForce;
@@ -559,26 +614,10 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.WallSlide(false);
         }
         // grip fall au wall
-        else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling)
+        else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling && Time.time >= wallGripTimeActu)
         {
-            if(!isWallGripStarted)
-            {
-                //le perso s'arrete un temps
-                wallGripTimeActu = wallGripTime + Time.time;
-                isWallGripStarted = true;
-            }
-            else
-            {
-                //player doesnt move
-                rb.velocity = new Vector2(0, 0);
-            }
-
-            if(Time.time >= wallGripTimeActu)
-            {
-                //le perso doit glisser du mur
-                rb.velocity = new Vector2(rb.velocity.x, - wallGripFallSpeed);
-                //isWallGripStarted = false;
-            }
+            //le perso doit glisser du mur
+                rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
         }
         else if (isGrippingLeft)
         {
@@ -592,6 +631,20 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.WallSlide(true);
             playerAnimator.localScale = new Vector2(Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
         }
+        //air intake
+        else if (movementInput.x == 0 && jumpState != JumpState.Grounded)
+        {
+            if (rb.velocity.x > 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x - (jumpAirIntake * Time.deltaTime), rb.velocity.y);
+                if (rb.velocity.x < 0) rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+            else if (rb.velocity.x < 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x + (jumpAirIntake * Time.deltaTime), rb.velocity.y);
+                if (rb.velocity.x > 0) rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+        }
         else
         {
             playerAnimScript.WallSlide(false);
@@ -600,23 +653,16 @@ public class PlayerController : MonoBehaviour
         ///// JUMP CURVE /////
         if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded && !isWallGripStarted)
         {
-            if (!isJumpFallSetted)
+            if (!isJumpFallSetted)
             {
                 isJumpFallSetted = true;
-                startCurveVelocity = rb.velocity.y;
+                //startCurveVelocity = rb.velocity.y;
             }
-
-            //determine curve
-            if (jumpMovementActu > -1 && isJump) jumpMovementActu -= jumpRatioAddForce;
-            else if (jumpMovementActu > -1 && isWallJump) jumpMovementActu -= wallJumpRatioAddForce;
-            else if (jumpMovementActu < -1) jumpMovementActu = -1;
 
-            //apply curve
-            if (jumpMovementActu < 0 && rb.velocity.y < 0) rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * - jumpMovementActu);
-            else rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpMovementActu);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - newJumpRatioAddForce * Time.deltaTime);
 
             //check if player is falling
-            if (jumpMovementActu < 0 && jumpState != JumpState.Falling)
+            if (rb.velocity.y < 0 && jumpState != JumpState.Falling)
             {
                 jumpState = JumpState.Falling;
                 playerAnimScript.Falling(true);
@@ -632,7 +678,7 @@ public class PlayerController : MonoBehaviour
         (Physics2D.Linecast(transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y), 1 << LayerMask.NameToLayer("Plateform"))) ||
         (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))) || /*Gauche*/
         (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))) || /*Milieu*/
-        (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x +1f, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))))   /*Droite*/
+        (Physics2D.Linecast(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y - 0.1f), 1 << LayerMask.NameToLayer("Player"))))   /*Droite*/
         {
             if (Time.time >= shaitanerieDUnityActu)
             {
@@ -650,7 +696,7 @@ public class PlayerController : MonoBehaviour
                 wallJumpMovementFreezeActuR = Time.time;
 
                 //addForce = null
-                jumpMovementActu = 0;
+                //jumpMovementActu = 0;
                 isJumpFallSetted = false;
 
                 isJump = false;
@@ -666,13 +712,13 @@ public class PlayerController : MonoBehaviour
         else
         {
             //coyot time
-            if(!coyoteTimeCheck)
+            if (!coyoteTimeCheck)
             {
                 coyotTimeActu = Time.time + coyotTime;
                 coyoteTimeCheck = true;
             }
 
-            if(rb.velocity.y <= 0 && !isWallGripStarted)
+            if (rb.velocity.y <= 0 && !isWallGripStarted && !isJumpFallSetted)
             {
                 //le perso chute
                 //vitesse de chute constante
@@ -695,17 +741,17 @@ public class PlayerController : MonoBehaviour
         //Colision Side GripCheck
         //float height = bc.size.y;
         if (Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Plateform")) || 
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x , gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform"))||
+            Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Plateform")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform")) ||
             ((Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform"))) &&
             //check if touched roof
-            (!Physics2D.Linecast(new Vector2(transform.position.x - 1.175f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform")) &&
-            !Physics2D.Linecast(new Vector2(transform.position.x - 1.175f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")))) ||
+            (!Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform")) &&
+            !Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")))) ||
             ((Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")) ) 
-            && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling )) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")))
+            && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling)) ||
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
         {
@@ -726,10 +772,10 @@ public class PlayerController : MonoBehaviour
             ((Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform"))) &&
             //check if touches roof
-            (!Physics2D.Linecast(new Vector2(transform.position.x - 1.175f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform")) &&
-            !Physics2D.Linecast(new Vector2(transform.position.x - 1.175f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")))) ||
+            (!Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform")) &&
+            !Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")))) ||
             ((Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")) ) 
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")))
             && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling)) ||
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
             Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
@@ -808,14 +854,14 @@ public class PlayerController : MonoBehaviour
             isWallJump = false;
 
             //Jump Curve
-            jumpMovementActu = 1;
+            //jumpMovementActu = 1;
             isJumpFallSetted = false;
         }
         else if (isGrippingRight && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
         {
             jumpState = JumpState.InFlight;
             //jump to the left w/ 45� angle
-            rb.velocity = new Vector2(-wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
+            rb.velocity = new Vector2(-wallJumpSpeed, wallJumpAngleY);
             actionState = Action.Jump;
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
@@ -838,14 +884,14 @@ public class PlayerController : MonoBehaviour
             isWallJump = true;
 
             //Jump Curve
-            jumpMovementActu = 1;
+            //jumpMovementActu = 1;
             isJumpFallSetted = false;
         }
         else if (isGrippingLeft && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
         {
             jumpState = JumpState.InFlight;
             //jump to the right w/ 45� angle
-            rb.velocity = new Vector2(wallJumpSpeed, jumpSpeed / (Mathf.Sqrt(2) / 2));
+            rb.velocity = new Vector2(wallJumpSpeed, wallJumpAngleY);
             actionState = Action.Jump;
             startJumpPosition = transform.position.y;
             startWallJumpPosition = transform.position.y;
@@ -866,7 +912,7 @@ public class PlayerController : MonoBehaviour
             isWallJump = true;
 
             //Jump Curve
-            jumpMovementActu = 1;
+            //jumpMovementActu = 1;
             isJumpFallSetted = false;
         }
 
@@ -903,7 +949,7 @@ public class PlayerController : MonoBehaviour
             hammerPointR.SetActive(true);
 
             //anim
-            if(playerAnimScript != null)
+            if (playerAnimScript != null)
             {
                 playerAnimScript.Attack();
             }
@@ -911,12 +957,12 @@ public class PlayerController : MonoBehaviour
             {
                 //Debug.LogWarning("Error: Le PlayerAnimScript est null");
             }
-             ///ToDO : corriger error :
+            ///ToDO : corriger error :
             /*
              * NullReferenceException: Object reference not set to an instance of an object
              * PlayerController.computeAttack () (at Assets/1_Main/Scripts/Players/PlayerController.cs:774)
             */
-            if(PlayerSoundScript != null)
+            if (PlayerSoundScript != null)
             {
                 PlayerSoundScript.HammerPouet();
             }
@@ -924,7 +970,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.LogWarning("Error: Le PlayerSoundScript est null");
             }
-            
+
         }
     }
 
@@ -971,9 +1017,10 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPointL.position, attackRange);
         Gizmos.DrawWireSphere(hammerPointL.transform.position, hammerHitboxRange);
         Gizmos.DrawWireSphere(hammerPointR.transform.position, hammerHitboxRange);
-        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y - 0.1f));
-        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - 0.1f));
-        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y - 0.1f));
+        //ground check
+        //Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y - 0.1f));
+        //Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - 0.1f));
+        //Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y - 0.1f));
 
         //roof check
         //Gizmos.DrawLine(new Vector2(transform.position.x - 1.175f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.2f));
@@ -987,9 +1034,9 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f));
         Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 0.5f));
         Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 2.2f));
-        // Test
-        Gizmos.DrawLine(new Vector2(transform.position.x, gripLeftCheck.position.y + 2.15f), new Vector2(gripRightCheck.position.x-0.5f, gripLeftCheck.position.y + 2.15f));
-        */
+        // Test*/
+        //Gizmos.DrawLine(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f));
+
     }
 
     public enum JumpState

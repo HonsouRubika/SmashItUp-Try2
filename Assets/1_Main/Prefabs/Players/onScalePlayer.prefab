@@ -370,16 +370,16 @@ MonoBehaviour:
   jumpState: 3
   nbJump: 2
   maxJumpHigh: 10
-  minJumpHeigh: 2
-  maxWallJumpHigh: 15
+  minJumpHeigh: 1
+  maxWallJumpHigh: 2
   wallJumpSpeed: 10
   wallJumpMovementFreeze: 0.2
   numberMaxWalljump: 50
   coyotTime: 0.3
-  wallGripTime: 1
+  wallGripTime: 0.2
   wallGripFallSpeed: 20
-  jumpRatioAddForce: 0.005
-  wallJumpRatioAddForce: 0.005
+  newJumpRatioAddForce: 180
+  jumpAirIntake: 20
   groundCheck: {fileID: 7944750135165682167}
   gripLeftCheck: {fileID: 8685648045550649710}
   gripRightCheck: {fileID: 6548757986954372878}
@@ -395,12 +395,12 @@ MonoBehaviour:
   hammerHitboxLayer:
     serializedVersion: 2
     m_Bits: 512
-  hammerXProjection: 25
+  hammerXProjection: 30
   hammerYProjection: 10
   hammerBlockProjection: 5
-  HammerSideProjectionMaxDistance: 15
+  HammerSideProjectionMaxDistance: 20
   projectionStopSpeed: 0.5
-  attackRate: 5
+  attackRate: 1
   attackDuration: 0.1
   disableCollider: 0
   stunTime: 0.75
@@ -942,6 +942,10 @@ PrefabInstance:
       value: 0.0000011920929
       objectReference: {fileID: 0}
     - target: {fileID: 6836670134442131812, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
+      propertyPath: m_Bounds.m_Extent.x
+      value: 1.981155
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836670134442131812, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
       propertyPath: m_Bounds.m_Extent.y
       value: 2.035
       objectReference: {fileID: 0}
@@ -952,6 +956,14 @@ PrefabInstance:
     - target: {fileID: 7983021121864635467, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
       propertyPath: m_Bounds.m_Center.y
       value: -0.0005622208
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983021121864635467, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
+      propertyPath: m_Bounds.m_Extent.x
+      value: 0.24989
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983021121864635467, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
+      propertyPath: m_Bounds.m_Extent.y
+      value: 0.3344397
       objectReference: {fileID: 0}
     - target: {fileID: 8218864344013910163, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
       propertyPath: m_RootOrder
@@ -1000,6 +1012,10 @@ PrefabInstance:
     - target: {fileID: 8328945318493964181, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
       propertyPath: m_Bounds.m_Center.x
       value: -0.000000059604645
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328945318493964181, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
+      propertyPath: m_Bounds.m_Center.y
+      value: 0.0006650686
       objectReference: {fileID: 0}
     - target: {fileID: 8328945318493964181, guid: 54642aad97aaa634ea2f323e898e3f80, type: 3}
       propertyPath: m_Bounds.m_Extent.x
