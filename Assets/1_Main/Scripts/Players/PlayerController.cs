@@ -141,6 +141,7 @@ public class PlayerController : MonoBehaviour
     [Header ("FX")]
     public ParticleSystem Ejection;
     public ParticleSystem Hammer;
+    public ParticleSystem Jump;
 
 
 
@@ -178,6 +179,11 @@ public class PlayerController : MonoBehaviour
     void CreateImpact()
     {
         Hammer.Play();
+    }
+
+    void CreateCloud()
+    {
+        Jump.Play();
     }
  
     public void OnMove(InputAction.CallbackContext context)
@@ -701,6 +707,8 @@ public class PlayerController : MonoBehaviour
         ///// JUMP CURVE /////
         if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded && !isWallGripStarted)
         {
+            CreateCloud();
+
             if (!isJumpFallSetted)
             {
                 isJumpFallSetted = true;
