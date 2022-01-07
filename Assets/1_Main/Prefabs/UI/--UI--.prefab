@@ -121,9 +121,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239b7e7aca40c494fb3ba8a308e8bac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  globalTimer: {fileID: 7095933241354619709}
   timerUI: {fileID: 6903172833003849957}
   durationMiniGame: 30
   miniGameTimer: 0
+  isTimerStarted: 0
+  debugEndTimer: 0
 --- !u!114 &4151503575342458534
 MonoBehaviour:
   m_ObjectHideFlags: 0

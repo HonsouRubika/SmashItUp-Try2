@@ -5,7 +5,8 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    public TextMeshProUGUI timerUI;
+    public GameObject globalTimer;
+    private TextMeshProUGUI timerUI;
 
     [Space]
     public float durationMiniGame = 30; //not used
@@ -19,6 +20,9 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
+        timerUI = globalTimer.GetComponentInChildren<TextMeshProUGUI>();
+        globalTimer.SetActive(false);
+
         durationMiniGame = GameManager.Instance.durationMiniGame;
         miniGameTimer = durationMiniGame;
 
@@ -42,6 +46,11 @@ public class Timer : MonoBehaviour
         {
             miniGameTimer -= Time.deltaTime;
             DisplayTimer();
+        }
+
+        if (miniGameTimer <= 10)
+        {
+            globalTimer.SetActive(true);
         }
     }
 
