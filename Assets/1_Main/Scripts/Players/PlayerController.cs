@@ -135,8 +135,12 @@ public class PlayerController : MonoBehaviour
     //Bonus
     [System.NonSerialized] public bool isUnbreakable = false;
 
+
     //FX
-    public ParticleSystem dust;
+    [Header ("FX")]
+    public ParticleSystem Ejection;
+    public ParticleSystem Hammer;
+
 
 
     void Start()
@@ -167,9 +171,14 @@ public class PlayerController : MonoBehaviour
     //Test FX 
     void CreateDust()
     {
-        dust.Play();
+        Ejection.Play();
     }
 
+    void CreateImpact()
+    {
+        Hammer.Play();
+    }
+ 
     public void OnMove(InputAction.CallbackContext context)
     {
         if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
@@ -213,6 +222,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (context.started) computeAttack();
             }
+       
         }
     }
 
@@ -275,6 +285,9 @@ public class PlayerController : MonoBehaviour
         {
             //anim
             playerAnimScript.Expulsion(true);
+
+            //Test FX 
+            CreateDust();
 
             //Disable the collision between players when player are stunt
             if (disableCollider)
@@ -341,6 +354,7 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
+                        CreateImpact();
                     }
                 }
             }
@@ -397,6 +411,7 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
+                        CreateImpact();
                     }
                 }
             }
@@ -428,8 +443,6 @@ public class PlayerController : MonoBehaviour
 
     void move()
     {
-        //Test FX 
-        //CreateDust();
 
         //Gauche + Droite
         //au sol

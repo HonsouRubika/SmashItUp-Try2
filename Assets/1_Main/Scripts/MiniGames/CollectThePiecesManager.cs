@@ -23,8 +23,7 @@ public class CollectThePiecesManager : MonoBehaviour
 
     private bool playOneTime = false;
 
-    //TestFX
-    public ParticleSystem dust;
+    
 
     private void Start()
     {
@@ -43,11 +42,7 @@ public class CollectThePiecesManager : MonoBehaviour
         }
     }
 
-    //Test FX 
-    void CreateDust()
-    {
-        dust.Play();
-    }
+   
     private void Update()
     {
         IncrementPlayerScore();
@@ -67,8 +62,7 @@ public class CollectThePiecesManager : MonoBehaviour
 
             playOneTime = true;
         }
-        //Test FX 
-        //CreateDust();
+     
     }
 
     private void SpawnPlayerRandomly()
