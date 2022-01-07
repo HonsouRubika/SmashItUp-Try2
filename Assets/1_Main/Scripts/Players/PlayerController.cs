@@ -39,8 +39,9 @@ public class PlayerController : MonoBehaviour
     public float maxJumpHigh = 1;
     private float startJumpPosition;
     public float minJumpHeigh = 0.5f;
+    public float maxFallingSpeed = 50f;
+    
     //wall jump
-
     [Header("Wall Jump")]
     private float startWallJumpPosition;
     public float maxWallJumpHigh = 1;
@@ -333,7 +334,7 @@ public class PlayerController : MonoBehaviour
 
         }
         //3) applyAttack
-        if (isAttackRunningL && Time.time >= attackDurationActu)
+        if (isAttackRunningL && Time.time < attackDurationActu)
         {
             //Debug.Log("Attaque gauche3");
             //Animation / Attack hitbox Apparition (pour test)
@@ -349,7 +350,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //Appliquer une velocit�
                     //Attention: check la direction pour coord x
-                    if (enemy != bc)
+                    if (enemy.gameObject != bc.gameObject)
                     {
                         enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
@@ -363,9 +364,12 @@ public class PlayerController : MonoBehaviour
                 // apply self blockProjection
                 applyBlock(hammerBlockProjection, 0);
             }
+        }
+        else if (isAttackRunningL && Time.time >= attackDurationActu)
+        {
+            isAttackRunningL = false;
             //reset var
             didAttackedBlockedL = false;
-            isAttackRunningL = false;
             //disparition hammerHitBox
             hammerPointL.SetActive(false);
         }
@@ -389,7 +393,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         //3) applyAttack
-        if (isAttackRunningR && Time.time >= attackDurationActu)
+        if (isAttackRunningR && Time.time < attackDurationActu)
         {
             //reset timeAttack
             //nextAttackTime = Time.time + 1f / attackRate;
@@ -398,6 +402,7 @@ public class PlayerController : MonoBehaviour
 
             //Detection des player dans la zone
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointR.position, attackRange, enemyLayer);
+            //ici
 
             if (!didAttackedBlockedR)
             {
@@ -420,6 +425,9 @@ public class PlayerController : MonoBehaviour
                 // apply self blockProjection
                 applyBlock(-hammerBlockProjection, 0);
             }
+        }
+        else if (isAttackRunningR && Time.time >= attackDurationActu)
+        {
             //reset var
             didAttackedBlockedR = false;
             isAttackRunningR = false;
@@ -447,7 +455,7 @@ public class PlayerController : MonoBehaviour
         //Gauche + Droite
         //au sol
 
-        if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
+        if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //gauche
             rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -480,7 +488,7 @@ public class PlayerController : MonoBehaviour
                 PlayerSoundScript.Run();
             }
         }
-        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
+        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //droite
             rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -514,7 +522,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         //en l'air
-        else if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
+        else if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
             //gauche
             //rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -550,7 +558,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else if ((movementInput.x < -0.3) && isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && !isAttackRunningL && !isAttackRunningR && jumpState == JumpState.Falling)
+        else if ((movementInput.x < -0.3) && isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && jumpState == JumpState.Falling)
         {
             if (!isWallGripStarted)
             {
@@ -571,7 +579,7 @@ public class PlayerController : MonoBehaviour
                 //isWallGripStarted = false;
             }
         }
-        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && jumpState != JumpState.Grounded)
+        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && jumpState != JumpState.Grounded)
         {
             //droite
             //rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
@@ -605,7 +613,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         //wall grip right
-        else if ((movementInput.x > 0.3) && isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && !isAttackRunningL && !isAttackRunningR && jumpState == JumpState.Falling)
+        else if ((movementInput.x > 0.3) && isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && jumpState == JumpState.Falling)
         {
             if (!isWallGripStarted)
             {
@@ -652,11 +660,13 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.WallSlide(false);
         }
         // grip fall au wall
+        /*
         else if ((isGrippingLeft || isGrippingRight) && jumpState == JumpState.Falling && Time.time >= wallGripTimeActu)
         {
             //le perso doit glisser du mur
                 rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
         }
+        */
         else if (isGrippingLeft)
         {
             //Debug.Log("le perso doit glisser du mur");
@@ -698,6 +708,7 @@ public class PlayerController : MonoBehaviour
             }
 
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - newJumpRatioAddForce * Time.deltaTime);
+            if (rb.velocity.y < -maxFallingSpeed) rb.velocity = new Vector2(rb.velocity.x, -maxFallingSpeed);
 
             //check if player is falling
             if (rb.velocity.y < 0 && jumpState != JumpState.Falling)

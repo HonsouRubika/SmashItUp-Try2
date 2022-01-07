@@ -211,10 +211,11 @@ MonoBehaviour:
   bc: {fileID: 6809023613868175522}
   jumpState: 3
   nbJump: 2
-  maxJumpHigh: 10
+  maxJumpHigh: 2
   minJumpHeigh: 1
+  maxFallingSpeed: 50
   maxWallJumpHigh: 2
-  wallJumpSpeed: 20
+  wallJumpSpeed: 15
   wallJumpAngleY: 56.568542
   wallJumpMovementFreeze: 0.2
   numberMaxWalljump: 50
@@ -230,7 +231,7 @@ MonoBehaviour:
   attackPointR: {fileID: 891004994122108270}
   hammerPointL: {fileID: 1489688116734007908}
   hammerPointR: {fileID: 7457566996908681798}
-  attackRange: 1.25
+  attackRange: 2
   hammerHitboxRange: 1.875
   enemyLayer:
     serializedVersion: 2
@@ -244,7 +245,7 @@ MonoBehaviour:
   HammerSideProjectionMaxDistance: 20
   projectionStopSpeed: 0.5
   attackRate: 1
-  attackDuration: 0.1
+  attackDuration: 0.5
   disableCollider: 0
   stunTime: 0.75
   isFrozen: 0
@@ -252,6 +253,7 @@ MonoBehaviour:
   playerIDHit: 0
   hitPlayer: 0
   playerAnimator: {fileID: 0}
+  dust: {fileID: 0}
 --- !u!212 &4771767619851399193
 SpriteRenderer:
   m_ObjectHideFlags: 0
