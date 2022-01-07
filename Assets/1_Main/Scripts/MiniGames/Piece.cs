@@ -16,6 +16,8 @@ public class Piece : MonoBehaviour
     public Color player2Color;
     public Color player3Color;
 
+    public ParticleSystem shineFX;
+
     private void Start()
     {
         collectThePiecesManager = GetComponentInParent<CollectThePiecesManager>();
@@ -24,6 +26,11 @@ public class Piece : MonoBehaviour
         scoreScript = collectThePiecesManager.scoreScript;
     }
 
+    //Test FX 
+    void CreateShine()
+    {
+        Instantiate(shineFX, transform.position, Quaternion.identity);
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -60,6 +67,7 @@ public class Piece : MonoBehaviour
     private void DestroyPiece()
     {
         collectThePiecesManager.piecesNumber--;
+        CreateShine();
         Destroy(gameObject);
     }
 }
