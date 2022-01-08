@@ -1,6 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum JumpState
+{
+    Grounded,
+    PrepareToJump,
+    Jumping,
+    InFlight,
+    Falling,
+    Landed
+}
+
 public class PlayerController : MonoBehaviour
 {
     //new input
@@ -1099,16 +1109,6 @@ public class PlayerController : MonoBehaviour
         // Test*/
         //Gizmos.DrawLine(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f));
 
-    }
-
-    public enum JumpState
-    {
-        Grounded,
-        PrepareToJump,
-        Jumping,
-        InFlight,
-        Falling,
-        Landed
     }
 
     public enum Action
