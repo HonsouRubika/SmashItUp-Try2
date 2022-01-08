@@ -16,25 +16,30 @@ public class ScoreManager : MonoBehaviour
     private bool flagAddedPoints = false;
     private bool flagUpdateScore = false;
 
-    [Header("P1")]
-    public Text P1ScoreUnits;
-    public Text P1ScoreTens;
-    public Text P1ScoreHundreds;
+    [Space]
+    //P1
+    public Transform P1ScoreNumber;
+    private Text P1ScoreUnits;
+    private Text P1ScoreTens;
+    private Text P1ScoreHundreds;
 
-    [Header("P2")]
-    public Text P2ScoreUnits;
-    public Text P2ScoreTens;
-    public Text P2ScoreHundreds;
+    //P2
+    public Transform P2ScoreNumber;
+    private Text P2ScoreUnits;
+    private Text P2ScoreTens;
+    private Text P2ScoreHundreds;
 
-    [Header("P3")]
-    public Text P3ScoreUnits;
-    public Text P3ScoreTens;
-    public Text P3ScoreHundreds;
+    //P3
+    public Transform P3ScoreNumber;
+    private Text P3ScoreUnits;
+    private Text P3ScoreTens;
+    private Text P3ScoreHundreds;
 
-    [Header("P4")]
-    public Text P4ScoreUnits;
-    public Text P4ScoreTens;
-    public Text P4ScoreHundreds;
+    //P4
+    public Transform P4ScoreNumber;
+    private Text P4ScoreUnits;
+    private Text P4ScoreTens;
+    private Text P4ScoreHundreds;
 
     public List<GameObject> playerAddedPoints;
     private List<Text> playerAddedPointsText;
@@ -42,9 +47,13 @@ public class ScoreManager : MonoBehaviour
     private GameObject[] players;
     public List<Transform> tpPoints = new List<Transform>();
 
+    public GameObject rollingBoard;
+    public List<GameObject> scoreBoard;
+
     private void Start()
     {
         SpawnPlayer();
+        FillPlayerScoreValues();
         DisplayPlayersScore();
 
         playerAddedPointsText = new List<Text>(new Text[playerAddedPoints.Count]);
@@ -77,8 +86,27 @@ public class ScoreManager : MonoBehaviour
                 if (GameManager.Instance.getAddedPointsPlayer(i + 1) != 0)
                 {
                     playerAddedPoints[i].SetActive(true);
+                    scoreBoard[i].SetActive(false);
+
+                    switch (i)
+                    {
+                        case 0:
+                            P1ScoreNumber.gameObject.SetActive(false);
+                            break;
+                        case 1:
+                            P2ScoreNumber.gameObject.SetActive(false);
+                            break;
+                        case 2:
+                            P3ScoreNumber.gameObject.SetActive(false);
+                            break;
+                        case 3:
+                            P4ScoreNumber.gameObject.SetActive(false);
+                            break;
+
+                    }
                 }    
             }
+            rollingBoard.SetActive(true);
         }
 
         if (Time.time >= timerBeforeUpdateScore && !flagUpdateScore)
@@ -91,7 +119,13 @@ public class ScoreManager : MonoBehaviour
             for (int i = 0; i < playerAddedPoints.Count; i++)
             {
                 playerAddedPoints[i].SetActive(false);
+                scoreBoard[i].SetActive(true);
             }
+            P1ScoreNumber.gameObject.SetActive(true);
+            P2ScoreNumber.gameObject.SetActive(true);
+            P3ScoreNumber.gameObject.SetActive(true);
+            P4ScoreNumber.gameObject.SetActive(true);
+            rollingBoard.SetActive(false);
         }
 
         if (Time.time >= TimerNextMapActu)
@@ -109,6 +143,25 @@ public class ScoreManager : MonoBehaviour
             }
             
         }
+    }
+
+    private void FillPlayerScoreValues()
+    {
+        P1ScoreHundreds = P1ScoreNumber.GetChild(0).GetComponent<Text>();
+        P1ScoreTens = P1ScoreNumber.GetChild(1).GetComponent<Text>();
+        P1ScoreUnits = P1ScoreNumber.GetChild(2).GetComponent<Text>();
+
+        P2ScoreHundreds = P2ScoreNumber.GetChild(0).GetComponent<Text>();
+        P2ScoreTens = P2ScoreNumber.GetChild(1).GetComponent<Text>();
+        P2ScoreUnits = P2ScoreNumber.GetChild(2).GetComponent<Text>();
+
+        P3ScoreHundreds = P3ScoreNumber.GetChild(0).GetComponent<Text>();
+        P3ScoreTens = P3ScoreNumber.GetChild(1).GetComponent<Text>();
+        P3ScoreUnits = P3ScoreNumber.GetChild(2).GetComponent<Text>();
+
+        P4ScoreHundreds = P4ScoreNumber.GetChild(0).GetComponent<Text>();
+        P4ScoreTens = P4ScoreNumber.GetChild(1).GetComponent<Text>();
+        P4ScoreUnits = P4ScoreNumber.GetChild(2).GetComponent<Text>();
     }
 
     private void DisplayPlayersScore()

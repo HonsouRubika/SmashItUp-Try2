@@ -1856,7 +1856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &693410689
 Animator:
   serializedVersion: 3
@@ -7048,6 +7048,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: scoreBoard
+      value: 
+      objectReference: {fileID: 399792061}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
       propertyPath: P1ScoreTens
       value: 
       objectReference: {fileID: 1197487715}
@@ -7084,6 +7088,26 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: rollingBoard
+      value: 
+      objectReference: {fileID: 693410688}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: P1ScoreNumber
+      value: 
+      objectReference: {fileID: 535912010}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: P2ScoreNumber
+      value: 
+      objectReference: {fileID: 1561872014}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: P3ScoreNumber
+      value: 
+      objectReference: {fileID: 14595170}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: P4ScoreNumber
+      value: 
+      objectReference: {fileID: 1992582285}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
       propertyPath: P1ScoreHundreds
       value: 
       objectReference: {fileID: 1829960882}
@@ -7100,8 +7124,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2095694406}
     - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: rollingAnimation
+      value: 
+      objectReference: {fileID: 693410688}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
       propertyPath: waitBeforeAddPoints
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: scoreBoard.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
       propertyPath: waitBeforeUpdateScore
@@ -7123,6 +7155,22 @@ PrefabInstance:
       propertyPath: tpPoints.Array.data[3]
       value: 
       objectReference: {fileID: 1817443201}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: scoreBoard.Array.data[0]
+      value: 
+      objectReference: {fileID: 71780513}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: scoreBoard.Array.data[1]
+      value: 
+      objectReference: {fileID: 1474151789}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: scoreBoard.Array.data[2]
+      value: 
+      objectReference: {fileID: 274614421}
+    - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
+      propertyPath: scoreBoard.Array.data[3]
+      value: 
+      objectReference: {fileID: 1339954402}
     - target: {fileID: 2136642632372695375, guid: 399c2882129b0aa4f85965ff9bd0061d, type: 3}
       propertyPath: playerScore.Array.data[0]
       value: 
