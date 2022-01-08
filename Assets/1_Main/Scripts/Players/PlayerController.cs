@@ -138,10 +138,10 @@ public class PlayerController : MonoBehaviour
 
 
     //FX
-    [Header ("FX")]
+    /*[Header ("FX")]
     public ParticleSystem Ejection;
     public ParticleSystem Hammer;
-    public ParticleSystem Jump;
+    public ParticleSystem Jump;*/
 
 
 
@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Test FX 
-    void CreateDust()
+    /*void CreateDust()
     {
         Ejection.Play();
     }
@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
     void CreateCloud()
     {
         Jump.Play();
-    }
+    }*/
  
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -294,7 +294,7 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.Expulsion(true);
 
             //Test FX 
-            CreateDust();
+            //CreateDust();
 
             //Disable the collision between players when player are stunt
             if (disableCollider)
@@ -361,7 +361,7 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
-                        CreateImpact();
+                        //CreateImpact();
                     }
                 }
             }
@@ -422,7 +422,7 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
-                        CreateImpact();
+                        //CreateImpact();
                     }
                 }
             }
@@ -581,6 +581,8 @@ public class PlayerController : MonoBehaviour
             if (Time.time >= wallGripTimeActu)
             {
                 //le perso doit glisser du mur
+                playerAnimScript.WallSlide(true);
+                playerAnimator.localScale = new Vector2(-Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
                 rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
                 //isWallGripStarted = false;
             }
@@ -636,6 +638,8 @@ public class PlayerController : MonoBehaviour
             if (Time.time >= wallGripTimeActu)
             {
                 //le perso doit glisser du mur
+                playerAnimScript.WallSlide(true);
+                playerAnimator.localScale = new Vector2(Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
                 rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
                 //isWallGripStarted = false;
             }
@@ -676,14 +680,12 @@ public class PlayerController : MonoBehaviour
         else if (isGrippingLeft)
         {
             //Debug.Log("le perso doit glisser du mur");
-            playerAnimScript.WallSlide(true);
-            playerAnimator.localScale = new Vector2(-Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
+            
         }
         else if (isGrippingRight)
         {
             //Debug.Log("le perso doit glisser du mur");
-            playerAnimScript.WallSlide(true);
-            playerAnimator.localScale = new Vector2(Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
+            
         }
         //air intake
         else if (movementInput.x == 0 && jumpState != JumpState.Grounded)
@@ -707,7 +709,7 @@ public class PlayerController : MonoBehaviour
         ///// JUMP CURVE /////
         if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded && !isWallGripStarted)
         {
-            CreateCloud();
+            //CreateCloud();
 
             if (!isJumpFallSetted)
             {

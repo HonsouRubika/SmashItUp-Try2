@@ -34,6 +34,8 @@ public class KeepTheFlagManager : MonoBehaviour
 
     private bool playOneTime = false;
 
+    private bool allScoreZero = true;
+
     //team compo
     public int[] playersTeam;
 
@@ -166,49 +168,62 @@ public class KeepTheFlagManager : MonoBehaviour
 
         System.Array.Sort(finalScores, playersPosition);
 
-        // Point Distribution By Team Composition
-        switch (GameManager.Instance.getTeamCompo())
+        //Check if no players get the crown
+        for (int i = 0; i < scorePlayers.Length; i++)
         {
-            case (int)GameManager.TeamCompo.FFA:
-                switch (playersPosition.Length)
-                {
-                    case 4:
-                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
-                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
-                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
-                        break;
-                    case 3:
-                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
-                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
-                        break;
-                    case 2:
-                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                        GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
-                        break;
-                }
+            if (scorePlayers[i] != 0)
+            {
+                allScoreZero = false;
                 break;
-            case (int)GameManager.TeamCompo.Coop:
-                //if win
-                GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                //if loose
-                //GameManager.Instance.addScores(0, 0, 0, 0);
-                break;
-            case (int)GameManager.TeamCompo.OneVSThree:
-                for (int i = 0; i < players.Length; i++)
-                {
-                    if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                    else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
-                }
-                break;
-            case (int)GameManager.TeamCompo.TwoVSTwo:
-                for (int i = 0; i < players.Length; i++)
-                {
-                    if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                    else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
-                }
-                break;
+            }
+        }
+
+        if (!allScoreZero)
+        {
+            // Point Distribution By Team Composition
+            switch (GameManager.Instance.getTeamCompo())
+            {
+                case (int)GameManager.TeamCompo.FFA:
+                    switch (playersPosition.Length)
+                    {
+                        case 4:
+                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
+                            break;
+                        case 3:
+                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case 2:
+                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                            break;
+                    }
+                    break;
+                case (int)GameManager.TeamCompo.Coop:
+                    //if win
+                    GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                    //if loose
+                    //GameManager.Instance.addScores(0, 0, 0, 0);
+                    break;
+                case (int)GameManager.TeamCompo.OneVSThree:
+                    for (int i = 0; i < players.Length; i++)
+                    {
+                        if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                        else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                    }
+                    break;
+                case (int)GameManager.TeamCompo.TwoVSTwo:
+                    for (int i = 0; i < players.Length; i++)
+                    {
+                        if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                        else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                    }
+                    break;
+            }
         }
 
         playOneTime = true;
