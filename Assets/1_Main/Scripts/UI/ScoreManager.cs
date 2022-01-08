@@ -16,35 +16,55 @@ public class ScoreManager : MonoBehaviour
     private bool flagAddedPoints = false;
     private bool flagUpdateScore = false;
 
-    public List<Text> playerScore;
-    public List<Text> playerAddedPoints;
+    [Header("P1")]
+    public Text P1ScoreUnits;
+    public Text P1ScoreTens;
+    public Text P1ScoreHundreds;
+
+    [Header("P2")]
+    public Text P2ScoreUnits;
+    public Text P2ScoreTens;
+    public Text P2ScoreHundreds;
+
+    [Header("P3")]
+    public Text P3ScoreUnits;
+    public Text P3ScoreTens;
+    public Text P3ScoreHundreds;
+
+    [Header("P4")]
+    public Text P4ScoreUnits;
+    public Text P4ScoreTens;
+    public Text P4ScoreHundreds;
+
+    public List<GameObject> playerAddedPoints;
+    private List<Text> playerAddedPointsText;
 
     private GameObject[] players;
     public List<Transform> tpPoints = new List<Transform>();
 
     private void Start()
     {
-        //appel de la fonction setScore du ScoreManager
+        SpawnPlayer();
+        DisplayPlayersScore();
 
-        for (int i = 0; i < playerScore.Count; i++)
-        {
-            playerScore[i].text = "Player " + (i + 1) + " : " + GameManager.Instance.getScorePlayer(i + 1);
-        }
-
+        playerAddedPointsText = new List<Text>(new Text[playerAddedPoints.Count]);
         for (int i = 0; i < playerAddedPoints.Count; i++)
         {
-            playerAddedPoints[i].enabled = false;
+            playerAddedPoints[i].SetActive(false);
+            playerAddedPointsText[i] = playerAddedPoints[i].GetComponentInChildren<Text>();
+        }
 
+        for (int i = 0; i < playerAddedPointsText.Count; i++)
+        {
             if (GameManager.Instance.getAddedPointsPlayer(i + 1) != 0)
             {
-                playerAddedPoints[i].text = "+ " + GameManager.Instance.getAddedPointsPlayer(i + 1);
+                playerAddedPointsText[i].text = "+ " + GameManager.Instance.getAddedPointsPlayer(i + 1);
             }  
         }
 
         TimerNextMapActu = Time.time + TimerNextMap;
         timerBeforeAddPoints = Time.time + waitBeforeAddPoints;
         timerBeforeUpdateScore = Time.time + waitBeforeUpdateScore;
-        SpawnPlayer();
     }
 
     private void Update()
@@ -54,7 +74,10 @@ public class ScoreManager : MonoBehaviour
             flagAddedPoints = true;
             for (int i = 0; i < playerAddedPoints.Count; i++)
             {
-                playerAddedPoints[i].enabled = true;
+                if (GameManager.Instance.getAddedPointsPlayer(i + 1) != 0)
+                {
+                    playerAddedPoints[i].SetActive(true);
+                }    
             }
         }
 
@@ -63,16 +86,13 @@ public class ScoreManager : MonoBehaviour
             flagUpdateScore = true;
 
             GameManager.Instance.UpdatePlayerScore();
-            for (int i = 0; i < playerScore.Count; i++)
-            {
-                playerScore[i].text = "Player " + (i + 1) + " : " + GameManager.Instance.getScorePlayer(i + 1);
-            }
+            DisplayPlayersScore();
+
             for (int i = 0; i < playerAddedPoints.Count; i++)
             {
-                playerAddedPoints[i].enabled = false;
+                playerAddedPoints[i].SetActive(false);
             }
         }
-
 
         if (Time.time >= TimerNextMapActu)
         {
@@ -91,24 +111,51 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    private void DisplayPlayersScore()
+    {
+        P1ScoreUnits.text = GameManager.Instance.getDividedScorePlayer(1, "units").ToString();
+        P1ScoreTens.text = GameManager.Instance.getDividedScorePlayer(1, "tens").ToString();
+        P1ScoreHundreds.text = GameManager.Instance.getDividedScorePlayer(1, "hundreds").ToString();
+
+        P2ScoreUnits.text = GameManager.Instance.getDividedScorePlayer(2, "units").ToString();
+        P2ScoreTens.text = GameManager.Instance.getDividedScorePlayer(2, "tens").ToString();
+        P2ScoreHundreds.text = GameManager.Instance.getDividedScorePlayer(2, "hundreds").ToString();
+
+        P3ScoreUnits.text = GameManager.Instance.getDividedScorePlayer(3, "units").ToString();
+        P3ScoreTens.text = GameManager.Instance.getDividedScorePlayer(3, "tens").ToString();
+        P3ScoreHundreds.text = GameManager.Instance.getDividedScorePlayer(3, "hundreds").ToString();
+
+        P4ScoreUnits.text = GameManager.Instance.getDividedScorePlayer(4, "units").ToString();
+        P4ScoreTens.text = GameManager.Instance.getDividedScorePlayer(4, "tens").ToString();
+        P4ScoreHundreds.text = GameManager.Instance.getDividedScorePlayer(4, "hundreds").ToString();
+    }
+
     public void setHardScore(int playerID, int score)
     {
         switch (playerID)
         {
             case 1:
-                playerScore[0].text = "Player 1 : " + score;
+                P1ScoreUnits.text = (score % 10).ToString();
+                P1ScoreTens.text = ((score / 10) % 10).ToString();
+                P1ScoreHundreds.text = ((score / 100) % 10).ToString();
                 GameManager.Instance._scoreP1 = score;
                 break;
             case 2:
-                playerScore[1].text = "Player 2 : " + score;
+                P2ScoreUnits.text = (score % 10).ToString();
+                P2ScoreTens.text = ((score / 10) % 10).ToString();
+                P2ScoreHundreds.text = ((score / 100) % 10).ToString();
                 GameManager.Instance._scoreP1 = score;
                 break;
             case 3:
-                playerScore[2].text = "Player 3 : " + score;
+                P3ScoreUnits.text = (score % 10).ToString();
+                P3ScoreTens.text = ((score / 10) % 10).ToString();
+                P3ScoreHundreds.text = ((score / 100) % 10).ToString();
                 GameManager.Instance._scoreP1 = score;
                 break;
             case 4:
-                playerScore[3].text = "Player 4 : " + score;
+                P4ScoreUnits.text = (score % 10).ToString();
+                P4ScoreTens.text = ((score / 10) % 10).ToString();
+                P4ScoreHundreds.text = ((score / 100) % 10).ToString();
                 GameManager.Instance._scoreP1 = score;
                 break;
             default:
