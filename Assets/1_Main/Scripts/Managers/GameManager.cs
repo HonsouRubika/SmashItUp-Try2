@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("Loading scene");
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
-                SceneManager.LoadScene("Score");
+                SceneManager.LoadScene("ScoreMiniGames");
 
                 /// TODO: Unfreeze players
                 for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
