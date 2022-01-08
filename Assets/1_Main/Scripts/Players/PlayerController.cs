@@ -886,9 +886,9 @@ public class PlayerController : MonoBehaviour
 
     void computeJump()
     {
-        if ((jumpState == JumpState.Grounded || //simple saut
+        if (jumpState == JumpState.Grounded || //simple saut
             (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone && !isGrippingRight && !isGrippingLeft) || 
-            (nbJumpActu != nbJump && !isGrippingRight && !isGrippingLeft)) && !isAttackRunningL && !isAttackRunningR)
+            (nbJumpActu != nbJump && !isGrippingRight && !isGrippingLeft))
 
         {
             //coyot time

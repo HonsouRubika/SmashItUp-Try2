@@ -29,7 +29,8 @@ public class TeleporterLobby : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             nbPlayerInZone--;
-        }   
+            isTimerInitiated = false;
+        }
     }
 
     private void Start()
