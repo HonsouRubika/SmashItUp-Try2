@@ -316,6 +316,53 @@ public class CaptureManager : MonoBehaviour
             }
         }
 
+        //Check if equality between players
+        for (int i = 0; i < finalScores.Length; i++)
+        {
+            if (i == 3)
+            {
+                if (finalScores[i] == finalScores[i - 1])
+                {
+                    //equality between 1st & 2nd
+                    Debug.Log("equality between 1st & 2nd");
+                } 
+            }
+            else if (i == 2)
+            {
+                if (finalScores[i] == finalScores[i - 1])
+                {
+                    //equality between 2st & 3rd
+                    Debug.Log("equality between 2st & 3rd");
+                }
+            }
+            else if (i == 1)
+            {
+                if (finalScores[i] == finalScores[i + 2] && finalScores[i] == finalScores[i-1])
+                {
+                    //equality between all players
+                    Debug.Log("equality between all players");
+                    break;
+                }
+                else if (finalScores[i] == finalScores[i + 2])
+                {
+                    //equality between 1st & 2nd & 3rd
+                    Debug.Log("equality between 1st & 2nd & 3rd");
+                    break;
+                }
+                else if (finalScores[i] == finalScores[i - 1] && finalScores[i] == finalScores[i + 1])
+                {
+                    //equality between 2st & 3rd & 4th
+                    Debug.Log("equality between 2st & 3rd & 4th");
+                    break;
+                }
+                else if (finalScores[i] == finalScores[i - 1])
+                {
+                    //equality between 3rd & 4th
+                    Debug.Log("equality between 3rd & 4th");
+                }
+            }
+        }
+
         if (!allScoreZero)
         {
             // Point Distribution By Team Composition
