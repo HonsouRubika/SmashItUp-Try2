@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     //Animation
     [HideInInspector] public TransitionAnim transitionAnimScript;
+    [HideInInspector] public ConsigneDisplayScript consigneAnimScript;
     public GameObject consigne;
     public GameObject curtain;
     public GameObject countdown;
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
     private GameObject countdownInstance;
     private GameObject consigneInstance;
     Animator transitionAnimator;
-    Animation consigneAnimation;
+    Animator consigneAnimator;
     Animation countdownAnimation;
 
     //Test/Debug
@@ -200,17 +201,21 @@ public class GameManager : MonoBehaviour
             {
                 //instantiate animation
                 consigneInstance = Instantiate<GameObject>(consigne);
-                consigneAnimation = consigneInstance.GetComponent<Animation>();
-                Debug.Log("in consigne anim");
-                //play anim
-                consigneAnimation.Play();
+                consigneAnimator = consigneInstance.GetComponent<Animator>();
+                consigneAnimScript = consigneInstance.GetComponent<ConsigneDisplayScript>();
 
                 //set active bon param consigne (mode de jeu, nom du mini jeu)
+                consigneAnimScript.SetActiveGoodConsigne();
+                Debug.Log("in consigne anim");
+                //play anim
+                //consigneAnimator.Play();
 
                 transitionState = TransitionState.FOCUS;
             }
-            else if (transitionState == TransitionState.FOCUS && !consigneAnimation.isPlaying)
+            else if (transitionState == TransitionState.FOCUS && consigneAnimator.GetCurrentAnimatorStateInfo(0).IsName("Finished"))
             {
+                Debug.Log("end anim consign");
+                Destroy(consigneInstance);
                 //7) Timer "1,2,3,GO"
                 countdownInstance = Instantiate<GameObject>(countdown);
                 countdownAnimation = countdownInstance.GetComponent<Animation>();
@@ -323,6 +328,11 @@ public class GameManager : MonoBehaviour
             //dois attendre que l'animation de fermeture ce termine avant de loadScene
             transitionState = TransitionState.CLOSE_BLUE;
         }
+    }
+
+    public int GetGameModeActu()
+    {
+        return _selectedGameModes[_nbMancheActu];
     }
 
     public void TestMap()
@@ -627,7 +637,7 @@ public class GameManager : MonoBehaviour
     }
 
     //liste des gameMode pr�sent dans le jeu (jouable)
-    enum GameMode
+    public enum GameMode
     {
         CaptureTheFlag,
         Loup,
