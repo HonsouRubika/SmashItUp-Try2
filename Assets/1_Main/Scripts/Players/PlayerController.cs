@@ -1089,7 +1089,7 @@ public class PlayerController : MonoBehaviour
 
         //roof check
         //Gizmos.DrawLine(new Vector2(transform.position.x - 1.175f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.2f));
-        /*
+        
         //DRAW RAYCASR
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f));
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f));
@@ -1099,7 +1099,7 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f));
         Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 0.5f));
         Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 2.2f));
-        // Test*/
+        // Test
         //Gizmos.DrawLine(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f));
 
     }
