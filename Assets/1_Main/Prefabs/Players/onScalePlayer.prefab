@@ -232,7 +232,7 @@ MonoBehaviour:
   hammerPointL: {fileID: 1489688116734007908}
   hammerPointR: {fileID: 7457566996908681798}
   attackRange: 2
-  hammerHitboxRange: 1.875
+  hammerHitboxRange: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -253,9 +253,6 @@ MonoBehaviour:
   playerIDHit: 0
   hitPlayer: 0
   playerAnimator: {fileID: 0}
-  Ejection: {fileID: 0}
-  Hammer: {fileID: 0}
-  Jump: {fileID: 0}
 --- !u!212 &4771767619851399193
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -352,7 +349,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.85333335, y: 1.7066667}
+  m_Size: {x: 1.17, y: 1.7066667}
   m_EdgeRadius: 0
 --- !u!114 &2682600549178744541
 MonoBehaviour:

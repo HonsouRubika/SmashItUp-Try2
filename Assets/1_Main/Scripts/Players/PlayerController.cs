@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     public float maxFallingSpeed = 50f;
     
     //wall jump
-    [Header("Wall Jump")]
+    [Header("WallJump")]
     private float startWallJumpPosition;
     public float maxWallJumpHigh = 1;
     public float wallJumpSpeed = 1;

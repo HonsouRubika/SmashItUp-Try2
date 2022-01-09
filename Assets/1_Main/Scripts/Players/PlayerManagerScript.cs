@@ -7,6 +7,7 @@ public class PlayerManagerScript : MonoBehaviour
     public TeleporterLobby teleporterLobby;
     public TeleporterLobby teleporterRestartGame;
     public Transform spawner1, spawner2, spawner3, spawner4;
+    public GameObject door1, door2, door3, door4;
     private int nbPlayerActu = 0;
 
     public bool playerPositionByScore = false;
@@ -60,24 +61,28 @@ public class PlayerManagerScript : MonoBehaviour
             case 0:
                 playerInput.transform.position = new Vector2(spawner1.position.x, spawner1.position.y);
                 playerInput.GetComponent<PlayerController>().playerID = 0;
+                door1.SetActive(false);
 
                 DontDestroyOnLoad(playerInput);
                 break;
             case 1:
                 playerInput.transform.position = new Vector2(spawner2.position.x, spawner2.position.y);
                 playerInput.GetComponent<PlayerController>().playerID = 1;
+                door2.SetActive(false);
 
                 DontDestroyOnLoad(playerInput);
                 break;
             case 2:
                 playerInput.transform.position = new Vector2(spawner3.position.x, spawner3.position.y);
                 playerInput.GetComponent<PlayerController>().playerID = 2;
+                door3.SetActive(false);
 
                 DontDestroyOnLoad(playerInput);
                 break;
             case 3:
                 playerInput.transform.position = new Vector2(spawner4.position.x, spawner4.position.y);
                 playerInput.GetComponent<PlayerController>().playerID = 3;
+                door4.SetActive(false);
 
                 DontDestroyOnLoad(playerInput);
                 break;
