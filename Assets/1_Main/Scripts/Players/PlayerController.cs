@@ -154,8 +154,6 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem Jump;
     public ParticleSystem WallSlide;
 
-
-
     void Start()
     {
         //init var
@@ -507,6 +505,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimScript.Running(true);
                 playerAnimScript.WallSlide(false);
+                PlayerSoundScript.WallRide(false);
                 PlayerSoundScript.Run();
             }
         }
@@ -540,6 +539,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimScript.Running(true);
                 playerAnimScript.WallSlide(false);
+                PlayerSoundScript.WallRide(false);
                 PlayerSoundScript.Run();
             }
         }
@@ -573,6 +573,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimScript.Running(true);
                 playerAnimScript.WallSlide(false);
+                PlayerSoundScript.WallRide(false);
 
                 if (jumpState == JumpState.Grounded)
                 {
@@ -598,6 +599,7 @@ public class PlayerController : MonoBehaviour
             {
                 //le perso doit glisser du mur
                 playerAnimScript.WallSlide(true);
+                PlayerSoundScript.WallRide(true);
                 playerAnimator.localScale = new Vector2(-Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
                 rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
                 //isWallGripStarted = false;
@@ -632,6 +634,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimScript.Running(true);
                 playerAnimScript.WallSlide(false);
+                PlayerSoundScript.WallRide(false);
 
                 if (jumpState == JumpState.Grounded)
                 {
@@ -658,6 +661,7 @@ public class PlayerController : MonoBehaviour
             {
                 //le perso doit glisser du mur
                 playerAnimScript.WallSlide(true);
+                PlayerSoundScript.WallRide(true);
                 playerAnimator.localScale = new Vector2(Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
                 rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
                 //isWallGripStarted = false;
@@ -687,6 +691,7 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.Running(false);
             playerAnimScript.Idle(true);
             playerAnimScript.WallSlide(false);
+            PlayerSoundScript.WallRide(false);
         }
         // grip fall au wall
         /*
@@ -723,6 +728,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             playerAnimScript.WallSlide(false);
+            PlayerSoundScript.WallRide(false);
         }
 
         ///// JUMP CURVE /////
@@ -931,6 +937,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimScript.Jumping(true);
                 playerAnimScript.WallSlide(false);
+                PlayerSoundScript.WallRide(false);
                 PlayerSoundScript.Jump();
             }
 

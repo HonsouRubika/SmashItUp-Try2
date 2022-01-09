@@ -146,6 +146,8 @@ MonoBehaviour:
   runVolume: 0.5
   ejection: {fileID: 8300000, guid: 98c3cb6cadaeead4ca3de891724d3405, type: 3}
   ejectionVolume: 0.5
+  wallRide: {fileID: 8300000, guid: b3824dbbc701539458d6e5cb00f643f0, type: 3}
+  wallRideVolume: 0.5
 --- !u!1 &8832553990740409711
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,6 +255,10 @@ MonoBehaviour:
   playerIDHit: 0
   hitPlayer: 0
   playerAnimator: {fileID: 0}
+  Ejection: {fileID: 0}
+  Hammer: {fileID: 0}
+  Jump: {fileID: 0}
+  WallSlide: {fileID: 0}
 --- !u!212 &4771767619851399193
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -520,6 +526,10 @@ MonoBehaviour:
   P2: {fileID: 21300000, guid: f8f501a70e443d849bd6c1b5e716bbc3, type: 3}
   P3: {fileID: 21300000, guid: b704292fefb9c324481dc35c8032f218, type: 3}
   P4: {fileID: 21300000, guid: 6ee436c80e410ef41aa9b99cad389470, type: 3}
+  hammerP1: {fileID: 21300000, guid: dec0d920cbae632409a0342ed6eb34a9, type: 3}
+  hammerP2: {fileID: 21300000, guid: 60834f5743121ee49b1ddee10dd9587b, type: 3}
+  hammerP3: {fileID: 21300000, guid: 83f2024af0a45264cbe78da70d359d96, type: 3}
+  hammerP4: {fileID: 21300000, guid: ba354e463d5fa2245835c8be971c4e7c, type: 3}
   skinSprites: []
 --- !u!114 &1789542739471898128
 MonoBehaviour:
@@ -614,7 +624,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 381a134720cc41c439a0beffd83efe75, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -30,6 +30,12 @@ public class PlayerSkins : MonoBehaviour
     public Sprite P3;
     public Sprite P4;
 
+    [Header("Players hammer")]
+    public Sprite hammerP1;
+    public Sprite hammerP2;
+    public Sprite hammerP3;
+    public Sprite hammerP4;
+
     public SpriteRenderer[] skinSprites;
 
     private int skinNumber;
@@ -252,6 +258,7 @@ public class PlayerSkins : MonoBehaviour
         {
             case 0:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P1;
+                currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP1;
 
                 /*SpriteRenderer[] spritesP1 =  skin.GetComponentsInChildren<SpriteRenderer>();
                 for (int i = 0; i < spritesP1.Length; i++)
@@ -261,6 +268,7 @@ public class PlayerSkins : MonoBehaviour
                 break;
             case 1:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P2;
+                currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP2;
 
                 SpriteRenderer[] spritesP2 = skin.GetComponentsInChildren<SpriteRenderer>();
                 /*for (int i = 0; i < spritesP2.Length; i++)
@@ -270,6 +278,7 @@ public class PlayerSkins : MonoBehaviour
                 break;
             case 2:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P3;
+                currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP3;
 
                 SpriteRenderer[] spritesP3 = skin.GetComponentsInChildren<SpriteRenderer>();
                 /*for (int i = 0; i < spritesP3.Length; i++)
@@ -279,6 +288,7 @@ public class PlayerSkins : MonoBehaviour
                 break;
             case 3:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P4;
+                currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP4;
 
                 SpriteRenderer[] spritesP4 = skin.GetComponentsInChildren<SpriteRenderer>();
                 /*for (int i = 0; i < spritesP4.Length; i++)
@@ -294,6 +304,7 @@ public class PlayerSkins : MonoBehaviour
         skinSprites = currentSkin.GetComponentsInChildren<SpriteRenderer>();
         for (int i = 0; i < skinSprites.Length; i++)
         {
+            skinSprites[i].material.SetFloat("_Intensity", 0.75f);
             switch (color)
             {
                 case "blue":
