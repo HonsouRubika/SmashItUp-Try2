@@ -50,8 +50,21 @@ public class ScoreManager : MonoBehaviour
     public GameObject rollingBoard;
     public List<GameObject> scoreBoard;
 
+    private bool isBonus = false;
+
     private void Start()
     {
+        //bonus
+        if (GameManager.Instance._nbMancheActu == GameManager.Instance.BonusRound)
+        {
+            //GameManager.Instance.bonusManagerScript.ApplyBonusInGame();
+            isBonus = true;
+        }
+        else if (GameManager.Instance._nbMancheActu == GameManager.Instance.BonusRound + 1)
+        {
+            //bonusManagerScript.DisableBonusInGame();
+        }
+
         SpawnPlayer();
         FillPlayerScoreValues();
         DisplayPlayersScore();
@@ -131,15 +144,38 @@ public class ScoreManager : MonoBehaviour
         if (Time.time >= TimerNextMapActu)
         {
             //Next Map
-            if (GameManager.Instance._nbMancheActu < GameManager.Instance._nbManches)
+            if (GameManager.Instance._nbMancheActu < GameManager.Instance._nbManches && !isBonus)
             {
                 GameManager.Instance.NextMap();
                 GameManager.Instance.resetScorePoints();
             }
-            else
+            else if (!isBonus)
             {
                 GameManager.Instance.FinaleScore();
                 GameManager.Instance.resetScorePoints();
+            }
+            else
+            {
+                isBonus = false;
+
+                playerAddedPointsText = new List<Text>(new Text[playerAddedPoints.Count]);
+                for (int i = 0; i < playerAddedPoints.Count; i++)
+                {
+                    playerAddedPoints[i].SetActive(false);
+                    playerAddedPointsText[i] = playerAddedPoints[i].GetComponentInChildren<Text>();
+                }
+
+                for (int i = 0; i < playerAddedPointsText.Count; i++)
+                {
+                    if (GameManager.Instance.getAddedPointsPlayer(i + 1) != 0)
+                    {
+                        playerAddedPointsText[i].text = "+ " + GameManager.Instance.getAddedPointsPlayer(i + 1);
+                    }
+                }
+
+                TimerNextMapActu = Time.time + TimerNextMap;
+                timerBeforeAddPoints = Time.time + waitBeforeAddPoints;
+                timerBeforeUpdateScore = Time.time + waitBeforeUpdateScore;
             }
             
         }
