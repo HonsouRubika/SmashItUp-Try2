@@ -34,6 +34,9 @@ public class CaptureManager : MonoBehaviour
     //team compo
     public int[] playersTeam;
 
+    //Equality
+    public EqualityCase equalityCase = EqualityCase.None;
+
     private void Start()
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
@@ -306,6 +309,232 @@ public class CaptureManager : MonoBehaviour
 
         System.Array.Sort(finalScores, playersPosition);
 
+        CheckIfEquality();
+
+        // Point Distribution By Team Composition
+        switch (GameManager.Instance.getTeamCompo())
+        {
+            case (int)GameManager.TeamCompo.FFA:
+                switch (playersPosition.Length)
+                {
+                    case 4:
+                        switch (equalityCase)
+                        {
+                            case EqualityCase.None:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
+                                break;
+                            case EqualityCase.AllEqualDifferentZero:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                break;
+                            case EqualityCase.FirstSecondAndThirdFourth:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                break;
+                            case EqualityCase.FirstSecondThird:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                break;
+                            case EqualityCase.SecondThirdFourth:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                break;
+                            case EqualityCase.FirstSecond:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                                break;
+                            case EqualityCase.SecondThird:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                                break;
+                            case EqualityCase.ThirdFourth:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                                break;
+                        }
+                        break;
+                    case 3:
+                        switch (equalityCase)
+                        {
+                            case EqualityCase.None:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                                break;
+                            case EqualityCase.AllEqualDifferentZero:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                break;
+                            case EqualityCase.FirstSecond:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                break;
+                            case EqualityCase.SecondThird:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch (equalityCase)
+                        {
+                            case EqualityCase.None:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
+                                break;
+                            case EqualityCase.AllEqualDifferentZero:
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case (int)GameManager.TeamCompo.Coop:
+                //if win
+                GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                //if loose
+                //GameManager.Instance.addScores(0, 0, 0, 0);
+                break;
+            case (int)GameManager.TeamCompo.OneVSThree:
+                for (int i = 0; i < players.Length; i++)
+                {
+                    switch (equalityCase)
+                    {
+                        case EqualityCase.None:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case EqualityCase.SecondThirdFourth:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case EqualityCase.FirstSecond:
+                            if (playersTeam[playersPosition[playersPosition.Length - 1]] == playersTeam[playersPosition[playersPosition.Length - 2]])
+                            {
+                                if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            }
+                            else
+                            {
+                                if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            }
+                            break;
+                        case EqualityCase.SecondThird:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case EqualityCase.ThirdFourth:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case EqualityCase.AllEqualDifferentZero:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            break;
+                        case EqualityCase.FirstSecondAndThirdFourth:
+                            if (playersTeam[playersPosition[playersPosition.Length - 1]] == playersTeam[playersPosition[playersPosition.Length - 2]])
+                            {
+                                if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            }
+                            else
+                            {
+                                if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            }
+                            break;
+                        case EqualityCase.FirstSecondThird:
+                            if (playersTeam[playersPosition[playersPosition.Length - 1]] == playersTeam[playersPosition[playersPosition.Length - 2]] && playersTeam[playersPosition[playersPosition.Length - 1]] == playersTeam[playersPosition[playersPosition.Length - 3]])
+                            {
+                                if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            }
+                            else
+                            {
+                                if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            }
+                            break;
+                    }
+                }
+                break;
+            case (int)GameManager.TeamCompo.TwoVSTwo:
+                for (int i = 0; i < players.Length; i++)
+                {
+                    switch (equalityCase)
+                    {
+                        case EqualityCase.None:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case EqualityCase.SecondThirdFourth:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case EqualityCase.FirstSecond:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case EqualityCase.SecondThird:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case EqualityCase.ThirdFourth:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            break;
+                        case EqualityCase.AllEqualDifferentZero:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            break;
+                        case EqualityCase.FirstSecondAndThirdFourth:
+                            if (playersTeam[playersPosition[playersPosition.Length - 1]] == playersTeam[playersPosition[playersPosition.Length - 2]])
+                            {
+                                if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                            }
+                            else
+                            {
+                                if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                                else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            }
+                            break;
+                        case EqualityCase.FirstSecondThird:
+                            if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                            break;
+                    }
+                }
+                break;
+        }
+
+        playOneTime = true;
+    }
+
+    private void CheckIfEquality()
+    {
         //Check if no players have points
         for (int i = 0; i < scorePlayers.Length; i++)
         {
@@ -316,56 +545,141 @@ public class CaptureManager : MonoBehaviour
             }
         }
 
-        if (!allScoreZero)
+        //Check if equality between players
+        for (int i = 0; i < finalScores.Length; i++)
         {
-            // Point Distribution By Team Composition
-            switch (GameManager.Instance.getTeamCompo())
+            if (finalScores.Length == 4)
             {
-                case (int)GameManager.TeamCompo.FFA:
-                    switch (playersPosition.Length)
+                if (i == 3)
+                {
+                    if (finalScores[i] == finalScores[i - 1])
                     {
-                        case 4:
-                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
-                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
-                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 4] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFourthPlace);
-                            break;
-                        case 3:
-                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
-                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 3] + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
-                            break;
-                        case 2:
-                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 1] + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                            GameManager.Instance.addSpecificScorePoints(playersPosition[playersPosition.Length - 2] + 1, GameManager.Instance.scoreValuesManagerScript.PointsSecondPlace);
-                            break;
+                        //equality between 1st & 2nd
+                        equalityCase = EqualityCase.FirstSecond;
+                        //Debug.Log("equality between 1st & 2nd");
                     }
-                    break;
-                case (int)GameManager.TeamCompo.Coop:
-                    //if win
-                    GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                    //if loose
-                    //GameManager.Instance.addScores(0, 0, 0, 0);
-                    break;
-                case (int)GameManager.TeamCompo.OneVSThree:
-                    for (int i = 0; i < players.Length; i++)
+                }
+                else if (i == 2)
+                {
+                    if (finalScores[i] == finalScores[i - 1])
                     {
-                        if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                        else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                        //equality between 2st & 3rd
+                        equalityCase = EqualityCase.SecondThird;
+                        //Debug.Log("equality between 2st & 3rd");
                     }
-                    break;
-                case (int)GameManager.TeamCompo.TwoVSTwo:
-                    for (int i = 0; i < players.Length; i++)
+                }
+                else if (i == 1)
+                {
+                    if (finalScores[i] == finalScores[i + 2] && finalScores[i] == finalScores[i - 1])
                     {
-                        if (playersTeam[i] == playersTeam[playersPosition[playersPosition.Length - 1]]) GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
-                        else GameManager.Instance.addSpecificScorePoints(i + 1, GameManager.Instance.scoreValuesManagerScript.PointsThirdPlace);
+                        if (allScoreZero)
+                        {
+                            //equality between all players
+                            equalityCase = EqualityCase.AllEqual;
+                            //Debug.Log("equality between all players");
+                            break;
+                        }
+                        else
+                        {
+                            //equality between all players different from 0
+                            equalityCase = EqualityCase.AllEqualDifferentZero;
+                            //Debug.Log("equality between all players different from 0");
+                            break;
+                        }
                     }
-                    break;
+                    else if (finalScores[i] == finalScores[i + 2])
+                    {
+                        //equality between 1st & 2nd & 3rd
+                        equalityCase = EqualityCase.FirstSecondThird;
+                        //Debug.Log("equality between 1st & 2nd & 3rd");
+                        break;
+                    }
+                    else if (finalScores[i] == finalScores[i - 1] && finalScores[i] == finalScores[i + 1])
+                    {
+                        //equality between 2st & 3rd & 4th
+                        equalityCase = EqualityCase.SecondThirdFourth;
+                        //Debug.Log("equality between 2st & 3rd & 4th");
+                        break;
+                    }
+                    else if (finalScores[i] == finalScores[i - 1])
+                    {
+                        if (finalScores[i + 2] == finalScores[(i + 2) - 1])
+                        {
+                            //equality between 1st & 2nd and 3rd & 4th
+                            equalityCase = EqualityCase.FirstSecondAndThirdFourth;
+                            //Debug.Log("equality between 1st & 2nd and 3rd & 4th");
+                            break;
+                        }
+                        else
+                        {
+                            //equality between 3rd & 4th
+                            equalityCase = EqualityCase.ThirdFourth;
+                            //Debug.Log("equality between 3rd & 4th");
+                        }
+                    }
+                }
+            }
+            else if (finalScores.Length == 3)
+            {
+                if (i == 1)
+                {
+                    if (finalScores[i] == finalScores[i - 1] && finalScores[i] == finalScores[i + 1])
+                    {
+                        if (allScoreZero)
+                        {
+                            //equality between all players
+                            equalityCase = EqualityCase.AllEqual;
+                            //Debug.Log("equality between all players");
+                            break;
+                        }
+                        else
+                        {
+                            //equality between all players different from 0
+                            equalityCase = EqualityCase.AllEqualDifferentZero;
+                            //Debug.Log("equality between all players different from 0");
+                            break;
+                        }
+                    }
+                    else if (finalScores[i] == finalScores[i + 1])
+                    {
+                        //equality between 1st & 2nd
+                        equalityCase = EqualityCase.FirstSecond;
+                        //Debug.Log("equality between 1st & 2nd");
+                    }
+                    else if (finalScores[i] == finalScores[i - 1])
+                    {
+                        //equality between 2st & 3rd
+                        equalityCase = EqualityCase.SecondThird;
+                        //Debug.Log("equality between 2st & 3rd");
+                    }
+                }
+            }
+            else if (finalScores.Length == 2)
+            {
+                if (i == 1)
+                {
+                    if (finalScores[i] == finalScores[i - 1])
+                    {
+                        if (allScoreZero)
+                        {
+                            //equality between all players
+                            equalityCase = EqualityCase.AllEqual;
+                            //Debug.Log("equality between all players");
+                            break;
+                        }
+                        else
+                        {
+                            //equality between all players different from 0
+                            equalityCase = EqualityCase.AllEqualDifferentZero;
+                            //Debug.Log("equality between all players different from 0");
+                            break;
+                        }
+                    }
+                }
             }
         }
-
-        playOneTime = true;
     }
+
     private void SortPlayerWithOneWinner()
     {
         int maxVal = 0;
@@ -406,5 +720,18 @@ public class CaptureManager : MonoBehaviour
                 GameManager.Instance.addScoresPoints(0, 0, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
                 break;
         }
+    }
+
+    public enum EqualityCase
+    {
+        None,
+        AllEqual,
+        AllEqualDifferentZero,
+        FirstSecondThird,
+        SecondThirdFourth,
+        FirstSecond,
+        ThirdFourth,
+        SecondThird,
+        FirstSecondAndThirdFourth
     }
 }

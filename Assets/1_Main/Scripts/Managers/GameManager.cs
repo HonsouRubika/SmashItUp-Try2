@@ -79,7 +79,6 @@ public class GameManager : MonoBehaviour
         focusPlayersScript = GetComponentInChildren<FocusPlayers>();
         scoreValuesManagerScript = GetComponent<ScoreValuesManager>();
         bonusManagerScript = GetComponent<BonusManager>();
-
     }
 
     private void Update()
@@ -523,6 +522,63 @@ public class GameManager : MonoBehaviour
                 return _scoreP3;
             case 4:
                 return _scoreP4;
+            default:
+                return -1;
+        }
+    }
+
+    public int getDividedScorePlayer(int numJoueur, string division)
+    {
+        switch (numJoueur)
+        {
+            case 1:
+                switch (division)
+                {
+                    case "hundreds":
+                        return (_scoreP1 / 100) % 10;
+                    case "tens":
+                        return (_scoreP1 / 10) % 10;
+                    case "units":
+                        return _scoreP1 % 10;
+                    default:
+                        return -1;
+                }
+            case 2:
+                switch (division)
+                {
+                    case "hundreds":
+                        return (_scoreP2 / 100) % 10;
+                    case "tens":
+                        return (_scoreP2 / 10) % 10;
+                    case "units":
+                        return _scoreP2 % 10;
+                    default:
+                        return -1;
+                }
+            case 3:
+                switch (division)
+                {
+                    case "hundreds":
+                        return (_scoreP3 / 100) % 10;
+                    case "tens":
+                        return (_scoreP3 / 10) % 10;
+                    case "units":
+                        return _scoreP3 % 10;
+                    default:
+                        return -1;
+                }
+            case 4:
+                switch (division)
+                {
+                    case "hundreds":
+                        return (_scoreP4 / 100) % 10;
+                    case "tens":
+                        return (_scoreP4 / 10) % 10;
+                    case "units":
+                        return _scoreP4 % 10;
+                    default:
+                        return -1;
+                }
             default:
                 return -1;
         }
