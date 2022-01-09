@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 30
-  jumpSpeed: 40
+  jumpSpeed: 30
   movementJumpSpeed: 20
   ratioAddForce: 0.08
   playerID: 0
@@ -211,18 +211,18 @@ MonoBehaviour:
   bc: {fileID: 6809023613868175522}
   jumpState: 3
   nbJump: 2
-  maxJumpHigh: 2
-  minJumpHeigh: 1
+  maxJumpHigh: 10
+  minJumpHeigh: 0.5
   maxFallingSpeed: 50
   maxWallJumpHigh: 2
-  wallJumpSpeed: 15
-  wallJumpAngleY: 56.568542
+  wallJumpSpeed: 30
+  wallJumpAngleY: 30
   wallJumpMovementFreeze: 0.2
   numberMaxWalljump: 50
   coyotTime: 0.3
-  wallGripTime: 0.2
+  wallGripTime: 0.3
   wallGripFallSpeed: 20
-  newJumpRatioAddForce: 180
+  newJumpRatioAddForce: 250
   jumpAirIntake: 20
   groundCheck: {fileID: 7944750135165682167}
   gripLeftCheck: {fileID: 8685648045550649710}
@@ -231,21 +231,21 @@ MonoBehaviour:
   attackPointR: {fileID: 891004994122108270}
   hammerPointL: {fileID: 1489688116734007908}
   hammerPointR: {fileID: 7457566996908681798}
-  attackRange: 2
-  hammerHitboxRange: 1.875
+  attackRange: 5
+  hammerHitboxRange: 10
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
   hammerHitboxLayer:
     serializedVersion: 2
     m_Bits: 512
-  hammerXProjection: 30
+  hammerXProjection: 50
   hammerYProjection: 10
   hammerBlockProjection: 5
-  HammerSideProjectionMaxDistance: 20
-  projectionStopSpeed: 0.5
-  attackRate: 1
-  attackDuration: 0.5
+  HammerSideProjectionMaxDistance: 25
+  projectionStopSpeed: 2.5
+  attackRate: 0.7
+  attackDuration: 0.1
   disableCollider: 0
   stunTime: 0.75
   isFrozen: 0
