@@ -36,6 +36,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource voiceSource;
     public AudioSource zoneSource;
     public AudioSource footStepsSource;
+    public AudioSource wallRideSource;
 
     private bool fadeOut = false;
 
@@ -207,6 +208,25 @@ public class SoundManager : MonoBehaviour
         }
 
         footStepsSource.pitch = 1;
+
+        return;
+    }
+    public void PlayWallRide(AudioClip wallRide, float volume = 1f, float pitch = 1f)
+    {
+        wallRideSource.pitch = pitch;
+        if (!wallRideSource.isPlaying)
+        {
+            wallRideSource.PlayOneShot(wallRide, (sfxDefaultVolume * volume) * globalDefaultVolume);
+        }
+
+        wallRideSource.pitch = 1;
+
+        return;
+    }
+
+    public void StopWallRide()
+    {
+        wallRideSource.Stop();
 
         return;
     }

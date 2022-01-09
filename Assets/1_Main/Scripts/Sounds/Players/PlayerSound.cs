@@ -23,6 +23,10 @@ public class PlayerSound : MonoBehaviour
 
     public AudioClip ejection;
     [Range(0f, 1f)] public float ejectionVolume = 0.5f;
+
+    public AudioClip wallRide;
+    [Range(0f, 1f)] public float wallRideVolume = 0.5f;
+
     public void HammerWoosh()
     {
         SoundManager.Instance.PlaySfx(hammerWoosh, wooshVolume);
@@ -51,5 +55,18 @@ public class PlayerSound : MonoBehaviour
     public void Ejection()
     {
         //SoundManager.Instance.PlaySfx(ejection, ejectionVolume);
+    }
+
+    public void WallRide(bool activated)
+    {
+        switch (activated)
+        {
+            case true:
+                SoundManager.Instance.PlayWallRide(wallRide, wallRideVolume);
+                break;
+            case false:
+                SoundManager.Instance.StopWallRide();
+                break;
+        } 
     }
 }
