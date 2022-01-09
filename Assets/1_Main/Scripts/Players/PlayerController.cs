@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     public float maxFallingSpeed = 50f;
     
     //wall jump
-    [Header("Wall Jump")]
+    [Header("WallJump")]
     private float startWallJumpPosition;
     public float maxWallJumpHigh = 1;
     public float wallJumpSpeed = 1;
@@ -597,7 +597,7 @@ public class PlayerController : MonoBehaviour
                 //isWallGripStarted = false;
             }
         }
-        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && jumpState != JumpState.Grounded)
+        else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling))
         {
             //droite
             //rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
@@ -896,7 +896,10 @@ public class PlayerController : MonoBehaviour
 
     void computeJump()
     {
-        if ((jumpState == JumpState.Grounded || (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone && !isGrippingRight && !isGrippingLeft) || (nbJumpActu != nbJump && !isGrippingRight && !isGrippingLeft)) && !isAttackRunningL && !isAttackRunningR)
+        if (jumpState == JumpState.Grounded || //simple saut
+            (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone && !isGrippingRight && !isGrippingLeft) || 
+            (nbJumpActu != nbJump && !isGrippingRight && !isGrippingLeft))
+
         {
             //coyot time
             if (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone) coyoteTimeDone = true;
@@ -1096,7 +1099,7 @@ public class PlayerController : MonoBehaviour
 
         //roof check
         //Gizmos.DrawLine(new Vector2(transform.position.x - 1.175f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.2f));
-        /*
+        
         //DRAW RAYCASR
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f));
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f));
@@ -1106,7 +1109,7 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f));
         Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 0.5f));
         Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 2.2f));
-        // Test*/
+        // Test
         //Gizmos.DrawLine(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f));
 
     }

@@ -159,6 +159,7 @@ public class GameManager : MonoBehaviour
 
                 //ApplyBonus
                 /// TODO: Verifier efficacité des bonus
+                /*
                 if (_nbMancheActu == BonusRound)
                 {
                     bonusManagerScript.ApplyBonusInGame();
@@ -167,6 +168,7 @@ public class GameManager : MonoBehaviour
                 {
                     bonusManagerScript.DisableBonusInGame();
                 }
+                */
             }
 
             //red = NextMap

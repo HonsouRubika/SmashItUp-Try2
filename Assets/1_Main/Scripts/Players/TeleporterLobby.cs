@@ -29,7 +29,8 @@ public class TeleporterLobby : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             nbPlayerInZone--;
-        }   
+            isTimerInitiated = false;
+        }
     }
 
     private void Start()
@@ -45,7 +46,7 @@ public class TeleporterLobby : MonoBehaviour
             timerBeforeTeleportationActu = timerBeforeTeleportation + Time.time;
             isTimerInitiated = true;
 
-        } else if (nbPlayerInZone < 2)
+        } else if (nbPlayerInZone != nbPlayerInGame)
         {
             timerBeforeTeleportationActu = 0;
             isTimerInitiated = false;
