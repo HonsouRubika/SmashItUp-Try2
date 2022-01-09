@@ -41,11 +41,14 @@ public class GameManager : MonoBehaviour
 
     //Animation
     [HideInInspector] public TransitionAnim transitionAnimScript;
+    public GameObject consigne;
     public GameObject curtain;
     public GameObject countdown;
     private GameObject transition;
     private GameObject countdownInstance;
+    private GameObject consigneInstance;
     Animator transitionAnimator;
+    Animation consigneAnimation;
     Animation countdownAnimation;
 
     //Test/Debug
@@ -53,7 +56,7 @@ public class GameManager : MonoBehaviour
     public bool isTest = false;
     public string testSceneName = "Contamination01";
 
-    private enum TransitionState { OPENING, OPEN, CLOSING, CLOSE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED }
+    private enum TransitionState { OPENING, OPEN, CLOSING, CLOSE, CONSIGNE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED }
 
     void Awake()
     {
@@ -186,14 +189,27 @@ public class GameManager : MonoBehaviour
             else if (transitionState == TransitionState.OPENING && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
             {
                 //6) Show Players && goal
-                transitionState = TransitionState.FOCUS;
+                transitionState = TransitionState.CONSIGNE;
 
                 focusPlayersScript.EnableFocus();
 
                 //on suprr les rideaux
                 Destroy(transition);
             }
-            else if (transitionState == TransitionState.FOCUS && Time.time >= focusPlayerTimerActu)
+            else if (transitionState == TransitionState.CONSIGNE && Time.time >= focusPlayerTimerActu)
+            {
+                //instantiate animation
+                consigneInstance = Instantiate<GameObject>(consigne);
+                consigneAnimation = consigneInstance.GetComponent<Animation>();
+                Debug.Log("in consigne anim");
+                //play anim
+                consigneAnimation.Play();
+
+                //set active bon param consigne (mode de jeu, nom du mini jeu)
+
+                transitionState = TransitionState.FOCUS;
+            }
+            else if (transitionState == TransitionState.FOCUS && !consigneAnimation.isPlaying)
             {
                 //7) Timer "1,2,3,GO"
                 countdownInstance = Instantiate<GameObject>(countdown);
