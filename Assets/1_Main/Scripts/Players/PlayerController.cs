@@ -148,10 +148,11 @@ public class PlayerController : MonoBehaviour
 
 
     //FX
-    /*[Header ("FX")]
+    [Header ("FX")]
     public ParticleSystem Ejection;
     public ParticleSystem Hammer;
-    public ParticleSystem Jump;*/
+    public ParticleSystem Jump;
+    public ParticleSystem WallSlide;
 
 
 
@@ -181,7 +182,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Test FX 
-    /*void CreateDust()
+    void CreateDust()
     {
         Ejection.Play();
     }
@@ -194,7 +195,12 @@ public class PlayerController : MonoBehaviour
     void CreateCloud()
     {
         Jump.Play();
-    }*/
+    }
+
+    void CreateWallDust()
+    {
+        WallSlide.Play();
+    }
  
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -304,7 +310,7 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.Expulsion(true);
 
             //Test FX 
-            //CreateDust();
+            CreateDust();
 
             //Disable the collision between players when player are stunt
             if (disableCollider)
@@ -432,7 +438,7 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
-                        //CreateImpact();
+                        CreateImpact();
                     }
                 }
             }
@@ -595,6 +601,9 @@ public class PlayerController : MonoBehaviour
                 playerAnimator.localScale = new Vector2(-Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
                 rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
                 //isWallGripStarted = false;
+
+                CreateWallDust();
+
             }
         }
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && jumpState != JumpState.Grounded)
