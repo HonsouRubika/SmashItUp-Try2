@@ -148,11 +148,11 @@ public class PlayerController : MonoBehaviour
 
 
     //FX
-    [Header ("FX")]
+    /*[Header ("FX")]
     public ParticleSystem Ejection;
     public ParticleSystem Hammer;
     public ParticleSystem Jump;
-    public ParticleSystem WallSlide;
+    public ParticleSystem WallSlide;*/
 
     void Start()
     {
@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Test FX 
-    void CreateDust()
+    /*void CreateDust()
     {
         Ejection.Play();
     }
@@ -198,7 +198,7 @@ public class PlayerController : MonoBehaviour
     void CreateWallDust()
     {
         WallSlide.Play();
-    }
+    }*/
  
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -308,7 +308,7 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.Expulsion(true);
 
             //Test FX 
-            CreateDust();
+            //CreateDust();
 
             //Disable the collision between players when player are stunt
             if (disableCollider)
@@ -436,7 +436,7 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
-                        CreateImpact();
+                        //CreateImpact();
                     }
                 }
             }
@@ -604,7 +604,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
                 //isWallGripStarted = false;
 
-                CreateWallDust();
+                //CreateWallDust();
 
             }
         }
