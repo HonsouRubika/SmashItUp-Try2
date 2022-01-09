@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     private bool animatorLoaded = true;
 
     //Bonus
-    private BonusManager bonusManagerScript;
+    [HideInInspector] public BonusManager bonusManagerScript;
     public int BonusRound = 3;
 
     //Animation
@@ -103,7 +103,8 @@ public class GameManager : MonoBehaviour
             {
                 //Bonus fin de partie
                 /// TODO: Verifier apply des bonus/scores
-                bonusManagerScript.ApplyBonusEndGame();
+                //bonusManagerScript.ApplyBonusEndGame();
+                //UpdatePlayerScore();
 
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
@@ -206,7 +207,6 @@ public class GameManager : MonoBehaviour
 
                 //set active bon param consigne (mode de jeu, nom du mini jeu)
                 consigneAnimScript.SetActiveGoodConsigne();
-                Debug.Log("in consigne anim");
                 //play anim
                 //consigneAnimator.Play();
 
@@ -214,7 +214,6 @@ public class GameManager : MonoBehaviour
             }
             else if (transitionState == TransitionState.FOCUS && consigneAnimator.GetCurrentAnimatorStateInfo(0).IsName("Finished"))
             {
-                Debug.Log("end anim consign");
                 Destroy(consigneInstance);
                 //7) Timer "1,2,3,GO"
                 countdownInstance = Instantiate<GameObject>(countdown);

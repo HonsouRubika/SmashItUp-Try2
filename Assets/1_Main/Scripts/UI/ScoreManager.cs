@@ -157,6 +157,15 @@ public class ScoreManager : MonoBehaviour
             else
             {
                 isBonus = false;
+                //bonus end game
+                GameManager.Instance.bonusManagerScript.ApplyBonusEndGame();
+
+                //reset var
+                flagAddedPoints = false;
+                flagUpdateScore = false;
+
+                FillPlayerScoreValues();
+                DisplayPlayersScore();
 
                 playerAddedPointsText = new List<Text>(new Text[playerAddedPoints.Count]);
                 for (int i = 0; i < playerAddedPoints.Count; i++)

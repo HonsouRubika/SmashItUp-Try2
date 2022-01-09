@@ -114,22 +114,22 @@ public class CaptureTheFlag_Rules : MonoBehaviour
             {
                 case (int)GameManager.TeamCompo.FFA:
                     playersTeam[i] = i;
-                    Debug.Log("1v1v1v1");
+                    //Debug.Log("1v1v1v1");
                     //Debug.Log("In switch FFA");
                     //pas d'�quipe
                     break;
                 case (int)GameManager.TeamCompo.Coop:
-                    Debug.Log("coop");
+                    //Debug.Log("coop");
                     playersTeam[i] = 0;
                     //tous ensemble equipe 0
                     break;
                 case (int)GameManager.TeamCompo.OneVSThree:
-                    Debug.Log("1v3");
+                    //Debug.Log("1v3");
                     if (i == 0) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
                     break;
                 case (int)GameManager.TeamCompo.TwoVSTwo:
-                    Debug.Log("2v2");
+                    //Debug.Log("2v2");
                     if (i < 2) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
                     break;

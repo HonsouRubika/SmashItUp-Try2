@@ -108,7 +108,7 @@ public class BonusManager : MonoBehaviour
                 break;
         }
 
-        GameManager.Instance.UpdatePlayerScore();
+        //GameManager.Instance.UpdatePlayerScore();
     }
 
 
