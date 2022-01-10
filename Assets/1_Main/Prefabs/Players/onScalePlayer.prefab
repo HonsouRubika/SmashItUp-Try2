@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 30
-  jumpSpeed: 30
+  jumpSpeed: 45
   movementJumpSpeed: 20
   ratioAddForce: 0.08
   playerID: 0
@@ -213,12 +213,12 @@ MonoBehaviour:
   bc: {fileID: 6809023613868175522}
   jumpState: 3
   nbJump: 2
-  maxJumpHigh: 10
+  maxJumpHigh: 8
   minJumpHeigh: 0.5
   maxFallingSpeed: 50
   maxWallJumpHigh: 2
   wallJumpSpeed: 30
-  wallJumpAngleY: 30
+  wallJumpAngleY: 40
   wallJumpMovementFreeze: 0.2
   numberMaxWalljump: 50
   coyotTime: 0.3
@@ -255,10 +255,6 @@ MonoBehaviour:
   playerIDHit: 0
   hitPlayer: 0
   playerAnimator: {fileID: 0}
-  Ejection: {fileID: 0}
-  Hammer: {fileID: 0}
-  Jump: {fileID: 0}
-  WallSlide: {fileID: 0}
 --- !u!212 &4771767619851399193
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -778,11 +774,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12785d940d0c99a4ca4fd12765ac2b94, type: 3}
---- !u!198 &3040645223220234204 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7805061624289765962, guid: 12785d940d0c99a4ca4fd12765ac2b94, type: 3}
-  m_PrefabInstance: {fileID: 5072087313246645654}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6248673182594623729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -840,11 +831,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ce8248441201ba4091ffe1fed3d5ce8, type: 3}
---- !u!198 &5077800582314830604 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1207043448279548925, guid: 5ce8248441201ba4091ffe1fed3d5ce8, type: 3}
-  m_PrefabInstance: {fileID: 6248673182594623729}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6438318303152837877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -902,11 +888,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ba89325b03c96843b1cb4e193c7ba52, type: 3}
---- !u!198 &1247437198123647247 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5194420478107112954, guid: 6ba89325b03c96843b1cb4e193c7ba52, type: 3}
-  m_PrefabInstance: {fileID: 6438318303152837877}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7645032069585691051
 PrefabInstance:
   m_ObjectHideFlags: 0
