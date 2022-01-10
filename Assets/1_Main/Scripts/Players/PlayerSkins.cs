@@ -303,20 +303,27 @@ public class PlayerSkins : MonoBehaviour
         skinSprites = currentSkin.GetComponentsInChildren<SpriteRenderer>();
         for (int i = 0; i < skinSprites.Length; i++)
         {
-            skinSprites[i].material.SetFloat("_Intensity", 0.75f);
             switch (color)
             {
                 case "blue":
                     skinSprites[i].material.SetColor("_Color", blue);
+                    skinSprites[i].material.SetFloat("_Intensity", 0.75f);
                     break;
                 case "red":
                     skinSprites[i].material.SetColor("_Color", red);
+                    skinSprites[i].material.SetFloat("_Intensity", 0.75f);
                     break;
                 case "green":
                     skinSprites[i].material.SetColor("_Color", green);
+                    skinSprites[i].material.SetFloat("_Intensity", 0.75f);
                     break;
                 case "yellow":
                     skinSprites[i].material.SetColor("_Color", yellow);
+                    skinSprites[i].material.SetFloat("_Intensity", 0.75f);
+                    break;
+                case "default":
+                    skinSprites[i].material.SetColor("_Color", Color.white);
+                    skinSprites[i].material.SetFloat("_Intensity", 0f);
                     break;
             } 
         }
