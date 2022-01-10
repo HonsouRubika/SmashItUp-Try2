@@ -69,7 +69,7 @@ public class CaptureManager : MonoBehaviour
 
             for (int i = 0; i < playersTeam.Length; i++)
             {
-                players[i].GetComponent<PlayerSkins>().SetColorByTeam("blue");
+                players[i].GetComponent<PlayerSkins>().SetColorByTeam("default");
             }
 
             playOneTime = true;

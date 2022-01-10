@@ -90,6 +90,11 @@ public class KeepTheFlagManager : MonoBehaviour
             keepingFlagScript.ResetFlag();
             SortPlayers();
 
+            for (int i = 0; i < playersTeam.Length; i++)
+            {
+                players[i].GetComponent<PlayerSkins>().SetColorByTeam("default");
+            }
+
             playOneTime = true;
         }
     }
