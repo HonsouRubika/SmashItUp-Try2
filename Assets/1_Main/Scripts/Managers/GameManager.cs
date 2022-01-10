@@ -632,7 +632,7 @@ public class GameManager : MonoBehaviour
     //renvoie la compo d'equipe pour une manche pr�cise
     public int getTeamCompo()
     {
-        return _teamCompo[_nbMancheActu];
+        return _teamCompo[_nbMancheActu - 1];
     }
 
     //liste des gameMode pr�sent dans le jeu (jouable)
