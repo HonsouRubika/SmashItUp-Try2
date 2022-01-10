@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -19,30 +19,30 @@ public class ScoreManager : MonoBehaviour
     [Space]
     //P1
     public Transform P1ScoreNumber;
-    private Text P1ScoreUnits;
-    private Text P1ScoreTens;
-    private Text P1ScoreHundreds;
+    private TextMeshProUGUI P1ScoreUnits;
+    private TextMeshProUGUI P1ScoreTens;
+    private TextMeshProUGUI P1ScoreHundreds;
 
     //P2
     public Transform P2ScoreNumber;
-    private Text P2ScoreUnits;
-    private Text P2ScoreTens;
-    private Text P2ScoreHundreds;
+    private TextMeshProUGUI P2ScoreUnits;
+    private TextMeshProUGUI P2ScoreTens;
+    private TextMeshProUGUI P2ScoreHundreds;
 
     //P3
     public Transform P3ScoreNumber;
-    private Text P3ScoreUnits;
-    private Text P3ScoreTens;
-    private Text P3ScoreHundreds;
+    private TextMeshProUGUI P3ScoreUnits;
+    private TextMeshProUGUI P3ScoreTens;
+    private TextMeshProUGUI P3ScoreHundreds;
 
     //P4
     public Transform P4ScoreNumber;
-    private Text P4ScoreUnits;
-    private Text P4ScoreTens;
-    private Text P4ScoreHundreds;
+    private TextMeshProUGUI P4ScoreUnits;
+    private TextMeshProUGUI P4ScoreTens;
+    private TextMeshProUGUI P4ScoreHundreds;
 
     public List<GameObject> playerAddedPoints;
-    private List<Text> playerAddedPointsText;
+    private List<TextMeshProUGUI> playerAddedPointsText;
 
     private GameObject[] players;
     public List<Transform> tpPoints = new List<Transform>();
@@ -69,11 +69,11 @@ public class ScoreManager : MonoBehaviour
         FillPlayerScoreValues();
         DisplayPlayersScore();
 
-        playerAddedPointsText = new List<Text>(new Text[playerAddedPoints.Count]);
+        playerAddedPointsText = new List<TextMeshProUGUI>(new TextMeshProUGUI[playerAddedPoints.Count]);
         for (int i = 0; i < playerAddedPoints.Count; i++)
         {
             playerAddedPoints[i].SetActive(false);
-            playerAddedPointsText[i] = playerAddedPoints[i].GetComponentInChildren<Text>();
+            playerAddedPointsText[i] = playerAddedPoints[i].GetComponentInChildren<TextMeshProUGUI>();
         }
 
         for (int i = 0; i < playerAddedPointsText.Count; i++)
@@ -167,11 +167,11 @@ public class ScoreManager : MonoBehaviour
                 FillPlayerScoreValues();
                 DisplayPlayersScore();
 
-                playerAddedPointsText = new List<Text>(new Text[playerAddedPoints.Count]);
+                playerAddedPointsText = new List<TextMeshProUGUI>(new TextMeshProUGUI[playerAddedPoints.Count]);
                 for (int i = 0; i < playerAddedPoints.Count; i++)
                 {
                     playerAddedPoints[i].SetActive(false);
-                    playerAddedPointsText[i] = playerAddedPoints[i].GetComponentInChildren<Text>();
+                    playerAddedPointsText[i] = playerAddedPoints[i].GetComponentInChildren<TextMeshProUGUI>();
                 }
 
                 for (int i = 0; i < playerAddedPointsText.Count; i++)
@@ -192,21 +192,21 @@ public class ScoreManager : MonoBehaviour
 
     private void FillPlayerScoreValues()
     {
-        P1ScoreHundreds = P1ScoreNumber.GetChild(0).GetComponent<Text>();
-        P1ScoreTens = P1ScoreNumber.GetChild(1).GetComponent<Text>();
-        P1ScoreUnits = P1ScoreNumber.GetChild(2).GetComponent<Text>();
+        P1ScoreHundreds = P1ScoreNumber.GetChild(0).GetComponent<TextMeshProUGUI>();
+        P1ScoreTens = P1ScoreNumber.GetChild(1).GetComponent<TextMeshProUGUI>();
+        P1ScoreUnits = P1ScoreNumber.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-        P2ScoreHundreds = P2ScoreNumber.GetChild(0).GetComponent<Text>();
-        P2ScoreTens = P2ScoreNumber.GetChild(1).GetComponent<Text>();
-        P2ScoreUnits = P2ScoreNumber.GetChild(2).GetComponent<Text>();
+        P2ScoreHundreds = P2ScoreNumber.GetChild(0).GetComponent<TextMeshProUGUI>();
+        P2ScoreTens = P2ScoreNumber.GetChild(1).GetComponent<TextMeshProUGUI>();
+        P2ScoreUnits = P2ScoreNumber.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-        P3ScoreHundreds = P3ScoreNumber.GetChild(0).GetComponent<Text>();
-        P3ScoreTens = P3ScoreNumber.GetChild(1).GetComponent<Text>();
-        P3ScoreUnits = P3ScoreNumber.GetChild(2).GetComponent<Text>();
+        P3ScoreHundreds = P3ScoreNumber.GetChild(0).GetComponent<TextMeshProUGUI>();
+        P3ScoreTens = P3ScoreNumber.GetChild(1).GetComponent<TextMeshProUGUI>();
+        P3ScoreUnits = P3ScoreNumber.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-        P4ScoreHundreds = P4ScoreNumber.GetChild(0).GetComponent<Text>();
-        P4ScoreTens = P4ScoreNumber.GetChild(1).GetComponent<Text>();
-        P4ScoreUnits = P4ScoreNumber.GetChild(2).GetComponent<Text>();
+        P4ScoreHundreds = P4ScoreNumber.GetChild(0).GetComponent<TextMeshProUGUI>();
+        P4ScoreTens = P4ScoreNumber.GetChild(1).GetComponent<TextMeshProUGUI>();
+        P4ScoreUnits = P4ScoreNumber.GetChild(2).GetComponent<TextMeshProUGUI>();
     }
 
     private void DisplayPlayersScore()
