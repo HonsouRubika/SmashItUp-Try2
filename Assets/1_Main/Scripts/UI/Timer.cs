@@ -16,6 +16,11 @@ public class Timer : MonoBehaviour
 
     public bool debugEndTimer = false;
 
+    public GameObject countdown;
+    private GameObject countdownInstance;
+    private bool isCountdownSetted = false;
+
+
     private Score scoresScript;
 
     private void Start()
@@ -39,6 +44,7 @@ public class Timer : MonoBehaviour
         if (isTimerStarted && miniGameTimer <= 0)
         {
             //GameManager.Instance.NextMap();
+            Destroy(countdownInstance);
             StopTimer();
             GameManager.Instance.Score();
         }
@@ -48,9 +54,11 @@ public class Timer : MonoBehaviour
             DisplayTimer();
         }
 
-        if (miniGameTimer <= 10)
+        if (miniGameTimer <= 10 && !isCountdownSetted)
         {
-            globalTimer.SetActive(true);
+            //globalTimer.SetActive(true);
+            countdownInstance = Instantiate<GameObject>(countdown);
+            isCountdownSetted = true;
         }
     }
 
