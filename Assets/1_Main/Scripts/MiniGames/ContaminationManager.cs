@@ -78,11 +78,14 @@ public class ContaminationManager : MonoBehaviour
         {
             if (playersControllers[playersTransformedWolf[i]].hitPlayer)
             {
-                wolfPlayerNumber = playersControllers[playersTransformedWolf[i]].playerIDHit;
+                if (!playersTransformedWolf.Contains(playersControllers[playersTransformedWolf[i]].playerIDHit))
+                {
+                    wolfPlayerNumber = playersControllers[playersTransformedWolf[i]].playerIDHit;
 
-                NewPlayerIsWolf(wolfPlayerNumber);
-                SpawnWolfHead(wolfPlayerNumber);
-                WolfSoundScript.WolfAttack();
+                    NewPlayerIsWolf(wolfPlayerNumber);
+                    SpawnWolfHead(wolfPlayerNumber);
+                    WolfSoundScript.WolfAttack();
+                }
             }
         }
 
