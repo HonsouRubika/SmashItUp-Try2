@@ -18,73 +18,84 @@ public class GameRuleBumper : MonoBehaviour
 
     private int playerIDWhoTriggeredButton = 0;
 
-    private void Start()
-    {
-        buttonAnimator = GetComponentInParent<Animator>();
-        textRules = transform.parent.GetComponentInChildren<TextMeshPro>();
+    public ParticleSystem Button;
+    
+private void Start()
+{
+    buttonAnimator = GetComponentInParent<Animator>();
+    textRules = transform.parent.GetComponentInChildren<TextMeshPro>();
 
-        switch (bumperRule)
-        {
-            case RULE.nbManches:
-                textRules.text = rangeNbManches[iterator].ToString();
-                break;
-            case RULE.dureeManche:
-                textRules.text = rangeDureeManche[iterator].ToString();
-                break;
-        }
+    switch (bumperRule)
+    {
+        case RULE.nbManches:
+            textRules.text = rangeNbManches[iterator].ToString();
+            break;
+        case RULE.dureeManche:
+            textRules.text = rangeDureeManche[iterator].ToString();
+            break;
     }
+}
+
+    //Test FX 
+    void CreateButtonDust()
+    {
+        Button.Play();
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
+{
+    //Check if Player is jumping on the button
+    if (collision.CompareTag("Player") && collision.GetComponent<PlayerController>().jumpState == JumpState.Falling && !isActive)
     {
-        //Check if Player is jumping on the button
-        if (collision.CompareTag("Player") && collision.GetComponent<PlayerController>().jumpState == JumpState.Falling && !isActive)
-        {
-            playerIDWhoTriggeredButton = (int)collision.GetComponent<PlayerController>().playerID;
+        playerIDWhoTriggeredButton = (int)collision.GetComponent<PlayerController>().playerID;
 
-            isActive = true; //pour animation
+        isActive = true; //pour animation
 
-            ChangeGameRules();
-            TriggerButtonAnim(true);
-        }
+        ChangeGameRules();
+        TriggerButtonAnim(true);
+
+            CreateButtonDust();
     }
+}
 
-    private void ChangeGameRules()
+private void ChangeGameRules()
+{
+    iterator++;
+
+    switch (bumperRule)
     {
-        iterator++;
-
-        switch (bumperRule)
-        {
-            case RULE.nbManches:
-                if (iterator == rangeNbManches.Length) iterator = 0;
-                GameManager.Instance._nbManches = rangeNbManches[iterator];
-                textRules.text = rangeNbManches[iterator].ToString();
-                break;
-            case RULE.dureeManche:
-                if (iterator == rangeDureeManche.Length) iterator = 0;
-                GameManager.Instance.durationMiniGame = rangeDureeManche[iterator];
-                textRules.text = rangeDureeManche[iterator].ToString();
-                break;
-        }
+        case RULE.nbManches:
+            if (iterator == rangeNbManches.Length) iterator = 0;
+            GameManager.Instance._nbManches = rangeNbManches[iterator];
+            textRules.text = rangeNbManches[iterator].ToString();
+            break;
+        case RULE.dureeManche:
+            if (iterator == rangeDureeManche.Length) iterator = 0;
+            GameManager.Instance.durationMiniGame = rangeDureeManche[iterator];
+            textRules.text = rangeDureeManche[iterator].ToString();
+            break;
     }
+}
 
-    private void TriggerButtonAnim(bool press)
+private void TriggerButtonAnim(bool press)
+{
+    buttonAnimator.SetBool("ButtonPress", press);
+}
+
+private void OnTriggerExit2D(Collider2D collision)
+{
+    if (collision.CompareTag("Player") && collision.GetComponent<PlayerController>().playerID == playerIDWhoTriggeredButton)
     {
-        buttonAnimator.SetBool("ButtonPress", press);
+        isActive = false;
+        TriggerButtonAnim(false);
     }
+}
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") && collision.GetComponent<PlayerController>().playerID == playerIDWhoTriggeredButton)
-        {
-            isActive = false;
-            TriggerButtonAnim(false);
-        }
-    }
-
-    public enum RULE
-    {
-        nbManches,
-        dureeManche
-    }
+public enum RULE
+{
+    nbManches,
+    dureeManche
+}
 
 }
