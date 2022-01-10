@@ -5,6 +5,13 @@ using UnityEngine;
 public class PlayerAnim : MonoBehaviour
 {
     [HideInInspector] public Animator playerAnimator;
+    private PlayerController playerControllerScript;
+
+    private void Start()
+    {
+        playerControllerScript = GetComponent<PlayerController>();
+        SetCooldownTimeAnimation(1 / playerControllerScript.attackRate);
+    }
 
     public void Idle(bool idle)
     {
@@ -40,5 +47,10 @@ public class PlayerAnim : MonoBehaviour
     public void Falling(bool fall)
     {
         playerAnimator.SetBool("isFalling", fall);
+    }
+
+    public void SetCooldownTimeAnimation(float cd)
+    {
+        playerAnimator.SetFloat("cooldownSpeed", cd);
     }
 }

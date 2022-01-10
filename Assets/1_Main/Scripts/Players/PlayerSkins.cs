@@ -18,7 +18,7 @@ public class PlayerSkins : MonoBehaviour
     [Header("All skins")]
     public List<GameObject> skins;
 
-    [Header("Color players")]
+    [Header("Color Team")]
     public Color blue;
     public Color red;
     public Color green;
