@@ -180,7 +180,6 @@ public class PlayerSkins : MonoBehaviour
             playerControllerScript.hammerPointL.SetActive(false);
             playerControllerScript.hammerPointR.SetActive(false);
 
-
             playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
         }
