@@ -132,7 +132,7 @@ public class PlayerSkins : MonoBehaviour
 
     public void ChangeSkinPlus(InputAction.CallbackContext context)
     {
-        if (context.started && isInArea && (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Test") || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SceneTestPlateforme")))
+        if (context.started && isInArea)
         {
             skinNumber++;
             if (skinNumber >= skins.Count)
@@ -188,8 +188,8 @@ public class PlayerSkins : MonoBehaviour
 
     public void ChangeSkinMinus(InputAction.CallbackContext context)
     {
-        if (context.started && isInArea && (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Test") || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SceneTestPlateforme")))
-        {
+            if (context.started && isInArea)
+            {
             skinNumber--;
             if (skinNumber < 0)
             {
