@@ -54,7 +54,7 @@ public class CaptureManager : MonoBehaviour
         captureSoundScript = GetComponentInChildren<CaptureSound>();
 
         SpawnPlayerRandomly();
-        GameManager.Instance.focusPlayersScript.SetGameTitle("Zone");
+        //GameManager.Instance.focusPlayersScript.SetGameTitle("Zone");
 
         AssignPlayerTeam();
     }

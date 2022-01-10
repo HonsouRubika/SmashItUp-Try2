@@ -49,6 +49,9 @@ public class ConsigneDisplayScript : MonoBehaviour
                 break;
         }
 
+        //Debug.Log(GameManager.Instance._nbMancheActu - 1);
+        //Debug.Log(GameManager.Instance.GetGameModeActu());
+
         switch (GameManager.Instance.GetGameModeActu())
         {
             case (int) GameManager.GameMode.CaptureTheFlag:

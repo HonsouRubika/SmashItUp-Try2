@@ -57,7 +57,7 @@ public class ContaminationManager : MonoBehaviour
 
         ChooseRandomWolf();
         SpawnPlayerRandomly();
-        GameManager.Instance.focusPlayersScript.SetGameTitle("Contamination");
+        //GameManager.Instance.focusPlayersScript.SetGameTitle("Contamination");
     }
 
     private void ChooseRandomWolf()

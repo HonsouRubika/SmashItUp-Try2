@@ -331,7 +331,7 @@ public class GameManager : MonoBehaviour
 
     public int GetGameModeActu()
     {
-        return _selectedGameModes[_nbMancheActu];
+        return _selectedGameModes[_nbMancheActu - 1];
     }
 
     public void TestMap()

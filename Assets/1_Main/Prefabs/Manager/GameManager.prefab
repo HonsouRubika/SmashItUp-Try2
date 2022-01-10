@@ -64,8 +64,10 @@ MonoBehaviour:
   isShowingPlayers: 0
   pauseScript: {fileID: 2040467285552887625}
   durationMiniGame: 30
+  bonusManagerScript: {fileID: 0}
   BonusRound: 3
   transitionAnimScript: {fileID: 0}
+  consigneAnimScript: {fileID: 0}
   consigne: {fileID: 1340252335624894009, guid: 0bea3c905b3895c4583979164007a262, type: 3}
   curtain: {fileID: 5805044401616752714, guid: 154f523b5d2657d4ebbababc2837f91c, type: 3}
   countdown: {fileID: 3046519167518943636, guid: 16fb4deaaa6dcfc488e12a8082f4d5cd, type: 3}
@@ -366,6 +368,10 @@ PrefabInstance:
     - target: {fileID: 5406578355057609831, guid: 4d1529d4d60b334409da0977edf77f4d, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934788349626389292, guid: 4d1529d4d60b334409da0977edf77f4d, type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d1529d4d60b334409da0977edf77f4d, type: 3}

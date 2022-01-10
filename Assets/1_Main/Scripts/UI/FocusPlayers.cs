@@ -20,7 +20,7 @@ public class FocusPlayers : MonoBehaviour
     public GameObject hideScreen;
     public Color colorHideScreen;
 
-    public Image minigameTitleImage;
+    //public Image minigameTitleImage;
 
     [Header("Mini-game title")]
     public Sprite captureTheFlagSprite;
@@ -75,6 +75,7 @@ public class FocusPlayers : MonoBehaviour
 
     public void SetGameTitle(string minigameName)
     {
+        /*
         switch (minigameName)
         {
             case "CaptureTheFlag":
@@ -96,6 +97,7 @@ public class FocusPlayers : MonoBehaviour
                 minigameTitleImage.sprite = destroyCratesSprite;
                 break;
         }
+        */
     }
 
     private IEnumerator IncrementTimer()
