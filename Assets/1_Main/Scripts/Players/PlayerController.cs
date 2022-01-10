@@ -156,6 +156,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        ///integrate wallride?
+        wallGripTime = 0;
+
         //init var
         startJumpPosition = transform.position.y;
         stunTimeActu = 0;
@@ -911,9 +914,16 @@ public class PlayerController : MonoBehaviour
 
     void computeJump()
     {
-        if (jumpState == JumpState.Grounded || //simple saut
+        ///old with wall jump restriction
+        /*
+         * if (jumpState == JumpState.Grounded || //simple saut
             (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone && !isGrippingRight && !isGrippingLeft) || 
             (nbJumpActu != nbJump && !isGrippingRight && !isGrippingLeft))
+        */
+
+        if (jumpState == JumpState.Grounded || //simple saut
+            (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone) || 
+            (nbJumpActu != nbJump))
 
         {
             //coyot time
@@ -949,6 +959,8 @@ public class PlayerController : MonoBehaviour
             //jumpMovementActu = 1;
             isJumpFallSetted = false;
         }
+        /// Wall jump integrated?
+        /*
         else if (isGrippingRight && !isAttackRunningL && !isAttackRunningR && numberMaxWalljumpActu < numberMaxWalljump)
         {
             jumpState = JumpState.InFlight;
@@ -1007,6 +1019,7 @@ public class PlayerController : MonoBehaviour
             //jumpMovementActu = 1;
             isJumpFallSetted = false;
         }
+        */
 
         //Debug.Log(" 2) JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
     }
