@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     [Header("DEBUG")]
     public bool isTest = false;
     public string testSceneName = "Contamination01";
+    public bool isGameModeTest = false;
+    public GameMode gameModeToTest = GameMode.Loup;
 
     private enum TransitionState { OPENING, OPEN, CLOSING, CLOSE, CONSIGNE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED }
 
@@ -287,7 +289,8 @@ public class GameManager : MonoBehaviour
         }
 
         //on passe � la premi�re manche
-        if (isTest) TestMap();
+        if (isTest && !isGameModeTest) TestMap();
+        else if (isGameModeTest) TestGameMode();
         else NextMap();
     }
 
@@ -337,6 +340,12 @@ public class GameManager : MonoBehaviour
     public void TestMap()
     {
         isTest = true;
+        NextMap();
+    }
+
+    public void TestGameMode()
+    {
+        isTest = false;
         NextMap();
     }
 
@@ -451,6 +460,46 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
+        }
+        else if (_nbMancheActu < _nbManches & isGameModeTest)
+        {
+            switch (gameModeToTest)
+            {
+                case GameMode.CaptureTheFlag:
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("FlagCapture" + Random.Range(1, 3));
+                    break;
+                case GameMode.Loup:
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("Loup0" + Random.Range(1, 3));
+                    break;
+                case GameMode.CaptureDeZone:
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("CaptureZone0" + Random.Range(1, 3));
+                    break;
+                case GameMode.Contamination:
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
+                    break;
+                case GameMode.KeepTheFlag:
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("KeepTheFlag0" + Random.Range(1, 3));
+                    break;
+                case GameMode.CaptureDeZoneMouvante:
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("ZoneMouvante0" + Random.Range(1, 3));
+                    break;
+                /*
+                case (int)GameMode.DestrucBox:
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("DestrucCaisse0" + Random.Range(1, 3));
+                    break;
+                */
+                default:
+                    Debug.Log("Error, GameMode not found or taken out");
+                    break;
+            }
+            SceneManager.LoadScene(testSceneName);
         }
         else if (_nbMancheActu < _nbManches & isTest)
         {
