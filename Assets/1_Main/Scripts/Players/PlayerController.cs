@@ -1024,6 +1024,7 @@ public class PlayerController : MonoBehaviour
 
             //apparition hammerHitBox
             hammerPointL.SetActive(true);
+            hammerPointR.SetActive(false);
 
             //anim
             if (playerAnimScript != null) playerAnimScript.Attack();
@@ -1039,6 +1040,7 @@ public class PlayerController : MonoBehaviour
             attackDurationActu = attackDuration + Time.time;
             //apparition hammerHitBox
             hammerPointR.SetActive(true);
+            hammerPointL.SetActive(false);
 
             //anim
             if (playerAnimScript != null)
