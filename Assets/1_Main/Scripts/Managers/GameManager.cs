@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     public bool isTest = false;
     public string testSceneName = "Contamination01";
     public bool isGameModeTest = false;
-    public GameMode gameModeToTest = GameMode.Loup;
+    public GameMode[] gameModeToTest;
 
     private enum TransitionState { OPENING, OPEN, CLOSING, CLOSE, CONSIGNE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED }
 
@@ -421,7 +421,7 @@ public class GameManager : MonoBehaviour
     {
         //4) LoadScene(sc�ne2)
 
-        if (_nbMancheActu < _nbManches && !isTest)
+        if (_nbMancheActu < _nbManches && !isTest & !isGameModeTest)
         {
             switch (_selectedGameModes[_nbMancheActu])
             {
@@ -463,7 +463,8 @@ public class GameManager : MonoBehaviour
         }
         else if (_nbMancheActu < _nbManches & isGameModeTest)
         {
-            switch (gameModeToTest)
+            if (_nbMancheActu > gameModeToTest.Length) _nbMancheActu = 0;
+            switch (gameModeToTest[_nbMancheActu])
             {
                 case GameMode.CaptureTheFlag:
                     _nbMancheActu++;
@@ -697,6 +698,7 @@ public class GameManager : MonoBehaviour
         total //egal au nombre d'�l�ment dans l'enum
     }
 
+    [HideInInspector]
     public int[] GameModeKind =
     {
         0, //CaptureTheFlag = Flag

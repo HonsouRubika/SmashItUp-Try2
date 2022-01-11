@@ -1631,6 +1631,22 @@ PrefabInstance:
       propertyPath: testSceneName
       value: CaptureZone02
       objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: isGameModeTest
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: gameModeToTest.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: gameModeToTest.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: gameModeToTest.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2393110260777838759, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: m_Name
       value: GameManager
