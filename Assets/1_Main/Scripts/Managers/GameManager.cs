@@ -56,8 +56,8 @@ public class GameManager : MonoBehaviour
     [Header("DEBUG")]
     public bool isTest = false;
     public string testSceneName = "Contamination01";
-    public bool isGameModeTest = false;
     public GameMode[] gameModeToTest;
+    public TeamCompo[] teamCompoToTest;
 
     private enum TransitionState { OPENING, OPEN, CLOSING, CLOSE, CONSIGNE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED }
 
@@ -281,16 +281,28 @@ public class GameManager : MonoBehaviour
 
             }
             _selectedGameModes[i] = nextGameMode;
-            if (scoreValuesManagerScript.players.Length < 4) _teamCompo[i] = (int)TeamCompo.FFA;
-            else _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
+
+            //TeamCompo
+            //DEBUG
+            if (teamCompoToTest.Length > 0)
+            {
+                Debug.Log(teamCompoToTest[i % teamCompoToTest.Length]);
+                _teamCompo[i] = (int) teamCompoToTest[i % teamCompoToTest.Length];
+            }
+            else
+            {
+                if (scoreValuesManagerScript.players.Length < 4) _teamCompo[i] = (int)TeamCompo.FFA;
+                else _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
+            }
+
             //Debug.Log("Team compo : " +_teamCompo[i]);
             //Debug.Log(i + " : " +_selectedGameModes[i]);
             //Debug.Log(nextGameMode + " : " +GameModeKind[nextGameMode]);
         }
 
         //on passe � la premi�re manche
-        if (isTest && !isGameModeTest) TestMap();
-        else if (isGameModeTest) TestGameMode();
+        if (isTest && gameModeToTest.Length <= 0) TestMap();
+        else if (gameModeToTest.Length > 0) TestGameMode();
         else NextMap();
     }
 
@@ -421,7 +433,7 @@ public class GameManager : MonoBehaviour
     {
         //4) LoadScene(sc�ne2)
 
-        if (_nbMancheActu < _nbManches && !isTest & !isGameModeTest)
+        if (_nbMancheActu < _nbManches && !isTest & gameModeToTest.Length <= 0)
         {
             switch (_selectedGameModes[_nbMancheActu])
             {
@@ -461,10 +473,10 @@ public class GameManager : MonoBehaviour
             }
 
         }
-        else if (_nbMancheActu < _nbManches & isGameModeTest)
+        else if (_nbMancheActu < _nbManches & gameModeToTest.Length > 0)
         {
             if (_nbMancheActu > gameModeToTest.Length) _nbMancheActu = 0;
-            switch (gameModeToTest[_nbMancheActu])
+            switch (gameModeToTest[_nbMancheActu % gameModeToTest.Length])
             {
                 case GameMode.CaptureTheFlag:
                     _nbMancheActu++;
@@ -500,7 +512,6 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Error, GameMode not found or taken out");
                     break;
             }
-            SceneManager.LoadScene(testSceneName);
         }
         else if (_nbMancheActu < _nbManches & isTest)
         {
