@@ -39,7 +39,8 @@ public class PlayerController : MonoBehaviour
 
     //Sprite et animation
     public Rigidbody2D rb;
-    public BoxCollider2D bc;
+    //public BoxCollider2D bc;
+    public CapsuleCollider2D cc;
 
     //jump variable
     [Header("Jump")]
@@ -373,7 +374,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //Appliquer une velocit�
                     //Attention: check la direction pour coord x
-                    if (enemy.gameObject != bc.gameObject)
+                    if (enemy.gameObject != cc.gameObject)
                     {
                         enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
@@ -434,7 +435,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //Appliquer une velocit�
                     //Attention: check la direction pour coord x
-                    if(enemy != bc)
+                    if(enemy != cc)
                     {
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
