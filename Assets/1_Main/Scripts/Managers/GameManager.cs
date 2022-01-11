@@ -443,6 +443,8 @@ public class GameManager : MonoBehaviour
                     break;
                 case (int)GameMode.Loup:
                     _nbMancheActu++;
+                    //Limitation de GameMode
+                    _teamCompo[_nbManches] = (int)TeamCompo.FFA;
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.CaptureDeZone:
@@ -451,6 +453,8 @@ public class GameManager : MonoBehaviour
                     break;
                 case (int)GameMode.Contamination:
                     _nbMancheActu++;
+                    //Limitation de GameMode
+                    _teamCompo[_nbManches] = (int)TeamCompo.FFA;
                     SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.KeepTheFlag:
@@ -484,6 +488,8 @@ public class GameManager : MonoBehaviour
                     break;
                 case GameMode.Loup:
                     _nbMancheActu++;
+                    //Limitation de GameMode
+                    _teamCompo[_nbManches] = (int)TeamCompo.FFA;
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 3));
                     break;
                 case GameMode.CaptureDeZone:
@@ -492,6 +498,8 @@ public class GameManager : MonoBehaviour
                     break;
                 case GameMode.Contamination:
                     _nbMancheActu++;
+                    //Limitation de GameMode
+                    _teamCompo[_nbManches] = (int)TeamCompo.FFA;
                     SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
                     break;
                 case GameMode.KeepTheFlag:
@@ -670,6 +678,27 @@ public class GameManager : MonoBehaviour
             default:
                 return -1;
         }
+    }
+
+    //return mvp
+    public int getMVP()
+    {
+        //get le meilleur joueur
+        int bestPlayer = 0;
+        int bestPlayerSpread = GameManager.Instance.getScorePlayer(0);
+
+        //get des players avec les stats approprié
+        for (int i = 0; i < GameManager.Instance.getNbPlayer(); i++)
+        {
+
+            if (GameManager.Instance.getScorePlayer(i) > bestPlayerSpread)
+            {
+                bestPlayerSpread = GameManager.Instance.getScorePlayer(i);
+                bestPlayer = i;
+            }
+        }
+
+        return bestPlayer;
     }
 
     //return earn points to add to player score
