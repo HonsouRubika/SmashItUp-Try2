@@ -119,6 +119,7 @@ public class PlayerController : MonoBehaviour
     //Paramètre vitesse
     private bool attackDirection = false;
     public float attackRate = 2f;
+    public bool attackIsCD = false;
     public float attackDuration = 0.1f;
     private float attackDurationActu;
     private bool isAttackRunningL, isAttackRunningR;
@@ -303,6 +304,15 @@ public class PlayerController : MonoBehaviour
             //error ce produit seulement lors de la frame d'apparition de l'entité, on peux l'ignorer
             //l'un des scipt n'est pas attaché
             //Debug.Log("l'un des script n'est pas attaché");
+        }
+
+        if (Time.time >= nextAttackTime)
+        {
+            attackIsCD = false;
+        }
+        else
+        {
+            attackIsCD = true;
         }
     }
 
