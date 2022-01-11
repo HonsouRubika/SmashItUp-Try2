@@ -109,6 +109,7 @@ public class PlayerSkins : MonoBehaviour
 
                 if (currentSkin.GetComponent<Animator>() == null) Debug.Log("error");
                 playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
+                playerAnimScript.SetAnimCooldownAttack();
                 playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
             }
         }
@@ -181,6 +182,7 @@ public class PlayerSkins : MonoBehaviour
             playerControllerScript.hammerPointR.SetActive(false);
 
             playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
+            playerAnimScript.SetAnimCooldownAttack();
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
         }
     }
@@ -234,6 +236,7 @@ public class PlayerSkins : MonoBehaviour
 
             if (currentSkin.GetComponent<Animator>() == null) Debug.Log("error");
             playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
+            playerAnimScript.SetAnimCooldownAttack();
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
         }
     }
