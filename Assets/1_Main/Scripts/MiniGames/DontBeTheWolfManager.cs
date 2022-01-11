@@ -79,7 +79,10 @@ public class DontBeTheWolfManager : MonoBehaviour
             WolfSoundScript.WolfAttack();
         }
 
-        IncrementPlayerScore(wolfPlayerNumber);
+        if (timerScript.isTimerStarted)
+        {
+            IncrementPlayerScore(wolfPlayerNumber);
+        }
 
         if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
