@@ -36,6 +36,9 @@ public class PlayerSkins : MonoBehaviour
     public Sprite hammerP3;
     public Sprite hammerP4;
 
+    [HideInInspector] private GameObject currentHammer;
+    private Color hammerColor;
+
     public SpriteRenderer[] skinSprites;
 
     private int skinNumber;
@@ -67,6 +70,8 @@ public class PlayerSkins : MonoBehaviour
 
         playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
         playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
+        currentHammer = currentSkin.transform.Find("Hammer").gameObject;
+        hammerColor = currentHammer.GetComponent<SpriteRenderer>().color;
 
         SetColorToPlayer(currentSkin);
     }
@@ -111,6 +116,8 @@ public class PlayerSkins : MonoBehaviour
                 playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
                 playerAnimScript.SetAnimCooldownAttack();
                 playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
+                currentHammer = currentSkin.transform.Find("Hammer").gameObject;
+                hammerColor = currentHammer.GetComponent<SpriteRenderer>().color;
             }
         }
     }
@@ -184,6 +191,8 @@ public class PlayerSkins : MonoBehaviour
             playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
             playerAnimScript.SetAnimCooldownAttack();
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
+            currentHammer = currentSkin.transform.Find("Hammer").gameObject;
+            hammerColor = currentHammer.GetComponent<SpriteRenderer>().color;
         }
     }
 
@@ -238,6 +247,8 @@ public class PlayerSkins : MonoBehaviour
             playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
             playerAnimScript.SetAnimCooldownAttack();
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
+            currentHammer = currentSkin.transform.Find("Hammer").gameObject;
+            hammerColor = currentHammer.GetComponent<SpriteRenderer>().color;
         }
     }
     GameObject GetChildWithName(GameObject obj, string name)
@@ -330,5 +341,11 @@ public class PlayerSkins : MonoBehaviour
                     break;
             } 
         }
+    }
+
+    public void SetHammerOpacity(float alpha)
+    {
+        hammerColor.a = alpha;
+        currentHammer.GetComponent<SpriteRenderer>().color = hammerColor;
     }
 }

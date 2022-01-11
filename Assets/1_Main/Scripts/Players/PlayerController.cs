@@ -145,6 +145,9 @@ public class PlayerController : MonoBehaviour
     private PlayerAnim playerAnimScript;
     [HideInInspector] public Transform playerAnimator;
 
+    //Skin
+    private PlayerSkins playerSkinScript;
+
     //Bonus
     [System.NonSerialized] public bool isUnbreakable = false;
 
@@ -172,6 +175,8 @@ public class PlayerController : MonoBehaviour
 
         //get anim script
         playerAnimScript = GetComponentInChildren<PlayerAnim>();
+
+        playerSkinScript = GetComponent<PlayerSkins>();
 
         PlayerSoundScript = GetComponentInChildren<PlayerSound>();
     }
@@ -309,10 +314,12 @@ public class PlayerController : MonoBehaviour
         if (Time.time >= nextAttackTime)
         {
             attackIsCD = false;
+            playerSkinScript.SetHammerOpacity(1);
         }
         else
         {
             attackIsCD = true;
+            playerSkinScript.SetHammerOpacity(0.5f);
         }
     }
 
