@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 264760811396103270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0, z: 0}
+  m_LocalPosition: {x: 0.87, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7944750134887754718}
@@ -84,7 +84,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7944750135165682164}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.88100004, z: 0}
+  m_LocalPosition: {x: 0.108, y: -0.915, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7944750134887754718}
@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 5683741562430962611}
   - component: {fileID: 4771767619851399193}
   - component: {fileID: 8299801329159407178}
+  - component: {fileID: 8011336986669270134}
   - component: {fileID: 6809023613868175522}
   - component: {fileID: 2682600549178744541}
   - component: {fileID: 2338296994736085340}
@@ -210,7 +211,7 @@ MonoBehaviour:
   ratioAddForce: 0.08
   playerID: 0
   rb: {fileID: 8299801329159407178}
-  bc: {fileID: 6809023613868175522}
+  cc: {fileID: 0}
   jumpState: 3
   nbJump: 2
   maxJumpHigh: 8
@@ -328,6 +329,22 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!70 &8011336986669270134
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8832553990740409711}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.13, y: 0.15}
+  m_Size: {x: 1.44, y: 2.06}
+  m_Direction: 0
 --- !u!61 &6809023613868175522
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -335,7 +352,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8832553990740409711}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -565,7 +582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9001602288957623517}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: 0, z: 0}
+  m_LocalPosition: {x: -0.62, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7944750134887754718}
