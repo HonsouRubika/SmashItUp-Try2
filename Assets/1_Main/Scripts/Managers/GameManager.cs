@@ -433,7 +433,7 @@ public class GameManager : MonoBehaviour
     {
         //4) LoadScene(sc�ne2)
 
-        if (_nbMancheActu < _nbManches && !isTest & gameModeToTest.Length <= 0)
+        if (_nbMancheActu < _nbManches && !isTest && gameModeToTest.Length <= 0 && teamCompoToTest.Length <= 0)
         {
             switch (_selectedGameModes[_nbMancheActu])
             {
@@ -489,7 +489,9 @@ public class GameManager : MonoBehaviour
                 case GameMode.Loup:
                     _nbMancheActu++;
                     //Limitation de GameMode
-                    _teamCompo[_nbManches] = (int)TeamCompo.FFA;
+                    Debug.Log("TeamCompo lenght : " + _teamCompo.Length);
+                    if (teamCompoToTest.Length > 0) teamCompoToTest[_nbMancheActu % teamCompoToTest.Length] = (int)TeamCompo.FFA;
+                    else _teamCompo[_nbMancheActu] = (int)TeamCompo.FFA;
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 3));
                     break;
                 case GameMode.CaptureDeZone:
@@ -499,7 +501,8 @@ public class GameManager : MonoBehaviour
                 case GameMode.Contamination:
                     _nbMancheActu++;
                     //Limitation de GameMode
-                    _teamCompo[_nbManches] = (int)TeamCompo.FFA;
+                    if (teamCompoToTest.Length > 0) teamCompoToTest[_nbMancheActu % teamCompoToTest.Length] = (int)TeamCompo.FFA;
+                    else _teamCompo[_nbMancheActu] = (int)TeamCompo.FFA;
                     SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
                     break;
                 case GameMode.KeepTheFlag:
