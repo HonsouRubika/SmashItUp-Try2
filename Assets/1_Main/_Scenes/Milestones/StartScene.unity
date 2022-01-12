@@ -1962,6 +1962,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &503647902 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1875996384336299553, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+  m_PrefabInstance: {fileID: 824044967}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &503647906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503647902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d34676e8368319a4c9344f3ca289e00f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startGame: {fileID: 8300000, guid: fa4bff39e21824446bbad5bb37571bfb, type: 3}
+  startGameVolume: 0.5
 --- !u!1 &514309197
 GameObject:
   m_ObjectHideFlags: 0
@@ -3678,6 +3697,10 @@ PrefabInstance:
       propertyPath: isDebug
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+      propertyPath: StartGameSoundScript
+      value: 
+      objectReference: {fileID: 503647906}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
 --- !u!114 &824044968 stripped
@@ -3685,7 +3708,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
   m_PrefabInstance: {fileID: 824044967}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 503647902}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b7b0faa761800a48a86927738133065, type: 3}

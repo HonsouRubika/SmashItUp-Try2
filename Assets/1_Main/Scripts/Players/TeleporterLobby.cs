@@ -16,6 +16,8 @@ public class TeleporterLobby : MonoBehaviour
     public bool isDebug;
     public bool isSendingToLobby = false;
 
+    public StartGameSound StartGameSoundScript;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -60,6 +62,10 @@ public class TeleporterLobby : MonoBehaviour
             isGameInitialized = true; //for debug purpuses: play fnct only once
             //doesnt work
             GameManager.Instance.initializeGameModes();
+
+            StartGameSoundScript.GameStarting();
+
+
         }
         else if (((Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized) || isDebug) && isSendingToLobby)
         {
