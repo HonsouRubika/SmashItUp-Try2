@@ -606,7 +606,8 @@ public class KeepTheFlagManager : MonoBehaviour
                     break;
                 case (int)GameManager.TeamCompo.OneVSThree:
                     Debug.Log("1v3");
-                    if (i == 0) playersTeam[i] = 0;
+                    GameManager.Instance.getMVP();
+                    if (i == GameManager.Instance.getMVP()) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
                     break;
                 case (int)GameManager.TeamCompo.TwoVSTwo:
@@ -622,6 +623,7 @@ public class KeepTheFlagManager : MonoBehaviour
         switch (teamCompo)
         {
             case (int)GameManager.TeamCompo.OneVSThree:
+                /*
                 for (int i = 0; i < playersTeam.Length; i++)
                 {
                     int temp = playersTeam[i];
@@ -630,6 +632,7 @@ public class KeepTheFlagManager : MonoBehaviour
                     playersTeam[randomIndex] = temp;
                     //Debug.Log(playersTeam[randomIndex]);
                 }
+                */
                 break;
             case (int)GameManager.TeamCompo.TwoVSTwo:
                 for (int i = 0; i < playersTeam.Length; i++)

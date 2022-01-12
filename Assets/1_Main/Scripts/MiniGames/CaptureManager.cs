@@ -187,22 +187,23 @@ public class CaptureManager : MonoBehaviour
             {
                 case (int)GameManager.TeamCompo.FFA:
                     playersTeam[i] = i;
-                    Debug.Log("1v1v1v1");
+                    //Debug.Log("1v1v1v1");
                     //Debug.Log("In switch FFA");
                     //pas d'�quipe
                     break;
                 case (int)GameManager.TeamCompo.Coop:
-                    Debug.Log("coop");
+                    //Debug.Log("coop");
                     playersTeam[i] = 0;
                     //tous ensemble equipe 0
                     break;
                 case (int)GameManager.TeamCompo.OneVSThree:
-                    Debug.Log("1v3");
-                    if (i == 0) playersTeam[i] = 0;
+                    //Debug.Log("1v3");
+                    GameManager.Instance.getMVP();
+                    if (i == GameManager.Instance.getMVP()) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
                     break;
                 case (int)GameManager.TeamCompo.TwoVSTwo:
-                    Debug.Log("2v2");
+                    //Debug.Log("2v2");
                     if (i < 2) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
                     break;
@@ -214,6 +215,8 @@ public class CaptureManager : MonoBehaviour
         switch (teamCompo)
         {
             case (int)GameManager.TeamCompo.OneVSThree:
+                //No alea since we pick the best player above
+                /*
                 for (int i = 0; i < playersTeam.Length; i++)
                 {
                     int temp = playersTeam[i];
@@ -222,6 +225,7 @@ public class CaptureManager : MonoBehaviour
                     playersTeam[randomIndex] = temp;
                     //Debug.Log(playersTeam[randomIndex]);
                 }
+                */
                 break;
             case (int)GameManager.TeamCompo.TwoVSTwo:
                 for (int i = 0; i < playersTeam.Length; i++)

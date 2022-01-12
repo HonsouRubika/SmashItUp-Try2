@@ -15,7 +15,7 @@ public class Flag : MonoBehaviour
         captureTheFlagRulesScript = GetComponentInParent<CaptureTheFlag_Rules>();
 
        
-            flagSoundScript = GetComponentInChildren<FlagSound>();
+        flagSoundScript = GetComponentInChildren<FlagSound>();
         
     }
 
