@@ -119,6 +119,7 @@ public class PlayerController : MonoBehaviour
     //Paramètre vitesse
     private bool attackDirection = false;
     public float attackRate = 2f;
+    public bool attackIsCD = false;
     public float attackDuration = 0.1f;
     private float attackDurationActu;
     private bool isAttackRunningL, isAttackRunningR;
@@ -143,6 +144,9 @@ public class PlayerController : MonoBehaviour
     //Animation
     private PlayerAnim playerAnimScript;
     [HideInInspector] public Transform playerAnimator;
+
+    //Skin
+    private PlayerSkins playerSkinScript;
 
     //Bonus
     [System.NonSerialized] public bool isUnbreakable = false;
@@ -171,6 +175,8 @@ public class PlayerController : MonoBehaviour
 
         //get anim script
         playerAnimScript = GetComponentInChildren<PlayerAnim>();
+
+        playerSkinScript = GetComponent<PlayerSkins>();
 
         PlayerSoundScript = GetComponentInChildren<PlayerSound>();
     }
@@ -303,6 +309,17 @@ public class PlayerController : MonoBehaviour
             //error ce produit seulement lors de la frame d'apparition de l'entité, on peux l'ignorer
             //l'un des scipt n'est pas attaché
             //Debug.Log("l'un des script n'est pas attaché");
+        }
+
+        if (Time.time >= nextAttackTime)
+        {
+            attackIsCD = false;
+            playerSkinScript.SetHammerOpacity(1);
+        }
+        else
+        {
+            attackIsCD = true;
+            playerSkinScript.SetHammerOpacity(0.5f);
         }
     }
 

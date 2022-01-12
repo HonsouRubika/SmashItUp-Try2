@@ -10,7 +10,7 @@ public class PlayerAnim : MonoBehaviour
     private void Start()
     {
         playerControllerScript = GetComponent<PlayerController>();
-        SetCooldownTimeAnimation(1 / playerControllerScript.attackRate);
+        SetAnimCooldownAttack();
     }
 
     public void Idle(bool idle)
@@ -52,5 +52,10 @@ public class PlayerAnim : MonoBehaviour
     public void SetCooldownTimeAnimation(float cd)
     {
         playerAnimator.SetFloat("cooldownSpeed", cd);
+    }
+
+    public void SetAnimCooldownAttack()
+    {
+        SetCooldownTimeAnimation(1 / playerControllerScript.attackRate);
     }
 }
