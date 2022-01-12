@@ -253,10 +253,13 @@ public class GameManager : MonoBehaviour
     //fonction � call depuis le menu suite au clic() du bouton play;
     public void initializeGameModes()
     {
+        //DEBUG
+        if (gameModeToTest.Length > 0) _nbManches = gameModeToTest.Length;
+        
         _nbMancheActu = 0;
         transitionState = TransitionState.OPEN;
         _selectedGameModes = new int[_nbManches];
-        _teamCompo = new int[_nbManches];
+        _teamCompo = new int[_nbManches];        
 
         _scoreP1 = 0;
         _scoreP2 = 0;
@@ -286,13 +289,18 @@ public class GameManager : MonoBehaviour
             //DEBUG
             if (teamCompoToTest.Length > 0)
             {
-                Debug.Log(teamCompoToTest[i % teamCompoToTest.Length]);
+                //Debug.Log(teamCompoToTest[i % teamCompoToTest.Length]);
                 _teamCompo[i] = (int) teamCompoToTest[i % teamCompoToTest.Length];
             }
             else
             {
                 if (scoreValuesManagerScript.players.Length < 4) _teamCompo[i] = (int)TeamCompo.FFA;
-                else _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
+                else
+                {
+                    //Limitation
+
+                    _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
+                }
             }
 
             //Debug.Log("Team compo : " +_teamCompo[i]);
@@ -489,7 +497,6 @@ public class GameManager : MonoBehaviour
                 case GameMode.Loup:
                     _nbMancheActu++;
                     //Limitation de GameMode
-                    Debug.Log("TeamCompo lenght : " + _teamCompo.Length);
                     if (teamCompoToTest.Length > 0) teamCompoToTest[_nbMancheActu % teamCompoToTest.Length] = (int)TeamCompo.FFA;
                     else _teamCompo[_nbMancheActu] = (int)TeamCompo.FFA;
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 3));
