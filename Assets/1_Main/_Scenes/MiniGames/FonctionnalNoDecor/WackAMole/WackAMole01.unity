@@ -2203,6 +2203,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7124528467330380863, guid: 865051f2edb8b4046b9d5f5173103bef, type: 3}
+      propertyPath: TaupeSoundScript
+      value: 
+      objectReference: {fileID: 1914823919}
+    - target: {fileID: 7124528467330380863, guid: 865051f2edb8b4046b9d5f5173103bef, type: 3}
       propertyPath: tpPoints.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -2224,6 +2228,27 @@ PrefabInstance:
       objectReference: {fileID: 934852987}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 865051f2edb8b4046b9d5f5173103bef, type: 3}
+--- !u!1 &1914823918 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7124528467330380862, guid: 865051f2edb8b4046b9d5f5173103bef, type: 3}
+  m_PrefabInstance: {fileID: 1914823917}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1914823919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914823918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c8da99c3506be45af2bf49be00e43c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taupeSpawn: {fileID: 8300000, guid: 6221b4d320a0f814689572c1dc95c322, type: 3}
+  taupeSpawnVolume: 0.5
+  taupeHit: {fileID: 8300000, guid: bdb841ba79817554e8cef2c34be926ca, type: 3}
+  taupeHitVolume: 0.5
 --- !u!1 &1916163727
 GameObject:
   m_ObjectHideFlags: 0

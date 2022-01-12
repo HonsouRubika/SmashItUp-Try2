@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8370912635110922606}
   - component: {fileID: 8370912635110922603}
   - component: {fileID: 8370912635110922605}
+  - component: {fileID: 4695566649711416237}
   m_Layer: 0
   m_Name: Piece
   m_TagString: Untagged
@@ -102,6 +103,8 @@ MonoBehaviour:
   player1Color: {r: 0.88235295, g: 0.5686275, b: 0.5686275, a: 1}
   player2Color: {r: 0.58431375, g: 0.84313726, b: 0.5254902, a: 1}
   player3Color: {r: 1, g: 0.8156863, b: 0.41960785, a: 1}
+  shineFX: {fileID: 3350204810974561071, guid: cb277d1e36e53c6409c8d25d2319ca4b, type: 3}
+  CoinSoundScript: {fileID: 4695566649711416237}
 --- !u!58 &8370912635110922605
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -118,3 +121,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.56
+--- !u!114 &4695566649711416237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8370912635110922602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756dd3f7b4554b449873465dc3f48f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coin: {fileID: 8300000, guid: dd0dbae817a8175468ba5b47580f5ef6, type: 3}
+  coinVolume: 0.5

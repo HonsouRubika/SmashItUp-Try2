@@ -7,6 +7,8 @@ public class DoorOpening : MonoBehaviour
     public GameObject openDoor;
     public GameObject closeDoor;
 
+    public DoorSound DoorSoundScript;
+
     private void Start()
     {
         openDoor.SetActive(false);
@@ -18,6 +20,8 @@ public class DoorOpening : MonoBehaviour
         {
             openDoor.SetActive(true);
             closeDoor.SetActive(false);
+
+            DoorSoundScript.DoorOpening();
         }
     }
 

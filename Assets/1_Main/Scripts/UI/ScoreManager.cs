@@ -52,6 +52,8 @@ public class ScoreManager : MonoBehaviour
 
     private bool isBonus = false;
 
+    public SpinnerSound SpinnerSoundScript;
+
     private void Start()
     {
         //bonus
@@ -93,6 +95,9 @@ public class ScoreManager : MonoBehaviour
     {
         if (Time.time >= timerBeforeAddPoints && !flagAddedPoints)
         {
+
+            SpinnerSoundScript.ScoreSpinning();
+
             flagAddedPoints = true;
             for (int i = 0; i < playerAddedPoints.Count; i++)
             {
@@ -139,7 +144,9 @@ public class ScoreManager : MonoBehaviour
             P3ScoreNumber.gameObject.SetActive(true);
             P4ScoreNumber.gameObject.SetActive(true);
             rollingBoard.SetActive(false);
-        }
+
+            SpinnerSoundScript.EndSpinning();
+        } 
 
         if (Time.time >= TimerNextMapActu)
         {

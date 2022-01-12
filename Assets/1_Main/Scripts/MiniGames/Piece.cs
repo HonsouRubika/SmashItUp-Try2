@@ -18,6 +18,8 @@ public class Piece : MonoBehaviour
 
     public ParticleSystem shineFX;
 
+    public CoinSound CoinSoundScript;
+
     private void Start()
     {
         collectThePiecesManager = GetComponentInParent<CollectThePiecesManager>();
@@ -61,11 +63,14 @@ public class Piece : MonoBehaviour
             }
 
             DestroyPiece();
+
+            
         }
     }
 
     private void DestroyPiece()
     {
+        CoinSoundScript.PlayerTakeCoin();
         collectThePiecesManager.piecesNumber--;
         CreateShine();
         Destroy(gameObject);

@@ -191,6 +191,7 @@ MonoBehaviour:
   player2Color: {r: 0.58431375, g: 0.84313726, b: 0.5254902, a: 1}
   player3Color: {r: 1, g: 0.8156863, b: 0.41960785, a: 1}
   shineFX: {fileID: 0}
+  CoinSoundScript: {fileID: 0}
 --- !u!212 &33239168
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -310,6 +311,7 @@ MonoBehaviour:
   player2Color: {r: 0.58431375, g: 0.84313726, b: 0.5254902, a: 1}
   player3Color: {r: 1, g: 0.8156863, b: 0.41960785, a: 1}
   shineFX: {fileID: 0}
+  CoinSoundScript: {fileID: 0}
 --- !u!212 &104229580
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -560,6 +562,7 @@ MonoBehaviour:
   player2Color: {r: 0.58431375, g: 0.84313726, b: 0.5254902, a: 1}
   player3Color: {r: 1, g: 0.8156863, b: 0.41960785, a: 1}
   shineFX: {fileID: 0}
+  CoinSoundScript: {fileID: 0}
 --- !u!212 &113329188
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2379,6 +2382,7 @@ MonoBehaviour:
   player2Color: {r: 0.58431375, g: 0.84313726, b: 0.5254902, a: 1}
   player3Color: {r: 1, g: 0.8156863, b: 0.41960785, a: 1}
   shineFX: {fileID: 0}
+  CoinSoundScript: {fileID: 0}
 --- !u!212 &1340107338
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2696,6 +2700,7 @@ MonoBehaviour:
   player2Color: {r: 0.58431375, g: 0.84313726, b: 0.5254902, a: 1}
   player3Color: {r: 1, g: 0.8156863, b: 0.41960785, a: 1}
   shineFX: {fileID: 0}
+  CoinSoundScript: {fileID: 0}
 --- !u!212 &1530499851
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3322,6 +3327,7 @@ MonoBehaviour:
   player2Color: {r: 0.58431375, g: 0.84313726, b: 0.5254902, a: 1}
   player3Color: {r: 1, g: 0.8156863, b: 0.41960785, a: 1}
   shineFX: {fileID: 0}
+  CoinSoundScript: {fileID: 0}
 --- !u!212 &1867769470
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3672,17 +3678,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piece
       objectReference: {fileID: 0}
+    - target: {fileID: 8370912635110922603, guid: 3658ef50df0aa2b4fac9dbfe4d71c103, type: 3}
+      propertyPath: shineFX
+      value: 
+      objectReference: {fileID: 3350204810974561071, guid: cb277d1e36e53c6409c8d25d2319ca4b, type: 3}
     - target: {fileID: 8370912635110922604, guid: 3658ef50df0aa2b4fac9dbfe4d71c103, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8370912635110922604, guid: 3658ef50df0aa2b4fac9dbfe4d71c103, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.38
+      value: 13.6
       objectReference: {fileID: 0}
     - target: {fileID: 8370912635110922604, guid: 3658ef50df0aa2b4fac9dbfe4d71c103, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 8370912635110922604, guid: 3658ef50df0aa2b4fac9dbfe4d71c103, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3737,7 +3747,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3278469494007073902, guid: e14382fb656492741a8fdaf448dd9f97, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3278469494007073902, guid: e14382fb656492741a8fdaf448dd9f97, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3863,7 +3873,7 @@ Transform:
   - {fileID: 33239165}
   - {fileID: 113329185}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2076244061792280260
 PrefabInstance:

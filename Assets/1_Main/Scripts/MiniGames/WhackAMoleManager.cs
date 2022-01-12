@@ -40,6 +40,8 @@ public class WhackAMoleManager : MonoBehaviour
 
     private bool playOneTime = false;
 
+    public TaupeSound TaupeSoundScript;
+
     private void Start()
     {
         //init var
@@ -66,6 +68,9 @@ public class WhackAMoleManager : MonoBehaviour
         for (int i = 0; i < moleAtStart; i++)
         {
             spawnMole();
+
+            TaupeSoundScript.TaupeSpawning();
+
         }
 
         SpawnPlayerRandomly();
@@ -81,6 +86,8 @@ public class WhackAMoleManager : MonoBehaviour
             }
 
             moleDestroyed = 0;
+            
+            TaupeSoundScript.TaupeisHit();
         }*/
 
         if (MoleInScene < moleAtStart)
@@ -88,6 +95,7 @@ public class WhackAMoleManager : MonoBehaviour
             for (int i = MoleInScene; i < moleAtStart; i++)
             {
                 spawnMole();
+                
             }
         }
 
