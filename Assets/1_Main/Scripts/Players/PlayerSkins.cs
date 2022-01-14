@@ -36,6 +36,10 @@ public class PlayerSkins : MonoBehaviour
     public Sprite hammerP3;
     public Sprite hammerP4;
 
+    [Header("hammer color")]
+    public Sprite purpleHammer;
+    public Sprite orangeHammer;
+
     [HideInInspector] private GameObject currentHammer;
     private Color hammerColor;
 
@@ -312,7 +316,7 @@ public class PlayerSkins : MonoBehaviour
         }
     }
 
-    public void SetColorByTeam(string color)
+    public void SetSpriteColorByTeam(string color)
     {
         skinSprites = currentSkin.GetComponentsInChildren<SpriteRenderer>();
         for (int i = 0; i < skinSprites.Length; i++)
@@ -343,9 +347,42 @@ public class PlayerSkins : MonoBehaviour
         }
     }
 
+    public void SetHammerColorByTeam(string color)
+    {
+        switch (color)
+        {
+            case "purple":
+                currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = purpleHammer;
+                break;
+            case "orange":
+                currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = orangeHammer;
+                break;
+            case "default":
+                switch (playerControllerScript.playerID)
+                {
+                    case 0:
+                        currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP1;
+                        break;
+                    case 1:
+                        currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP2;
+                        break;
+                    case 2:
+                        currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP3;
+                        break;
+                    case 3:
+                        currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP4;
+                        break;
+                }
+                break;
+        } 
+    }
+
     public void SetHammerOpacity(float alpha)
     {
         hammerColor.a = alpha;
-        currentHammer.GetComponent<SpriteRenderer>().color = hammerColor;
+        if(currentHammer != null)
+        {
+            currentHammer.GetComponent<SpriteRenderer>().color = hammerColor;
+        }
     }
 }

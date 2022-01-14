@@ -1637,15 +1637,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: isTest
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: _scoreP1
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: _nbManches
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: testSceneName
-      value: ZoneMouvante01
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: isGameModeTest
@@ -1653,35 +1657,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: gameModeToTest.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
-      propertyPath: teamCompoToTest.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
-      propertyPath: gameModeToTest.Array.data[0]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
-      propertyPath: gameModeToTest.Array.data[1]
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
-      propertyPath: gameModeToTest.Array.data[2]
+      propertyPath: teamCompoToTest.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: gameModeToTest.Array.data[0]
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
-      propertyPath: gameModeToTest.Array.data[3]
+      propertyPath: gameModeToTest.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: gameModeToTest.Array.data[2]
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: gameModeToTest.Array.data[3]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: gameModeToTest.Array.data[4]
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: gameModeToTest.Array.data[5]
-      value: 5
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: teamCompoToTest.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: teamCompoToTest.Array.data[1]
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2393110260777838759, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: m_Name

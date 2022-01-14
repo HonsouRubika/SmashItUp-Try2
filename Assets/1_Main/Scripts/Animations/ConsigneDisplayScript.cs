@@ -38,7 +38,7 @@ public class ConsigneDisplayScript : MonoBehaviour
     {
         if (GameManager.Instance.teamCompoToTest.Length > 0)
         {
-            Debug.Log("affichage team compo debug");
+            //Debug.Log("affichage team compo debug");
             switch (GameManager.Instance.teamCompoToTest[GameManager.Instance._nbMancheActu - 1])
             {
                 case GameManager.TeamCompo.OneVSThree:
@@ -76,7 +76,7 @@ public class ConsigneDisplayScript : MonoBehaviour
 
         if (GameManager.Instance.gameModeToTest.Length > 0)
         {
-            Debug.Log("affichage game mode debug");
+            //Debug.Log("affichage game mode debug");
             switch (GameManager.Instance.gameModeToTest[GameManager.Instance._nbMancheActu - 1])
             {
                 case GameManager.GameMode.CaptureTheFlag:
