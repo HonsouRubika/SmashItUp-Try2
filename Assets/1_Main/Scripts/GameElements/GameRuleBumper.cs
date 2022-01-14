@@ -19,6 +19,8 @@ public class GameRuleBumper : MonoBehaviour
     private int playerIDWhoTriggeredButton = 0;
 
     public ParticleSystem Button;
+
+    public ButtonSound ButtonSoundScript;
     
 private void Start()
 {
@@ -55,7 +57,10 @@ private void Start()
         ChangeGameRules();
         TriggerButtonAnim(true);
 
-            CreateButtonDust();
+        CreateButtonDust();
+
+        ButtonSoundScript.ButtonPressed();
+
     }
 }
 

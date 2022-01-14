@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 8.01}
+  m_AnchoredPosition: {x: 0, y: 7.31}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &2037009116
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -398,6 +398,7 @@ GameObject:
   - component: {fileID: 8028704688862193320}
   - component: {fileID: 8028704688862193322}
   - component: {fileID: 8028704688862193323}
+  - component: {fileID: 1710412567}
   m_Layer: 0
   m_Name: Behavior
   m_TagString: Untagged
@@ -433,10 +434,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 678feff7ff2d6494a8565d2b3a63cd3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bumperRule: 1
+  bumperRule: 0
   rangeNbManches: 05000000070000000a000000
   rangeDureeManche: 1e0000002d0000003c000000
   Button: {fileID: 2013236877}
+  ButtonSoundScript: {fileID: 1710412567}
 --- !u!61 &8028704688862193323
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -463,6 +465,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.683487, y: 0.94094276}
   m_EdgeRadius: 0
+--- !u!114 &1710412567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028704688862193321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2c14578f001183478aaf10f2caaa3dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 8300000, guid: ecb4e90b16ec72a48b34d3bdeaa6da22, type: 3}
+  buttonVolume: 1
 --- !u!1 &8028704688964917274
 GameObject:
   m_ObjectHideFlags: 0

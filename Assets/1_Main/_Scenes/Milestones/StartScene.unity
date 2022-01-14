@@ -1065,6 +1065,7 @@ GameObject:
   - component: {fileID: 238544080}
   - component: {fileID: 238544082}
   - component: {fileID: 238544081}
+  - component: {fileID: 238544083}
   m_Layer: 11
   m_Name: Door
   m_TagString: Door
@@ -1128,6 +1129,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openDoor: {fileID: 1301780657}
   closeDoor: {fileID: 1567431956}
+  DoorSoundScript: {fileID: 238544083}
+--- !u!114 &238544083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238544079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc50eaee793ea446a3d3859cdde30c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: {fileID: 8300000, guid: 1b00498f2ddab2f43a2e720f25f8c440, type: 3}
+  doorVolume: 0.3
 --- !u!1 &254393832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,6 +1962,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &503647902 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1875996384336299553, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+  m_PrefabInstance: {fileID: 824044967}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &503647906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503647902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d34676e8368319a4c9344f3ca289e00f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startGame: {fileID: 8300000, guid: fa4bff39e21824446bbad5bb37571bfb, type: 3}
+  startGameVolume: 0.5
 --- !u!1 &514309197
 GameObject:
   m_ObjectHideFlags: 0
@@ -3662,6 +3697,10 @@ PrefabInstance:
       propertyPath: isDebug
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+      propertyPath: StartGameSoundScript
+      value: 
+      objectReference: {fileID: 503647906}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
 --- !u!114 &824044968 stripped
@@ -3669,7 +3708,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
   m_PrefabInstance: {fileID: 824044967}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 503647902}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b7b0faa761800a48a86927738133065, type: 3}
@@ -9001,33 +9040,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2037009115, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
-      propertyPath: m_fontStyle
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2037009116, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 2037009117, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 7.31
-      objectReference: {fileID: 0}
     - target: {fileID: 106109835885126146, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
       propertyPath: m_Name
       value: ButtonChangeRules
-      objectReference: {fileID: 0}
-    - target: {fileID: 106109835885126146, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8028704688428825488, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8028704688862193322, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
-      propertyPath: bumperRule
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8704041514611318403, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
       propertyPath: m_RootOrder

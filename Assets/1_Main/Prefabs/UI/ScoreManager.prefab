@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2136642632372695374}
   - component: {fileID: 2136642632372695375}
+  - component: {fileID: 6025642974920432903}
   m_Layer: 0
   m_Name: ScoreManager
   m_TagString: Untagged
@@ -46,11 +47,10 @@ MonoBehaviour:
   TimerNextMap: 4
   waitBeforeAddPoints: 1
   waitBeforeUpdateScore: 2
-  playerScore:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  P1ScoreNumber: {fileID: 0}
+  P2ScoreNumber: {fileID: 0}
+  P3ScoreNumber: {fileID: 0}
+  P4ScoreNumber: {fileID: 0}
   playerAddedPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -61,3 +61,22 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  rollingBoard: {fileID: 0}
+  scoreBoard: []
+  SpinnerSoundScript: {fileID: 6025642974920432903}
+--- !u!114 &6025642974920432903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136642632372695368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f3688cd95d7e04f9c810794137fb22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinner: {fileID: 8300000, guid: ccd550a5cef8fd0478978ac854405531, type: 3}
+  spinnerVolume: 1
+  endSpinning: {fileID: 8300000, guid: 6f4b01cb6a583504398d0857b8e5ca0d, type: 3}
+  endSpinningVolume: 1
