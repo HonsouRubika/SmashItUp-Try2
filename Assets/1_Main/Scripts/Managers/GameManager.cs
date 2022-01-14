@@ -298,12 +298,24 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     //Limitation
+                    int nextTeamCompo = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
 
-                    _teamCompo[i] = Random.Range(0, (int)TeamCompo.Coop); //on retire la coop des Compo d'equipe possible
+                    if (i > 0) //pas de limitation pour le premier mini jeu choisi (logique)
+                    {
+
+                        //on s'assure que le prochain team compo choisi soit diff�rent du premier
+                        while (nextTeamCompo == _teamCompo[i-1])
+                        {
+                            nextTeamCompo = Random.Range(0, (int)TeamCompo.Coop);
+                        }
+
+                    }
+                    _teamCompo[i] = nextTeamCompo;
                 }
             }
 
-            //Debug.Log("Team compo : " +_teamCompo[i]);
+            //Debug.Log("Team compo : ");
+            //Debug.Log(_teamCompo[i]);
             //Debug.Log(i + " : " +_selectedGameModes[i]);
             //Debug.Log(nextGameMode + " : " +GameModeKind[nextGameMode]);
         }
