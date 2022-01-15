@@ -69,7 +69,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
 
         for (int i = 0; i < playersTeam.Length; i++)
         {
-            players[i].GetComponent<PlayerSkins>().SetColorByTeam("default");
+            players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("default");
         }
 
         playOneTime = true;
@@ -173,10 +173,10 @@ public class CaptureTheFlag_Rules : MonoBehaviour
                 switch (playersTeam[i])
                 {
                     case 0:
-                        players[i].GetComponent<PlayerSkins>().SetColorByTeam("blue");
+                        players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("purple");
                         break;
                     case 1:
-                        players[i].GetComponent<PlayerSkins>().SetColorByTeam("red");
+                        players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("orange");
                         break;
                 }
             }

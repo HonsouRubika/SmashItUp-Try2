@@ -581,6 +581,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1290055986}
     - target: {fileID: -2188783968860176596, guid: daab09a9625952043a4ab97a283fc69a, type: 3}
+      propertyPath: crownOfWinner
+      value: 
+      objectReference: {fileID: 7107762863945688204, guid: e0ddf19c144f06246900de46bebcb841, type: 3}
+    - target: {fileID: -2188783968860176596, guid: daab09a9625952043a4ab97a283fc69a, type: 3}
       propertyPath: teleporterLobby
       value: 
       objectReference: {fileID: 1546741747}
@@ -592,6 +596,10 @@ PrefabInstance:
       propertyPath: teleporterRestartGame
       value: 
       objectReference: {fileID: 227180251}
+    - target: {fileID: -2188783968860176596, guid: daab09a9625952043a4ab97a283fc69a, type: 3}
+      propertyPath: flagAttachedPlayerPosY
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5363275386316663937, guid: daab09a9625952043a4ab97a283fc69a, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -646,6 +654,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daab09a9625952043a4ab97a283fc69a, type: 3}
+--- !u!114 &263487672 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -2188783968860176596, guid: daab09a9625952043a4ab97a283fc69a, type: 3}
+  m_PrefabInstance: {fileID: 263487671}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c7bc164206f68d4a9e49efa3b4664c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &265485865
 GameObject:
   m_ObjectHideFlags: 0
@@ -2544,6 +2563,10 @@ PrefabInstance:
       propertyPath: isSendingToLobby
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+      propertyPath: playerManagerScript
+      value: 
+      objectReference: {fileID: 263487672}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
 --- !u!114 &1546741747 stripped
