@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,6 +12,10 @@ public class PauseMenu : MonoBehaviour
     public GameObject optionsMenu;
     public GameObject audioMenu;
     public GameObject videoMenu;
+
+    [Space]
+    public InputSystemUIInputModule eventSystemKeyboard;
+    public InputSystemUIInputModule eventSystemController;
 
     private uint playerThatPausedID;
 
@@ -23,25 +29,32 @@ public class PauseMenu : MonoBehaviour
 
     public void GamePause(uint playerID, InputAction.CallbackContext context)
     {
-        if (context.control == Gamepad.current.startButton)
-        {
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
-        }
-        else if (context.control == Keyboard.current.escapeKey)
-        {
-            EventSystem.current.SetSelectedGameObject(null);
-        }
-
         if (!GameManager.Instance.isPaused)
         {
             Pause();
             playerThatPausedID = playerID;
+
+            if (context.control == Gamepad.current.startButton)
+            {
+                eventSystemController.gameObject.SetActive(true);
+                eventSystemKeyboard.gameObject.SetActive(false);
+
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
+            }
+            else if (context.control == Keyboard.current.escapeKey)
+            {
+                eventSystemKeyboard.gameObject.SetActive(true);
+                eventSystemController.gameObject.SetActive(false);
+
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
+            }
         }
         else if (playerThatPausedID == playerID)
         {
             Resume();
-        } 
+        }
     }
 
     private void Pause()

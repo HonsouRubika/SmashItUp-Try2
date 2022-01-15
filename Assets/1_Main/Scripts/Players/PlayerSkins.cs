@@ -144,7 +144,7 @@ public class PlayerSkins : MonoBehaviour
 
     public void ChangeSkinPlus(InputAction.CallbackContext context)
     {
-        if (context.started && isInArea)
+        if (context.started && isInArea && !GameManager.Instance.isPaused)
         {
             skinNumber++;
             if (skinNumber >= skins.Count)
@@ -202,7 +202,7 @@ public class PlayerSkins : MonoBehaviour
 
     public void ChangeSkinMinus(InputAction.CallbackContext context)
     {
-            if (context.started && isInArea)
+        if (context.started && isInArea && !GameManager.Instance.isPaused)
             {
             skinNumber--;
             if (skinNumber < 0)

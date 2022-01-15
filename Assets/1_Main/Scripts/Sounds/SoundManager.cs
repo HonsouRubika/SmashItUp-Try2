@@ -99,6 +99,25 @@ public class SoundManager : MonoBehaviour
     {
         voiceDefaultVolume = vol;
     }
+
+    void Update()
+    {
+        if (musicSource.clip != null)
+        {
+            musicSource.volume = musicDefaultVolume * globalDefaultVolume;
+        }
+
+        if (sfxSource.clip != null)
+        {
+            sfxSource.volume = sfxDefaultVolume * globalDefaultVolume;
+        }
+
+        if (voiceSource.clip != null)
+        {
+            voiceSource.volume = voiceDefaultVolume * globalDefaultVolume;
+        }
+    }
+
     #endregion
 
     #region FunctionsPlaySound

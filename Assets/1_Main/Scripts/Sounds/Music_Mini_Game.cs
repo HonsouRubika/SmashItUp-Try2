@@ -45,7 +45,7 @@ public class Music_Mini_Game : MonoBehaviour
 
     private void Update()
     {
-        if (loopMusic && !SoundManager.Instance.musicSource.isPlaying)
+        if (loopMusic && !SoundManager.Instance.musicSource.isPlaying && !GameManager.Instance.isPaused)
         {
             SoundManager.Instance.PlayMusic(currentMusicMiniGame, musicMiniGameVolume);
         }
