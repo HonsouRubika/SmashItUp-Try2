@@ -17,6 +17,7 @@ public class TeleporterLobby : MonoBehaviour
     public bool isSendingToLobby = false;
 
     public StartGameSound StartGameSoundScript;
+    public PlayerManagerScript playerManagerScript;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -73,7 +74,19 @@ public class TeleporterLobby : MonoBehaviour
 
             isTimerInitiated = false;
             isGameInitialized = true;
-            SceneManager.LoadScene("Test"); //return to lobby
+
+            if (playerManagerScript != null)
+            {
+                if (playerManagerScript.crownInstances.Length != 0)
+                {
+                    for (int i = 0; i < playerManagerScript.crownInstances.Length; i++)
+                    {
+                        Destroy(playerManagerScript.crownInstances[i]);
+                    }                  
+                }
+            }
+
+            SceneManager.LoadScene("StartScene"); //return to lobby
         }
     }
 }
