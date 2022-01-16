@@ -79,26 +79,7 @@ public class SoundManager : MonoBehaviour
     }
     #endregion
 
-    #region SetVolume
-    public void SetVolumeGlobal(float vol)
-    {
-        globalDefaultVolume = vol;
-    }
-
-    public void SetVolumeSFX(float vol)
-    {
-        sfxDefaultVolume = vol;
-    }
-
-    public void SetVolumeMusic(float vol)
-    {
-        musicDefaultVolume = vol;
-    }
-
-    public void SetVolumeVoice(float vol)
-    {
-        voiceDefaultVolume = vol;
-    }
+    #region UpdateVolume
 
     void Update()
     {

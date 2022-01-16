@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -17,6 +18,15 @@ public class PauseMenu : MonoBehaviour
     public InputSystemUIInputModule eventSystemKeyboard;
     public InputSystemUIInputModule eventSystemController;
 
+    [Header("Settings values")]
+    [Range(0, 1)] public float globalVolume;
+    [Range(0, 1)] public float musicVolume;
+    [Range(0, 1)] public float sfxVolume;
+
+    public bool fullScren;
+    public int resolution;
+    public int quality;
+
     private uint playerThatPausedID;
 
     private void Start()
@@ -25,6 +35,8 @@ public class PauseMenu : MonoBehaviour
         optionsMenu.SetActive(false);
         audioMenu.SetActive(false);
         videoMenu.SetActive(false);
+
+        LoadSettings();
     }
 
     public void GamePause(uint playerID, InputAction.CallbackContext context)
@@ -84,11 +96,13 @@ public class PauseMenu : MonoBehaviour
 
     public void SetFullScreen(bool isFullScreen)
     {
+        fullScren = isFullScreen;
         Screen.fullScreen = isFullScreen;
     }
 
     public void SetResolution(int resolutionIndex)
-    {     
+    {
+        resolution = resolutionIndex;
         switch (resolutionIndex)
         {
             case 0:
@@ -111,6 +125,7 @@ public class PauseMenu : MonoBehaviour
 
     public void SetQuality(int qualityIndex)
     {
+        quality = qualityIndex;
         switch (qualityIndex)
         {
             case 0:
@@ -123,5 +138,76 @@ public class PauseMenu : MonoBehaviour
                 QualitySettings.SetQualityLevel(0);
                 break;
         }
+    }
+
+    public void SetVolumeGlobal(float vol)
+    {
+        globalVolume = vol;
+        SoundManager.Instance.globalDefaultVolume = vol;
+    }
+
+    public void SetVolumeSFX(float vol)
+    {
+        sfxVolume = vol;
+        SoundManager.Instance.sfxDefaultVolume = vol;
+    }
+
+    public void SetVolumeMusic(float vol)
+    {
+        musicVolume = vol;
+        SoundManager.Instance.musicDefaultVolume = vol;
+    }
+
+    public void SaveSettings()
+    {
+        SaveSystem.SaveSettings(this);
+    }
+
+    private void LoadSettings()
+    {
+        SettingsData data = SaveSystem.LoadPauseSettings();
+
+        if (data != null)
+        {
+            globalVolume = data.globalVolume;
+            musicVolume = data.musicVolume;
+            sfxVolume = data.sfxVolume;
+
+            fullScren = data.fullScren;
+            resolution = data.resolution;
+            quality = data.quality;
+
+            UpdateSettingsValue();
+        }
+        else
+        {
+            globalVolume = audioMenu.transform.GetChild(0).GetComponent<Slider>().value;
+            musicVolume = audioMenu.transform.GetChild(1).GetComponent<Slider>().value;
+            sfxVolume = audioMenu.transform.GetChild(2).GetComponent<Slider>().value;
+            fullScren = videoMenu.transform.GetChild(1).GetComponent<Toggle>().isOn;
+            resolution = videoMenu.transform.GetChild(3).GetComponent<TMP_Dropdown>().value;
+            quality = videoMenu.transform.GetChild(5).GetComponent<TMP_Dropdown>().value;
+        }
+    }
+
+    private void UpdateSettingsValue()
+    {
+        audioMenu.transform.GetChild(0).GetComponent<Slider>().value = globalVolume;
+        SetVolumeGlobal(globalVolume);
+
+        audioMenu.transform.GetChild(1).GetComponent<Slider>().value = musicVolume;
+        SetVolumeMusic(musicVolume);
+
+        audioMenu.transform.GetChild(2).GetComponent<Slider>().value = sfxVolume;
+        SetVolumeSFX(sfxVolume);
+
+        videoMenu.transform.GetChild(1).GetComponent<Toggle>().isOn = fullScren;
+        SetFullScreen(fullScren);
+
+        videoMenu.transform.GetChild(3).GetComponent<TMP_Dropdown>().value = resolution;
+        SetResolution(resolution);
+
+        videoMenu.transform.GetChild(5).GetComponent<TMP_Dropdown>().value = quality;
+        SetQuality(quality);
     }
 }
