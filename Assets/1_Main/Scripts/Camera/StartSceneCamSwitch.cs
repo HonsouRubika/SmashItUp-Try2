@@ -6,9 +6,11 @@ public class StartSceneCamSwitch : MonoBehaviour
 {
     public GameObject MainCamera;
     public GameObject FocusSkins;
+
+    private bool isOut = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == "Player" && !isOut)
         {
             MainCamera.SetActive(false);
             FocusSkins.SetActive(true);
@@ -20,6 +22,8 @@ public class StartSceneCamSwitch : MonoBehaviour
         {
             MainCamera.SetActive(true);
             FocusSkins.SetActive(false);
+
+            isOut = true;
         }
     }
 }
