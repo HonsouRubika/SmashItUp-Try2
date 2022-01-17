@@ -376,6 +376,61 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 12.744415, y: 19.432217}
   m_EdgeRadius: 0
+--- !u!1 &194823553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 194823555}
+  - component: {fileID: 194823554}
+  m_Layer: 0
+  m_Name: SortPlayers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &194823554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194823553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677650ecf3af4db44a52dd2b5f1c71ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawner1: {fileID: 391086699}
+  spawner2: {fileID: 2027456060}
+  spawner3: {fileID: 1618175398}
+  spawner4: {fileID: 1290055986}
+  destroyHammerOnHub: 0
+  destroyCrownOnHub: 1
+  crownOfWinner: {fileID: 7107762863945688204, guid: e0ddf19c144f06246900de46bebcb841, type: 3}
+  crownInstances: []
+  flagAttachedPlayerPosY: 3
+  players: []
+  finalPlayerScore: 
+  winnerEqualityCase: 0
+--- !u!4 &194823555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194823553}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &227180250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -455,6 +510,14 @@ PrefabInstance:
       propertyPath: isDebug
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+      propertyPath: sortPlayersScript
+      value: 
+      objectReference: {fileID: 194823554}
+    - target: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+      propertyPath: StartGameSoundScript
+      value: 
+      objectReference: {fileID: 227180253}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
 --- !u!114 &227180251 stripped
@@ -462,12 +525,31 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
   m_PrefabInstance: {fileID: 227180250}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 227180252}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b7b0faa761800a48a86927738133065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &227180252 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1875996384336299553, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+  m_PrefabInstance: {fileID: 227180250}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &227180253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227180252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d34676e8368319a4c9344f3ca289e00f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startGame: {fileID: 8300000, guid: fa4bff39e21824446bbad5bb37571bfb, type: 3}
+  startGameVolume: 0.5
 --- !u!1 &242635460
 GameObject:
   m_ObjectHideFlags: 0
@@ -2563,6 +2645,10 @@ PrefabInstance:
       propertyPath: isSendingToLobby
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+      propertyPath: sortPlayersScript
+      value: 
+      objectReference: {fileID: 194823554}
     - target: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
       propertyPath: playerManagerScript
       value: 

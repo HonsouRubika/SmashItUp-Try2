@@ -1127,9 +1127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa09b3793b4197468f0e4b8f775e167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openDoor: {fileID: 1301780657}
-  closeDoor: {fileID: 1567431956}
-  DoorSoundScript: {fileID: 238544083}
 --- !u!114 &238544083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1635,6 +1632,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: gameModeToTest.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: teamCompoToTest.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: gameModeToTest.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2393110260777838759, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: m_Name
       value: GameManager

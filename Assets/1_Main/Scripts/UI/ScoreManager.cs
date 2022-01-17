@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -44,7 +45,6 @@ public class ScoreManager : MonoBehaviour
     public List<GameObject> playerAddedPoints;
     private List<TextMeshProUGUI> playerAddedPointsText;
 
-    private GameObject[] players;
     public List<Transform> tpPoints = new List<Transform>();
 
     public GameObject rollingBoard;
@@ -54,8 +54,47 @@ public class ScoreManager : MonoBehaviour
 
     public SpinnerSound SpinnerSoundScript;
 
+    [Header("Crowns")]
+    public SpriteRenderer crownP1;
+    public SpriteRenderer crownP2;
+    public SpriteRenderer crownP3;
+    public SpriteRenderer crownP4;
+
+    [Space]
+    public Sprite crownGold;
+    public Sprite crownSilver;
+    public Sprite crownBronze;
+
+    private int[] scorePlayers;
+
+    private GameObject[] playersUnsorted;
+    private GameObject[] players;
+    private int[] playersPosition;
+
+    //Equality
+    public EqualityCase equalityCase = EqualityCase.None;
+
+    private bool allScoreZero = true;
+
+
     private void Start()
     {
+        playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
+        players = playersUnsorted.OrderBy(go => go.name).ToArray();
+
+        scorePlayers = new int[players.Length];
+        playersPosition = new int[players.Length];
+        for (int i = 0; i < players.Length; i++)
+        {
+            playersPosition[i] = i;
+        }
+
+        //crowns
+        crownP1.sprite = null;
+        crownP2.sprite = null;
+        crownP3.sprite = null;
+        crownP4.sprite = null;
+
         //bonus
         if (GameManager.Instance._nbMancheActu == GameManager.Instance.BonusRound)
         {
@@ -95,7 +134,6 @@ public class ScoreManager : MonoBehaviour
     {
         if (Time.time >= timerBeforeAddPoints && !flagAddedPoints)
         {
-
             SpinnerSoundScript.ScoreSpinning();
 
             flagAddedPoints = true;
@@ -133,6 +171,7 @@ public class ScoreManager : MonoBehaviour
 
             GameManager.Instance.UpdatePlayerScore();
             DisplayPlayersScore();
+            SortPlayers();
 
             for (int i = 0; i < playerAddedPoints.Count; i++)
             {
@@ -173,6 +212,7 @@ public class ScoreManager : MonoBehaviour
 
                 FillPlayerScoreValues();
                 DisplayPlayersScore();
+                SortPlayers();
 
                 playerAddedPointsText = new List<TextMeshProUGUI>(new TextMeshProUGUI[playerAddedPoints.Count]);
                 for (int i = 0; i < playerAddedPoints.Count; i++)
@@ -271,11 +311,324 @@ public class ScoreManager : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
-
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < playersUnsorted.Length; i++)
         {
-            players[i].transform.position = tpPoints[i].position;
+            playersUnsorted[i].transform.position = tpPoints[i].position;
         }
+    }
+
+    private void SetCrownToPlayers(int player, Sprite crown)
+    {
+        switch (player)
+        {
+            case 1:
+                crownP1.sprite = crown;
+                break;
+            case 2:
+                crownP2.sprite = crown;
+                break;
+            case 3:
+                crownP3.sprite = crown;
+                break;
+            case 4:
+                crownP4.sprite = crown;
+                break;
+        }
+    }
+
+    private void SortPlayers()
+    {
+        switch (scorePlayers.Length)
+        {
+            case 2:
+                scorePlayers[0] = GameManager.Instance.getScorePlayer(1);
+                scorePlayers[1] = GameManager.Instance.getScorePlayer(2);
+                break;
+            case 3:
+                scorePlayers[0] = GameManager.Instance.getScorePlayer(1);
+                scorePlayers[1] = GameManager.Instance.getScorePlayer(2);
+                scorePlayers[2] = GameManager.Instance.getScorePlayer(3);
+                break;
+            case 4:
+                scorePlayers[0] = GameManager.Instance.getScorePlayer(1);
+                scorePlayers[1] = GameManager.Instance.getScorePlayer(2);
+                scorePlayers[2] = GameManager.Instance.getScorePlayer(3);
+                scorePlayers[3] = GameManager.Instance.getScorePlayer(4);
+                break;
+        }
+
+        System.Array.Sort(scorePlayers, playersPosition);
+
+        CheckIfEquality();
+
+        switch (playersPosition.Length)
+        {
+            case 4:
+                switch (equalityCase)
+                {
+                    case EqualityCase.None:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, null);
+                        break;
+                    case EqualityCase.AllEqualDifferentZero:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownGold);
+                        break;
+                    case EqualityCase.FirstSecondAndThirdFourth:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
+                        break;
+                    case EqualityCase.FirstSecondThird:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
+                        break;
+                    case EqualityCase.SecondThirdFourth:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
+                        break;
+                    case EqualityCase.FirstSecond:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
+                        break;
+                    case EqualityCase.SecondThird:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
+                        break;
+                    case EqualityCase.ThirdFourth:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
+                        break;
+                }
+                break;
+            case 3:
+                switch (equalityCase)
+                {
+                    case EqualityCase.None:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
+                        break;
+                    case EqualityCase.AllEqualDifferentZero:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
+                        break;
+                    case EqualityCase.FirstSecond:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        break;
+                    case EqualityCase.SecondThird:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        break;
+                }
+                break;
+            case 2:
+                switch (equalityCase)
+                {
+                    case EqualityCase.None:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        break;
+                    case EqualityCase.AllEqualDifferentZero:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        break;
+                }
+                break;
+        }
+    }
+
+    private void CheckIfEquality()
+    {
+        //Check if no players have points
+        for (int i = 0; i < scorePlayers.Length; i++)
+        {
+            if (scorePlayers[i] != 0)
+            {
+                allScoreZero = false;
+                break;
+            }
+        }
+
+        //Check if equality between players
+        for (int i = 0; i < scorePlayers.Length; i++)
+        {
+            if (scorePlayers.Length == 4)
+            {
+                if (i == 3)
+                {
+                    if (scorePlayers[i] == scorePlayers[i - 1])
+                    {
+                        //equality between 1st & 2nd
+                        equalityCase = EqualityCase.FirstSecond;
+                        //Debug.Log("equality between 1st & 2nd");
+                    }
+                }
+                else if (i == 2)
+                {
+                    if (scorePlayers[i] == scorePlayers[i - 1])
+                    {
+                        //equality between 2st & 3rd
+                        equalityCase = EqualityCase.SecondThird;
+                        //Debug.Log("equality between 2st & 3rd");
+                    }
+                }
+                else if (i == 1)
+                {
+                    if (scorePlayers[i] == scorePlayers[i + 2] && scorePlayers[i] == scorePlayers[i - 1])
+                    {
+                        if (allScoreZero)
+                        {
+                            //equality between all players
+                            equalityCase = EqualityCase.AllEqual;
+                            //Debug.Log("equality between all players");
+                            break;
+                        }
+                        else
+                        {
+                            //equality between all players different from 0
+                            equalityCase = EqualityCase.AllEqualDifferentZero;
+                            //Debug.Log("equality between all players different from 0");
+                            break;
+                        }
+                    }
+                    else if (scorePlayers[i] == scorePlayers[i + 2])
+                    {
+                        //equality between 1st & 2nd & 3rd
+                        equalityCase = EqualityCase.FirstSecondThird;
+                        //Debug.Log("equality between 1st & 2nd & 3rd");
+                        break;
+                    }
+                    else if (scorePlayers[i] == scorePlayers[i - 1] && scorePlayers[i] == scorePlayers[i + 1])
+                    {
+                        //equality between 2st & 3rd & 4th
+                        equalityCase = EqualityCase.SecondThirdFourth;
+                        //Debug.Log("equality between 2st & 3rd & 4th");
+                        break;
+                    }
+                    else if (scorePlayers[i] == scorePlayers[i - 1])
+                    {
+                        if (scorePlayers[i + 2] == scorePlayers[(i + 2) - 1])
+                        {
+                            //equality between 1st & 2nd and 3rd & 4th
+                            equalityCase = EqualityCase.FirstSecondAndThirdFourth;
+                            //Debug.Log("equality between 1st & 2nd and 3rd & 4th");
+                            break;
+                        }
+                        else
+                        {
+                            //equality between 3rd & 4th
+                            equalityCase = EqualityCase.ThirdFourth;
+                            //Debug.Log("equality between 3rd & 4th");
+                        }
+                    }
+                }
+                else
+                {
+                    //no equality
+                    equalityCase = EqualityCase.None;
+                }
+            }
+            else if (scorePlayers.Length == 3)
+            {
+                if (i == 1)
+                {
+                    if (scorePlayers[i] == scorePlayers[i - 1] && scorePlayers[i] == scorePlayers[i + 1])
+                    {
+                        if (allScoreZero)
+                        {
+                            //equality between all players
+                            equalityCase = EqualityCase.AllEqual;
+                            //Debug.Log("equality between all players");
+                            break;
+                        }
+                        else
+                        {
+                            //equality between all players different from 0
+                            equalityCase = EqualityCase.AllEqualDifferentZero;
+                            //Debug.Log("equality between all players different from 0");
+                            break;
+                        }
+                    }
+                    else if (scorePlayers[i] == scorePlayers[i + 1])
+                    {
+                        //equality between 1st & 2nd
+                        equalityCase = EqualityCase.FirstSecond;
+                        //Debug.Log("equality between 1st & 2nd");
+                    }
+                    else if (scorePlayers[i] == scorePlayers[i - 1])
+                    {
+                        //equality between 2st & 3rd
+                        equalityCase = EqualityCase.SecondThird;
+                        //Debug.Log("equality between 2st & 3rd");
+                    }
+                }
+                else
+                {
+                    //no equality
+                    equalityCase = EqualityCase.None;
+                }
+            }
+            else if (scorePlayers.Length == 2)
+            {
+                if (i == 1)
+                {
+                    if (scorePlayers[i] == scorePlayers[i - 1])
+                    {
+                        if (allScoreZero)
+                        {
+                            //equality between all players
+                            equalityCase = EqualityCase.AllEqual;
+                            //Debug.Log("equality between all players");
+                            break;
+                        }
+                        else
+                        {
+                            //equality between all players different from 0
+                            equalityCase = EqualityCase.AllEqualDifferentZero;
+                            //Debug.Log("equality between all players different from 0");
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    //no equality
+                    equalityCase = EqualityCase.None;
+                }
+            }
+        }
+    }
+
+    public enum EqualityCase
+    {
+        None,
+        AllEqual,
+        AllEqualDifferentZero,
+        FirstSecondThird,
+        SecondThirdFourth,
+        FirstSecond,
+        ThirdFourth,
+        SecondThird,
+        FirstSecondAndThirdFourth
     }
 }

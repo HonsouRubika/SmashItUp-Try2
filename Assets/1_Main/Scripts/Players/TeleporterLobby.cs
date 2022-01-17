@@ -17,7 +17,7 @@ public class TeleporterLobby : MonoBehaviour
     public bool isSendingToLobby = false;
 
     public StartGameSound StartGameSoundScript;
-    public PlayerManagerScript playerManagerScript;
+    public SortPlayersAfterGame sortPlayersScript;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -61,12 +61,13 @@ public class TeleporterLobby : MonoBehaviour
 
             isTimerInitiated = false;
             isGameInitialized = true; //for debug purpuses: play fnct only once
+
+            DestroyRewards();
+
             //doesnt work
             GameManager.Instance.initializeGameModes();
 
             StartGameSoundScript.GameStarting();
-
-
         }
         else if (((Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized) || isDebug) && isSendingToLobby)
         {
@@ -75,18 +76,27 @@ public class TeleporterLobby : MonoBehaviour
             isTimerInitiated = false;
             isGameInitialized = true;
 
-            if (playerManagerScript != null)
-            {
-                if (playerManagerScript.crownInstances.Length != 0)
-                {
-                    for (int i = 0; i < playerManagerScript.crownInstances.Length; i++)
-                    {
-                        Destroy(playerManagerScript.crownInstances[i]);
-                    }                  
-                }
-            }
+            DestroyRewards();
 
             SceneManager.LoadScene("StartScene"); //return to lobby
+        }
+    }
+
+    private void DestroyRewards()
+    {
+        if (sortPlayersScript != null)
+        {
+            if (sortPlayersScript.destroyCrownOnHub)
+            {
+                for (int i = 0; i < sortPlayersScript.crownInstances.Length; i++)
+                {
+                    Destroy(sortPlayersScript.crownInstances[i]);
+                }
+            }
+            if (sortPlayersScript.destroyHammerOnHub)
+            {
+                sortPlayersScript.players[sortPlayersScript.players.Length - 1].GetComponent<PlayerSkins>().SetHammerColorByTeam("reset");
+            }
         }
     }
 }
