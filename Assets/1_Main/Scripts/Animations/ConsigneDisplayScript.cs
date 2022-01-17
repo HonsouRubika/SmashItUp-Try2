@@ -42,15 +42,15 @@ public class ConsigneDisplayScript : MonoBehaviour
             switch (GameManager.Instance.teamCompoToTest[GameManager.Instance._nbMancheActu - 1])
             {
                 case GameManager.TeamCompo.OneVSThree:
-                    Debug.Log("Team compo : 1v3");
+                    //Debug.Log("Team compo : 1v3");
                     Team_1v3.SetActive(true);
                     break;
                 case GameManager.TeamCompo.TwoVSTwo:
-                    Debug.Log("Team compo : 2v2");
+                    //Debug.Log("Team compo : 2v2");
                     Team_2v2.SetActive(true);
                     break;
                 case GameManager.TeamCompo.FFA:
-                    Debug.Log("Team compo : ffa");
+                    //Debug.Log("Team compo : ffa");
                     Team_FFA.SetActive(true);
                     break;
             }
@@ -80,32 +80,32 @@ public class ConsigneDisplayScript : MonoBehaviour
             switch (GameManager.Instance.gameModeToTest[GameManager.Instance._nbMancheActu - 1])
             {
                 case GameManager.GameMode.CaptureTheFlag:
-                    Debug.Log("CaptureTheFlag");
+                    //Debug.Log("CaptureTheFlag");
                     Rules_CatchTheCrown.SetActive(true);
                     Illustration_CatchTheCrown.SetActive(true);
                     break;
                 case GameManager.GameMode.CaptureDeZone:
-                    Debug.Log("CaptureDeZone");
+                    //Debug.Log("CaptureDeZone");
                     Rules_StayInTheLight.SetActive(true);
                     Illustration_StayInTheLight.SetActive(true);
                     break;
                 case GameManager.GameMode.CaptureDeZoneMouvante:
-                    Debug.Log("CaptureDeZoneMouvante");
+                    //Debug.Log("CaptureDeZoneMouvante");
                     Rules_StayInTheLight.SetActive(true);
                     Illustration_StayInTheLight.SetActive(true);
                     break;
                 case GameManager.GameMode.Contamination:
-                    Debug.Log("Contamination");
+                    //Debug.Log("Contamination");
                     Rules_Contamination.SetActive(true);
                     Illustration_Contamination.SetActive(true);
                     break;
                 case GameManager.GameMode.KeepTheFlag:
-                    Debug.Log("KeepTheFlag");
+                    //Debug.Log("KeepTheFlag");
                     Rules_KeepTheCrown.SetActive(true);
                     Illustration_KeepTheCrown.SetActive(true);
                     break;
                 case GameManager.GameMode.Loup:
-                    Debug.Log("Loup");
+                    //Debug.Log("Loup");
                     Rules_DontTouchTheWolf.SetActive(true);
                     Illustration_DontTouchTheWolf.SetActive(true);
                     break;
