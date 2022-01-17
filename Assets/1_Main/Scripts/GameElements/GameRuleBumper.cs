@@ -22,21 +22,21 @@ public class GameRuleBumper : MonoBehaviour
 
     public ButtonSound ButtonSoundScript;
     
-private void Start()
-{
-    buttonAnimator = GetComponentInParent<Animator>();
-    textRules = transform.parent.GetComponentInChildren<TextMeshPro>();
-
-    switch (bumperRule)
+    private void Start()
     {
-        case RULE.nbManches:
-            textRules.text = rangeNbManches[iterator].ToString();
-            break;
-        case RULE.dureeManche:
-            textRules.text = rangeDureeManche[iterator].ToString();
-            break;
+        buttonAnimator = GetComponentInParent<Animator>();
+        textRules = transform.parent.GetComponentInChildren<TextMeshPro>();
+
+        switch (bumperRule)
+        {
+            case RULE.nbManches:
+                textRules.text = rangeNbManches[iterator].ToString();
+                break;
+            case RULE.dureeManche:
+                textRules.text = rangeDureeManche[iterator].ToString();
+                break;
+        }
     }
-}
 
     //Test FX 
     void CreateButtonDust()
@@ -64,43 +64,43 @@ private void Start()
     }
 }
 
-private void ChangeGameRules()
-{
-    iterator++;
-
-    switch (bumperRule)
+    private void ChangeGameRules()
     {
-        case RULE.nbManches:
-            if (iterator == rangeNbManches.Length) iterator = 0;
-            GameManager.Instance._nbManches = rangeNbManches[iterator];
-            textRules.text = rangeNbManches[iterator].ToString();
-            break;
-        case RULE.dureeManche:
-            if (iterator == rangeDureeManche.Length) iterator = 0;
-            GameManager.Instance.durationMiniGame = rangeDureeManche[iterator];
-            textRules.text = rangeDureeManche[iterator].ToString();
-            break;
+        iterator++;
+
+        switch (bumperRule)
+        {
+            case RULE.nbManches:
+                if (iterator == rangeNbManches.Length) iterator = 0;
+                GameManager.Instance._nbManches = rangeNbManches[iterator];
+                textRules.text = rangeNbManches[iterator].ToString();
+                break;
+            case RULE.dureeManche:
+                if (iterator == rangeDureeManche.Length) iterator = 0;
+                GameManager.Instance.durationMiniGame = rangeDureeManche[iterator];
+                textRules.text = rangeDureeManche[iterator].ToString();
+                break;
+        }
     }
-}
 
-private void TriggerButtonAnim(bool press)
-{
-    buttonAnimator.SetBool("ButtonPress", press);
-}
-
-private void OnTriggerExit2D(Collider2D collision)
-{
-    if (collision.CompareTag("Player") && collision.GetComponent<PlayerController>().playerID == playerIDWhoTriggeredButton)
+    private void TriggerButtonAnim(bool press)
     {
-        isActive = false;
-        TriggerButtonAnim(false);
+        buttonAnimator.SetBool("ButtonPress", press);
     }
-}
 
-public enum RULE
-{
-    nbManches,
-    dureeManche
-}
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && collision.GetComponent<PlayerController>().playerID == playerIDWhoTriggeredButton)
+        {
+            isActive = false;
+            TriggerButtonAnim(false);
+        }
+    }
+
+    public enum RULE
+    {
+        nbManches,
+        dureeManche
+    }
 
 }
