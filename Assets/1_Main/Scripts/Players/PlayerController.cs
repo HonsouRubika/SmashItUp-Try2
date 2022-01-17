@@ -133,6 +133,9 @@ public class PlayerController : MonoBehaviour
     public bool isFrozen = false;
     public float blockStunTime = 0.5f;
     private float blockStunTimeActu;
+    private float invicibilityTimeActu;
+    public float invicibilityTime = 0.5f;
+
 
     [System.NonSerialized] public float lastTimeAttackHit = 0;
     [System.NonSerialized] public float lastTimeGotHit = 0;
@@ -200,17 +203,20 @@ public class PlayerController : MonoBehaviour
                 {
                     computeJump();
                 }
+                //long jump
                 else if (context.canceled && transform.position.y >= (minJumpHeigh + startJumpPosition))
                 {
                     shaitanerieDUnityActu = Time.time; //ne touche pas à ça
                     //le perso descend car il relache la touche de saut
-                    startJumpPosition = transform.position.y - maxJumpHigh;
+                    //startJumpPosition = transform.position.y - maxJumpHigh;
+                    isJumpFallSetted = true;
                 }
+                //small jump
                 else if (context.canceled && transform.position.y < (minJumpHeigh + startJumpPosition))
                 {
                     //dois s'arreter au minimum de saut
                     shaitanerieDUnityActu = Time.time;
-                    startJumpPosition = transform.position.y - maxJumpHigh + minJumpHeigh;
+                    startJumpPosition = startJumpPosition - maxJumpHigh;
                 }
             }
         }
@@ -786,10 +792,9 @@ public class PlayerController : MonoBehaviour
 
             if (rb.velocity.y <= 0 && !isWallGripStarted && !isJumpFallSetted)
             {
-                //le perso chute
-                //vitesse de chute constante
-                jumpState = JumpState.Falling;
-                rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed);
+                //le perso chute ou touche le plafond
+                isJumpFallSetted = true;
+                //ici
             }
             /*
             else if (rb.velocity.y <= movementJumpSpeed-startCurveVelocity && isJumpFallSetted)
@@ -1061,21 +1066,32 @@ public class PlayerController : MonoBehaviour
 
     void applyAttack(float velocityX, float velocityY)
     {
-        //Action (anim)
-        actionState = Action.Projected;
+        //invicibility check
+        if (Time.time > invicibilityTimeActu)
+        {
+            //Action (anim)
+            actionState = Action.Projected;
 
-        //Stun
-        stunTimeActu = stunTime + Time.time;
+            //Stun
+            stunTimeActu = stunTime + Time.time;
 
-        //var pour mini jeu
-        lastTimeGotHit = Time.time;
+            //Invicibility
+            invicibilityTimeActu = invicibilityTime + Time.time;
 
-        //gestion distance max
-        isBeingProjected = true;
-        startProjectedPostion = transform.position.x;
+            //var pour mini jeu
+            lastTimeGotHit = Time.time;
 
-        //Velocit�
-        rb.velocity = new Vector2(velocityX, velocityY);
+            //gestion distance max
+            isBeingProjected = true;
+            startProjectedPostion = transform.position.x;
+
+            //Velocit�
+            rb.velocity = new Vector2(velocityX, velocityY);
+        }
+        else
+        {
+            Debug.Log("attack blocked cause player is invicible");
+        }
     }
     void applyBlock(float velocityX, float velocityY)
     {
