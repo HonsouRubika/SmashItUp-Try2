@@ -516,7 +516,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130057463}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 10, y: 32, z: 410.5266}
+  m_LocalPosition: {x: 10, y: 36, z: 410.5266}
   m_LocalScale: {x: 1, y: 20, z: 1}
   m_Children:
   - {fileID: 546673686}
@@ -562,7 +562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleporterDirection: 0
-  transformAddedOnExit: {x: 0, y: 3}
+  transformAddedOnExit: {x: 0, y: 5}
   otherTP: {fileID: 2139478000}
 --- !u!4 &150521053 stripped
 Transform:
@@ -1236,7 +1236,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 589883685}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -33, y: -28.9, z: 410.5266}
+  m_LocalPosition: {x: -33, y: -31.4, z: 410.5266}
   m_LocalScale: {x: 1, y: 20, z: 1}
   m_Children:
   - {fileID: 80141213}
@@ -1282,7 +1282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleporterDirection: 0
-  transformAddedOnExit: {x: 0, y: -3}
+  transformAddedOnExit: {x: 0, y: -5}
   otherTP: {fileID: 1779782177}
 --- !u!1001 &641475394
 PrefabInstance:
@@ -1925,9 +1925,25 @@ PrefabInstance:
       propertyPath: musicMiniGame
       value: 
       objectReference: {fileID: 8300000, guid: 7cabeffce370a8d4cbd83e6a6144f51f, type: 3}
+    - target: {fileID: 3278469494007073903, guid: e14382fb656492741a8fdaf448dd9f97, type: 3}
+      propertyPath: musicMiniGame30s
+      value: 
+      objectReference: {fileID: 8300000, guid: 46af307e767bcad4c87ae7f1dd92f487, type: 3}
+    - target: {fileID: 3278469494007073903, guid: e14382fb656492741a8fdaf448dd9f97, type: 3}
+      propertyPath: musicMiniGame45s
+      value: 
+      objectReference: {fileID: 8300000, guid: 9f948b788b56b6d429100130201c0185, type: 3}
+    - target: {fileID: 3278469494007073903, guid: e14382fb656492741a8fdaf448dd9f97, type: 3}
+      propertyPath: musicMiniGame60s
+      value: 
+      objectReference: {fileID: 8300000, guid: b1471ce2e1f9fee4bbc9e68b4011b4e2, type: 3}
     - target: {fileID: 3278469494007073904, guid: e14382fb656492741a8fdaf448dd9f97, type: 3}
       propertyPath: m_Name
       value: Music
+      objectReference: {fileID: 0}
+    - target: {fileID: 3278469494007073904, guid: e14382fb656492741a8fdaf448dd9f97, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e14382fb656492741a8fdaf448dd9f97, type: 3}
@@ -2856,7 +2872,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1779782176}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -33, y: 32, z: 410.5266}
+  m_LocalPosition: {x: -33, y: 36, z: 410.5266}
   m_LocalScale: {x: 1, y: 20, z: 1}
   m_Children:
   - {fileID: 309225624}
@@ -2902,7 +2918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleporterDirection: 0
-  transformAddedOnExit: {x: 0, y: 3}
+  transformAddedOnExit: {x: 0, y: 5}
   otherTP: {fileID: 589883686}
 --- !u!4 &1871674582 stripped
 Transform:
@@ -3664,7 +3680,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139477999}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 10, y: -28.9, z: 410.5266}
+  m_LocalPosition: {x: 10, y: -31.4, z: 410.5266}
   m_LocalScale: {x: 1, y: 20, z: 1}
   m_Children:
   - {fileID: 1503808577}
@@ -3710,5 +3726,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleporterDirection: 0
-  transformAddedOnExit: {x: 0, y: -3}
+  transformAddedOnExit: {x: 0, y: -5}
   otherTP: {fileID: 130057464}
