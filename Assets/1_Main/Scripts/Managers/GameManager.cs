@@ -320,6 +320,8 @@ public class GameManager : MonoBehaviour
             //Debug.Log(nextGameMode + " : " +GameModeKind[nextGameMode]);
         }
 
+        bonusManagerScript.enabled = true;
+
         //on passe � la premi�re manche
         if (isTest && gameModeToTest.Length <= 0) TestMap();
         else if (gameModeToTest.Length > 0) TestGameMode();

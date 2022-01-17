@@ -7,6 +7,9 @@ public class BonusManager : MonoBehaviour
     private int player;
     private int selectedBonus;
 
+    private int[] playersScore;
+    private int[] playerPosition;
+
     /// <summary>
     /// TO:
     /// - attendre de jouer une certaine manche (disons la 3eme sur 5 manches)
@@ -16,7 +19,14 @@ public class BonusManager : MonoBehaviour
 
     void Start()
     {
-        
+        playersScore = new int[GameManager.Instance.getNbPlayer()];
+        playerPosition = new int[GameManager.Instance.getNbPlayer()];
+        for (int i = 0; i < playerPosition.Length; i++)
+        {
+            playerPosition[i] = i;
+        }
+
+        OrderPlayers();
     }
 
     public void ApplyBonusInGame()
@@ -109,6 +119,31 @@ public class BonusManager : MonoBehaviour
         }
 
         //GameManager.Instance.UpdatePlayerScore();
+    }
+
+    void OrderPlayers()
+    {
+        for (int i = 0; i < GameManager.Instance.getNbPlayer(); i++)
+        {
+            playersScore[i] = GameManager.Instance.getScorePlayer(i);
+        }
+
+        System.Array.Sort(playersScore, playerPosition);
+
+        //la liste playerPosition contient le rank des joueurs dans un ordre décroissant
+        //ex: playersScore = [2,1,4,3]
+        /*
+         * 1er = 2
+         * 2eme = 1
+         * 3eme = 4
+         * 4eme = 3
+        */
+
+        //debug log
+        //for (int i = 0; i < playersScore.Length; i++)
+        //{
+        //    Debug.Log(playerPosition[i]);
+        //}
     }
 
 
