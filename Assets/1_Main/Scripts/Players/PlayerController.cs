@@ -134,6 +134,9 @@ public class PlayerController : MonoBehaviour
     public float blockStunTime = 0.5f;
     private float blockStunTimeActu;
 
+    [Header("LD")]
+    public float trampolineJump = 3;
+
     [System.NonSerialized] public float lastTimeAttackHit = 0;
     [System.NonSerialized] public float lastTimeGotHit = 0;
 
@@ -1001,6 +1004,33 @@ public class PlayerController : MonoBehaviour
         */
 
         //Debug.Log(" 2) JumpState : " + jumpState + ", coyoteTimeCheck : " + coyoteTimeCheck);
+    }
+
+    public void computeTrampolineJump()
+    {
+        //block le check du ground : ne pas toucher
+        shaitanerieDUnityActu = Time.time + shaitanerieDUnity;
+
+        //Debug.Log("Jump");
+        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        actionState = Action.Jump;
+        startJumpPosition = transform.position.y;
+        //anim
+        if (playerAnimScript != null)
+        {
+            playerAnimScript.Jumping(true);
+            playerAnimScript.WallSlide(false);
+            PlayerSoundScript.WallRide(false);
+            PlayerSoundScript.Jump();
+        }
+
+        //jump or walljump
+        isJump = true;
+        isWallJump = false;
+
+        //Jump Curve
+        //jumpMovementActu = 1;
+        isJumpFallSetted = false;
     }
 
     void computeAttack()
