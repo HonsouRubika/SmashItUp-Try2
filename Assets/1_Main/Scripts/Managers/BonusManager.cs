@@ -110,12 +110,101 @@ public class BonusManager : MonoBehaviour
         //on apply l'effet sur le joueur (le temps de la game)
         switch (selectedBonus)
         {
+            // WorstPlayer
+            case (int)BonusEndGame.BackInTheGame:
+                if (GameManager.Instance.getScorePlayer(playersScore[3]) < GameManager.Instance.getScorePlayer(playersScore[0]) + 30) // si la différence entre le dernier et le premier joueur est inférieur à 30.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[3], 10); // add 10 points au pire joueur
+                }   
+                break;
+
+            case (int)BonusEndGame.TakeThis:
+                if (GameManager.Instance.getScorePlayer(playersScore[3]) < GameManager.Instance.getScorePlayer(playersScore[0]) + 50) // si la différence entre le dernier et le premier joueur est inférieur à 50.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[3], 20); // add 20 points au pire joueur
+                }
+                break;
+
+            case (int)BonusEndGame.InExtremis:
+                if (GameManager.Instance.getScorePlayer(playersScore[3]) > GameManager.Instance.getScorePlayer(playersScore[0]) + 50) // si la différence entre le dernier et le premier joueur est supérieur à 50.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[3], 30); // add 30 points au pire joueur
+                }
+                break;
+
             case (int)BonusEndGame.Duffer:
-                GameManager.Instance.addSpecificScorePoints(worstPlayer, 75); // add 75 points au pire joueur
+                if (GameManager.Instance.getScorePlayer(playersScore[3]) < 10) // si le score du dernier joueur est inférieur à 10.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[3], 40); // add 50 points au pire joueur
+                }
                 break;
+
+            // Third Player
+            case (int)BonusEndGame.StayInTheWake:
+                if (GameManager.Instance.getScorePlayer(playersScore[2]) < GameManager.Instance.getScorePlayer(playersScore[1]) + 30) // si la différence entre le troisième et le deuxième joueur est inférieur à 30.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[2], 20); // add 20 points au troisième joueur
+                }
+                break;
+
+            case (int)BonusEndGame.BackOnTheTop:
+                if (GameManager.Instance.getScorePlayer(playersScore[2]) < GameManager.Instance.getScorePlayer(playersScore[1]) + 50) // si la différence entre le troisième et le deuxième joueur est inférieur à 50.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[2], 50); // add 50 points au troisième joueur
+                }
+                break;
+
+            case (int)BonusEndGame.ImStillHere:
+                if (GameManager.Instance.getScorePlayer(playersScore[2]) > GameManager.Instance.getScorePlayer(playersScore[1]) + 50) // si la différence entre le troisième et le deuxième joueur est supérieur à 50.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[2], 70); // add 70 points au troisième joueur
+                }
+                break;
+
+            // Second Player 
+            case (int)BonusEndGame.StayInMyBack:
+                if (GameManager.Instance.getScorePlayer(playersScore[1]) < GameManager.Instance.getScorePlayer(playersScore[2]) + 10) // si la différence entre le deuxième et le troisème joueur est inférieur à 10.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[1], 10); // add 10 points au deuxième joueur
+                }
+                break;
+
+            case (int)BonusEndGame.RoadToTheFirstPlace:
+                if (GameManager.Instance.getScorePlayer(playersScore[1]) < GameManager.Instance.getScorePlayer(playersScore[0]) + 50) // si la différence entre le deuxième et le premier joueur est inférieur à 50.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[1], 30); // add 30 points au deuxième joueur
+                }
+                break;
+
+            case (int)BonusEndGame.IDontLikeDolphins:
+                if (GameManager.Instance.getScorePlayer(playersScore[1]) > GameManager.Instance.getScorePlayer(playersScore[0]) + 50) // si la différence entre le deuxième et le premier joueur est supérieur à 50.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[1], 70); // add 70 points au deuxième joueur
+                }
+                break;
+
+            // Best Player
             case (int)BonusEndGame.Bootlicker:
-                GameManager.Instance.addSpecificScorePoints(bestPlayer, -25); // on retire 25 points au meilleur joueur
+                if (GameManager.Instance.getScorePlayer(playersScore[0]) > GameManager.Instance.getScorePlayer(playersScore[0]) + 70) // si la différence entre le premier et le deuxième joueur est supérieur à 70.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[0], -30); // enlève 30 points au meilleur joueur
+                }
                 break;
+
+            case (int)BonusEndGame.ForeverBefore:
+                if (GameManager.Instance.getScorePlayer(playersScore[0]) < GameManager.Instance.getScorePlayer(playersScore[0]) + 50) // si la différence entre le premier et le deuxième joueur est inférieur à 50.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[0], 10); // add 10 points au meilleur joueur
+                }
+                break;
+
+            case (int)BonusEndGame.ItsStartingToGetHot:
+                if (GameManager.Instance.getScorePlayer(playersScore[0]) < GameManager.Instance.getScorePlayer(playersScore[0]) + 30) // si la différence entre le premier et le deuxième joueur est inférieur à 30.
+                {
+                    GameManager.Instance.addSpecificScorePoints(playersScore[0], 20); // add 20 points au meilleur joueur
+                }
+                break;
+
         }
 
         //GameManager.Instance.UpdatePlayerScore();
@@ -155,9 +244,28 @@ public class BonusManager : MonoBehaviour
     }
 
     enum BonusEndGame
-    {
+    {     
+        // WorstPlayer
         Duffer,
+        BackInTheGame,
+        TakeThis,
+        InExtremis,
+
+        // Third Player
+        StayInTheWake,
+        BackOnTheTop,
+        ImStillHere,
+
+        // Second Player
+        StayInMyBack,
+        RoadToTheFirstPlace,
+        IDontLikeDolphins,
+
+        // Best Player
         Bootlicker,
+        ForeverBefore,
+        ItsStartingToGetHot,
+
         total
     }
 }
