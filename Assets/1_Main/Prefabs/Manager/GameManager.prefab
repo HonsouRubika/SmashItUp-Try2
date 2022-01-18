@@ -73,8 +73,8 @@ MonoBehaviour:
   countdown: {fileID: 3046519167518943636, guid: 16fb4deaaa6dcfc488e12a8082f4d5cd, type: 3}
   isTest: 1
   testSceneName: 
-  gameModeToTest: 02000000
-  teamCompoToTest: 00000000
+  gameModeToTest: 0200000002000000
+  teamCompoToTest: 0200000000000000
   GameModeKind: 000000000100000002000000020000000100000000000000
 --- !u!114 &7698355189767790221
 MonoBehaviour:
@@ -185,6 +185,14 @@ PrefabInstance:
       propertyPath: globalVolume
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2040467285607542758, guid: 4a17a89bf371a7c4d8aa56e08cbd439a, type: 3}
+      propertyPath: eventSystemKeyboard
+      value: 
+      objectReference: {fileID: 4136970904735167643}
+    - target: {fileID: 2040467285607542758, guid: 4a17a89bf371a7c4d8aa56e08cbd439a, type: 3}
+      propertyPath: eventSystemController
+      value: 
+      objectReference: {fileID: 8983498656562553121}
     - target: {fileID: 2040467285607542759, guid: 4a17a89bf371a7c4d8aa56e08cbd439a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -505,6 +513,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4eca32753ba08d4ea98892fe6afead8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4136970904735167643 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4136970904678935604, guid: 4a17a89bf371a7c4d8aa56e08cbd439a, type: 3}
+  m_PrefabInstance: {fileID: 90052783}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8983498656562553121 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8983498656648935822, guid: 4a17a89bf371a7c4d8aa56e08cbd439a, type: 3}
+  m_PrefabInstance: {fileID: 90052783}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2164746140518048386

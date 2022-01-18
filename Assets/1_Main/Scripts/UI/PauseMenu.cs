@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
@@ -15,8 +12,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject videoMenu;
 
     [Space]
-    public InputSystemUIInputModule eventSystemKeyboard;
-    public InputSystemUIInputModule eventSystemController;
+    public EventSystem eventSystemKeyboard;
+    public EventSystem eventSystemController;
 
     [Header("Settings values")]
     [Range(0, 1)] public float globalVolume;
@@ -46,21 +43,17 @@ public class PauseMenu : MonoBehaviour
             Pause();
             playerThatPausedID = playerID;
 
-            if (context.control == Gamepad.current.startButton)
-            {
-                eventSystemController.gameObject.SetActive(true);
-                eventSystemKeyboard.gameObject.SetActive(false);
-
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
-            }
-            else if (context.control == Keyboard.current.escapeKey)
+            if (context.control == Keyboard.current.escapeKey)
             {
                 eventSystemKeyboard.gameObject.SetActive(true);
-                eventSystemController.gameObject.SetActive(false);
-
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
+                eventSystemKeyboard.SetSelectedGameObject(null);
+                eventSystemKeyboard.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
+            }
+            else
+            {
+                eventSystemController.gameObject.SetActive(true);
+                eventSystemController.SetSelectedGameObject(null);
+                eventSystemController.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
             }
         }
         else if (playerThatPausedID == playerID)
@@ -80,6 +73,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        eventSystemController.gameObject.SetActive(false);
+        eventSystemKeyboard.gameObject.SetActive(false);
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
         audioMenu.SetActive(false);
