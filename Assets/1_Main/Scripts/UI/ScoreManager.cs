@@ -65,11 +65,11 @@ public class ScoreManager : MonoBehaviour
     public Sprite crownSilver;
     public Sprite crownBronze;
 
-    private int[] scorePlayers;
+    public int[] scorePlayers;
 
     private GameObject[] playersUnsorted;
     private GameObject[] players;
-    private int[] playersPosition;
+    public int[] playersPosition;
 
     //Equality
     public EqualityCase equalityCase = EqualityCase.None;
@@ -109,6 +109,7 @@ public class ScoreManager : MonoBehaviour
         SpawnPlayer();
         FillPlayerScoreValues();
         DisplayPlayersScore();
+        SortPlayers();
 
         playerAddedPointsText = new List<TextMeshProUGUI>(new TextMeshProUGUI[playerAddedPoints.Count]);
         for (int i = 0; i < playerAddedPoints.Count; i++)
@@ -338,6 +339,7 @@ public class ScoreManager : MonoBehaviour
 
     private void SortPlayers()
     {
+        //VIDER LE TABLEAU SCORE PLAYERS
         switch (scorePlayers.Length)
         {
             case 2:
@@ -355,6 +357,11 @@ public class ScoreManager : MonoBehaviour
                 scorePlayers[2] = GameManager.Instance.getScorePlayer(3);
                 scorePlayers[3] = GameManager.Instance.getScorePlayer(4);
                 break;
+        }
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            playersPosition[i] = i;
         }
 
         System.Array.Sort(scorePlayers, playersPosition);
@@ -581,11 +588,11 @@ public class ScoreManager : MonoBehaviour
                         equalityCase = EqualityCase.SecondThird;
                         //Debug.Log("equality between 2st & 3rd");
                     }
-                }
-                else
-                {
-                    //no equality
-                    equalityCase = EqualityCase.None;
+                    else
+                    {
+                        //no equality
+                        equalityCase = EqualityCase.None;
+                    }
                 }
             }
             else if (scorePlayers.Length == 2)
@@ -609,11 +616,11 @@ public class ScoreManager : MonoBehaviour
                             break;
                         }
                     }
-                }
-                else
-                {
-                    //no equality
-                    equalityCase = EqualityCase.None;
+                    else
+                    {
+                        //no equality
+                        equalityCase = EqualityCase.None;
+                    }
                 }
             }
         }

@@ -35,11 +35,14 @@ public class PlayerSkins : MonoBehaviour
     public Sprite hammerP2;
     public Sprite hammerP3;
     public Sprite hammerP4;
+    public Sprite goldenHammerP1;
+    public Sprite goldenHammerP2;
+    public Sprite goldenHammerP3;
+    public Sprite goldenHammerP4;
 
-    [Header("hammer color")]
+    [Header("Team hammer")]
     public Sprite purpleHammer;
     public Sprite orangeHammer;
-    public Sprite goldenHammer;
     public Sprite goldenPurpleHammer;
     public Sprite goldenOrangeHammer;
 
@@ -355,7 +358,10 @@ public class PlayerSkins : MonoBehaviour
         switch (color)
         {
             case "purple":
-                if (currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammer)
+                if (currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP1
+                    && currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP2
+                    && currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP3
+                    && currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP4)
                 {
                     currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = purpleHammer;
                 }
@@ -365,7 +371,10 @@ public class PlayerSkins : MonoBehaviour
                 }
                 break;
             case "orange":
-                if (currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammer)
+                if (currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP1
+                    && currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP2
+                    && currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP3
+                    && currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP4)
                 {
                     currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = orangeHammer;
                 }
@@ -375,10 +384,29 @@ public class PlayerSkins : MonoBehaviour
                 }
                 break;
             case "golden":
-                currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammer;
+                switch (playerControllerScript.playerID)
+                {
+                    case 0:
+                        currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP1;
+                        break;
+                    case 1:
+                        currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP2;
+                        break;
+                    case 2:
+                        currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP3;
+                        break;
+                    case 3:
+                        currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP4;
+                        break;
+                }
                 break;
             case "default":
-                if (currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammer)
+                if (currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP1
+                    && currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP2
+                    && currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP3
+                    && currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenHammerP4
+                    && currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenPurpleHammer
+                    && currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite != goldenOrangeHammer)
                 {
                     switch (playerControllerScript.playerID)
                     {
@@ -393,6 +421,25 @@ public class PlayerSkins : MonoBehaviour
                             break;
                         case 3:
                             currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP4;
+                            break;
+                    }
+                }
+                else if (currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite == goldenPurpleHammer
+                    || currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite == goldenOrangeHammer)
+                {
+                    switch (playerControllerScript.playerID)
+                    {
+                        case 0:
+                            currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP1;
+                            break;
+                        case 1:
+                            currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP2;
+                            break;
+                        case 2:
+                            currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP3;
+                            break;
+                        case 3:
+                            currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP4;
                             break;
                     }
                 }
