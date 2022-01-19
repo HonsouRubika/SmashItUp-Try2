@@ -245,6 +245,7 @@ public class GameManager : MonoBehaviour
                 didTransitionStarted = false;
                 //start minigame timer
                 GameObject.Find("--UI--").GetComponent<Timer>().StartTimer();
+                //GameObject.Find("Music").GetComponent<Music_Mini_Game>().StartMusic();
 
             }
         }
@@ -487,12 +488,12 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
                     SceneManager.LoadScene("ZoneMouvante0" + Random.Range(1, 3));
                     break;
-                /*
-                case (int)GameMode.DestrucBox:
+                
+                case (int)GameMode.CollectTheCoin:
                     _nbMancheActu++;
-                    SceneManager.LoadScene("DestrucCaisse0" + Random.Range(1, 3));
+                    SceneManager.LoadScene("Coins0" + Random.Range(1, 3));
                     break;
-                */
+                
                 default:
                     Debug.Log("Error, GameMode not found or taken out");
                     break;
@@ -534,12 +535,12 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
                     SceneManager.LoadScene("ZoneMouvante0" + Random.Range(1, 3));
                     break;
-                /*
-                case (int)GameMode.DestrucBox:
+                
+                case GameMode.CollectTheCoin:
                     _nbMancheActu++;
-                    SceneManager.LoadScene("DestrucCaisse0" + Random.Range(1, 3));
+                    SceneManager.LoadScene("Coins0" + Random.Range(1, 3));
                     break;
-                */
+                
                 default:
                     Debug.Log("Error, GameMode not found or taken out");
                     break;
@@ -756,7 +757,7 @@ public class GameManager : MonoBehaviour
         Loup,
         CaptureDeZone,
         CaptureDeZoneMouvante,
-        //DestrucBox,
+        CollectTheCoin,
         Contamination,
         KeepTheFlag,
         total //egal au nombre d'�l�ment dans l'enum

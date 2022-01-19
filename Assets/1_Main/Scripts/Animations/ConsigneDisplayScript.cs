@@ -109,6 +109,11 @@ public class ConsigneDisplayScript : MonoBehaviour
                     Rules_DontTouchTheWolf.SetActive(true);
                     Illustration_DontTouchTheWolf.SetActive(true);
                     break;
+                case GameManager.GameMode.CollectTheCoin:
+                    //Debug.Log("Loup");
+                    Rules_Coins.SetActive(true);
+                    Illustration_Coins.SetActive(true);
+                    break;
                 default:
                     Debug.LogWarning("GameMode inconnu : Ajouter un case; GameMode : " + GameManager.Instance.GetGameModeActu());
                     break;
@@ -141,7 +146,11 @@ public class ConsigneDisplayScript : MonoBehaviour
                     break;
                 case (int)GameManager.GameMode.Loup:
                     Rules_DontTouchTheWolf.SetActive(true);
-                    Rules_DontTouchTheWolf.SetActive(true);
+                    Illustration_DontTouchTheWolf.SetActive(true);
+                    break;
+                case (int)GameManager.GameMode.CollectTheCoin:
+                    Rules_Coins.SetActive(true);
+                    Illustration_Coins.SetActive(true);
                     break;
                 default:
                     Debug.LogWarning("GameMode inconnu : Ajouter un case; GameMode : " + GameManager.Instance.GetGameModeActu());

@@ -40,6 +40,11 @@ public class Music_Mini_Game : MonoBehaviour
             }
         }
 
+        StartMusic();
+    }
+
+    public void StartMusic()
+    {
         SoundManager.Instance.PlayMusic(currentMusicMiniGame, musicMiniGameVolume);
     }
 
