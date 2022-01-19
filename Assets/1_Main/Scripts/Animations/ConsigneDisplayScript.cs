@@ -17,7 +17,7 @@ public class ConsigneDisplayScript : MonoBehaviour
     public GameObject Rules_KeepTheCrown;
     public GameObject Rules_MineTheCristal;
     public GameObject Rules_StayInTheLight;
-    public GameObject Rules_WackAMole;
+    public GameObject Rules_WhackAMole;
 
     public GameObject Illustration_CatchTheCrown;
     public GameObject Illustration_Coins;
@@ -26,7 +26,7 @@ public class ConsigneDisplayScript : MonoBehaviour
     public GameObject Illustration_KeepTheCrown;
     public GameObject Illustration_MineTheCristal;
     public GameObject Illustration_StayInTheLight;
-    public GameObject Illustration_WackAMole;
+    public GameObject Illustration_WhackAMole;
 
 
     private void Awake()
@@ -110,14 +110,18 @@ public class ConsigneDisplayScript : MonoBehaviour
                     Illustration_DontTouchTheWolf.SetActive(true);
                     break;
                 case GameManager.GameMode.CollectTheCoin:
-                    //Debug.Log("Loup");
+                    //Debug.Log("CollectTheCoin");
                     Rules_Coins.SetActive(true);
                     Illustration_Coins.SetActive(true);
+                    break;
+                case GameManager.GameMode.WhackAMole:
+                    //Debug.Log("WhackAMole");
+                    Rules_WhackAMole.SetActive(true);
+                    Illustration_WhackAMole.SetActive(true);
                     break;
                 default:
                     Debug.LogWarning("GameMode inconnu : Ajouter un case; GameMode : " + GameManager.Instance.GetGameModeActu());
                     break;
-
             }
         }
         else
@@ -151,6 +155,10 @@ public class ConsigneDisplayScript : MonoBehaviour
                 case (int)GameManager.GameMode.CollectTheCoin:
                     Rules_Coins.SetActive(true);
                     Illustration_Coins.SetActive(true);
+                    break;
+                case (int)GameManager.GameMode.WhackAMole:
+                    Rules_WhackAMole.SetActive(true);
+                    Illustration_WhackAMole.SetActive(true);
                     break;
                 default:
                     Debug.LogWarning("GameMode inconnu : Ajouter un case; GameMode : " + GameManager.Instance.GetGameModeActu());

@@ -28,7 +28,7 @@ public class CheckPlayerIsClose : MonoBehaviour
         pos = transform.position;
     }
 
-    private void FixedUpdate()
+    /*private void FixedUpdate()
     {
         playerCollider = Physics2D.OverlapBox(pos, new Vector2(moleColliderBoundsX, moleColliderBoundsY), 0f, playerLayer);
     }
@@ -43,5 +43,5 @@ public class CheckPlayerIsClose : MonoBehaviour
         {
             playerIsClose = false;
         }
-    }
+    }*/
 }

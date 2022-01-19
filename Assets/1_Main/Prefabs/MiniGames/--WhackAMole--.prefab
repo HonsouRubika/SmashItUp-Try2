@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7124528467330380860}
   - component: {fileID: 7124528467330380863}
+  - component: {fileID: 1347219380376409837}
   m_Layer: 0
   m_Name: --WhackAMole--
   m_TagString: Untagged
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: []
+  scorePlayers: []
   tpPoints: []
   TpFolder: {fileID: 7124528467919759087}
   molesFolder: {fileID: 7124528468166035629}
@@ -55,8 +57,27 @@ MonoBehaviour:
   moleTimeStay: 3
   scoreScript: {fileID: 0}
   timerScript: {fileID: 0}
-  scorePlayers: []
   allTpPoints: []
+  previousRandomNumber: 
+  playersTeam: 
+  equalityCase: 0
+  TaupeSoundScript: {fileID: 0}
+--- !u!114 &1347219380376409837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7124528467330380862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c8da99c3506be45af2bf49be00e43c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taupeSpawn: {fileID: 8300000, guid: 6221b4d320a0f814689572c1dc95c322, type: 3}
+  taupeSpawnVolume: 0.5
+  taupeHit: {fileID: 8300000, guid: bdb841ba79817554e8cef2c34be926ca, type: 3}
+  taupeHitVolume: 0.5
 --- !u!1 &7124528467919759086
 GameObject:
   m_ObjectHideFlags: 0

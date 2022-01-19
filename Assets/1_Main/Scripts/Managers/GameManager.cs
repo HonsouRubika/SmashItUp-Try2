@@ -488,12 +488,14 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
                     SceneManager.LoadScene("ZoneMouvante0" + Random.Range(1, 3));
                     break;
-                
                 case (int)GameMode.CollectTheCoin:
                     _nbMancheActu++;
                     SceneManager.LoadScene("Coins0" + Random.Range(1, 3));
                     break;
-                
+                case (int)GameMode.WhackAMole:
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("WackAMole0" + Random.Range(1, 3));
+                    break;
                 default:
                     Debug.Log("Error, GameMode not found or taken out");
                     break;
@@ -535,12 +537,14 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
                     SceneManager.LoadScene("ZoneMouvante0" + Random.Range(1, 3));
                     break;
-                
                 case GameMode.CollectTheCoin:
                     _nbMancheActu++;
                     SceneManager.LoadScene("Coins0" + Random.Range(1, 3));
                     break;
-                
+                case GameMode.WhackAMole:
+                    _nbMancheActu++;
+                    SceneManager.LoadScene("WackAMole0" + Random.Range(1, 3));
+                    break;
                 default:
                     Debug.Log("Error, GameMode not found or taken out");
                     break;
@@ -760,6 +764,7 @@ public class GameManager : MonoBehaviour
         CollectTheCoin,
         Contamination,
         KeepTheFlag,
+        WhackAMole,
         total //egal au nombre d'�l�ment dans l'enum
     }
 

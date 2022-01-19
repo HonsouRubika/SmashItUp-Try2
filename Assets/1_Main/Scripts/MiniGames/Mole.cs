@@ -33,6 +33,8 @@ public class Mole : MonoBehaviour
     public int moleID;
     public WhackAMoleManager whackAMoleScript;
 
+    private bool playOneTime = false;
+
     private void Start()
     {
         whackAWholeScript = transform.parent.GetComponentInParent<WhackAMoleManager>();
@@ -52,8 +54,10 @@ public class Mole : MonoBehaviour
 
     private void Update()
     {
-        if (hammerCollider != null)
+        if (hammerCollider != null && !playOneTime)
         {
+            playOneTime = true;
+
             GameObject floatPoint = Instantiate(floatingPoint, transform.position, Quaternion.identity);
             floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
 
