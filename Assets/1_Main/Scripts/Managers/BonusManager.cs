@@ -135,7 +135,7 @@ public class BonusManager : MonoBehaviour
             case (int)BonusEndGame.Duffer:
                 if (GameManager.Instance.getScorePlayer(playersScore[3]) < 10) // si le score du dernier joueur est inférieur à 10.
                 {
-                    GameManager.Instance.addSpecificScorePoints(playersScore[3], 40); // add 50 points au pire joueur
+                    GameManager.Instance.addSpecificScorePoints(playersScore[3], 50); // add 50 points au pire joueur
                 }
                 break;
 
@@ -150,14 +150,14 @@ public class BonusManager : MonoBehaviour
             case (int)BonusEndGame.BackOnTheTop:
                 if (GameManager.Instance.getScorePlayer(playersScore[2]) < GameManager.Instance.getScorePlayer(playersScore[1]) + 50) // si la différence entre le troisième et le deuxième joueur est inférieur à 50.
                 {
-                    GameManager.Instance.addSpecificScorePoints(playersScore[2], 50); // add 50 points au troisième joueur
+                    GameManager.Instance.addSpecificScorePoints(playersScore[2], 30); // add 30 points au troisième joueur
                 }
                 break;
 
             case (int)BonusEndGame.ImStillHere:
                 if (GameManager.Instance.getScorePlayer(playersScore[2]) > GameManager.Instance.getScorePlayer(playersScore[1]) + 50) // si la différence entre le troisième et le deuxième joueur est supérieur à 50.
                 {
-                    GameManager.Instance.addSpecificScorePoints(playersScore[2], 70); // add 70 points au troisième joueur
+                    GameManager.Instance.addSpecificScorePoints(playersScore[2], 50); // add 50 points au troisième joueur
                 }
                 break;
 
@@ -179,7 +179,7 @@ public class BonusManager : MonoBehaviour
             case (int)BonusEndGame.IDontLikeDolphins:
                 if (GameManager.Instance.getScorePlayer(playersScore[1]) > GameManager.Instance.getScorePlayer(playersScore[0]) + 50) // si la différence entre le deuxième et le premier joueur est supérieur à 50.
                 {
-                    GameManager.Instance.addSpecificScorePoints(playersScore[1], 70); // add 70 points au deuxième joueur
+                    GameManager.Instance.addSpecificScorePoints(playersScore[1], 50); // add 50 points au deuxième joueur
                 }
                 break;
 
