@@ -79,8 +79,11 @@ public class GameManager : MonoBehaviour
         #endregion
 
         //Load save
-        ProgressionData pd = SaveSystem.LoadProgression();
-        nbGameFinished = pd.GetNbGameFinished();
+        if (SaveSystem.LoadProgression() != null)
+        {
+            ProgressionData pd = SaveSystem.LoadProgression();
+            nbGameFinished = pd.GetNbGameFinished();
+        }
     }
 
     private void Start()
