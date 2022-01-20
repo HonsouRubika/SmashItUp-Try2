@@ -7,6 +7,8 @@ public class CheckPlayerIsClose : MonoBehaviour
     public bool playerIsClose = false;
     public bool alreadyMole = false;
 
+    public float moleSpawnedTime = 0;
+
     [Header("Hammer")]
     public LayerMask playerLayer;
 
