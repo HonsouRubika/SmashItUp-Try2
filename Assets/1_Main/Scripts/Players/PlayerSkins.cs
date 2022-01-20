@@ -17,6 +17,7 @@ public class PlayerSkins : MonoBehaviour
 
     [Header("All skins")]
     public List<GameObject> skins;
+    public bool[] isSkinUnlocked;
 
     [Header("Color Team")]
     public Color blue;
@@ -78,6 +79,20 @@ public class PlayerSkins : MonoBehaviour
             }
         }
 
+        isSkinUnlocked = new bool[skins.Count];
+        for (int i = 0; i< skins.Count; i++)
+        {
+            isSkinUnlocked[i] = true;
+        }
+
+        /*
+        if (GameManager.Instance.nbGameFinished < 1) isSkinUnlocked[3] = false;
+        if (GameManager.Instance.nbGameFinished < 3) isSkinUnlocked[4] = false;
+        if (GameManager.Instance.nbGameFinished < 4) isSkinUnlocked[5] = false;
+        */
+
+
+
         playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
         playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
         currentHammer = currentSkin.transform.Find("Hammer").gameObject;
@@ -86,6 +101,8 @@ public class PlayerSkins : MonoBehaviour
         SetColorToPlayer(currentSkin);
     }
 
+    /*
+    //OLD FONCTION
     public void ChangeSkin(InputAction.CallbackContext context)
     {
         // change skin only in hub
@@ -131,6 +148,7 @@ public class PlayerSkins : MonoBehaviour
             }
         }
     }
+    */
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -148,6 +166,12 @@ public class PlayerSkins : MonoBehaviour
         }
     }
 
+    public void NewSkinUnlocked(GameObject skin)
+    {
+        skins.Add(skin);
+        isSkinUnlocked[isSkinUnlocked.Length] = true;
+    }
+
     public void ChangeSkinPlus(InputAction.CallbackContext context)
     {
         if (context.started && isInArea && !GameManager.Instance.isPaused)
@@ -156,6 +180,17 @@ public class PlayerSkins : MonoBehaviour
             if (skinNumber >= skins.Count)
             {
                 skinNumber = 0;
+            }
+            if (!isSkinUnlocked[skinNumber])
+            {
+                while (!isSkinUnlocked[skinNumber])
+                {
+                    skinNumber++;
+                    if (skinNumber >= skins.Count)
+                    {
+                        skinNumber = 0;
+                    }
+                }
             }
 
             //on supprime le skin actuel
@@ -215,6 +250,36 @@ public class PlayerSkins : MonoBehaviour
             {
                 skinNumber = skins.Count - 1;
             }
+            if (!isSkinUnlocked[skinNumber])
+            {
+                while (!isSkinUnlocked[skinNumber])
+                {
+                    skinNumber--;
+                    if (skinNumber < 0)
+                    {
+                        skinNumber = skins.Count - 1;
+                    }
+                }
+            }
+
+            /*
+            skinNumber++;
+            if (skinNumber >= skins.Count && isSkinUnlocked[skinNumber])
+            {
+                skinNumber = 0;
+            }
+            else if (!isSkinUnlocked[skinNumber])
+            {
+                while (!isSkinUnlocked[skinNumber])
+                {
+                    skinNumber++;
+                    if (skinNumber >= skins.Count)
+                    {
+                        skinNumber = 0;
+                    }
+                }
+            }
+            */
 
             //on supprime le skin actuel
             Destroy(currentSkin);

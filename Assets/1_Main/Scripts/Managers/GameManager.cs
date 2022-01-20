@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public BonusManager bonusManagerScript;
     public int BonusRound = 3;
 
+    //Save
+    [HideInInspector] public int nbGameFinished = 0;
+
     //Animation
     [HideInInspector] public TransitionAnim transitionAnimScript;
     [HideInInspector] public ConsigneDisplayScript consigneAnimScript;
@@ -74,6 +77,10 @@ public class GameManager : MonoBehaviour
             return;
         }
         #endregion
+
+        //Load save
+        ProgressionData pd = SaveSystem.LoadProgression();
+        nbGameFinished = pd.GetNbGameFinished();
     }
 
     private void Start()
@@ -130,6 +137,10 @@ public class GameManager : MonoBehaviour
                 {
                     scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = false;
                 }
+
+                //inc nbGameFinished and THEN save
+                nbGameFinished++;
+                SaveSystem.SaveProgression(this);
 
                 Destroy(transition);
             }
