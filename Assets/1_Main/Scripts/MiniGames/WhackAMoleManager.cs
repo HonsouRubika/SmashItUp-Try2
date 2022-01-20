@@ -37,6 +37,8 @@ public class WhackAMoleManager : MonoBehaviour
     public List<Transform> allTpPoints;
 
     public List<int> previousRandomNumber;
+    //public List<float> timesMoleSpawned;
+    public float delaySpawnMoleTime = 2;
     //public int[] previousRandomNumberVector;
 
     private bool playOneTime = false;
@@ -133,7 +135,8 @@ public class WhackAMoleManager : MonoBehaviour
         //if (allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>() == null) Debug.Log("c'est null");
 
         
-        if (!previousRandomNumber.Contains(randomNumberChosen) && !allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole)
+        if (!previousRandomNumber.Contains(randomNumberChosen) && !allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole 
+            && allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().moleSpawnedTime + delaySpawnMoleTime < Time.time) //consition de spawn => évite un spawnkill non-intentionnel
         {
             previousRandomNumber.Add(randomNumberChosen);
 
@@ -156,8 +159,17 @@ public class WhackAMoleManager : MonoBehaviour
 
     public void despawnMole(int moleID)
     {
-        previousRandomNumber.Remove(moleID);
-        MoleInScene--;
+        for (int i = 0; i< MoleInScene; i++)
+        {
+            if(previousRandomNumber[i] == moleID)
+            {
+                previousRandomNumber.RemoveAt(i);
+                allTpPoints[moleID].GetComponent<CheckPlayerIsClose>().moleSpawnedTime = Time.time + moleTimeStay;
+                MoleInScene--;
+            }
+            
+        }
+        
     }
 
     private void SortPlayers()
