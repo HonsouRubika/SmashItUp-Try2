@@ -78,7 +78,14 @@ public class TeleporterLobby : MonoBehaviour
 
             DestroyRewards();
 
-            SceneManager.LoadScene("StartScene"); //return to lobby
+            //nouveau skin débloquer
+            if (GameManager.Instance.nbGameFinished == 1 ||
+               GameManager.Instance.nbGameFinished == 3 ||
+               GameManager.Instance.nbGameFinished == 5)
+            {
+                SceneManager.LoadScene("NewSkinScene"); //return to lobby
+            }
+            else SceneManager.LoadScene("StartScene"); //return to lobby
         }
     }
 
