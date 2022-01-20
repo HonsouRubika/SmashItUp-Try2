@@ -290,6 +290,7 @@ public class GameManager : MonoBehaviour
             ///// LIMITATIONS /////
             if (i > 0) //pas de limitation pour le premier mini jeu choisi (logique)
             {
+                Debug.Log(GameModeKind[_selectedGameModes[i - 1]]);
 
                 //on s'assure que le prochain game mode choisi soit diff�rent du premier
                 while (GameModeKind[nextGameMode] == GameModeKind[_selectedGameModes[i - 1]])
@@ -789,8 +790,10 @@ public class GameManager : MonoBehaviour
         1, //Loup = Wolf
         2, //CaptureDeZone = Capture
         2, //CaptureDeZoneMouvante = Capture
+        4, //CollectTheCoin
         1, //Contamination = Wolf
-        0  //KeepTheFlag = Flag
+        0, //KeepTheFlag = Flag
+        3  //WhackAMole
     };
 
     public enum TeamCompo
