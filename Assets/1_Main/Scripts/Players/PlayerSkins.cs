@@ -166,6 +166,12 @@ public class PlayerSkins : MonoBehaviour
         }
     }
 
+    public void NewSkinUnlocked(GameObject skin)
+    {
+        skins.Add(skin);
+        isSkinUnlocked[isSkinUnlocked.Length] = true;
+    }
+
     public void ChangeSkinPlus(InputAction.CallbackContext context)
     {
         if (context.started && isInArea && !GameManager.Instance.isPaused)
