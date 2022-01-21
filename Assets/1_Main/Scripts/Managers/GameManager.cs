@@ -480,7 +480,7 @@ public class GameManager : MonoBehaviour
                 case (int)GameMode.Loup:
                     _nbMancheActu++;
                     //Limitation de GameMode
-                    _teamCompo[_nbManches] = (int)TeamCompo.FFA;
+                    _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.CaptureDeZone:
@@ -490,7 +490,7 @@ public class GameManager : MonoBehaviour
                 case (int)GameMode.Contamination:
                     _nbMancheActu++;
                     //Limitation de GameMode
-                    _teamCompo[_nbManches] = (int)TeamCompo.FFA;
+                    _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
                     SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.KeepTheFlag:
@@ -528,7 +528,7 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
                     //Limitation de GameMode
                     if (teamCompoToTest.Length > 0) teamCompoToTest[_nbMancheActu % teamCompoToTest.Length] = (int)TeamCompo.FFA;
-                    else _teamCompo[_nbMancheActu] = (int)TeamCompo.FFA;
+                    else _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 3));
                     break;
                 case GameMode.CaptureDeZone:
@@ -539,7 +539,7 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
                     //Limitation de GameMode
                     if (teamCompoToTest.Length > 0) teamCompoToTest[_nbMancheActu % teamCompoToTest.Length] = (int)TeamCompo.FFA;
-                    else _teamCompo[_nbMancheActu] = (int)TeamCompo.FFA;
+                    else _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
                     SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
                     break;
                 case GameMode.KeepTheFlag:
@@ -730,7 +730,7 @@ public class GameManager : MonoBehaviour
         int bestPlayerSpread = GameManager.Instance.getScorePlayer(0);
 
         //get des players avec les stats approprié
-        for (int i = 0; i < GameManager.Instance.getNbPlayer(); i++)
+        for (int i = 1; i < GameManager.Instance.getNbPlayer(); i++)
         {
 
             if (GameManager.Instance.getScorePlayer(i) > bestPlayerSpread)
