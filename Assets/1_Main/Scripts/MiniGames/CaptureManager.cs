@@ -136,10 +136,7 @@ public class CaptureManager : MonoBehaviour
                 scoreScript.AddScore(1, 0, 0, 0);
 
                 pointCounterP1++;
-                if(instFloatingPointP1 != null) Destroy(instFloatingPointP1);
-                instFloatingPointP1 = Instantiate(floatingPoint, players[0].transform.position, Quaternion.identity, players[0].transform);
-                instFloatingPointP1.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointCounterP1.ToString();
-                instFloatingPointP1.transform.GetChild(0).GetComponent<TextMeshPro>().color = player0Color;
+                SpawnFloatingText(instFloatingPointP1, player0Color, players[0], pointCounterP1);
             }
             else
             {
@@ -148,12 +145,9 @@ public class CaptureManager : MonoBehaviour
         }
         else
         {
-            if (timePastInZonePlayer.Length >= 1)
-            {
-                timePastInZonePlayer[0] = timeToScore;
-                pointCounterP1 = 0;
-                Destroy(instFloatingPointP1);
-            }
+            timePastInZonePlayer[0] = timeToScore;
+            pointCounterP1 = 0;
+            Destroy(instFloatingPointP1);
         }
 
         //Player 2 score
@@ -164,6 +158,9 @@ public class CaptureManager : MonoBehaviour
                 scorePlayer1++;
                 timePastInZonePlayer[1] = 0;
                 scoreScript.AddScore(0, 1, 0, 0);
+
+                pointCounterP2++;
+                SpawnFloatingText(instFloatingPointP2, player1Color, players[1], pointCounterP2);
             }
             else
             {
@@ -172,10 +169,9 @@ public class CaptureManager : MonoBehaviour
         }
         else
         {
-            if (timePastInZonePlayer.Length >= 2)
-            {
-                timePastInZonePlayer[1] = timeToScore;
-            } 
+            timePastInZonePlayer[1] = timeToScore;
+            pointCounterP2 = 0;
+            Destroy(instFloatingPointP2);
         }
 
         //Player 3 score
@@ -186,6 +182,9 @@ public class CaptureManager : MonoBehaviour
                 scorePlayer2++;
                 timePastInZonePlayer[2] = 0;
                 scoreScript.AddScore(0, 0, 1, 0);
+
+                pointCounterP3++;
+                SpawnFloatingText(instFloatingPointP3, player2Color, players[2], pointCounterP3);
             }
             else
             {
@@ -194,10 +193,9 @@ public class CaptureManager : MonoBehaviour
         }
         else
         {
-            if (timePastInZonePlayer.Length >= 3)
-            {
-                timePastInZonePlayer[2] = timeToScore;
-            }
+            timePastInZonePlayer[2] = timeToScore;
+            pointCounterP3 = 0;
+            Destroy(instFloatingPointP3);
         }
 
         //Player 4 score
@@ -208,6 +206,9 @@ public class CaptureManager : MonoBehaviour
                 scorePlayer3++;
                 timePastInZonePlayer[3] = 0;
                 scoreScript.AddScore(0, 0, 0, 1);
+
+                pointCounterP4++;
+                SpawnFloatingText(instFloatingPointP4, player3Color, players[3], pointCounterP4);
             }
             else
             {
@@ -216,11 +217,18 @@ public class CaptureManager : MonoBehaviour
         }
         else
         {
-            if (timePastInZonePlayer.Length >= 4)
-            {
-                timePastInZonePlayer[3] = timeToScore;
-            } 
+            timePastInZonePlayer[3] = timeToScore;
+            pointCounterP4 = 0;
+            Destroy(instFloatingPointP4);
         }
+    }
+
+    private void SpawnFloatingText(GameObject instFloatingText, Color playerColor, GameObject player, int counter)
+    {
+        if (instFloatingText != null) Destroy(instFloatingText);
+        instFloatingText = Instantiate(floatingPoint, player.transform.position, Quaternion.identity, player.transform);
+        instFloatingText.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + counter.ToString();
+        instFloatingText.transform.GetChild(0).GetComponent<TextMeshPro>().color = playerColor;
     }
 
     private void OnePlayerCaptureZone()

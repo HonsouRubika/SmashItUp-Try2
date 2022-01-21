@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 public class KeepTheFlagManager : MonoBehaviour
 {
@@ -19,16 +20,32 @@ public class KeepTheFlagManager : MonoBehaviour
     private List<int> randomNumbers = new List<int>();
 
     [Header("KeepFlag Rules")]
-    public int winPoints;
+    public float timeToScore = 1;
 
     [Header("KeepFlag Score")]
     public bool player0HaveFlag = false;
     public bool player1HaveFlag = false;
     public bool player2HaveFlag = false;
     public bool player3HaveFlag = false;
-    public float[] scorePlayers;
+
+    private float[] scorePlayers;
+
+    public float[] timePastInZonePlayer;
     private float[] finalScores;
     private int[] playersPosition;
+
+    [Header("Score")]
+    public GameObject floatingPoint;
+    public Vector2 spawnPointOffset;
+    private GameObject instFloatingPoint;
+    public Color player0Color;
+    public Color player1Color;
+    public Color player2Color;
+    public Color player3Color;
+    private int pointCounterP1 = 1;
+    private int pointCounterP2 = 1;
+    private int pointCounterP3 = 1;
+    private int pointCounterP4 = 1;
 
     public int currentPlayerHaveFlag = 0;
 
@@ -61,6 +78,12 @@ public class KeepTheFlagManager : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             playersPosition[i] = i;
+        }
+
+        timePastInZonePlayer = new float[players.Length];
+        for (int i = 0; i < timePastInZonePlayer.Length; i++)
+        {
+            timePastInZonePlayer[i] = timeToScore;
         }
 
         SpawnPlayerRandomly();
@@ -100,6 +123,14 @@ public class KeepTheFlagManager : MonoBehaviour
         }
     }
 
+    private void SpawnFloatingText(Color playerColor, GameObject player, int counter)
+    {
+        if (instFloatingPoint != null) Destroy(instFloatingPoint);
+        instFloatingPoint = Instantiate(floatingPoint, new Vector2(player.transform.position.x + spawnPointOffset.x, player.transform.position.y + spawnPointOffset.y), Quaternion.identity, player.transform);
+        instFloatingPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + counter.ToString();
+        instFloatingPoint.transform.GetChild(0).GetComponent<TextMeshPro>().color = playerColor;
+    }
+
     public void FlagCaptured(int player)
     {
         switch (player)
@@ -133,38 +164,104 @@ public class KeepTheFlagManager : MonoBehaviour
 
     private void IncrementPlayerScore()
     {
-        if (scorePlayers.Length == 2)
-        {
-            scoreScript.SetScore((int)scorePlayers[0], (int)scorePlayers[1], 0, 0);
-        }
-        else if (scorePlayers.Length == 3)
-        {
-            scoreScript.SetScore((int)scorePlayers[0], (int)scorePlayers[1], (int)scorePlayers[2], 0);
-        }
-        else if (scorePlayers.Length == 4)
-        {
-            scoreScript.SetScore((int)scorePlayers[0], (int)scorePlayers[1], (int)scorePlayers[2], (int)scorePlayers[3]);
-        }
-
         if (player0HaveFlag)
         {
-            scorePlayers[0] += Time.deltaTime;
-            currentPlayerHaveFlag = 1;
+            if (timePastInZonePlayer[0] >= timeToScore)
+            {
+                scorePlayers[0]++;
+                timePastInZonePlayer[0] = 0;
+                scoreScript.AddScore(1, 0, 0, 0);
+
+                pointCounterP1++;
+                SpawnFloatingText(player0Color, players[0], pointCounterP1);
+            }
+            else
+            {
+                timePastInZonePlayer[0] += Time.deltaTime;
+            }
         }
-        else if (player1HaveFlag)
+        else
         {
-            scorePlayers[1] += Time.deltaTime;
-            currentPlayerHaveFlag = 2;
+            if (timePastInZonePlayer.Length >= 1)
+            {
+                timePastInZonePlayer[0] = timeToScore;
+                pointCounterP1 = 0;
+            } 
         }
-        else if (player2HaveFlag)
+
+        if (player1HaveFlag)
         {
-            scorePlayers[2] += Time.deltaTime;
-            currentPlayerHaveFlag = 3;
+            if (timePastInZonePlayer[1] >= timeToScore)
+            {
+                scorePlayers[1]++;
+                timePastInZonePlayer[1] = 0;
+                scoreScript.AddScore(0, 1, 0, 0);
+
+                pointCounterP2++;
+                SpawnFloatingText(player1Color, players[1], pointCounterP2);
+            }
+            else
+            {
+                timePastInZonePlayer[1] += Time.deltaTime;
+            }
         }
-        else if (player3HaveFlag)
+        else
         {
-            scorePlayers[3] += Time.deltaTime;
-            currentPlayerHaveFlag = 4;
+            if (timePastInZonePlayer.Length >= 2)
+            {
+                timePastInZonePlayer[1] = timeToScore;
+                pointCounterP2 = 0;
+            }
+        }
+
+        if (player2HaveFlag)
+        {
+            if (timePastInZonePlayer[2] >= timeToScore)
+            {
+                scorePlayers[2]++;
+                timePastInZonePlayer[2] = 0;
+                scoreScript.AddScore(0, 0, 1, 0);
+
+                pointCounterP3++;
+                SpawnFloatingText(player2Color, players[2], pointCounterP3);
+            }
+            else
+            {
+                timePastInZonePlayer[2] += Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (timePastInZonePlayer.Length >= 3)
+            {
+                timePastInZonePlayer[2] = timeToScore;
+                pointCounterP3 = 0;
+            }
+        }
+
+        if (player3HaveFlag)
+        {
+            if (timePastInZonePlayer[3] >= timeToScore)
+            {
+                scorePlayers[3]++;
+                timePastInZonePlayer[3] = 0;
+                scoreScript.AddScore(0, 0, 0, 1);
+
+                pointCounterP4++;
+                SpawnFloatingText(player3Color, players[3], pointCounterP4);
+            }
+            else
+            {
+                timePastInZonePlayer[3] += Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (timePastInZonePlayer.Length >= 4)
+            {
+                timePastInZonePlayer[3] = timeToScore;
+                pointCounterP4 = 0;
+            }
         }
     }
 

@@ -19,9 +19,6 @@ public class CaptureTheFlag_Rules : MonoBehaviour
     public List<Transform> tpPoints = new List<Transform>();
     private List<int> randomNumbers = new List<int>();
 
-    [Header("CaptureTheFlag Rules")]
-    public int winPoints;
-
     private bool playOneTime = false;
 
     private void Start()

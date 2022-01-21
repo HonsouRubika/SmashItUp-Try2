@@ -130,13 +130,21 @@ MonoBehaviour:
   scoreScript: {fileID: 0}
   timerScript: {fileID: 0}
   tpPoints: []
-  winPoints: 0
+  timeToScore: 0.5
   player0HaveFlag: 0
   player1HaveFlag: 0
   player2HaveFlag: 0
   player3HaveFlag: 0
-  scorePlayers: []
+  timePastInZonePlayer: []
+  floatingPoint: {fileID: 7282320832305823009, guid: ecf9474f37254dd409f50cf5f2fab236, type: 3}
+  spawnPointOffset: {x: 0, y: 2}
+  player0Color: {r: 0.5686275, g: 0.6, b: 0.88235295, a: 1}
+  player1Color: {r: 0.88235295, g: 0.5686275, b: 0.5686275, a: 1}
+  player2Color: {r: 0.58431375, g: 0.84313726, b: 0.5254902, a: 1}
+  player3Color: {r: 1, g: 0.8156863, b: 0.41960785, a: 1}
   currentPlayerHaveFlag: 0
+  playersTeam: 
+  equalityCase: 0
 --- !u!1 &6769783102339168995
 GameObject:
   m_ObjectHideFlags: 0
