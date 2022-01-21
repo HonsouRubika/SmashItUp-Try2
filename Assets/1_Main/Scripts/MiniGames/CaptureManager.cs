@@ -34,6 +34,7 @@ public class CaptureManager : MonoBehaviour
 
     [Header ("Score")]
     public GameObject floatingPoint;
+    public Vector2 spawnPointOffset;
     private GameObject instFloatingPointP1;
     private GameObject instFloatingPointP2;
     private GameObject instFloatingPointP3;
@@ -145,9 +146,12 @@ public class CaptureManager : MonoBehaviour
         }
         else
         {
-            timePastInZonePlayer[0] = timeToScore;
-            pointCounterP1 = 0;
-            Destroy(instFloatingPointP1);
+            if (timePastInZonePlayer.Length >= 1)
+            {
+                timePastInZonePlayer[0] = timeToScore;
+                pointCounterP1 = 0;
+                Destroy(instFloatingPointP1);
+            }
         }
 
         //Player 2 score
@@ -169,9 +173,12 @@ public class CaptureManager : MonoBehaviour
         }
         else
         {
-            timePastInZonePlayer[1] = timeToScore;
-            pointCounterP2 = 0;
-            Destroy(instFloatingPointP2);
+            if (timePastInZonePlayer.Length >= 2)
+            {
+                timePastInZonePlayer[1] = timeToScore;
+                pointCounterP2 = 0;
+                Destroy(instFloatingPointP2);
+            } 
         }
 
         //Player 3 score
@@ -193,9 +200,12 @@ public class CaptureManager : MonoBehaviour
         }
         else
         {
-            timePastInZonePlayer[2] = timeToScore;
-            pointCounterP3 = 0;
-            Destroy(instFloatingPointP3);
+            if (timePastInZonePlayer.Length >= 3)
+            {
+                timePastInZonePlayer[2] = timeToScore;
+                pointCounterP3 = 0;
+                Destroy(instFloatingPointP3);
+            }
         }
 
         //Player 4 score
@@ -217,16 +227,19 @@ public class CaptureManager : MonoBehaviour
         }
         else
         {
-            timePastInZonePlayer[3] = timeToScore;
-            pointCounterP4 = 0;
-            Destroy(instFloatingPointP4);
+            if (timePastInZonePlayer.Length >= 4)
+            {
+                timePastInZonePlayer[3] = timeToScore;
+                pointCounterP4 = 0;
+                Destroy(instFloatingPointP4);
+            }
         }
     }
 
     private void SpawnFloatingText(GameObject instFloatingText, Color playerColor, GameObject player, int counter)
     {
         if (instFloatingText != null) Destroy(instFloatingText);
-        instFloatingText = Instantiate(floatingPoint, player.transform.position, Quaternion.identity, player.transform);
+        instFloatingText = Instantiate(floatingPoint, new Vector2(player.transform.position.x + spawnPointOffset.x, player.transform.position.y + spawnPointOffset.y), Quaternion.identity, player.transform);
         instFloatingText.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + counter.ToString();
         instFloatingText.transform.GetChild(0).GetComponent<TextMeshPro>().color = playerColor;
     }

@@ -95,7 +95,10 @@ public class KeepTheFlagManager : MonoBehaviour
 
     private void Update()
     {
-        IncrementPlayerScore();
+        if (timerScript.miniGameTimer > 0)
+        {
+            IncrementPlayerScore();
+        }
 
         for (int i = 0; i < playersControllers.Length; i++)
         {
@@ -166,6 +169,8 @@ public class KeepTheFlagManager : MonoBehaviour
     {
         if (player0HaveFlag)
         {
+            currentPlayerHaveFlag = 1;
+
             if (timePastInZonePlayer[0] >= timeToScore)
             {
                 scorePlayers[0]++;
@@ -191,6 +196,8 @@ public class KeepTheFlagManager : MonoBehaviour
 
         if (player1HaveFlag)
         {
+            currentPlayerHaveFlag = 2;
+
             if (timePastInZonePlayer[1] >= timeToScore)
             {
                 scorePlayers[1]++;
@@ -216,6 +223,8 @@ public class KeepTheFlagManager : MonoBehaviour
 
         if (player2HaveFlag)
         {
+            currentPlayerHaveFlag = 3;
+
             if (timePastInZonePlayer[2] >= timeToScore)
             {
                 scorePlayers[2]++;
@@ -241,6 +250,8 @@ public class KeepTheFlagManager : MonoBehaviour
 
         if (player3HaveFlag)
         {
+            currentPlayerHaveFlag = 4;
+
             if (timePastInZonePlayer[3] >= timeToScore)
             {
                 scorePlayers[3]++;
