@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 public class CaptureManager : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class CaptureManager : MonoBehaviour
     private int scorePlayer1 = 0;
     private int scorePlayer2 = 0;
     private int scorePlayer3 = 0;
+    private int pointCounterP1 = 1;
+    private int pointCounterP2 = 1;
+    private int pointCounterP3 = 1;
+    private int pointCounterP4 = 1;
     private Zone zoneScript;
     public float timePastInZone = 0;
     public float[] timePastInZonePlayer;
@@ -26,6 +31,17 @@ public class CaptureManager : MonoBehaviour
     public Score scoreScript;
     public Timer timerScript;
     private bool zoneSound = false;
+
+    [Header ("Score")]
+    public GameObject floatingPoint;
+    private GameObject instFloatingPointP1;
+    private GameObject instFloatingPointP2;
+    private GameObject instFloatingPointP3;
+    private GameObject instFloatingPointP4;
+    public Color player0Color;
+    public Color player1Color;
+    public Color player2Color;
+    public Color player3Color;
 
     public List<Transform> tpPoints = new List<Transform>();
     private List<int> randomNumbers = new List<int>();
@@ -118,6 +134,12 @@ public class CaptureManager : MonoBehaviour
                 scorePlayer0++;
                 timePastInZonePlayer[0] = 0;
                 scoreScript.AddScore(1, 0, 0, 0);
+
+                pointCounterP1++;
+                if(instFloatingPointP1 != null) Destroy(instFloatingPointP1);
+                instFloatingPointP1 = Instantiate(floatingPoint, players[0].transform.position, Quaternion.identity, players[0].transform);
+                instFloatingPointP1.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointCounterP1.ToString();
+                instFloatingPointP1.transform.GetChild(0).GetComponent<TextMeshPro>().color = player0Color;
             }
             else
             {
@@ -129,6 +151,8 @@ public class CaptureManager : MonoBehaviour
             if (timePastInZonePlayer.Length >= 1)
             {
                 timePastInZonePlayer[0] = timeToScore;
+                pointCounterP1 = 0;
+                Destroy(instFloatingPointP1);
             }
         }
 

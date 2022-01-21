@@ -249,11 +249,11 @@ MonoBehaviour:
   attackRate: 1
   attackIsCD: 0
   attackDuration: 0.1
-  disableCollider: 1
   stunTime: 0.75
   isFrozen: 0
   blockStunTime: 0.5
   invicibilityTime: 0.5
+  isStunt: 0
   trampolineJump: 45
   playerIDHit: 0
   hitPlayer: 0
@@ -508,10 +508,10 @@ MonoBehaviour:
   - {fileID: 7711389394269838525, guid: 22a7248bd936f7c44897428b140962c2, type: 3}
   - {fileID: 4632043644986785815, guid: b792a34491db75743b31c45a84c7591b, type: 3}
   isSkinUnlocked: 
-  blue: {r: 0.2537411, g: 0.19223925, b: 0.9056604, a: 1}
-  red: {r: 0.8867924, g: 0.13803846, b: 0.13803846, a: 1}
-  green: {r: 0.1254902, g: 0.79215693, b: 0, a: 1}
-  yellow: {r: 0.9607844, g: 0.8117648, b: 0.09411766, a: 1}
+  blue: {r: 0.5686275, g: 0.6, b: 0.88235295, a: 1}
+  red: {r: 0.88235295, g: 0.5686275, b: 0.5686275, a: 1}
+  green: {r: 0.58431375, g: 0.84313726, b: 0.5254902, a: 1}
+  yellow: {r: 1, g: 0.8156863, b: 0.41960785, a: 1}
   P1: {fileID: 21300000, guid: 4f54ce319ecaac14c96beffddbc5f3ab, type: 3}
   P2: {fileID: 21300000, guid: f8f501a70e443d849bd6c1b5e716bbc3, type: 3}
   P3: {fileID: 21300000, guid: b704292fefb9c324481dc35c8032f218, type: 3}
