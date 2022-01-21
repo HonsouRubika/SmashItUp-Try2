@@ -62,6 +62,8 @@ public class GameManager : MonoBehaviour
     public GameMode[] gameModeToTest;
     public TeamCompo[] teamCompoToTest;
 
+    [HideInInspector] public List<PlayerController> playerControllers;
+
     private enum TransitionState { OPENING, OPEN, CLOSING, CLOSE, CONSIGNE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED }
 
     void Awake()
@@ -262,6 +264,104 @@ public class GameManager : MonoBehaviour
                 //GameObject.Find("Music").GetComponent<Music_Mini_Game>().StartMusic();
 
             }
+        }
+
+        CheckPlayerCollision();
+    }
+
+    private void CheckPlayerCollision()
+    {
+        switch (playerControllers.Count)
+        {
+            case 2:
+                if (playerControllers[0].isStunt || playerControllers[1].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[1].cc, true);
+                }
+
+                if (!playerControllers[0].isStunt && !playerControllers[1].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[1].cc, false);
+                }
+                break;
+            case 3:
+                if (playerControllers[0].isStunt || playerControllers[1].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[1].cc, true);
+                }
+                if (playerControllers[0].isStunt || playerControllers[2].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[2].cc, true);
+                }
+                if (playerControllers[1].isStunt || playerControllers[2].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[1].cc, playerControllers[2].cc, true);
+                }
+
+                if (!playerControllers[0].isStunt && !playerControllers[1].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[1].cc, false);
+                }
+                if (!playerControllers[0].isStunt && !playerControllers[2].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[2].cc, false);
+                }
+                if (!playerControllers[1].isStunt && !playerControllers[2].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[1].cc, playerControllers[2].cc, false);
+                }
+                break;
+            case 4:
+                if (playerControllers[0].isStunt || playerControllers[1].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[1].cc, true);
+                }
+                if (playerControllers[0].isStunt || playerControllers[2].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[2].cc, true);
+                }
+                if (playerControllers[0].isStunt || playerControllers[3].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[3].cc, true);
+                }
+                if (playerControllers[1].isStunt || playerControllers[2].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[1].cc, playerControllers[2].cc, true);
+                }
+                if (playerControllers[1].isStunt || playerControllers[3].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[1].cc, playerControllers[3].cc, true);
+                }
+                if (playerControllers[2].isStunt || playerControllers[3].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[2].cc, playerControllers[3].cc, true);
+                }
+
+                if (!playerControllers[0].isStunt && !playerControllers[1].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[1].cc, false);
+                }
+                if (!playerControllers[0].isStunt && !playerControllers[2].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[2].cc, false);
+                }
+                if (!playerControllers[0].isStunt && !playerControllers[3].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[0].cc, playerControllers[3].cc, false);
+                }
+                if (!playerControllers[1].isStunt && !playerControllers[2].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[1].cc, playerControllers[2].cc, false);
+                }
+                if (!playerControllers[1].isStunt && !playerControllers[3].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[1].cc, playerControllers[3].cc, false);
+                }
+                if (!playerControllers[2].isStunt && !playerControllers[3].isStunt)
+                {
+                    Physics2D.IgnoreCollision(playerControllers[2].cc, playerControllers[3].cc, false);
+                }
+                break;
         }
     }
 

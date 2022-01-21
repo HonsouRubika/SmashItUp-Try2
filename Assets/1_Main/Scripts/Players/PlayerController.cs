@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
     private float nextAttackTime = 0f;
 
     [Header("Stun")]
-    public bool disableCollider = false;
+    //public bool disableCollider = false;
     public float stunTime = 0.5f;
     private float stunTimeActu;
     public bool isFrozen = false;
@@ -135,6 +135,7 @@ public class PlayerController : MonoBehaviour
     private float blockStunTimeActu;
     private float invicibilityTimeActu;
     public float invicibilityTime = 0.5f;
+    [HideInInspector] public bool isStunt = false;
 
 
     [Header("LD")]
@@ -159,6 +160,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        cc = GetComponent<CapsuleCollider2D>();
+        GameManager.Instance.playerControllers.Add(this);
+
         ///integrate wallride?
         wallGripTime = 0;
 
@@ -254,14 +258,17 @@ public class PlayerController : MonoBehaviour
         //stun
         if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu && playerAnimScript != null && PlayerSoundScript != null && playerAnimator != null && !isFrozen)
         {
+            isStunt = false;
+
             //Enable back collision between players 
-            if (disableCollider)
-
+            /*if (disableCollider)
             {
-
-                Physics2D.IgnoreLayerCollision(8, 8, false);
-
-            }
+                //Physics2D.IgnoreLayerCollision(8, 8, false);
+                for (int i = 0; i < GameManager.Instance.playerColliders.Count; i++)
+                {
+                    Physics2D.GetIgnoreCollision
+                }
+            }*/
 
             //anim
             if (playerAnimScript.playerAnimator != null)
@@ -294,14 +301,20 @@ public class PlayerController : MonoBehaviour
         }
         else if (playerAnimScript != null && PlayerSoundScript != null && playerAnimator != null) //player is stun
         {
+            isStunt = true;
+
             //anim
             playerAnimScript.Expulsion(true);
 
             //Disable the collision between players when player are stunt
-            if (disableCollider)
+            /*if (disableCollider)
             {
-                Physics2D.IgnoreLayerCollision(8, 8, true);
-            }
+                //Physics2D.IgnoreLayerCollision(8, 8, true);
+                for (int i = 0; i < GameManager.Instance.playerColliders.Count; i++)
+                {
+                    Physics2D.IgnoreCollision(cc, GameManager.Instance.playerColliders[i], true);
+                } 
+            }*/
             PlayerSoundScript.Ejection();
 
             if (transform.position.x <= startProjectedPostion)
