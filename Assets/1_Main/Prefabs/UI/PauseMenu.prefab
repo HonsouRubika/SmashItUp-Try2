@@ -1926,6 +1926,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2040467285607542759}
   - component: {fileID: 2040467285607542758}
+  - component: {fileID: 8639902137599757104}
   m_Layer: 0
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -1966,8 +1967,29 @@ MonoBehaviour:
   optionsMenu: {fileID: 8663257359480964296}
   audioMenu: {fileID: 1541011058825503336}
   videoMenu: {fileID: 8670267453819254024}
-  eventSystemKeyboard: {fileID: 2373581879596313934}
-  eventSystemController: {fileID: 4546957795590973922}
+  eventSystemKeyboard: {fileID: 0}
+  eventSystemController: {fileID: 0}
+  globalVolume: 0
+  musicVolume: 0
+  sfxVolume: 0
+  fullScren: 0
+  resolution: 0
+  quality: 0
+  PauseSoundScript: {fileID: 0}
+--- !u!114 &8639902137599757104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040467285607542756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04adc01e3fa81954d8558993dbc3136d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pause: {fileID: 8300000, guid: 250dd222d307735438b82e62c0a50d7f, type: 3}
+  pauseVolume: 0.6
 --- !u!1 &2040467285720094721
 GameObject:
   m_ObjectHideFlags: 0
