@@ -12,12 +12,15 @@ public class CaptureManager : MonoBehaviour
     private float[] finalScores;
     private int[] playersPosition;
 
-    public int scorePlayer0 = 0;
-    public int scorePlayer1 = 0;
-    public int scorePlayer2 = 0;
-    public int scorePlayer3 = 0;
+    private int scorePlayer0 = 0;
+    private int scorePlayer1 = 0;
+    private int scorePlayer2 = 0;
+    private int scorePlayer3 = 0;
     private Zone zoneScript;
     public float timePastInZone = 0;
+    public float[] timePastInZonePlayer;
+
+    [Space]
     public float timeToScore = 1;
     private CaptureSound captureSoundScript;
     public Score scoreScript;
@@ -45,9 +48,15 @@ public class CaptureManager : MonoBehaviour
         scorePlayers = new float[players.Length];
         finalScores = new float[players.Length];
         playersPosition = new int[players.Length];
+        timePastInZonePlayer = new float[players.Length];
         for (int i = 0; i < players.Length; i++)
         {
             playersPosition[i] = i;
+        }
+
+        for (int i = 0; i < timePastInZonePlayer.Length; i++)
+        {
+            timePastInZonePlayer[i] = timeToScore;
         }
 
         zoneScript = GetComponentInChildren<Zone>();
@@ -75,6 +84,123 @@ public class CaptureManager : MonoBehaviour
             playOneTime = true;
         }
 
+        if (timerScript.miniGameTimer > 0)
+        {
+            MultiplePlayersCaptureZone();
+        }
+    }
+
+    private void MultiplePlayersCaptureZone()
+    {
+        if (zoneScript.counterPlayerinZone > 0)
+        {
+            if (!zoneSound)
+            {
+                zoneSound = true;
+                captureSoundScript.PlayerCapturing();
+            }
+        }
+        else
+        {
+            if (zoneSound)
+            {
+                zoneSound = false;
+                captureSoundScript.PlayerOutZone();
+            }
+            
+        }
+
+        //Player 1 score
+        if (zoneScript.player0IsInZone)
+        {
+            if (timePastInZonePlayer[0] >= timeToScore)
+            {
+                scorePlayer0++;
+                timePastInZonePlayer[0] = 0;
+                scoreScript.AddScore(1, 0, 0, 0);
+            }
+            else
+            {
+                timePastInZonePlayer[0] += Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (timePastInZonePlayer.Length >= 1)
+            {
+                timePastInZonePlayer[0] = timeToScore;
+            }
+        }
+
+        //Player 2 score
+        if (zoneScript.player1IsInZone)
+        {
+            if (timePastInZonePlayer[1] >= timeToScore)
+            {
+                scorePlayer1++;
+                timePastInZonePlayer[1] = 0;
+                scoreScript.AddScore(0, 1, 0, 0);
+            }
+            else
+            {
+                timePastInZonePlayer[1] += Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (timePastInZonePlayer.Length >= 2)
+            {
+                timePastInZonePlayer[1] = timeToScore;
+            } 
+        }
+
+        //Player 3 score
+        if (zoneScript.player2IsInZone)
+        {
+            if (timePastInZonePlayer[2] >= timeToScore)
+            {
+                scorePlayer2++;
+                timePastInZonePlayer[2] = 0;
+                scoreScript.AddScore(0, 0, 1, 0);
+            }
+            else
+            {
+                timePastInZonePlayer[2] += Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (timePastInZonePlayer.Length >= 3)
+            {
+                timePastInZonePlayer[2] = timeToScore;
+            }
+        }
+
+        //Player 4 score
+        if (zoneScript.player3IsInZone)
+        {
+            if (timePastInZonePlayer[3] >= timeToScore)
+            {
+                scorePlayer3++;
+                timePastInZonePlayer[3] = 0;
+                scoreScript.AddScore(0, 0, 0, 1);
+            }
+            else
+            {
+                timePastInZonePlayer[3] += Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (timePastInZonePlayer.Length >= 4)
+            {
+                timePastInZonePlayer[3] = timeToScore;
+            } 
+        }
+    }
+
+    private void OnePlayerCaptureZone()
+    {
         if (zoneScript.counterPlayerinZone >= 2)
         {
             timePastInZone = 0;
@@ -87,7 +213,7 @@ public class CaptureManager : MonoBehaviour
             if (zoneScript.player0IsInZone == true)
             {
                 timePastInZone += Time.deltaTime;
-                
+
 
                 if (!zoneSound)
                 {
@@ -100,13 +226,13 @@ public class CaptureManager : MonoBehaviour
                 {
                     scorePlayer0++;
                     timePastInZone = 0;
-                    scoreScript.AddScore(1,0,0,0);
+                    scoreScript.AddScore(1, 0, 0, 0);
                 }
-            }          
+            }
 
             if (zoneScript.player1IsInZone == true)
             {
-                timePastInZone += Time.deltaTime;             
+                timePastInZone += Time.deltaTime;
 
 
                 if (!zoneSound)
