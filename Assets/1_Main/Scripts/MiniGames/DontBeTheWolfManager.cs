@@ -79,15 +79,16 @@ public class DontBeTheWolfManager : MonoBehaviour
             WolfSoundScript.WolfAttack();
         }
 
-        if (timerScript.isTimerStarted)
+        /*if (timerScript.isTimerStarted)
         {
             IncrementPlayerScore(wolfPlayerNumber);
-        }
+        }*/
 
         if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
             Destroy(wolfHeadInstance);
-            SortPlayers();
+            //SortPlayers();
+            SortPlayersLastWolf();
 
             playOneTime = true;
         }
@@ -224,6 +225,55 @@ public class DontBeTheWolfManager : MonoBehaviour
                     GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0);
                     break;
             }
+        }
+    }
+
+    private void SortPlayersLastWolf()
+    {
+        switch (players.Length)
+        {
+            case 2:
+                if (player0IsWolf)
+                {
+                    GameManager.Instance.addScoresPoints(0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0);
+                }
+                else if (player1IsWolf)
+                {
+                    GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0, 0);
+                }
+                break;
+            case 3:
+                if (player0IsWolf)
+                {
+                    GameManager.Instance.addScoresPoints(0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0);
+                }
+                else if (player1IsWolf)
+                {
+                    GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0);
+                }
+                else if (player2IsWolf)
+                {
+                    GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, 0);
+                }
+                break;
+            case 4:
+                if (player0IsWolf)
+                {
+                    GameManager.Instance.addScoresPoints(0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                }
+                else if (player1IsWolf)
+                {
+                    GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                }
+                else if (player2IsWolf)
+                {
+                    GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace);
+                }
+                else if (player3IsWolf)
+                {
+                    GameManager.Instance.addScoresPoints(GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, GameManager.Instance.scoreValuesManagerScript.PointsFirstPlace, 0);
+                }
+                break;
         }
     }
 
