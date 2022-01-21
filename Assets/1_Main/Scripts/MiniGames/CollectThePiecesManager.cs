@@ -46,7 +46,7 @@ public class CollectThePiecesManager : MonoBehaviour
 
         SpawnPlayerRandomly();
 
-        AssignPlayerTeam();
+        playersTeam = GameManager.Instance.AssignPlayerTeam();
     }
 
    
@@ -511,91 +511,6 @@ public class CollectThePiecesManager : MonoBehaviour
         }
     }
 
-    private void AssignPlayerTeam()
-    {
-        /// TODO : Attribution al�atoire pour la compp des equipes 1 et 2
-        //Debug.Log("In Game : " + GameManager.Instance.getTeamCompo());
-        playersTeam = new int[players.Length];
-
-        //verif si nb players insufisant
-        int teamCompo = GameManager.Instance.getTeamCompo();
-        if (players.Length <= 2 && teamCompo == 1) teamCompo = 0; //coop to 1v3
-        if (players.Length <= 2 && teamCompo == 2) teamCompo = 3; //coop to 1v3
-
-        for (int i = 0; i < players.Length; i++)
-        {
-            switch (teamCompo)
-            {
-                case (int)GameManager.TeamCompo.FFA:
-                    playersTeam[i] = i;
-                    //Debug.Log("1v1v1v1");
-                    //Debug.Log("In switch FFA");
-                    //pas d'�quipe
-                    break;
-                case (int)GameManager.TeamCompo.Coop:
-                    //Debug.Log("coop");
-                    playersTeam[i] = 0;
-                    //tous ensemble equipe 0
-                    break;
-                case (int)GameManager.TeamCompo.OneVSThree:
-                    //Debug.Log("1v3");
-                    GameManager.Instance.getMVP();
-                    if (i == GameManager.Instance.getMVP()) playersTeam[i] = 0;
-                    else playersTeam[i] = 1;
-                    break;
-                case (int)GameManager.TeamCompo.TwoVSTwo:
-                    //Debug.Log("2v2");
-                    if (i < 2) playersTeam[i] = 0;
-                    else playersTeam[i] = 1;
-                    break;
-            }
-        }
-        //Debug.Log("in switch alea : " + playersTeam.Length);
-
-        //aléa team players
-        switch (teamCompo)
-        {
-            case (int)GameManager.TeamCompo.OneVSThree:
-                //No alea since we pick the best player above
-                /*
-                for (int i = 0; i < playersTeam.Length; i++)
-                {
-                    int temp = playersTeam[i];
-                    int randomIndex = Random.Range(i, playersTeam.Length);
-                    playersTeam[i] = playersTeam[randomIndex];
-                    playersTeam[randomIndex] = temp;
-                    //Debug.Log(playersTeam[randomIndex]);
-                }
-                */
-                break;
-            case (int)GameManager.TeamCompo.TwoVSTwo:
-                for (int i = 0; i < playersTeam.Length; i++)
-                {
-                    int temp = playersTeam[i];
-                    int randomIndex = Random.Range(i, playersTeam.Length);
-                    playersTeam[i] = playersTeam[randomIndex];
-                    playersTeam[randomIndex] = temp;
-                    //Debug.Log(playersTeam[randomIndex]);
-                }
-                break;
-        }
-
-        if (teamCompo == 1 || teamCompo == 2)
-        {
-            for (int i = 0; i < playersTeam.Length; i++)
-            {
-                switch (playersTeam[i])
-                {
-                    case 0:
-                        players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("purple");
-                        break;
-                    case 1:
-                        players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("orange");
-                        break;
-                }
-            }
-        }
-    }
 
     public enum EqualityCase
     {

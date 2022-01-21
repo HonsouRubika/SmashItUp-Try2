@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class GameManager : MonoBehaviour
 
     private int[] _selectedGameModes;
     private int[] _teamCompo;
+    //team compo
+    public int[] playersTeam;
+    private GameObject[] players;
+    private GameObject[] playersUnsorted;
+
     public int _nbManches;
     public int _nbMancheActu = 0;
 
@@ -90,6 +96,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
+        players = playersUnsorted.OrderBy(go => go.name).ToArray();
+
         transitionState = TransitionState.OPEN;
 
         DontDestroyOnLoad(this);
@@ -208,16 +217,9 @@ public class GameManager : MonoBehaviour
             }
             else if (transitionState == TransitionState.OPENING && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
             {
-                //6) Show Players && goal
-                transitionState = TransitionState.CONSIGNE;
-
-                focusPlayersScript.EnableFocus();
-
                 //on suprr les rideaux
                 Destroy(transition);
-            }
-            else if (transitionState == TransitionState.CONSIGNE && Time.time >= focusPlayerTimerActu)
-            {
+
                 //instantiate animation
                 consigneInstance = Instantiate<GameObject>(consigne);
                 consigneAnimator = consigneInstance.GetComponent<Animator>();
@@ -228,9 +230,17 @@ public class GameManager : MonoBehaviour
                 //play anim
                 //consigneAnimator.Play();
 
-                transitionState = TransitionState.FOCUS;
+                transitionState = TransitionState.CONSIGNE;
             }
-            else if (transitionState == TransitionState.FOCUS && consigneAnimator.GetCurrentAnimatorStateInfo(0).IsName("Finished"))
+            else if (transitionState == TransitionState.CONSIGNE && consigneAnimator.GetCurrentAnimatorStateInfo(0).IsName("Finished"))
+            {
+                //6) Show Players && goal
+                transitionState = TransitionState.FOCUS;
+
+                focusPlayersScript.EnableFocus();
+
+            }
+            else if (transitionState == TransitionState.FOCUS && Time.time >= focusPlayerTimerActu)
             {
                 Destroy(consigneInstance);
                 //7) Timer "1,2,3,GO"
@@ -865,6 +875,94 @@ public class GameManager : MonoBehaviour
     public int getTeamCompo()
     {
         return _teamCompo[_nbMancheActu - 1];
+    }
+
+    public int[] AssignPlayerTeam()
+    {
+        /// TODO : Attribution al�atoire pour la compp des equipes 1 et 2
+        //Debug.Log("In Game : " + GameManager.Instance.getTeamCompo());
+        playersTeam = new int[players.Length];
+
+        //verif si nb players insufisant
+        int teamCompo = GameManager.Instance.getTeamCompo();
+        if (players.Length <= 2 && teamCompo == 1) teamCompo = 0; //coop to 1v3
+        if (players.Length <= 2 && teamCompo == 2) teamCompo = 3; //coop to 1v3
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            switch (teamCompo)
+            {
+                case (int)GameManager.TeamCompo.FFA:
+                    playersTeam[i] = i;
+                    //Debug.Log("1v1v1v1");
+                    //Debug.Log("In switch FFA");
+                    //pas d'�quipe
+                    break;
+                case (int)GameManager.TeamCompo.Coop:
+                    //Debug.Log("coop");
+                    playersTeam[i] = 0;
+                    //tous ensemble equipe 0
+                    break;
+                case (int)GameManager.TeamCompo.OneVSThree:
+                    //Debug.Log("1v3");
+                    GameManager.Instance.getMVP();
+                    if (i == GameManager.Instance.getMVP()) playersTeam[i] = 0;
+                    else playersTeam[i] = 1;
+                    break;
+                case (int)GameManager.TeamCompo.TwoVSTwo:
+                    //Debug.Log("2v2");
+                    if (i < 2) playersTeam[i] = 0;
+                    else playersTeam[i] = 1;
+                    break;
+            }
+        }
+        //Debug.Log("in switch alea : " + playersTeam.Length);
+
+        //aléa team players
+        switch (teamCompo)
+        {
+            case (int)GameManager.TeamCompo.OneVSThree:
+                //No alea since we pick the best player above
+                /*
+                for (int i = 0; i < playersTeam.Length; i++)
+                {
+                    int temp = playersTeam[i];
+                    int randomIndex = Random.Range(i, playersTeam.Length);
+                    playersTeam[i] = playersTeam[randomIndex];
+                    playersTeam[randomIndex] = temp;
+                    //Debug.Log(playersTeam[randomIndex]);
+                }
+                */
+                break;
+            case (int)GameManager.TeamCompo.TwoVSTwo:
+                for (int i = 0; i < playersTeam.Length; i++)
+                {
+                    int temp = playersTeam[i];
+                    int randomIndex = Random.Range(i, playersTeam.Length);
+                    playersTeam[i] = playersTeam[randomIndex];
+                    playersTeam[randomIndex] = temp;
+                    //Debug.Log(playersTeam[randomIndex]);
+                }
+                break;
+        }
+
+        if (teamCompo == 1 || teamCompo == 2)
+        {
+            for (int i = 0; i < playersTeam.Length; i++)
+            {
+                switch (playersTeam[i])
+                {
+                    case 0:
+                        players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("purple");
+                        break;
+                    case 1:
+                        players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("orange");
+                        break;
+                }
+            }
+        }
+
+        return playersTeam;
     }
 
     //liste des gameMode pr�sent dans le jeu (jouable)

@@ -13,6 +13,9 @@ public class DetructCrate_Rules : MonoBehaviour
     private GameObject[] playersUnsorted;
     public GameObject[] players;
 
+    //team compo
+    public int[] playersTeam;
+
     public float[] scorePlayers;
     private float[] finalScores;
     private int[] playersPosition;
@@ -43,6 +46,8 @@ public class DetructCrate_Rules : MonoBehaviour
         {
             playersPosition[i] = i;
         }
+
+
     }
 
     private void Update()
@@ -64,6 +69,9 @@ public class DetructCrate_Rules : MonoBehaviour
 
             playOneTime = true;
         }
+
+        //à toujours mettre dans le start
+        playersTeam = GameManager.Instance.AssignPlayerTeam();
     }
 
     private void SpawnPlayerRandomly()
