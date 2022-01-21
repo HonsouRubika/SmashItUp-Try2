@@ -150,10 +150,13 @@ public class WhackAMoleManager : MonoBehaviour
             MoleInScene++;
             TaupeSoundScript.TaupeSpawning();
         }
+        /*
         else
         {
-            spawnMole();
+            //no spawner actually available
+            //spawnMole();
         }
+        */
 
     }
 
