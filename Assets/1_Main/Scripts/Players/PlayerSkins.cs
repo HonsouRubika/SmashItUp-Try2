@@ -346,6 +346,7 @@ public class PlayerSkins : MonoBehaviour
         {
             case 0:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P1;
+                transform.GetChild(5).GetComponent<SpriteRenderer>().color = blue;
                 currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP1;
 
                 /*SpriteRenderer[] spritesP1 =  skin.GetComponentsInChildren<SpriteRenderer>();
@@ -356,6 +357,7 @@ public class PlayerSkins : MonoBehaviour
                 break;
             case 1:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P2;
+                transform.GetChild(5).GetComponent<SpriteRenderer>().color = red;
                 currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP2;
 
                 SpriteRenderer[] spritesP2 = skin.GetComponentsInChildren<SpriteRenderer>();
@@ -366,6 +368,7 @@ public class PlayerSkins : MonoBehaviour
                 break;
             case 2:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P3;
+                transform.GetChild(5).GetComponent<SpriteRenderer>().color = green;
                 currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP3;
 
                 SpriteRenderer[] spritesP3 = skin.GetComponentsInChildren<SpriteRenderer>();
@@ -376,6 +379,7 @@ public class PlayerSkins : MonoBehaviour
                 break;
             case 3:
                 transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = P4;
+                transform.GetChild(5).GetComponent<SpriteRenderer>().color = yellow;
                 currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP4;
 
                 SpriteRenderer[] spritesP4 = skin.GetComponentsInChildren<SpriteRenderer>();
