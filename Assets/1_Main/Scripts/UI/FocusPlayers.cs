@@ -30,6 +30,12 @@ public class FocusPlayers : MonoBehaviour
     public Sprite zoneSprite;
     public Sprite destroyCratesSprite;
 
+    [Header("Mini-game title")]
+    public SpriteRenderer[] skinPlayers;
+    public SpriteRenderer[] playersNumber;
+    public GameObject[] playersDisplay;
+    public Sprite[] skinsSprite;
+
     private Canvas canvas;
 
     private void Start()
@@ -106,6 +112,45 @@ public class FocusPlayers : MonoBehaviour
 
         SpawnCercle();
         GameManager.Instance.isShowingPlayers = true;
+
+        //affichage equipes
+        for(int i = 0; i< players.Length; i++)
+        {
+            switch (players[i].GetComponent<PlayerSkins>().currentSkin.name)
+            {
+                case "KamékinV2":
+                    skinPlayers[i].sprite = skinsSprite[0];
+                    break;
+                case "LaptiteFraise":
+                    skinPlayers[i].sprite = skinsSprite[1];
+                    break;
+                case "Pouletto":
+                    skinPlayers[i].sprite = skinsSprite[2];
+                    break;
+                default:
+                    Debug.LogWarning("New sprite needs to be linked in script FocusPlayers");
+                    skinPlayers[i].sprite = skinsSprite[0];
+                    break;
+            }
+        }
+        
+        //set position of players elements
+        switch (GameManager.Instance.getTeamCompo())
+        {
+            case (int)GameManager.TeamCompo.FFA:
+
+                break;
+            case (int)GameManager.TeamCompo.OneVSThree:
+
+                break;
+            case (int)GameManager.TeamCompo.TwoVSTwo:
+
+                break;
+            case (int)GameManager.TeamCompo.Coop:
+
+                break;
+        }
+        
 
         yield return new WaitForSecondsRealtime(timeShowingPlayers);
 
