@@ -238,6 +238,8 @@ public class PlayerSkins : MonoBehaviour
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
             currentHammer = currentSkin.transform.Find("Hammer").gameObject;
             hammerColor = currentHammer.GetComponent<SpriteRenderer>().color;
+
+            SetHammerColor();
         }
     }
 
@@ -324,6 +326,8 @@ public class PlayerSkins : MonoBehaviour
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
             currentHammer = currentSkin.transform.Find("Hammer").gameObject;
             hammerColor = currentHammer.GetComponent<SpriteRenderer>().color;
+
+            SetHammerColor();
         }
     }
     GameObject GetChildWithName(GameObject obj, string name)
@@ -337,6 +341,25 @@ public class PlayerSkins : MonoBehaviour
         else
         {
             return null;
+        }
+    }
+
+    private void SetHammerColor()
+    {
+        switch (playerControllerScript.playerID)
+        {
+            case 0:
+                currentHammer.GetComponent<SpriteRenderer>().sprite = hammerP1;
+                break;
+            case 1:
+                currentHammer.GetComponent<SpriteRenderer>().sprite = hammerP2;
+                break;
+            case 2:
+                currentHammer.GetComponent<SpriteRenderer>().sprite = hammerP3;
+                break;
+            case 3:
+                currentHammer.GetComponent<SpriteRenderer>().sprite = hammerP4;
+                break;
         }
     }
 
