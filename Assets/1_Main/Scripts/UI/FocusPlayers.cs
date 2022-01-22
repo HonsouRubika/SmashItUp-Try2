@@ -35,6 +35,7 @@ public class FocusPlayers : MonoBehaviour
     public SpriteRenderer[] playersNumber;
     public GameObject[] playersDisplay;
     public Sprite[] skinsSprite;
+    public Sprite[] numberSprite;
 
     private Canvas canvas;
 
@@ -114,7 +115,52 @@ public class FocusPlayers : MonoBehaviour
         GameManager.Instance.isShowingPlayers = true;
 
         //affichage equipes
-        for(int i = 0; i< players.Length; i++)
+        switch (GameManager.Instance.getTeamCompo())
+        {
+            case (int)GameManager.TeamCompo.FFA:
+                //no change
+                break;
+            case (int)GameManager.TeamCompo.OneVSThree:
+                //equipe 1
+                for (int j = 0; j < GameManager.Instance.playersTeam.Length; j++)
+                {
+                    if (GameManager.Instance.playersTeam[j] == 0) playersNumber[0].sprite = numberSprite[j];
+                }
+                //equipe 2
+                int cursor = 1;
+                for (int j = 0; j < GameManager.Instance.playersTeam.Length; j++)
+                {
+                    if (GameManager.Instance.playersTeam[j] == 1)
+                    {
+                        playersNumber[cursor].sprite = numberSprite[j];
+                        cursor++;
+                    }
+                }
+                break;
+            case (int)GameManager.TeamCompo.TwoVSTwo:
+                //equipe 1
+                int cursor1 = 0;
+                for (int j = 0; j < GameManager.Instance.playersTeam.Length; j++)
+                {
+                    cursor1++;
+                    if (GameManager.Instance.playersTeam[j] == 0) playersNumber[cursor1].sprite = numberSprite[j];
+                }
+                //equipe 2
+                int cursor2 = 2;
+                for (int j = 0; j < GameManager.Instance.playersTeam.Length; j++)
+                {
+                    if (GameManager.Instance.playersTeam[cursor2] == 1)
+                    {
+                        playersNumber[cursor2].sprite = numberSprite[cursor2];
+                        cursor2++;
+                    }
+                }
+                break;
+            case (int)GameManager.TeamCompo.Coop:
+                //no change
+                break;
+        }
+        for (int i = 0; i< GameManager.Instance.playersTeam.Length; i++)
         {
             switch (players[i].GetComponent<PlayerSkins>().currentSkin.name)
             {
@@ -138,10 +184,16 @@ public class FocusPlayers : MonoBehaviour
         switch (GameManager.Instance.getTeamCompo())
         {
             case (int)GameManager.TeamCompo.FFA:
+                for (int i = 0; i < GameManager.Instance.playersTeam.Length; i++)
+                {
 
+                }
                 break;
             case (int)GameManager.TeamCompo.OneVSThree:
+                for (int i = 0; i < GameManager.Instance.playersTeam.Length; i++)
+                {
 
+                }
                 break;
             case (int)GameManager.TeamCompo.TwoVSTwo:
 
