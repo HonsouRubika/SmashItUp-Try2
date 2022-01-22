@@ -31,13 +31,7 @@ public class Score : MonoBehaviour
         bulleScore2 = score2.transform.parent.gameObject;
         bulleScore3 = score3.transform.parent.gameObject;
 
-        if (!enableDisplayScore)
-        {
-            bulleScore0.SetActive(false);
-            bulleScore1.SetActive(false);
-            bulleScore2.SetActive(false);
-            bulleScore3.SetActive(false);
-        }
+        DisplayUIDependingPlayers();
     }
 
     private void DisplayScore()
@@ -97,5 +91,40 @@ public class Score : MonoBehaviour
     public void EnableAddScore()
     {
         enableAddScore = true;
+    }
+
+    private void DisplayUIDependingPlayers()
+    {
+        if (enableDisplayScore)
+        {
+            switch (GameManager.Instance.players.Length)
+            {
+                case 2:
+                    bulleScore0.SetActive(true);
+                    bulleScore1.SetActive(true);
+                    bulleScore2.SetActive(false);
+                    bulleScore3.SetActive(false);
+                    break;
+                case 3:
+                    bulleScore0.SetActive(true);
+                    bulleScore1.SetActive(true);
+                    bulleScore2.SetActive(true);
+                    bulleScore3.SetActive(false);
+                    break;
+                case 4:
+                    bulleScore0.SetActive(true);
+                    bulleScore1.SetActive(true);
+                    bulleScore2.SetActive(true);
+                    bulleScore3.SetActive(true);
+                    break;
+            }
+        }
+        else
+        {
+            bulleScore0.SetActive(false);
+            bulleScore1.SetActive(false);
+            bulleScore2.SetActive(false);
+            bulleScore3.SetActive(false);
+        } 
     }
 }
