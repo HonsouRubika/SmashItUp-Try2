@@ -151,8 +151,11 @@ public class FocusPlayers : MonoBehaviour
                 int cursor1 = 0;
                 for (int j = 0; j < playersTeam.Length; j++)
                 {
-                    if (playersTeam[j] == 0) playersNumber[cursor1].sprite = numberSprite[j];
-                    cursor1++;
+                    if (playersTeam[j] == 0)
+                    {
+                        playersNumber[cursor1].sprite = numberSprite[j];
+                        cursor1++;
+                    }
                 }
                 //equipe 2
                 int cursor2 = 2;
