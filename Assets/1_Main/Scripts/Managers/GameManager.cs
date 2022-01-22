@@ -234,6 +234,9 @@ public class GameManager : MonoBehaviour
                 //6) Show Players && goal
                 transitionState = TransitionState.FOCUS;
 
+                //display team compo
+                playersTeam = AssignPlayerTeam();
+
                 focusPlayersScript.EnableFocus();
 
             }
@@ -886,7 +889,7 @@ public class GameManager : MonoBehaviour
         playersTeam = new int[players.Length];
 
         //verif si nb players insufisant
-        int teamCompo = GameManager.Instance.getTeamCompo();
+        int teamCompo = getTeamCompo();
         if (players.Length <= 2 && teamCompo == 1) teamCompo = 0; //coop to 1v3
         if (players.Length <= 2 && teamCompo == 2) teamCompo = 3; //coop to 1v3
 
@@ -894,24 +897,24 @@ public class GameManager : MonoBehaviour
         {
             switch (teamCompo)
             {
-                case (int)GameManager.TeamCompo.FFA:
+                case (int)TeamCompo.FFA:
                     playersTeam[i] = i;
                     //Debug.Log("1v1v1v1");
                     //Debug.Log("In switch FFA");
                     //pas d'�quipe
                     break;
-                case (int)GameManager.TeamCompo.Coop:
+                case (int)TeamCompo.Coop:
                     //Debug.Log("coop");
                     playersTeam[i] = 0;
                     //tous ensemble equipe 0
                     break;
-                case (int)GameManager.TeamCompo.OneVSThree:
+                case (int)TeamCompo.OneVSThree:
                     //Debug.Log("1v3");
-                    GameManager.Instance.getMVP();
-                    if (i == GameManager.Instance.getMVP()) playersTeam[i] = 0;
+                    getMVP();
+                    if (i == getMVP()) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
                     break;
-                case (int)GameManager.TeamCompo.TwoVSTwo:
+                case (int)TeamCompo.TwoVSTwo:
                     //Debug.Log("2v2");
                     if (i < 2) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
@@ -923,7 +926,7 @@ public class GameManager : MonoBehaviour
         //aléa team players
         switch (teamCompo)
         {
-            case (int)GameManager.TeamCompo.OneVSThree:
+            case (int)TeamCompo.OneVSThree:
                 //No alea since we pick the best player above
                 /*
                 for (int i = 0; i < playersTeam.Length; i++)
@@ -936,7 +939,7 @@ public class GameManager : MonoBehaviour
                 }
                 */
                 break;
-            case (int)GameManager.TeamCompo.TwoVSTwo:
+            case (int)TeamCompo.TwoVSTwo:
                 for (int i = 0; i < playersTeam.Length; i++)
                 {
                     int temp = playersTeam[i];
@@ -963,7 +966,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
         return playersTeam;
     }
 

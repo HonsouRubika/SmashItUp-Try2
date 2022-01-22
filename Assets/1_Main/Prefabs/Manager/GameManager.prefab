@@ -51,6 +51,8 @@ MonoBehaviour:
   focusPlayersScript: {fileID: 0}
   scoreValuesManagerScript: {fileID: 0}
   playersTeam: 
+  players: []
+  playersUnsorted: []
   _nbManches: 5
   _nbMancheActu: 0
   _scoreP1: 0
@@ -630,6 +632,22 @@ PrefabInstance:
       propertyPath: destroyCratesSprite
       value: 
       objectReference: {fileID: 21300000, guid: 289d93e4ba6934a4aa3a5026c827c4b4, type: 3}
+    - target: {fileID: 5353233394172496941, guid: 4d1529d4d60b334409da0977edf77f4d, type: 3}
+      propertyPath: skinsSprite.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 9689f8de350e36f47ab57f772c0af092, type: 3}
+    - target: {fileID: 5353233394172496941, guid: 4d1529d4d60b334409da0977edf77f4d, type: 3}
+      propertyPath: skinsSprite.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 2efa09902b3b3d442bfbe88d29e35fa0, type: 3}
+    - target: {fileID: 5353233394172496941, guid: 4d1529d4d60b334409da0977edf77f4d, type: 3}
+      propertyPath: skinsSprite.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: f9550062bc796ec47a6b7df3c5272d90, type: 3}
+    - target: {fileID: 5353233394172496941, guid: 4d1529d4d60b334409da0977edf77f4d, type: 3}
+      propertyPath: skinsSprite.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: ce658340b8e89bd4bbf35e5d9e8f798b, type: 3}
     - target: {fileID: 5406578355057609831, guid: 4d1529d4d60b334409da0977edf77f4d, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
