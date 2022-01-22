@@ -445,6 +445,38 @@ public class PlayerSkins : MonoBehaviour
         }
     }
 
+    public string GetHammerColor()
+    {
+        if (currentHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP1
+            || currentHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP2
+            || currentHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP3
+            || currentHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP4)
+        {
+            return "golden";
+        }
+        else if (currentHammer.GetComponent<SpriteRenderer>().sprite == hammerP1
+            || currentHammer.GetComponent<SpriteRenderer>().sprite == hammerP2
+            || currentHammer.GetComponent<SpriteRenderer>().sprite == hammerP3
+            || currentHammer.GetComponent<SpriteRenderer>().sprite == hammerP4)
+        {
+            return "default";
+        }
+        else if (currentHammer.GetComponent<SpriteRenderer>().sprite == purpleHammer
+            || currentHammer.GetComponent<SpriteRenderer>().sprite == goldenPurpleHammer)
+        {
+            return "purple";
+        }
+        else if (currentHammer.GetComponent<SpriteRenderer>().sprite == orangeHammer
+            || currentHammer.GetComponent<SpriteRenderer>().sprite == goldenOrangeHammer)
+        {
+            return "orange";
+        }
+        else
+        {
+            return "null";
+        }
+    }
+
     public void SetHammerColorByTeam(string color)
     {
         switch (color)

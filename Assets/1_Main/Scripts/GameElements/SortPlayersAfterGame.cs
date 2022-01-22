@@ -109,6 +109,7 @@ public class SortPlayersAfterGame : MonoBehaviour
                 {
                     crownInstances[i] = Instantiate(crownOfWinner, new Vector2(players[players.Length - 1 - i].transform.position.x, players[players.Length - 1 - i].transform.position.y + flagAttachedPlayerPosY), Quaternion.identity);
                     crownInstances[i].transform.SetParent(players[players.Length - 1 - i].transform);
+                    players[players.Length - 1 - i].GetComponent<PlayerSkins>().SetHammerColorByTeam("golden");
                 }
                 break;
             case WinnerEqualityCase.FirstSecondThird:
@@ -117,6 +118,7 @@ public class SortPlayersAfterGame : MonoBehaviour
                 {
                     crownInstances[i] = Instantiate(crownOfWinner, new Vector2(players[players.Length - 1 - i].transform.position.x, players[players.Length - 1 - i].transform.position.y + flagAttachedPlayerPosY), Quaternion.identity);
                     crownInstances[i].transform.SetParent(players[players.Length - 1 - i].transform);
+                    players[players.Length - 1 - i].GetComponent<PlayerSkins>().SetHammerColorByTeam("golden");
                 }
                 break;
             case WinnerEqualityCase.FirstSecond:
@@ -125,6 +127,7 @@ public class SortPlayersAfterGame : MonoBehaviour
                 {
                     crownInstances[i] = Instantiate(crownOfWinner, new Vector2(players[players.Length - 1 - i].transform.position.x, players[players.Length - 1 - i].transform.position.y + flagAttachedPlayerPosY), Quaternion.identity);
                     crownInstances[i].transform.SetParent(players[players.Length - 1 - i].transform);
+                    players[players.Length - 1 - i].GetComponent<PlayerSkins>().SetHammerColorByTeam("golden");
                 }
                 break;
         }

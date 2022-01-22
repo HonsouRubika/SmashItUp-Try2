@@ -102,7 +102,13 @@ public class TeleporterLobby : MonoBehaviour
             }
             if (sortPlayersScript.destroyHammerOnHub)
             {
-                sortPlayersScript.players[sortPlayersScript.players.Length - 1].GetComponent<PlayerSkins>().SetHammerColorByTeam("reset");
+                for (int i = 0; i < sortPlayersScript.players.Length; i++)
+                {
+                    if (sortPlayersScript.players[i].GetComponent<PlayerSkins>().GetHammerColor() == "golden")
+                    {
+                        sortPlayersScript.players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("reset");
+                    }
+                }
             }
         }
     }
