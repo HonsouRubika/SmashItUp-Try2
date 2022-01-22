@@ -884,7 +884,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //return mvp
+    //return mvp [0-3]
     public int getMVP()
     {
         //get le meilleur joueur
@@ -892,12 +892,12 @@ public class GameManager : MonoBehaviour
         int bestPlayerSpread = GameManager.Instance.getScorePlayer(0);
 
         //get des players avec les stats approprié
-        for (int i = 1; i < GameManager.Instance.getNbPlayer(); i++)
+        for (int i = 0; i < GameManager.Instance.getNbPlayer(); i++)
         {
 
-            if (GameManager.Instance.getScorePlayer(i) > bestPlayerSpread)
+            if (GameManager.Instance.getScorePlayer(i+1) > bestPlayerSpread)
             {
-                bestPlayerSpread = GameManager.Instance.getScorePlayer(i);
+                bestPlayerSpread = GameManager.Instance.getScorePlayer(i+1);
                 bestPlayer = i;
             }
         }
@@ -957,7 +957,6 @@ public class GameManager : MonoBehaviour
                     break;
                 case (int)TeamCompo.OneVSThree:
                     //Debug.Log("1v3");
-                    getMVP();
                     if (i == getMVP()) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
                     break;
