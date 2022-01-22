@@ -23,6 +23,7 @@ public class Mole : MonoBehaviour
 
     [Header("Score")]
     public int pointsToAdd = 1;
+    private int pointsToAddAlone1V3 = 0;
     public GameObject floatingPoint;
     public Color player0Color;
     public Color player1Color;
@@ -45,6 +46,8 @@ public class Mole : MonoBehaviour
         moleColliderBoundsX = moleCollider.bounds.size.x;
         moleColliderBoundsY = moleCollider.bounds.size.y;
         pos = transform.position;
+
+        pointsToAddAlone1V3 = pointsToAdd * 2;
     }
 
     private void FixedUpdate()
@@ -59,29 +62,72 @@ public class Mole : MonoBehaviour
             playOneTime = true;
 
             GameObject floatPoint = Instantiate(floatingPoint, transform.position, Quaternion.identity);
-            floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
 
             switch (hammerCollider.GetComponentInParent<PlayerController>().playerID)
             {
                 case 0:
                     floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().color = player0Color;
-                    scoreScript.AddScore(pointsToAdd, 0, 0, 0);
-                    whackAWholeScript.scorePlayers[0]++;
+
+                    if (whackAMoleScript.OneVSThreeEnable && whackAMoleScript.playerAlone1v3 == 0)
+                    {
+                        floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
+                        scoreScript.AddScore(pointsToAddAlone1V3, 0, 0, 0);
+                        whackAWholeScript.scorePlayers[0] += pointsToAddAlone1V3;
+                    }
+                    else
+                    {
+                        floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
+                        scoreScript.AddScore(pointsToAdd, 0, 0, 0);
+                        whackAWholeScript.scorePlayers[0]++;
+                    }
                     break;
                 case 1:
                     floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().color = player1Color;
-                    scoreScript.AddScore(0, pointsToAdd, 0, 0);
-                    whackAWholeScript.scorePlayers[1]++;
+
+                    if (whackAMoleScript.OneVSThreeEnable && whackAMoleScript.playerAlone1v3 == 1)
+                    {
+                        floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
+                        scoreScript.AddScore(0, pointsToAddAlone1V3, 0, 0);
+                        whackAWholeScript.scorePlayers[1] += pointsToAddAlone1V3;
+                    }
+                    else
+                    {
+                        floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
+                        scoreScript.AddScore(0, pointsToAdd, 0, 0);
+                        whackAWholeScript.scorePlayers[1]++;
+                    }
                     break;
                 case 2:
                     floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().color = player2Color;
-                    scoreScript.AddScore(0, 0, pointsToAdd, 0);
-                    whackAWholeScript.scorePlayers[2]++;
+
+                    if (whackAMoleScript.OneVSThreeEnable && whackAMoleScript.playerAlone1v3 == 2)
+                    {
+                        floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
+                        scoreScript.AddScore(0, 0, pointsToAddAlone1V3, 0);
+                        whackAWholeScript.scorePlayers[2] += pointsToAddAlone1V3;
+                    }
+                    else
+                    {
+                        floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
+                        scoreScript.AddScore(0, 0, pointsToAdd, 0);
+                        whackAWholeScript.scorePlayers[2]++;
+                    }
                     break;
                 case 3:
                     floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().color = player3Color;
-                    scoreScript.AddScore(0, 0, 0, pointsToAdd);
-                    whackAWholeScript.scorePlayers[3]++;
+
+                    if (whackAMoleScript.OneVSThreeEnable && whackAMoleScript.playerAlone1v3 == 3)
+                    {
+                        floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
+                        scoreScript.AddScore(0, 0, 0, pointsToAddAlone1V3);
+                        whackAWholeScript.scorePlayers[3] += pointsToAddAlone1V3;
+                    }
+                    else
+                    {
+                        floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
+                        scoreScript.AddScore(0, 0, 0, pointsToAdd);
+                        whackAWholeScript.scorePlayers[3]++;
+                    }
                     break;
             }
 

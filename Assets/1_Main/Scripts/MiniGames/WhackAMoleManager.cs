@@ -47,6 +47,8 @@ public class WhackAMoleManager : MonoBehaviour
 
     //team compo
     public int[] playersTeam;
+    [HideInInspector] public int playerAlone1v3 = 0;
+    [HideInInspector] public bool OneVSThreeEnable = false;
 
     //Equality
     public EqualityCase equalityCase = EqualityCase.None;
@@ -80,6 +82,12 @@ public class WhackAMoleManager : MonoBehaviour
 
         //à toujours mettre dans le start
         playersTeam = GameManager.Instance.AssignPlayerTeam();
+
+        if (GameManager.Instance.getTeamCompo() == 1)
+        {
+            OneVSThreeEnable = true;
+            playerAlone1v3 = System.Array.IndexOf(playersTeam, 0);
+        }
     }
 
     private void Update()
