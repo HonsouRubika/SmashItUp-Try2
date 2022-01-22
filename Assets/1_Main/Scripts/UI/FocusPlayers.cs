@@ -151,8 +151,8 @@ public class FocusPlayers : MonoBehaviour
                 int cursor1 = 0;
                 for (int j = 0; j < playersTeam.Length; j++)
                 {
-                    cursor1++;
                     if (playersTeam[j] == 0) playersNumber[cursor1].sprite = numberSprite[j];
+                    cursor1++;
                 }
                 //equipe 2
                 int cursor2 = 2;
@@ -231,9 +231,14 @@ public class FocusPlayers : MonoBehaviour
                 //display VS sprite
                 VS.SetActive(true);
                 //equipe 1
+                int cursor1 = 0;
                 for (int j = 0; j < playersTeam.Length; j++)
                 {
-                    if (playersTeam[j] == 0) playersDisplay[j].transform.position = new Vector2(twoVSTwoPlayerDisplayCoordonate[0].position.x, twoVSTwoPlayerDisplayCoordonate[0].position.y);
+                    if (playersTeam[j] == 0)
+                    {
+                        playersDisplay[j].transform.position = new Vector2(twoVSTwoPlayerDisplayCoordonate[cursor1].position.x, twoVSTwoPlayerDisplayCoordonate[cursor1].position.y);
+                        cursor1++;
+                    }
                 }
                 //equipe 2
                 int cursor2 = 1;
