@@ -162,6 +162,8 @@ public class PlayerController : MonoBehaviour
     {
         cc = GetComponent<CapsuleCollider2D>();
         GameManager.Instance.playerControllers.Add(this);
+        GameManager.Instance.playersUnsorted.Add(gameObject);
+        GameManager.Instance.SortPlayersInList();
 
         ///integrate wallride?
         wallGripTime = 0;

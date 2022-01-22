@@ -21,6 +21,7 @@ public class KeepTheFlagManager : MonoBehaviour
 
     [Header("KeepFlag Rules")]
     public float timeToScore = 1;
+    public int pointsEarned1V3Alone = 2;
 
     [Header("KeepFlag Score")]
     public bool player0HaveFlag = false;
@@ -55,6 +56,8 @@ public class KeepTheFlagManager : MonoBehaviour
 
     //team compo
     public int[] playersTeam;
+    private int playerAlone1v3 = 0;
+    private bool OneVSThreeEnable = false;
 
     //Equality
     public EqualityCase equalityCase = EqualityCase.None;
@@ -91,6 +94,12 @@ public class KeepTheFlagManager : MonoBehaviour
 
         //à toujours mettre dans le start
         playersTeam = GameManager.Instance.AssignPlayerTeam();
+
+        if (GameManager.Instance.getTeamCompo() == 1)
+        {
+            OneVSThreeEnable = true;
+            playerAlone1v3 = System.Array.IndexOf(playersTeam, 0);
+        }
     }
 
     private void Update()
@@ -173,11 +182,21 @@ public class KeepTheFlagManager : MonoBehaviour
 
             if (timePastInZonePlayer[0] >= timeToScore)
             {
-                scorePlayers[0]++;
-                timePastInZonePlayer[0] = 0;
-                scoreScript.AddScore(1, 0, 0, 0);
+                if (OneVSThreeEnable && playerAlone1v3 == 0)
+                {
+                    scorePlayers[0] += pointsEarned1V3Alone;
+                    scoreScript.AddScore(pointsEarned1V3Alone, 0, 0, 0);
+                    pointCounterP1 += pointsEarned1V3Alone;
 
-                pointCounterP1++;
+                }
+                else
+                {
+                    scorePlayers[0]++;
+                    scoreScript.AddScore(1, 0, 0, 0);
+                    pointCounterP1++;
+                }
+
+                timePastInZonePlayer[0] = 0;
                 SpawnFloatingText(player0Color, players[0], pointCounterP1);
             }
             else
@@ -200,11 +219,21 @@ public class KeepTheFlagManager : MonoBehaviour
 
             if (timePastInZonePlayer[1] >= timeToScore)
             {
-                scorePlayers[1]++;
-                timePastInZonePlayer[1] = 0;
-                scoreScript.AddScore(0, 1, 0, 0);
+                if (OneVSThreeEnable && playerAlone1v3 == 1)
+                {
+                    scorePlayers[1] += pointsEarned1V3Alone;
+                    scoreScript.AddScore(0, pointsEarned1V3Alone, 0, 0);
+                    pointCounterP2 += pointsEarned1V3Alone;
 
-                pointCounterP2++;
+                }
+                else
+                {
+                    scorePlayers[1]++;
+                    scoreScript.AddScore(0, 1, 0, 0);
+                    pointCounterP2++;
+                }
+
+                timePastInZonePlayer[1] = 0;
                 SpawnFloatingText(player1Color, players[1], pointCounterP2);
             }
             else
@@ -227,11 +256,21 @@ public class KeepTheFlagManager : MonoBehaviour
 
             if (timePastInZonePlayer[2] >= timeToScore)
             {
-                scorePlayers[2]++;
-                timePastInZonePlayer[2] = 0;
-                scoreScript.AddScore(0, 0, 1, 0);
+                if (OneVSThreeEnable && playerAlone1v3 == 2)
+                {
+                    scorePlayers[2] += pointsEarned1V3Alone;
+                    scoreScript.AddScore(0, 0, pointsEarned1V3Alone, 0);
+                    pointCounterP3 += pointsEarned1V3Alone;
 
-                pointCounterP3++;
+                }
+                else
+                {
+                    scorePlayers[2]++;
+                    scoreScript.AddScore(0, 0, 1, 0);
+                    pointCounterP3++;
+                }
+
+                timePastInZonePlayer[2] = 0;
                 SpawnFloatingText(player2Color, players[2], pointCounterP3);
             }
             else
@@ -254,11 +293,21 @@ public class KeepTheFlagManager : MonoBehaviour
 
             if (timePastInZonePlayer[3] >= timeToScore)
             {
-                scorePlayers[3]++;
-                timePastInZonePlayer[3] = 0;
-                scoreScript.AddScore(0, 0, 0, 1);
+                if (OneVSThreeEnable && playerAlone1v3 == 3)
+                {
+                    scorePlayers[3] += pointsEarned1V3Alone;
+                    scoreScript.AddScore(0, 0, 0, pointsEarned1V3Alone);
+                    pointCounterP4 += pointsEarned1V3Alone;
 
-                pointCounterP4++;
+                }
+                else
+                {
+                    scorePlayers[3]++;
+                    scoreScript.AddScore(0, 0, 0, 1);
+                    pointCounterP4++;
+                }
+
+                timePastInZonePlayer[3] = 0;
                 SpawnFloatingText(player3Color, players[3], pointCounterP4);
             }
             else

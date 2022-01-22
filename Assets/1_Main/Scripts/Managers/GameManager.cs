@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
     private int[] _teamCompo;
     //team compo
     public int[] playersTeam;
-    private GameObject[] players;
-    private GameObject[] playersUnsorted;
+    public GameObject[] players;
+    public List<GameObject> playersUnsorted;
 
     public int _nbManches;
     public int _nbMancheActu = 0;
@@ -96,9 +96,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
-        players = playersUnsorted.OrderBy(go => go.name).ToArray();
-
         transitionState = TransitionState.OPEN;
 
         DontDestroyOnLoad(this);
@@ -277,6 +274,11 @@ public class GameManager : MonoBehaviour
         }
 
         CheckPlayerCollision();
+    }
+
+    public void SortPlayersInList()
+    {
+        players = playersUnsorted.OrderBy(go => go.name).ToArray();
     }
 
     private void CheckPlayerCollision()
