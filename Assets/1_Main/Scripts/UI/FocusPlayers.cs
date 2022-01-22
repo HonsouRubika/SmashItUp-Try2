@@ -225,7 +225,6 @@ public class FocusPlayers : MonoBehaviour
                     if (playersTeam[j] == 1)
                     {
                         playersDisplay[j].transform.position = new Vector2(oneVSThreePlayerDisplayCoordonate[cursor].position.x, oneVSThreePlayerDisplayCoordonate[cursor].position.y);
-                        playersNumber[cursor].sprite = numberSprite[j];
                         cursor++;
                     }
                 }
@@ -244,13 +243,12 @@ public class FocusPlayers : MonoBehaviour
                     }
                 }
                 //equipe 2
-                int cursor2 = 1;
+                int cursor2 = 2;
                 for (int j = 0; j < playersTeam.Length; j++)
                 {
                     if (playersTeam[j] == 1)
                     {
                         playersDisplay[j].transform.position = new Vector2(twoVSTwoPlayerDisplayCoordonate[cursor2].position.x, twoVSTwoPlayerDisplayCoordonate[cursor2].position.y);
-                        playersNumber[cursor2].sprite = numberSprite[j];
                         cursor2++;
                     }
                 }
