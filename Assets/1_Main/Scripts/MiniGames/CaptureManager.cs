@@ -85,7 +85,7 @@ public class CaptureManager : MonoBehaviour
         SpawnPlayerRandomly();
         //GameManager.Instance.focusPlayersScript.SetGameTitle("Zone");
 
-        playersTeam = GameManager.Instance.AssignPlayerTeam();
+        playersTeam = GameManager.Instance.playersTeam;
         
         if (GameManager.Instance.getTeamCompo() == 1)
         {

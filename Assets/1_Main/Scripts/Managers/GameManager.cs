@@ -587,38 +587,71 @@ public class GameManager : MonoBehaviour
             {
                 case (int)GameMode.CaptureTheFlag:
                     _nbMancheActu++;
+
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
+
                     SceneManager.LoadScene("FlagCapture" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.Loup:
                     _nbMancheActu++;
                     //Limitation de GameMode
                     _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
+
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
+
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.CaptureDeZone:
                     _nbMancheActu++;
+
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
+
                     SceneManager.LoadScene("CaptureZone0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.Contamination:
                     _nbMancheActu++;
+
                     //Limitation de GameMode
                     _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
+
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
+
                     SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.KeepTheFlag:
                     _nbMancheActu++;
+
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
+
                     SceneManager.LoadScene("KeepTheFlag0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.CaptureDeZoneMouvante:
                     _nbMancheActu++;
+
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
+
                     SceneManager.LoadScene("ZoneMouvante0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.CollectTheCoin:
                     _nbMancheActu++;
+
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
+
                     SceneManager.LoadScene("Coins0" + Random.Range(1, 3));
                     break;
                 case (int)GameMode.WhackAMole:
                     _nbMancheActu++;
+
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
+
                     SceneManager.LoadScene("WackAMole0" + Random.Range(1, 3));
                     break;
                 default:
@@ -634,6 +667,9 @@ public class GameManager : MonoBehaviour
             {
                 case GameMode.CaptureTheFlag:
                     _nbMancheActu++;
+
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
                     SceneManager.LoadScene("FlagCapture" + Random.Range(1, 3));
                     break;
                 case GameMode.Loup:
@@ -641,10 +677,14 @@ public class GameManager : MonoBehaviour
                     //Limitation de GameMode
                     if (teamCompoToTest.Length > 0) teamCompoToTest[_nbMancheActu % teamCompoToTest.Length] = (int)TeamCompo.FFA;
                     else _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 3));
                     break;
                 case GameMode.CaptureDeZone:
                     _nbMancheActu++;
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
                     SceneManager.LoadScene("CaptureZone0" + Random.Range(1, 3));
                     break;
                 case GameMode.Contamination:
@@ -652,22 +692,32 @@ public class GameManager : MonoBehaviour
                     //Limitation de GameMode
                     if (teamCompoToTest.Length > 0) teamCompoToTest[_nbMancheActu % teamCompoToTest.Length] = (int)TeamCompo.FFA;
                     else _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
                     SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
                     break;
                 case GameMode.KeepTheFlag:
                     _nbMancheActu++;
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
                     SceneManager.LoadScene("KeepTheFlag0" + Random.Range(1, 3));
                     break;
                 case GameMode.CaptureDeZoneMouvante:
                     _nbMancheActu++;
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
                     SceneManager.LoadScene("ZoneMouvante0" + Random.Range(1, 3));
                     break;
                 case GameMode.CollectTheCoin:
                     _nbMancheActu++;
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
                     SceneManager.LoadScene("Coins0" + Random.Range(1, 3));
                     break;
                 case GameMode.WhackAMole:
                     _nbMancheActu++;
+                    //load team compo
+                    playersTeam = AssignPlayerTeam();
                     SceneManager.LoadScene("WackAMole0" + Random.Range(1, 3));
                     break;
                 default:
@@ -834,7 +884,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //return mvp
+    //return mvp [0-3]
     public int getMVP()
     {
         //get le meilleur joueur
@@ -842,12 +892,12 @@ public class GameManager : MonoBehaviour
         int bestPlayerSpread = GameManager.Instance.getScorePlayer(0);
 
         //get des players avec les stats approprié
-        for (int i = 1; i < GameManager.Instance.getNbPlayer(); i++)
+        for (int i = 0; i < GameManager.Instance.getNbPlayer(); i++)
         {
 
-            if (GameManager.Instance.getScorePlayer(i) > bestPlayerSpread)
+            if (GameManager.Instance.getScorePlayer(i+1) > bestPlayerSpread)
             {
-                bestPlayerSpread = GameManager.Instance.getScorePlayer(i);
+                bestPlayerSpread = GameManager.Instance.getScorePlayer(i+1);
                 bestPlayer = i;
             }
         }
@@ -886,7 +936,7 @@ public class GameManager : MonoBehaviour
         playersTeam = new int[players.Length];
 
         //verif si nb players insufisant
-        int teamCompo = GameManager.Instance.getTeamCompo();
+        int teamCompo = getTeamCompo();
         if (players.Length <= 2 && teamCompo == 1) teamCompo = 0; //coop to 1v3
         if (players.Length <= 2 && teamCompo == 2) teamCompo = 3; //coop to 1v3
 
@@ -894,24 +944,23 @@ public class GameManager : MonoBehaviour
         {
             switch (teamCompo)
             {
-                case (int)GameManager.TeamCompo.FFA:
+                case (int)TeamCompo.FFA:
                     playersTeam[i] = i;
                     //Debug.Log("1v1v1v1");
                     //Debug.Log("In switch FFA");
                     //pas d'�quipe
                     break;
-                case (int)GameManager.TeamCompo.Coop:
+                case (int)TeamCompo.Coop:
                     //Debug.Log("coop");
                     playersTeam[i] = 0;
                     //tous ensemble equipe 0
                     break;
-                case (int)GameManager.TeamCompo.OneVSThree:
+                case (int)TeamCompo.OneVSThree:
                     //Debug.Log("1v3");
-                    GameManager.Instance.getMVP();
-                    if (i == GameManager.Instance.getMVP()) playersTeam[i] = 0;
+                    if (i == getMVP()) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
                     break;
-                case (int)GameManager.TeamCompo.TwoVSTwo:
+                case (int)TeamCompo.TwoVSTwo:
                     //Debug.Log("2v2");
                     if (i < 2) playersTeam[i] = 0;
                     else playersTeam[i] = 1;
@@ -923,7 +972,7 @@ public class GameManager : MonoBehaviour
         //aléa team players
         switch (teamCompo)
         {
-            case (int)GameManager.TeamCompo.OneVSThree:
+            case (int)TeamCompo.OneVSThree:
                 //No alea since we pick the best player above
                 /*
                 for (int i = 0; i < playersTeam.Length; i++)
@@ -936,7 +985,7 @@ public class GameManager : MonoBehaviour
                 }
                 */
                 break;
-            case (int)GameManager.TeamCompo.TwoVSTwo:
+            case (int)TeamCompo.TwoVSTwo:
                 for (int i = 0; i < playersTeam.Length; i++)
                 {
                     int temp = playersTeam[i];
@@ -963,7 +1012,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
         return playersTeam;
     }
 

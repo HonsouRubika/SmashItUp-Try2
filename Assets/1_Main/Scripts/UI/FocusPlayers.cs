@@ -30,11 +30,17 @@ public class FocusPlayers : MonoBehaviour
     public Sprite zoneSprite;
     public Sprite destroyCratesSprite;
 
-    [Header("Mini-game title")]
+    [Header("Display Team Compo")]
     public SpriteRenderer[] skinPlayers;
     public SpriteRenderer[] playersNumber;
     public GameObject[] playersDisplay;
     public Sprite[] skinsSprite;
+    public Sprite[] numberSprite;
+    public Transform[] oneVSThreePlayerDisplayCoordonate;
+    public Transform[] twoVSTwoPlayerDisplayCoordonate;
+    public GameObject VS;
+    private int[] playersTeam; //from GameManager
+
 
     private Canvas canvas;
 
@@ -42,6 +48,7 @@ public class FocusPlayers : MonoBehaviour
     {
         hideScreen.GetComponent<SpriteRenderer>().color = colorHideScreen;
         canvas = canvasRef.GetComponent<Canvas>();
+
     }
 
     public void FindPlayers()
@@ -55,6 +62,8 @@ public class FocusPlayers : MonoBehaviour
         StartCoroutine(GetReference());
 
         StartCoroutine(IncrementTimer());
+
+        playersTeam = GameManager.Instance.playersTeam;
     }
 
     private void SpawnCercle()
@@ -113,8 +122,65 @@ public class FocusPlayers : MonoBehaviour
         SpawnCercle();
         GameManager.Instance.isShowingPlayers = true;
 
-        //affichage equipes
-        for(int i = 0; i< players.Length; i++)
+        ///////  affichage equipes  ///////
+        //num des players :
+        switch (GameManager.Instance.getTeamCompo())
+        {
+            case (int)GameManager.TeamCompo.FFA:
+                //no change
+                break;
+            case (int)GameManager.TeamCompo.OneVSThree:
+                //equipe 1
+                for (int j = 0; j < playersTeam.Length; j++)
+                {
+                    if (playersTeam[j] == 0) playersNumber[0].sprite = numberSprite[0];
+                }
+                //equipe 2
+                int cursor1v3 = 1;
+                for (int j = 0; j < playersTeam.Length; j++)
+                {
+                    if (playersTeam[j] == 1)
+                    {
+                        playersNumber[cursor1v3].sprite = numberSprite[cursor1v3];
+                        cursor1v3++;
+                    }
+                }
+                break;
+            case (int)GameManager.TeamCompo.TwoVSTwo:
+                //equipe 1
+                int cursor1 = 0;
+                for (int j = 0; j < playersTeam.Length; j++)
+                {
+                    if (playersTeam[j] == 0)
+                    {
+                        playersNumber[cursor1].sprite = numberSprite[cursor1];
+                        cursor1++;
+                    }
+                }
+                //equipe 2
+                int cursor2 = 2;
+                for (int j = 0; j < playersTeam.Length; j++)
+                {
+                    if (playersTeam[j] == 1)
+                    {
+                        playersNumber[cursor2].sprite = numberSprite[cursor2];
+                        cursor2++;
+                    }
+                }
+                break;
+            case (int)GameManager.TeamCompo.Coop:
+                //no change
+                break;
+        }
+
+        //on desactive pour les players vacants
+        for (int i = playersTeam.Length; i < 4; i++)
+        {
+            playersDisplay[i].SetActive(false);
+        }
+
+        //display skin du bon player
+        for (int i = 0; i< playersTeam.Length; i++)
         {
             switch (players[i].GetComponent<PlayerSkins>().currentSkin.name)
             {
@@ -138,16 +204,60 @@ public class FocusPlayers : MonoBehaviour
         switch (GameManager.Instance.getTeamCompo())
         {
             case (int)GameManager.TeamCompo.FFA:
+                //no change in players placement
+                //add FFA display
 
+                //hide VS sprite
+                VS.SetActive(false);
                 break;
             case (int)GameManager.TeamCompo.OneVSThree:
-
+                //display VS sprite
+                VS.SetActive(true);
+                //equipe 1
+                for (int j = 0; j < playersTeam.Length; j++)
+                {
+                    if (playersTeam[j] == 0) playersDisplay[j].transform.position = new Vector2( oneVSThreePlayerDisplayCoordonate[0].position.x, oneVSThreePlayerDisplayCoordonate[0].position.y);
+                }
+                //equipe 2
+                int cursor = 1;
+                for (int j = 0; j < playersTeam.Length; j++)
+                {
+                    if (playersTeam[j] == 1)
+                    {
+                        playersDisplay[j].transform.position = new Vector2(oneVSThreePlayerDisplayCoordonate[cursor].position.x, oneVSThreePlayerDisplayCoordonate[cursor].position.y);
+                        cursor++;
+                    }
+                }
                 break;
             case (int)GameManager.TeamCompo.TwoVSTwo:
-
+                //display VS sprite
+                VS.SetActive(true);
+                //equipe 1
+                int cursor1 = 0;
+                for (int j = 0; j < playersTeam.Length; j++)
+                {
+                    if (playersTeam[j] == 0)
+                    {
+                        playersDisplay[j].transform.position = new Vector2(twoVSTwoPlayerDisplayCoordonate[cursor1].position.x, twoVSTwoPlayerDisplayCoordonate[cursor1].position.y);
+                        cursor1++;
+                    }
+                }
+                //equipe 2
+                int cursor2 = 2;
+                for (int j = 0; j < playersTeam.Length; j++)
+                {
+                    if (playersTeam[j] == 1)
+                    {
+                        playersDisplay[j].transform.position = new Vector2(twoVSTwoPlayerDisplayCoordonate[cursor2].position.x, twoVSTwoPlayerDisplayCoordonate[cursor2].position.y);
+                        cursor2++;
+                    }
+                }
                 break;
             case (int)GameManager.TeamCompo.Coop:
-
+                //no change in players placement
+                //hide VS sprite
+                VS.SetActive(false);
+                //add COOP display
                 break;
         }
         

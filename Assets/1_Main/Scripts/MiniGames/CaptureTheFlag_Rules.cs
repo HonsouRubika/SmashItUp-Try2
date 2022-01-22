@@ -27,7 +27,7 @@ public class CaptureTheFlag_Rules : MonoBehaviour
         players = playersUnsorted.OrderBy(go => go.name).ToArray();
 
         //à toujours mettre dans le start
-        playersTeam = GameManager.Instance.AssignPlayerTeam();
+        playersTeam = GameManager.Instance.playersTeam;
 
         SpawnPlayerRandomly();
         GameManager.Instance.focusPlayersScript.SetGameTitle("CaptureTheFlag");

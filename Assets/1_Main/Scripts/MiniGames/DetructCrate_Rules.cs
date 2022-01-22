@@ -47,6 +47,8 @@ public class DetructCrate_Rules : MonoBehaviour
             playersPosition[i] = i;
         }
 
+        //à toujours mettre dans le start
+        playersTeam = GameManager.Instance.playersTeam;
 
     }
 
@@ -69,9 +71,6 @@ public class DetructCrate_Rules : MonoBehaviour
 
             playOneTime = true;
         }
-
-        //à toujours mettre dans le start
-        playersTeam = GameManager.Instance.AssignPlayerTeam();
     }
 
     private void SpawnPlayerRandomly()
