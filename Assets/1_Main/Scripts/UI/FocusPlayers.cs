@@ -133,16 +133,16 @@ public class FocusPlayers : MonoBehaviour
                 //equipe 1
                 for (int j = 0; j < playersTeam.Length; j++)
                 {
-                    if (playersTeam[j] == 0) playersNumber[0].sprite = numberSprite[j];
+                    if (playersTeam[j] == 0) playersNumber[0].sprite = numberSprite[0];
                 }
                 //equipe 2
-                int cursor = 1;
+                int cursor1v3 = 1;
                 for (int j = 0; j < playersTeam.Length; j++)
                 {
                     if (playersTeam[j] == 1)
                     {
-                        playersNumber[cursor].sprite = numberSprite[j];
-                        cursor++;
+                        playersNumber[cursor1v3].sprite = numberSprite[cursor1v3];
+                        cursor1v3++;
                     }
                 }
                 break;
@@ -153,7 +153,7 @@ public class FocusPlayers : MonoBehaviour
                 {
                     if (playersTeam[j] == 0)
                     {
-                        playersNumber[cursor1].sprite = numberSprite[j];
+                        playersNumber[cursor1].sprite = numberSprite[cursor1];
                         cursor1++;
                     }
                 }
@@ -163,7 +163,7 @@ public class FocusPlayers : MonoBehaviour
                 {
                     if (playersTeam[j] == 1)
                     {
-                        playersNumber[cursor2].sprite = numberSprite[j];
+                        playersNumber[cursor2].sprite = numberSprite[cursor2];
                         cursor2++;
                     }
                 }
