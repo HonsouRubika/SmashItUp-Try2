@@ -93,7 +93,7 @@ public class KeepTheFlagManager : MonoBehaviour
         GameManager.Instance.focusPlayersScript.SetGameTitle("KeepTheFlag");
 
         //à toujours mettre dans le start
-        playersTeam = GameManager.Instance.AssignPlayerTeam();
+        playersTeam = GameManager.Instance.playersTeam;
 
         if (GameManager.Instance.getTeamCompo() == 1)
         {

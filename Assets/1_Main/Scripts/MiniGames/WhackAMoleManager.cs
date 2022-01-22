@@ -81,7 +81,7 @@ public class WhackAMoleManager : MonoBehaviour
         SpawnPlayerRandomly();
 
         //à toujours mettre dans le start
-        playersTeam = GameManager.Instance.AssignPlayerTeam();
+        playersTeam = GameManager.Instance.playersTeam;
 
         if (GameManager.Instance.getTeamCompo() == 1)
         {

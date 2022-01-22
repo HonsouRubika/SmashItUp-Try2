@@ -48,7 +48,8 @@ public class CollectThePiecesManager : MonoBehaviour
 
         SpawnPlayerRandomly();
 
-        playersTeam = GameManager.Instance.AssignPlayerTeam();
+        //à toujours mettre dans le start
+        playersTeam = GameManager.Instance.playersTeam;
 
         if (GameManager.Instance.getTeamCompo() == 1)
         {
