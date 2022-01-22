@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focusPlayersScript: {fileID: 0}
   scoreValuesManagerScript: {fileID: 0}
+  playersTeam: 
   _nbManches: 5
   _nbMancheActu: 0
   _scoreP1: 0
@@ -76,7 +77,7 @@ MonoBehaviour:
   testSceneName: 
   gameModeToTest: 0200000002000000
   teamCompoToTest: 0200000000000000
-  GameModeKind: 000000000100000002000000020000000100000000000000
+  playerControllers: []
 --- !u!114 &7698355189767790221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,6 +553,10 @@ PrefabInstance:
     - target: {fileID: 577456096, guid: 4d1529d4d60b334409da0977edf77f4d, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446774287557185632, guid: 4d1529d4d60b334409da0977edf77f4d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5353233393079816576, guid: 4d1529d4d60b334409da0977edf77f4d, type: 3}
       propertyPath: m_IsActive
