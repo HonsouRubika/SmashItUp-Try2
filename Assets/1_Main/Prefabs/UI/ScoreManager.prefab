@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1818cec752c14c94fb28d4b2cc016290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimerNextMap: 4
-  waitBeforeAddPoints: 1
-  waitBeforeUpdateScore: 2
+  TimerNextMap: 7
+  waitBeforeAddPoints: 3
+  waitBeforeUpdateScore: 5
   P1ScoreNumber: {fileID: 0}
   P2ScoreNumber: {fileID: 0}
   P3ScoreNumber: {fileID: 0}
@@ -62,8 +62,40 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   rollingBoard: {fileID: 0}
-  scoreBoard: []
+  scoreBoard:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   SpinnerSoundScript: {fileID: 6025642974920432903}
+  crownP1: {fileID: 0}
+  crownP2: {fileID: 0}
+  crownP3: {fileID: 0}
+  crownP4: {fileID: 0}
+  crownGold: {fileID: 21300000, guid: 4ddf12c42c96fce48843a9840a0bfdcc, type: 3}
+  crownSilver: {fileID: 21300000, guid: 556cd34684d25fa43b4aa7b5b1cc8f6a, type: 3}
+  crownBronze: {fileID: 21300000, guid: 9a6eb2a166dc8664ea8d05cefefd6f90, type: 3}
+  scorePlayers: 
+  playersPosition: 
+  equalityCase: 0
+  hideP3Objects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  hideP4Objects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &6025642974920432903
 MonoBehaviour:
   m_ObjectHideFlags: 0

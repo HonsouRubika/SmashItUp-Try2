@@ -85,12 +85,13 @@ public class PlayerSkins : MonoBehaviour
             isSkinUnlocked[i] = true;
         }
 
-        /*
-        if (GameManager.Instance.nbGameFinished < 1) isSkinUnlocked[3] = false;
-        if (GameManager.Instance.nbGameFinished < 3) isSkinUnlocked[4] = false;
-        if (GameManager.Instance.nbGameFinished < 4) isSkinUnlocked[5] = false;
-        */
 
+        if (GameManager.Instance.nbGameFinished < 1) isSkinUnlocked[3] = false;
+        else isSkinUnlocked[3] = true; ;
+        if (GameManager.Instance.nbGameFinished < 3) isSkinUnlocked[4] = false;
+        else isSkinUnlocked[4] = true; ;
+        if (GameManager.Instance.nbGameFinished < 5) isSkinUnlocked[5] = false;
+        else isSkinUnlocked[5] = true; ;
 
 
         playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();

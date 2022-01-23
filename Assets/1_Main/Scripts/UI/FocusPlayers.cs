@@ -193,6 +193,15 @@ public class FocusPlayers : MonoBehaviour
                 case "Pouletto":
                     skinPlayers[i].sprite = skinsSprite[2];
                     break;
+                case "Mashmaboy":
+                    skinPlayers[i].sprite = skinsSprite[3];
+                    break;
+                case "TakoTako":
+                    skinPlayers[i].sprite = skinsSprite[4];
+                    break;
+                case "DevilPrincess":
+                    skinPlayers[i].sprite = skinsSprite[5];
+                    break;
                 default:
                     Debug.LogWarning("New sprite needs to be linked in script FocusPlayers");
                     skinPlayers[i].sprite = skinsSprite[0];
