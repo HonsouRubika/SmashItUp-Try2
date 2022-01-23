@@ -72,7 +72,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(true);
 
-        PauseSoundScript.GameIsOnPause();
+        //PauseSoundScript.GameIsOnPause();
 
         Time.timeScale = 0f;
         GameManager.Instance.isPaused = true;
