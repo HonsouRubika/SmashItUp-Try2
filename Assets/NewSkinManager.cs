@@ -38,19 +38,14 @@ public class NewSkinManager : MonoBehaviour
         {
             //TODO : utiliser la liste de nouveau skin à débloquer "unlockableSkins"
             switch (GameManager.Instance.nbGameFinished) {
-                case 1:
+                case 2:
                     GameManager.Instance.players[i].GetComponent<PlayerSkins>().NewSkinUnlocked(unlockableSkins[0]);
                     unlock.GetComponent<SpriteRenderer>().sprite = unlockPossibility[0];
                     skinDisplay.GetComponent<SpriteRenderer>().sprite = unlockableSkinsSprite[0];
                     break;
-                case 3:
+                case 4:
                     GameManager.Instance.players[i].GetComponent<PlayerSkins>().NewSkinUnlocked(unlockableSkins[1]);
                     unlock.GetComponent<SpriteRenderer>().sprite = unlockPossibility[1];
-                    skinDisplay.GetComponent<SpriteRenderer>().sprite = unlockableSkinsSprite[0];
-                    break;
-                case 5:
-                    GameManager.Instance.players[i].GetComponent<PlayerSkins>().NewSkinUnlocked(unlockableSkins[2]);
-                    unlock.GetComponent<SpriteRenderer>().sprite = unlockPossibility[2];
                     skinDisplay.GetComponent<SpriteRenderer>().sprite = unlockableSkinsSprite[0];
                     break;
             }

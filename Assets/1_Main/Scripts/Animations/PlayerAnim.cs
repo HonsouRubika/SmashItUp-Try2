@@ -46,12 +46,12 @@ public class PlayerAnim : MonoBehaviour
 
     public void Falling(bool fall)
     {
-        playerAnimator.SetBool("isFalling", fall);
+        if (playerAnimator != null) playerAnimator.SetBool("isFalling", fall);
     }
 
     public void SetCooldownTimeAnimation(float cd)
     {
-        playerAnimator.SetFloat("cooldownSpeed", cd);
+        if (playerAnimator != null) playerAnimator.SetFloat("cooldownSpeed", cd);
     }
 
     public void SetAnimCooldownAttack()

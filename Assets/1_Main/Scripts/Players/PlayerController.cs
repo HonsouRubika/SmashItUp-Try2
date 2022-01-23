@@ -1135,7 +1135,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log("attack blocked cause player is invicible");
+            //Debug.Log("attack blocked cause player is invicible");
         }
     }
     void applyBlock(float velocityX, float velocityY)

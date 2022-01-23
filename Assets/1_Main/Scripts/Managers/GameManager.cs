@@ -91,6 +91,8 @@ public class GameManager : MonoBehaviour
         {
             ProgressionData pd = SaveSystem.LoadProgression();
             nbGameFinished = pd.GetNbGameFinished();
+            //Debug.Log(nbGameFinished);
+            nbGameFinished = 0;
         }
     }
 
