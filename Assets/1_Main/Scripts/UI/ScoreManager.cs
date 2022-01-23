@@ -50,6 +50,8 @@ public class ScoreManager : MonoBehaviour
     public GameObject rollingBoard;
     public List<GameObject> scoreBoard;
 
+    public GameObject bonusBanner;
+    public GameObject bonusText;
     private bool isBonus = false;
 
     public SpinnerSound SpinnerSoundScript;
@@ -109,6 +111,8 @@ public class ScoreManager : MonoBehaviour
         {
             //bonusManagerScript.DisableBonusInGame();
         }
+        bonusBanner.SetActive(false);
+        bonusText.SetActive(false);
 
         SpawnPlayer();
         FillPlayerScoreValues();
@@ -214,11 +218,19 @@ public class ScoreManager : MonoBehaviour
             //Next Map
             if (GameManager.Instance._nbMancheActu < GameManager.Instance._nbManches && !isBonus)
             {
+                //end display bonus
+                bonusBanner.SetActive(false);
+                bonusText.SetActive(false);
+
                 GameManager.Instance.NextMap();
                 GameManager.Instance.resetScorePoints();
             }
             else if (!isBonus)
             {
+                //end display bonus
+                bonusBanner.SetActive(false);
+                bonusText.SetActive(false);
+
                 GameManager.Instance.FinaleScore();
                 GameManager.Instance.resetScorePoints();
             }
@@ -227,6 +239,10 @@ public class ScoreManager : MonoBehaviour
                 isBonus = false;
                 //bonus end game
                 GameManager.Instance.bonusManagerScript.ApplyBonusEndGame();
+
+                //display is bonus
+                bonusBanner.SetActive(true);
+                bonusText.SetActive(true);
 
                 //reset var
                 flagAddedPoints = false;
