@@ -80,16 +80,17 @@ public class PlayerSkins : MonoBehaviour
         }
 
         isSkinUnlocked = new bool[skins.Count];
-        for (int i = 0; i< skins.Count; i++)
+        //starter skins
+        for (int i = 0; i< 4; i++)
         {
             isSkinUnlocked[i] = true;
         }
+        
 
-
-        if (isSkinUnlocked.Length == 5 && GameManager.Instance.nbGameFinished >= 2) isSkinUnlocked[4] = false;
+        /*if (isSkinUnlocked.Length == 5 && GameManager.Instance.nbGameFinished >= 1) isSkinUnlocked[4] = false;
         else if (isSkinUnlocked.Length == 5) isSkinUnlocked[4] = true;
-        if (isSkinUnlocked.Length == 6 && GameManager.Instance.nbGameFinished >= 4) isSkinUnlocked[5] = false;
-        else if (isSkinUnlocked.Length == 5) isSkinUnlocked[5] = true;
+        if (isSkinUnlocked.Length == 6 && GameManager.Instance.nbGameFinished >= 3) isSkinUnlocked[5] = false;
+        else if (isSkinUnlocked.Length == 5) isSkinUnlocked[5] = true;*/
 
 
         playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
@@ -167,8 +168,15 @@ public class PlayerSkins : MonoBehaviour
 
     public void NewSkinUnlocked(GameObject skin)
     {
-        skins.Add(skin);
-        isSkinUnlocked[isSkinUnlocked.Length - 1] = true;
+        switch (GameManager.Instance.nbGameFinished)
+        {
+            case 1:
+                isSkinUnlocked[4] = true;
+                break;
+            case 3:
+                isSkinUnlocked[5] = true;
+                break;
+        }
     }
 
     public void ChangeSkinPlus(InputAction.CallbackContext context)

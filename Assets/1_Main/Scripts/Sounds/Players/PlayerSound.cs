@@ -59,14 +59,17 @@ public class PlayerSound : MonoBehaviour
 
     public void WallRide(bool activated)
     {
-        switch (activated)
+        if (SoundManager.Instance != null)
         {
-            case true:
-                SoundManager.Instance.PlayWallRide(wallRide, wallRideVolume);
-                break;
-            case false:
-                SoundManager.Instance.StopWallRide();
-                break;
-        } 
+            switch (activated)
+            {
+                case true:
+                    SoundManager.Instance.PlayWallRide(wallRide, wallRideVolume);
+                    break;
+                case false:
+                    SoundManager.Instance.StopWallRide();
+                    break;
+            }
+        }
     }
 }

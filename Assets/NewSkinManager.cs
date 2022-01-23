@@ -26,30 +26,30 @@ public class NewSkinManager : MonoBehaviour
     {
         if (!isSetup)
         {
-            UnlockNewScene();
+            UnlockNewSkin();
+            isSetup = true;
         }
         if (Time.time > waitTimeActu) SceneManager.LoadScene("StartScene"); //return to lobby
     }
 
-    private void UnlockNewScene()
+    private void UnlockNewSkin()
     {
 
         for(int i = 0; i< GameManager.Instance.scoreValuesManagerScript.players.Length; i++)
         {
             //TODO : utiliser la liste de nouveau skin à débloquer "unlockableSkins"
             switch (GameManager.Instance.nbGameFinished) {
-                case 2:
+                case 1:
                     GameManager.Instance.players[i].GetComponent<PlayerSkins>().NewSkinUnlocked(unlockableSkins[0]);
                     unlock.GetComponent<SpriteRenderer>().sprite = unlockPossibility[0];
                     skinDisplay.GetComponent<SpriteRenderer>().sprite = unlockableSkinsSprite[0];
                     break;
-                case 4:
+                case 3:
                     GameManager.Instance.players[i].GetComponent<PlayerSkins>().NewSkinUnlocked(unlockableSkins[1]);
                     unlock.GetComponent<SpriteRenderer>().sprite = unlockPossibility[1];
-                    skinDisplay.GetComponent<SpriteRenderer>().sprite = unlockableSkinsSprite[0];
+                    skinDisplay.GetComponent<SpriteRenderer>().sprite = unlockableSkinsSprite[1];
                     break;
             }
-            GameManager.Instance.scoreValuesManagerScript.players[i].GetComponent<PlayerSkins>().NewSkinUnlocked(new GameObject());
         }
     }
 }

@@ -184,7 +184,7 @@ public class FocusPlayers : MonoBehaviour
         {
             switch (players[i].GetComponent<PlayerSkins>().currentSkin.name)
             {
-                case "KamékinV2(Clone)":
+                case "KamékinV2":
                     skinPlayers[i].sprite = skinsSprite[0];
                     break;
                 case "LaptiteFraise(Clone)":
