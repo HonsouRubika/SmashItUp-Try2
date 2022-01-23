@@ -6,14 +6,15 @@ using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject pauseMenu;
-    public GameObject optionsMenu;
-    public GameObject audioMenu;
-    public GameObject videoMenu;
+    public GameObject[] pauseMenu;
+    public GameObject[] optionsMenu;
+    public GameObject[] audioMenu;
+    public GameObject[] videoMenu;
+
+    public GameObject[] canvas; 
 
     [Space]
-    public EventSystem eventSystemKeyboard;
-    public EventSystem eventSystemController;
+    public GameObject[] eventSystemPlayers;
 
     [Header("Settings values")]
     [Range(0, 1)] public float globalVolume;
@@ -30,10 +31,13 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
-        pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
-        audioMenu.SetActive(false);
-        videoMenu.SetActive(false);
+        for (int i = 0; i < pauseMenu.Length; i++)
+        {
+            pauseMenu[i].SetActive(false);
+            optionsMenu[i].SetActive(false);
+            audioMenu[i].SetActive(false);
+            videoMenu[i].SetActive(false);
+        }
 
         LoadSettings();
     }
@@ -44,33 +48,42 @@ public class PauseMenu : MonoBehaviour
         {
             Pause();
             playerThatPausedID = playerID;
-
-
-           
-
+            /*
+            for (int i = 0; i< GameManager.Instance.players.Length; i++)
+            {
+                GameManager.Instance.players[i].GetComponent<PlayerInput>().uiInputModule = eventSystemPlayers[i].GetComponent<>();
+            }
 
             if (context.control == Keyboard.current.escapeKey)
             {
-                eventSystemKeyboard.gameObject.SetActive(true);
-                eventSystemKeyboard.SetSelectedGameObject(null);
-                eventSystemKeyboard.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
+                eventSystemPlayers[playerThatPausedID].gameObject.SetActive(true);
+                eventSystemPlayers[playerThatPausedID].SetSelectedGameObject(null);
+                eventSystemPlayers[playerThatPausedID].SetSelectedGameObject(pauseMenu[playerThatPausedID].transform.GetChild(0).gameObject);
             }
             else
             {
-                eventSystemController.gameObject.SetActive(true);
-                eventSystemController.SetSelectedGameObject(null);
-                eventSystemController.SetSelectedGameObject(pauseMenu.transform.GetChild(0).gameObject);
+                eventSystemPlayers[playerThatPausedID].gameObject.SetActive(true);
+                eventSystemPlayers[playerThatPausedID].SetSelectedGameObject(null);
+                eventSystemPlayers[playerThatPausedID].SetSelectedGameObject(pauseMenu[playerThatPausedID].transform.GetChild(0).gameObject);
             }
+            */
         }
         else if (playerThatPausedID == playerID)
         {
             Resume();
         }
+        
     }
 
     private void Pause()
     {
-        pauseMenu.SetActive(true);
+        pauseMenu[playerThatPausedID].SetActive(true);
+
+        //link to camera
+        foreach (Camera camera in FindObjectsOfType<Camera>())
+        {
+            if (camera.enabled == true) canvas[playerThatPausedID].GetComponent<Canvas>().worldCamera = camera;
+        }
 
         //PauseSoundScript.GameIsOnPause();
 
@@ -81,12 +94,15 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        eventSystemController.gameObject.SetActive(false);
-        eventSystemKeyboard.gameObject.SetActive(false);
-        pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
-        audioMenu.SetActive(false);
-        videoMenu.SetActive(false);
+        eventSystemPlayers[playerThatPausedID].gameObject.SetActive(false);
+        eventSystemPlayers[playerThatPausedID].gameObject.SetActive(false);
+        for (int i = 0; i < pauseMenu.Length; i++)
+        {
+            pauseMenu[i].SetActive(false);
+            optionsMenu[i].SetActive(false);
+            audioMenu[i].SetActive(false);
+            videoMenu[i].SetActive(false);
+        }
         Time.timeScale = 1f;
         GameManager.Instance.isPaused = false;
         SoundManager.Instance.PauseGame(false);
@@ -184,33 +200,33 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            globalVolume = audioMenu.transform.GetChild(0).GetComponent<Slider>().value;
-            musicVolume = audioMenu.transform.GetChild(1).GetComponent<Slider>().value;
-            sfxVolume = audioMenu.transform.GetChild(2).GetComponent<Slider>().value;
-            fullScren = videoMenu.transform.GetChild(1).GetComponent<Toggle>().isOn;
-            resolution = videoMenu.transform.GetChild(3).GetComponent<TMP_Dropdown>().value;
-            quality = videoMenu.transform.GetChild(5).GetComponent<TMP_Dropdown>().value;
+            globalVolume = audioMenu[playerThatPausedID].transform.GetChild(0).GetComponent<Slider>().value;
+            musicVolume = audioMenu[playerThatPausedID].transform.GetChild(1).GetComponent<Slider>().value;
+            sfxVolume = audioMenu[playerThatPausedID].transform.GetChild(2).GetComponent<Slider>().value;
+            fullScren = videoMenu[playerThatPausedID].transform.GetChild(1).GetComponent<Toggle>().isOn;
+            resolution = videoMenu[playerThatPausedID].transform.GetChild(3).GetComponent<TMP_Dropdown>().value;
+            quality = videoMenu[playerThatPausedID].transform.GetChild(5).GetComponent<TMP_Dropdown>().value;
         }
     }
 
     private void UpdateSettingsValue()
     {
-        audioMenu.transform.GetChild(0).GetComponent<Slider>().value = globalVolume;
+        audioMenu[playerThatPausedID].transform.GetChild(0).GetComponent<Slider>().value = globalVolume;
         SetVolumeGlobal(globalVolume);
 
-        audioMenu.transform.GetChild(1).GetComponent<Slider>().value = musicVolume;
+        audioMenu[playerThatPausedID].transform.GetChild(1).GetComponent<Slider>().value = musicVolume;
         SetVolumeMusic(musicVolume);
 
-        audioMenu.transform.GetChild(2).GetComponent<Slider>().value = sfxVolume;
+        audioMenu[playerThatPausedID].transform.GetChild(2).GetComponent<Slider>().value = sfxVolume;
         SetVolumeSFX(sfxVolume);
 
-        videoMenu.transform.GetChild(1).GetComponent<Toggle>().isOn = fullScren;
+        videoMenu[playerThatPausedID].transform.GetChild(1).GetComponent<Toggle>().isOn = fullScren;
         SetFullScreen(fullScren);
 
-        videoMenu.transform.GetChild(3).GetComponent<TMP_Dropdown>().value = resolution;
+        videoMenu[playerThatPausedID].transform.GetChild(3).GetComponent<TMP_Dropdown>().value = resolution;
         SetResolution(resolution);
 
-        videoMenu.transform.GetChild(5).GetComponent<TMP_Dropdown>().value = quality;
+        videoMenu[playerThatPausedID].transform.GetChild(5).GetComponent<TMP_Dropdown>().value = quality;
         SetQuality(quality);
     }
 }
