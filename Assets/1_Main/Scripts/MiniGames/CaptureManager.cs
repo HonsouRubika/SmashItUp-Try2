@@ -52,6 +52,9 @@ public class CaptureManager : MonoBehaviour
 
     private bool allScoreZero = true;
 
+    //animator
+    private Animator lightAnimator;
+
     //team compo
     public int[] playersTeam;
     private int playerAlone1v3 = 0;
@@ -92,15 +95,27 @@ public class CaptureManager : MonoBehaviour
             OneVSThreeEnable = true;
             playerAlone1v3 = System.Array.IndexOf(playersTeam, 0);
         }
+
+        lightAnimator = GetComponent<Animator>();
+        lightAnimator.enabled = false;
     }
 
     private void Update()
     {
         IncrementPlayerScore();
 
+        if (timerScript.isTimerStarted && !lightAnimator.enabled)
+        {
+            //activate light movement
+            lightAnimator.enabled = true;
+        }
+
         if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
             SortPlayers();
+
+            //deactivate light movement
+            lightAnimator.enabled = false;
 
             for (int i = 0; i < playersTeam.Length; i++)
             {
