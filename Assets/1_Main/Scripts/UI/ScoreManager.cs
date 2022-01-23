@@ -76,6 +76,10 @@ public class ScoreManager : MonoBehaviour
 
     private bool allScoreZero = true;
 
+    [Header("Display Score")]
+    public GameObject[] hideP3Objects;
+    public GameObject[] hideP4Objects;
+
 
     private void Start()
     {
@@ -110,6 +114,7 @@ public class ScoreManager : MonoBehaviour
         FillPlayerScoreValues();
         DisplayPlayersScore();
         SortPlayers();
+        DisplayScoreDependingPlayers();
 
         playerAddedPointsText = new List<TextMeshProUGUI>(new TextMeshProUGUI[playerAddedPoints.Count]);
         for (int i = 0; i < playerAddedPoints.Count; i++)
@@ -179,10 +184,26 @@ public class ScoreManager : MonoBehaviour
                 playerAddedPoints[i].SetActive(false);
                 scoreBoard[i].SetActive(true);
             }
-            P1ScoreNumber.gameObject.SetActive(true);
-            P2ScoreNumber.gameObject.SetActive(true);
-            P3ScoreNumber.gameObject.SetActive(true);
-            P4ScoreNumber.gameObject.SetActive(true);
+
+            switch (GameManager.Instance.players.Length)
+            {
+                case 2:
+                    P1ScoreNumber.gameObject.SetActive(true);
+                    P2ScoreNumber.gameObject.SetActive(true);
+                    break;
+                case 3:
+                    P1ScoreNumber.gameObject.SetActive(true);
+                    P2ScoreNumber.gameObject.SetActive(true);
+                    P3ScoreNumber.gameObject.SetActive(true);
+                    break;
+                case 4:
+                    P1ScoreNumber.gameObject.SetActive(true);
+                    P2ScoreNumber.gameObject.SetActive(true);
+                    P3ScoreNumber.gameObject.SetActive(true);
+                    P4ScoreNumber.gameObject.SetActive(true);
+                    break;    
+            }
+
             rollingBoard.SetActive(false);
 
             SpinnerSoundScript.EndSpinning();
@@ -637,5 +658,32 @@ public class ScoreManager : MonoBehaviour
         ThirdFourth,
         SecondThird,
         FirstSecondAndThirdFourth
+    }
+
+    private void DisplayScoreDependingPlayers()
+    {
+        switch (GameManager.Instance.players.Length)
+        {
+            case 2:
+                hideP3Objects[0].SetActive(true);
+                for (int i = 1; i < hideP3Objects.Length; i++)
+                {
+                    hideP3Objects[i].SetActive(false);
+                }
+
+                hideP4Objects[0].SetActive(true);
+                for (int i = 1; i < hideP4Objects.Length; i++)
+                {
+                    hideP4Objects[i].SetActive(false);
+                }
+                break;
+            case 3:
+                hideP4Objects[0].SetActive(true);
+                for (int i = 1; i < hideP4Objects.Length; i++)
+                {
+                    hideP4Objects[i].SetActive(false);
+                }
+                break;
+        }
     }
 }
