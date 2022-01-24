@@ -48,6 +48,7 @@ public class PlayerSkins : MonoBehaviour
     public Sprite goldenOrangeHammer;
 
     [HideInInspector] private GameObject currentHammer;
+    private GameObject previousHammer;
     private Color hammerColor;
 
     public SpriteRenderer[] skinSprites;
@@ -200,6 +201,9 @@ public class PlayerSkins : MonoBehaviour
                 }
             }
 
+            //Save previous hammer
+            previousHammer = currentHammer;
+
             //on supprime le skin actuel
             Destroy(currentSkin);
 
@@ -209,6 +213,9 @@ public class PlayerSkins : MonoBehaviour
             {
                 SetColorToPlayer(currentSkin);
             }
+
+            setHammerColorOnSwitchingSkin();
+
             //on link les points du hammer
             /*foreach (var point in currentSkin.GetComponentsInChildren<GameObject>())
             {
@@ -245,8 +252,6 @@ public class PlayerSkins : MonoBehaviour
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
             currentHammer = currentSkin.transform.Find("Hammer").gameObject;
             hammerColor = currentHammer.GetComponent<SpriteRenderer>().color;
-
-            SetHammerColor();
         }
     }
 
@@ -290,15 +295,21 @@ public class PlayerSkins : MonoBehaviour
             }
             */
 
+            //Save previous hammer
+            previousHammer = currentHammer;
+
             //on supprime le skin actuel
             Destroy(currentSkin);
 
             //on ajoute le nouveau skin
             currentSkin = Instantiate(skins[skinNumber], skinPosition.position, Quaternion.identity, parent);
             if (skinNumber == 0)
-            {
+            {             
                 SetColorToPlayer(currentSkin);
             }
+
+            setHammerColorOnSwitchingSkin();
+
             //on link les points du hammer
             /*foreach (var point in currentSkin.GetComponentsInChildren<GameObject>())
             {
@@ -334,7 +345,7 @@ public class PlayerSkins : MonoBehaviour
             currentHammer = currentSkin.transform.Find("Hammer").gameObject;
             hammerColor = currentHammer.GetComponent<SpriteRenderer>().color;
 
-            SetHammerColor();
+            
         }
     }
     GameObject GetChildWithName(GameObject obj, string name)
@@ -390,8 +401,8 @@ public class PlayerSkins : MonoBehaviour
                 transform.GetChild(5).GetComponent<SpriteRenderer>().color = red;
                 currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP2;
 
-                SpriteRenderer[] spritesP2 = skin.GetComponentsInChildren<SpriteRenderer>();
-                /*for (int i = 0; i < spritesP2.Length; i++)
+                /*SpriteRenderer[] spritesP2 = skin.GetComponentsInChildren<SpriteRenderer>();
+                for (int i = 0; i < spritesP2.Length; i++)
                 {
                     spritesP2[i].material.SetColor("_Color", red);
                 }*/
@@ -401,8 +412,8 @@ public class PlayerSkins : MonoBehaviour
                 transform.GetChild(5).GetComponent<SpriteRenderer>().color = green;
                 currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP3;
 
-                SpriteRenderer[] spritesP3 = skin.GetComponentsInChildren<SpriteRenderer>();
-                /*for (int i = 0; i < spritesP3.Length; i++)
+                /*SpriteRenderer[] spritesP3 = skin.GetComponentsInChildren<SpriteRenderer>();
+                for (int i = 0; i < spritesP3.Length; i++)
                 {
                     spritesP3[i].material.SetColor("_Color", green);
                 }*/
@@ -412,8 +423,8 @@ public class PlayerSkins : MonoBehaviour
                 transform.GetChild(5).GetComponent<SpriteRenderer>().color = yellow;
                 currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP4;
 
-                SpriteRenderer[] spritesP4 = skin.GetComponentsInChildren<SpriteRenderer>();
-                /*for (int i = 0; i < spritesP4.Length; i++)
+                /*SpriteRenderer[] spritesP4 = skin.GetComponentsInChildren<SpriteRenderer>();
+                /for (int i = 0; i < spritesP4.Length; i++)
                 {
                     spritesP4[i].material.SetColor("_Color", yellow);
                 }*/
@@ -601,6 +612,61 @@ public class PlayerSkins : MonoBehaviour
         if(currentHammer != null)
         {
             currentHammer.GetComponent<SpriteRenderer>().color = hammerColor;
+        }
+    }
+
+    private void setHammerColorOnSwitchingSkin()
+    {
+        switch (playerControllerScript.playerID)
+        {
+            case 0:
+                if (previousHammer != null && previousHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP1)
+                {
+                    Debug.Log("gold");
+                    currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP1;
+                }
+                else
+                {
+                    Debug.Log("classic");
+                    currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP1;
+                }
+                break;
+            case 1:
+                if (previousHammer != null && previousHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP2)
+                {
+                    Debug.Log("gold");
+                    currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP2;
+                }
+                else
+                {
+                    Debug.Log("classic");
+                    currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP2;
+                }
+                break;
+            case 2:
+                if (previousHammer != null && previousHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP3)
+                {
+                    Debug.Log("gold");
+                    currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP3;
+                }
+                else
+                {
+                    Debug.Log("classic");
+                    currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP3;
+                }
+                break;
+            case 3:
+                if (previousHammer != null && previousHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP4)
+                {
+                    Debug.Log("gold");
+                    currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP4;
+                }
+                else
+                {
+                    Debug.Log("classic");
+                    currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP4;
+                }
+                break;
         }
     }
 }

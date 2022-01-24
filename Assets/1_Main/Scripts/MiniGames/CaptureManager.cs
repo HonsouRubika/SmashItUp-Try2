@@ -125,7 +125,7 @@ public class CaptureManager : MonoBehaviour
             playOneTime = true;
         }
 
-        if (timerScript.miniGameTimer > 0)
+        if (timerScript.miniGameTimer > 0 && timerScript.isTimerStarted)
         {
             MultiplePlayersCaptureZone();
         }
