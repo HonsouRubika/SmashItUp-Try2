@@ -96,26 +96,35 @@ public class CaptureManager : MonoBehaviour
             playerAlone1v3 = System.Array.IndexOf(playersTeam, 0);
         }
 
-        lightAnimator = GetComponent<Animator>();
-        lightAnimator.enabled = false;
+        if (GetComponent<Animator>() != null)
+        {
+            lightAnimator = GetComponent<Animator>();
+            lightAnimator.enabled = false;
+        }
     }
 
     private void Update()
     {
         IncrementPlayerScore();
 
-        if (timerScript.isTimerStarted && !lightAnimator.enabled)
+        if (timerScript.isTimerStarted && lightAnimator != null)
         {
-            //activate light movement
-            lightAnimator.enabled = true;
+            if (!lightAnimator.enabled)
+            {
+                //activate light movement
+                lightAnimator.enabled = true;
+            }
         }
 
         if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
             SortPlayers();
 
-            //deactivate light movement
-            lightAnimator.enabled = false;
+            if (lightAnimator != null)
+            {
+                //deactivate light movement
+                lightAnimator.enabled = false;
+            }
 
             for (int i = 0; i < playersTeam.Length; i++)
             {
