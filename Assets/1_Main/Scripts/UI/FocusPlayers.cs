@@ -38,7 +38,10 @@ public class FocusPlayers : MonoBehaviour
     public Sprite[] numberSprite;
     public Transform[] oneVSThreePlayerDisplayCoordonate;
     public Transform[] twoVSTwoPlayerDisplayCoordonate;
+    public Transform[] FFAPlayerDisplayCoordonate;
     public GameObject VS;
+    public GameObject VS2;
+    public GameObject VS3;
     private int[] playersTeam; //from GameManager
 
 
@@ -48,6 +51,9 @@ public class FocusPlayers : MonoBehaviour
     {
         hideScreen.GetComponent<SpriteRenderer>().color = colorHideScreen;
         canvas = canvasRef.GetComponent<Canvas>();
+
+        VS2.SetActive(false);
+        VS3.SetActive(false);
 
     }
 
@@ -214,14 +220,42 @@ public class FocusPlayers : MonoBehaviour
         {
             case (int)GameManager.TeamCompo.FFA:
                 //no change in players placement
+                for (int j = 0; j < playersTeam.Length; j++)
+                {
+                    playersDisplay[j].transform.position = new Vector2(FFAPlayerDisplayCoordonate[j].position.x, FFAPlayerDisplayCoordonate[j].position.y);
+                }
                 //add FFA display
 
                 //hide VS sprite
-                VS.SetActive(false);
+                if(players.Length > 1)
+                {
+                    VS.SetActive(false);
+                    VS2.SetActive(true);
+                }
+                else
+                {
+                    VS.transform.localScale = new Vector2(30, 30);
+                    VS.SetActive(false);
+                }
+                if (playersTeam.Length > 2)
+                {
+                    VS2.SetActive(true);
+                    VS.SetActive(true);
+                    VS.transform.localScale = new Vector2(30, 30);
+                }
+                if (playersTeam.Length > 3)
+                {
+                    VS3.SetActive(true);
+                    VS.SetActive(true);
+                    VS.transform.localScale = new Vector2(30, 30);
+                }
                 break;
+
             case (int)GameManager.TeamCompo.OneVSThree:
                 //display VS sprite
                 VS.SetActive(true);
+                VS2.SetActive(false);
+                VS3.SetActive(false);
                 //equipe 1
                 for (int j = 0; j < playersTeam.Length; j++)
                 {
@@ -241,6 +275,8 @@ public class FocusPlayers : MonoBehaviour
             case (int)GameManager.TeamCompo.TwoVSTwo:
                 //display VS sprite
                 VS.SetActive(true);
+                VS2.SetActive(false);
+                VS3.SetActive(false);
                 //equipe 1
                 int cursor1 = 0;
                 for (int j = 0; j < playersTeam.Length; j++)
@@ -264,6 +300,9 @@ public class FocusPlayers : MonoBehaviour
                 break;
             case (int)GameManager.TeamCompo.Coop:
                 //no change in players placement
+                VS.SetActive(false);
+                VS2.SetActive(false);
+                VS3.SetActive(false);
                 //hide VS sprite
                 VS.SetActive(false);
                 //add COOP display

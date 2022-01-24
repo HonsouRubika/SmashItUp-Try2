@@ -104,6 +104,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -115,6 +119,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -126,6 +134,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -137,6 +149,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -149,6 +165,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -160,6 +180,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -171,6 +195,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -183,6 +211,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -194,6 +226,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -205,6 +241,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -217,6 +257,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -228,6 +272,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
@@ -239,6 +287,10 @@ public class BonusManager : MonoBehaviour
                 else
                 {
                     if (iteration < 10) ApplyBonusEndGame(iteration); //retry
+                    else
+                    {
+                        GameManager.Instance.addSpecificScorePoints(playerPosition[playerPosition.Length - 1], 10); // add 10 points au pire joueur
+                    }
                 }
                 break;
 
