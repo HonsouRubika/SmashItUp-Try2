@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     public int BonusRound = 3;
 
     //Save
-    [HideInInspector] public int nbGameFinished = 0;
+    public int nbGameFinished = 0;
 
     //Animation
     [HideInInspector] public TransitionAnim transitionAnimScript;
@@ -85,7 +85,10 @@ public class GameManager : MonoBehaviour
             return;
         }
         #endregion
+    }
 
+    private void Start()
+    {
         //Load save
         if (SaveSystem.LoadProgression() != null)
         {
@@ -95,10 +98,8 @@ public class GameManager : MonoBehaviour
         }
 
         BonusRound = _nbManches / 2;
-    }
 
-    private void Start()
-    {
+
         transitionState = TransitionState.OPEN;
 
         DontDestroyOnLoad(this);
