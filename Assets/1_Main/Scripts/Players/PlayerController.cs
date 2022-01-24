@@ -443,7 +443,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //Appliquer une velocit�
                     //Attention: check la direction pour coord x
-                    if(enemy != cc)
+                    if(enemy.gameObject != cc.gameObject)
                     {
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;

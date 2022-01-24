@@ -346,6 +346,9 @@ public class PlayerSkins : MonoBehaviour
             playerControllerScript.hammerPointL = GetChildWithName(hammer, "hammerPointL");
             playerControllerScript.hammerPointR = GetChildWithName(hammer, "hammerPointR");
 
+            playerControllerScript.hammerPointL.SetActive(false);
+            playerControllerScript.hammerPointR.SetActive(false);
+
             if (currentSkin.GetComponent<Animator>() == null) Debug.Log("error");
             playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
             playerAnimScript.SetAnimCooldownAttack();
