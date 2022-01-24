@@ -622,48 +622,40 @@ public class PlayerSkins : MonoBehaviour
             case 0:
                 if (previousHammer != null && previousHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP1)
                 {
-                    Debug.Log("gold");
                     currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP1;
                 }
                 else
                 {
-                    Debug.Log("classic");
                     currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP1;
                 }
                 break;
             case 1:
                 if (previousHammer != null && previousHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP2)
                 {
-                    Debug.Log("gold");
                     currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP2;
                 }
                 else
                 {
-                    Debug.Log("classic");
                     currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP2;
                 }
                 break;
             case 2:
                 if (previousHammer != null && previousHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP3)
                 {
-                    Debug.Log("gold");
                     currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP3;
                 }
                 else
                 {
-                    Debug.Log("classic");
                     currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP3;
                 }
                 break;
             case 3:
                 if (previousHammer != null && previousHammer.GetComponent<SpriteRenderer>().sprite == goldenHammerP4)
                 {
-                    Debug.Log("gold");
                     currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = goldenHammerP4;
                 }
                 else
                 {
-                    Debug.Log("classic");
                     currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP4;
                 }
                 break;
