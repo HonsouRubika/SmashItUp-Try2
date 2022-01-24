@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
         {
             ProgressionData pd = SaveSystem.LoadProgression();
             nbGameFinished = pd.GetNbGameFinished();
+            //Debug.LogWarning("Nb game finished : " + nbGameFinished);
         }
 
         BonusRound = _nbManches / 2;
