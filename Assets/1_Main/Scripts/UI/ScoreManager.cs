@@ -238,7 +238,7 @@ public class ScoreManager : MonoBehaviour
             {
                 isBonus = false;
                 //bonus end game
-                GameManager.Instance.bonusManagerScript.ApplyBonusEndGame();
+                GameManager.Instance.bonusManagerScript.ApplyBonusEndGame(0);
 
                 //display is bonus
                 bonusBanner.SetActive(true);
@@ -248,6 +248,7 @@ public class ScoreManager : MonoBehaviour
                 flagAddedPoints = false;
                 flagUpdateScore = false;
 
+                //UI
                 FillPlayerScoreValues();
                 DisplayPlayersScore();
                 SortPlayers();
