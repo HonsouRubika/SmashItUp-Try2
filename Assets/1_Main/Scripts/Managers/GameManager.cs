@@ -474,7 +474,7 @@ public class GameManager : MonoBehaviour
                 scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
             }
 
-            LoadSceneAfterScore();
+            GetComponent<NewScoreSystem>().DisplayScore(true);
         }
     }
 
