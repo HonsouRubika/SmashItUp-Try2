@@ -474,26 +474,31 @@ public class GameManager : MonoBehaviour
                 scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
             }
 
-            //Debug.Log("call fnct score");
-            //reset transition state
-            transitionState = TransitionState.OPEN;
-
-            //2) pop gameObject rideau(NotDestroyOnLoad)
-            transition = Instantiate<GameObject>(curtain);
-            DontDestroyOnLoad(transition);
-            animatorLoaded = false;
-            ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
-
-            //get anim script
-            transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
-            transitionAnimator = transition.GetComponent<Animator>();
-
-            //3) play anim "fermer rideau"
-            //Debug.Log("fermer le rideau");
-            transitionAnimScript.CloseBlue();
-            //dois attendre que l'animation de fermeture ce termine avant de loadScene
-            transitionState = TransitionState.CLOSE_BLUE;
+            LoadSceneAfterScore();
         }
+    }
+
+    public void LoadSceneAfterScore()
+    {
+        //Debug.Log("call fnct score");
+        //reset transition state
+        transitionState = TransitionState.OPEN;
+
+        //2) pop gameObject rideau(NotDestroyOnLoad)
+        transition = Instantiate<GameObject>(curtain);
+        DontDestroyOnLoad(transition);
+        animatorLoaded = false;
+        ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
+
+        //get anim script
+        transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
+        transitionAnimator = transition.GetComponent<Animator>();
+
+        //3) play anim "fermer rideau"
+        //Debug.Log("fermer le rideau");
+        transitionAnimScript.CloseBlue();
+        //dois attendre que l'animation de fermeture ce termine avant de loadScene
+        transitionState = TransitionState.CLOSE_BLUE;
     }
 
     public int GetGameModeActu()
