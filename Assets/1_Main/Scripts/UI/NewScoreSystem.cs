@@ -16,18 +16,20 @@ public class NewScoreSystem : MonoBehaviour
 
     private float timerScoreStays = 0;
 
+    [Header("Points")]
+    public Sprite hammerPoint;
+    public Sprite hammerPointPlus;
+
     [Header("Canvas")]
     public GameObject ScorePanel;
     public GameObject P1;
     public GameObject P2;
     public GameObject P3;
     public GameObject P4;
-    public Sprite hammerPoint;
-
-    public int p1PointIndex = 0;
-    public int p2PointIndex = 0;
-    public int p3PointIndex = 0;
-    public int p4PointIndex = 0;
+    private int p1PointIndex = 0;
+    private int p2PointIndex = 0;
+    private int p3PointIndex = 0;
+    private int p4PointIndex = 0;
 
     private Image[] P1Points;
     private Image[] P2Points;
@@ -98,6 +100,7 @@ public class NewScoreSystem : MonoBehaviour
                 ScorePanel.SetActive(true);
                 timerScoreStays = 0;
                 FillPlayersList();
+                SortPlayers();
                 StartCoroutine(DistributePoints());
                 break;
             case false:
@@ -112,71 +115,161 @@ public class NewScoreSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeFirstIncrementation);
 
-        StartCoroutine(AddPoints(GameManager.Instance.getAddedPointsPlayer(1), P1Points, p1PointIndex));
+        AddPoints(GameManager.Instance.getAddedPointsPlayer(1), P1Points, p1PointIndex);
     }
 
-    private IEnumerator AddPoints(int addedPoints, Image[] points, int index)
+    private void AddPoints(int addedPoints, Image[] points, int index)
+    {
+        StartCoroutine(SetHammerPoints(addedPoints, points, index));
+    }
+
+    private IEnumerator SetHammerPoints(int addedPoints, Image[] points, int index)
     {
         switch (playersPosition.Length)
         {
             case 4:
                 if (addedPoints == scoreValuesScript.FourPlayersPointsFirstPlace)
                 {
-                    points[index].sprite = hammerPoint;
-                    points[index].rectTransform.localScale = new Vector2(4, 4);
-                    index++;
+                    for (int i = 0; i < scoreValuesScript.FourPlayersPointsFirstPlace; i++)
+                    {
+                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
+                        else points[index].sprite = hammerPoint;
+                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
+                        else points[index].rectTransform.localScale = new Vector2(4, 4);
 
-                    yield return new WaitForSeconds(timeBtwPops);
+                        index++;
 
-                    points[index].sprite = hammerPoint;
-                    points[index].rectTransform.localScale = new Vector2(4, 4);
-                    index++;
-
-                    yield return new WaitForSeconds(timeBtwPops);
-
-                    points[index].sprite = hammerPoint;
-                    points[index].rectTransform.localScale = new Vector2(4, 4);
-                    index++;
-
-                    yield return new WaitForSeconds(timeBtwPops);
+                        yield return new WaitForSeconds(timeBtwPops);
+                    }
                 }
                 else if (addedPoints == scoreValuesScript.FourPlayersPointsSecondPlace)
                 {
-                    points[index].sprite = hammerPoint;
-                    points[index].rectTransform.localScale = new Vector2(4, 4);
-                    index++;
+                    for (int i = 0; i < scoreValuesScript.FourPlayersPointsSecondPlace; i++)
+                    {
+                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
+                        else points[index].sprite = hammerPoint;
+                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
+                        else points[index].rectTransform.localScale = new Vector2(4, 4);
 
-                    yield return new WaitForSeconds(timeBtwPops);
+                        index++;
 
-                    points[index].sprite = hammerPoint;
-                    points[index].rectTransform.localScale = new Vector2(4, 4);
-                    index++;
-
-                    yield return new WaitForSeconds(timeBtwPops);
+                        yield return new WaitForSeconds(timeBtwPops);
+                    }
                 }
                 else if (addedPoints == scoreValuesScript.FourPlayersPointsThirdPlace)
                 {
-                    points[index].sprite = hammerPoint;
-                    points[index].rectTransform.localScale = new Vector2(4, 4);
-                    index++;
+                    for (int i = 0; i < scoreValuesScript.FourPlayersPointsThirdPlace; i++)
+                    {
+                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
+                        else points[index].sprite = hammerPoint;
+                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
+                        else points[index].rectTransform.localScale = new Vector2(4, 4);
 
-                    yield return new WaitForSeconds(timeBtwPops);
+                        index++;
+
+                        yield return new WaitForSeconds(timeBtwPops);
+                    }
                 }
                 else if (addedPoints == scoreValuesScript.FourPlayersPointsFourthPlace)
                 {
-                    index++;
+                    for (int i = 0; i < scoreValuesScript.FourPlayersPointsFourthPlace; i++)
+                    {
+                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
+                        else points[index].sprite = hammerPoint;
+                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
+                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+
+                        index++;
+
+                        yield return new WaitForSeconds(timeBtwPops);
+                    }
                 }
 
-                if (points == P1Points) { StartCoroutine(AddPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex += index; }
-                else if (points == P2Points) { StartCoroutine(AddPoints(GameManager.Instance.getAddedPointsPlayer(3), P3Points, p3PointIndex)); p2PointIndex += index; }
-                else if (points == P3Points) { StartCoroutine(AddPoints(GameManager.Instance.getAddedPointsPlayer(4), P4Points, p4PointIndex)); p3PointIndex += index; }
-                else if (points == P4Points) p4PointIndex += index;
+                if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; }
+                else if (points == P2Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(3), P3Points, p3PointIndex)); p2PointIndex = index; }
+                else if (points == P3Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(4), P4Points, p4PointIndex)); p3PointIndex = index; }
+                else if (points == P4Points) p4PointIndex = index;
                 break;
             case 3:
+                if (addedPoints == scoreValuesScript.ThreePlayersPointsFirstPlace)
+                {
+                    for (int i = 0; i < scoreValuesScript.ThreePlayersPointsFirstPlace; i++)
+                    {
+                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
+                        else points[index].sprite = hammerPoint;
+                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
+                        else points[index].rectTransform.localScale = new Vector2(4, 4);
 
+                        index++;
+
+                        yield return new WaitForSeconds(timeBtwPops);
+                    }
+                }
+                else if (addedPoints == scoreValuesScript.ThreePlayersPointsSecondPlace)
+                {
+                    for (int i = 0; i < scoreValuesScript.ThreePlayersPointsSecondPlace; i++)
+                    {
+                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
+                        else points[index].sprite = hammerPoint;
+                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
+                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+
+                        index++;
+
+                        yield return new WaitForSeconds(timeBtwPops);
+                    }
+                }
+                else if (addedPoints == scoreValuesScript.ThreePlayersPointsThirdPlace)
+                {
+                    for (int i = 0; i < scoreValuesScript.ThreePlayersPointsThirdPlace; i++)
+                    {
+                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
+                        else points[index].sprite = hammerPoint;
+                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
+                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+
+                        index++;
+
+                        yield return new WaitForSeconds(timeBtwPops);
+                    }
+                }
+
+                if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; }
+                else if (points == P2Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(3), P3Points, p3PointIndex)); p2PointIndex = index; }
+                else if (points == P3Points) p3PointIndex = index;
                 break;
             case 2:
+                if (addedPoints == scoreValuesScript.TwoPlayersPointsFirstPlace)
+                {
+                    for (int i = 0; i < scoreValuesScript.TwoPlayersPointsFirstPlace; i++)
+                    {
+                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
+                        else points[index].sprite = hammerPoint;
+                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
+                        else points[index].rectTransform.localScale = new Vector2(4, 4);
 
+                        index++;
+
+                        yield return new WaitForSeconds(timeBtwPops);
+                    }
+                }
+                else if (addedPoints == scoreValuesScript.TwoPlayersSecondPlace)
+                {
+                    for (int i = 0; i < scoreValuesScript.TwoPlayersSecondPlace; i++)
+                    {
+                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
+                        else points[index].sprite = hammerPoint;
+                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
+                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+
+                        index++;
+
+                        yield return new WaitForSeconds(timeBtwPops);
+                    }
+                }
+
+                if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; }
+                else if (points == P2Points) p2PointIndex = index;
                 break;
         }
     }
@@ -225,98 +318,55 @@ public class NewScoreSystem : MonoBehaviour
 
         CheckIfEquality();
 
-        /*switch (playersPosition.Length)
+        /*switch (equalityCase)
         {
-            case 4:
-                switch (equalityCase)
-                {
-                    case EqualityCase.None:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, null);
-                        break;
-                    case EqualityCase.AllEqualDifferentZero:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownGold);
-                        break;
-                    case EqualityCase.FirstSecondAndThirdFourth:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
-                        break;
-                    case EqualityCase.FirstSecondThird:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
-                        break;
-                    case EqualityCase.SecondThirdFourth:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
-                        break;
-                    case EqualityCase.FirstSecond:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
-                        break;
-                    case EqualityCase.SecondThird:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
-                        break;
-                    case EqualityCase.ThirdFourth:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
-                        break;
-                }
+            case EqualityCase.None:
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, null);
                 break;
-            case 3:
-                switch (equalityCase)
-                {
-                    case EqualityCase.None:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
-                        break;
-                    case EqualityCase.AllEqualDifferentZero:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
-                        break;
-                    case EqualityCase.FirstSecond:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
-                        break;
-                    case EqualityCase.SecondThird:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
-                        break;
-                }
+            case EqualityCase.AllEqualDifferentZero:
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownGold);
                 break;
-            case 2:
-                switch (equalityCase)
-                {
-                    case EqualityCase.None:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
-                        break;
-                    case EqualityCase.AllEqualDifferentZero:
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
-                        break;
-                }
+            case EqualityCase.FirstSecondAndThirdFourth:
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
+                break;
+            case EqualityCase.FirstSecondThird:
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
+                break;
+            case EqualityCase.SecondThirdFourth:
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
+                break;
+            case EqualityCase.FirstSecond:
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
+                break;
+            case EqualityCase.SecondThird:
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
+                break;
+            case EqualityCase.ThirdFourth:
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
+                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
                 break;
         }*/
     }
