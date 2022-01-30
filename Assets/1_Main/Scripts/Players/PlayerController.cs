@@ -217,6 +217,7 @@ public class PlayerController : MonoBehaviour
                     computeJump();
                 }
                 //long jump
+                /*
                 else if (context.canceled && !didTouchRoof && transform.position.y >= (minJumpHeigh + startJumpPosition))
                 {
                     shaitanerieDUnityActu = Time.time; //ne touche pas à ça
@@ -231,6 +232,7 @@ public class PlayerController : MonoBehaviour
                     shaitanerieDUnityActu = Time.time;
                     startJumpPosition = startJumpPosition - maxJumpHigh;
                 }
+                */
             }
         }
     }
