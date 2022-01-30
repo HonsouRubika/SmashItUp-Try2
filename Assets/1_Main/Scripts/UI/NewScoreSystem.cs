@@ -17,8 +17,9 @@ public class NewScoreSystem : MonoBehaviour
     private float timerScoreStays = 0;
 
     [Header("Points")]
-    public Sprite hammerPoint;
-    public Sprite hammerPointPlus;
+    public Sprite hammerPointBronze;
+    public Sprite hammerPointSilver;
+    public Sprite hammerPointGold;
 
     [Header("Canvas")]
     public GameObject ScorePanel;
@@ -36,6 +37,10 @@ public class NewScoreSystem : MonoBehaviour
     private Image[] P3Points;
     private Image[] P4Points;
 
+    private GameObject score4Players;
+    private GameObject score3Players;
+    private GameObject score2Players;
+
     private  int[] scorePlayers;
     private GameObject[] playersUnsorted;
     private GameObject[] players;
@@ -51,8 +56,12 @@ public class NewScoreSystem : MonoBehaviour
     private void Start()
     {
         scoreValuesScript = GetComponent<ScoreValuesManager>();
+        score4Players = ScorePanel.transform.GetChild(1).gameObject;
+        score3Players = ScorePanel.transform.GetChild(2).gameObject;
+        score2Players = ScorePanel.transform.GetChild(3).gameObject;
 
         ScorePanel.SetActive(false);
+        DisplayScoreDependingPlayersNumber(false);
 
         P1Points = new Image[P1.transform.childCount];
         for (int i = 0; i < P1Points.Length; i++)
@@ -101,11 +110,13 @@ public class NewScoreSystem : MonoBehaviour
                 timerScoreStays = 0;
                 FillPlayersList();
                 SortPlayers();
+                DisplayScoreDependingPlayersNumber(true);
                 StartCoroutine(DistributePoints());
                 break;
             case false:
                 displayScore = false;
                 ScorePanel.SetActive(false);
+                DisplayScoreDependingPlayersNumber(false);
                 GameManager.Instance.LoadSceneAfterScore();
                 break;
         }
@@ -132,10 +143,13 @@ public class NewScoreSystem : MonoBehaviour
                 {
                     for (int i = 0; i < scoreValuesScript.FourPlayersPointsFirstPlace; i++)
                     {
-                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
-                        else points[index].sprite = hammerPoint;
-                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
-                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].sprite = hammerPointGold;
+                        else if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointSilver;
+                        else points[index].sprite = hammerPointBronze;
+
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
+                        else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
+                        else points[index].color = new Color(1, 1, 1, 1);
 
                         index++;
 
@@ -146,10 +160,13 @@ public class NewScoreSystem : MonoBehaviour
                 {
                     for (int i = 0; i < scoreValuesScript.FourPlayersPointsSecondPlace; i++)
                     {
-                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
-                        else points[index].sprite = hammerPoint;
-                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
-                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].sprite = hammerPointGold;
+                        else if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointSilver;
+                        else points[index].sprite = hammerPointBronze;
+
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
+                        else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
+                        else points[index].color = new Color(1, 1, 1, 1);
 
                         index++;
 
@@ -160,10 +177,13 @@ public class NewScoreSystem : MonoBehaviour
                 {
                     for (int i = 0; i < scoreValuesScript.FourPlayersPointsThirdPlace; i++)
                     {
-                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
-                        else points[index].sprite = hammerPoint;
-                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
-                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].sprite = hammerPointGold;
+                        else if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointSilver;
+                        else points[index].sprite = hammerPointBronze;
+
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
+                        else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
+                        else points[index].color = new Color(1, 1, 1, 1);
 
                         index++;
 
@@ -174,10 +194,13 @@ public class NewScoreSystem : MonoBehaviour
                 {
                     for (int i = 0; i < scoreValuesScript.FourPlayersPointsFourthPlace; i++)
                     {
-                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
-                        else points[index].sprite = hammerPoint;
-                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
-                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].sprite = hammerPointGold;
+                        else if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointSilver;
+                        else points[index].sprite = hammerPointBronze;
+
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
+                        else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
+                        else points[index].color = new Color(1, 1, 1, 1);
 
                         index++;
 
@@ -195,10 +218,13 @@ public class NewScoreSystem : MonoBehaviour
                 {
                     for (int i = 0; i < scoreValuesScript.ThreePlayersPointsFirstPlace; i++)
                     {
-                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
-                        else points[index].sprite = hammerPoint;
-                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
-                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].sprite = hammerPointGold;
+                        else if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointSilver;
+                        else points[index].sprite = hammerPointBronze;
+
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
+                        else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
+                        else points[index].color = new Color(1, 1, 1, 1);
 
                         index++;
 
@@ -209,10 +235,13 @@ public class NewScoreSystem : MonoBehaviour
                 {
                     for (int i = 0; i < scoreValuesScript.ThreePlayersPointsSecondPlace; i++)
                     {
-                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
-                        else points[index].sprite = hammerPoint;
-                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
-                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].sprite = hammerPointGold;
+                        else if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointSilver;
+                        else points[index].sprite = hammerPointBronze;
+
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
+                        else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
+                        else points[index].color = new Color(1, 1, 1, 1);
 
                         index++;
 
@@ -223,10 +252,13 @@ public class NewScoreSystem : MonoBehaviour
                 {
                     for (int i = 0; i < scoreValuesScript.ThreePlayersPointsThirdPlace; i++)
                     {
-                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
-                        else points[index].sprite = hammerPoint;
-                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
-                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].sprite = hammerPointGold;
+                        else if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointSilver;
+                        else points[index].sprite = hammerPointBronze;
+
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
+                        else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
+                        else points[index].color = new Color(1, 1, 1, 1);
 
                         index++;
 
@@ -243,10 +275,13 @@ public class NewScoreSystem : MonoBehaviour
                 {
                     for (int i = 0; i < scoreValuesScript.TwoPlayersPointsFirstPlace; i++)
                     {
-                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
-                        else points[index].sprite = hammerPoint;
-                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
-                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].sprite = hammerPointGold;
+                        else if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointSilver;
+                        else points[index].sprite = hammerPointBronze;
+
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
+                        else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
+                        else points[index].color = new Color(1, 1, 1, 1);
 
                         index++;
 
@@ -257,10 +292,13 @@ public class NewScoreSystem : MonoBehaviour
                 {
                     for (int i = 0; i < scoreValuesScript.TwoPlayersSecondPlace; i++)
                     {
-                        if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointPlus;
-                        else points[index].sprite = hammerPoint;
-                        if (index > points.Length - 1) points[index - points.Length].rectTransform.localScale = new Vector2(4, 4);
-                        else points[index].rectTransform.localScale = new Vector2(4, 4);
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].sprite = hammerPointGold;
+                        else if (index > points.Length - 1) points[index - points.Length].sprite = hammerPointSilver;
+                        else points[index].sprite = hammerPointBronze;
+
+                        if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
+                        else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
+                        else points[index].color = new Color(1, 1, 1, 1);
 
                         index++;
 
@@ -284,6 +322,31 @@ public class NewScoreSystem : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             playersPosition[i] = i;
+        }
+    }
+
+    private void DisplayScoreDependingPlayersNumber(bool enable)
+    {
+        if (enable)
+        {
+            switch (playersPosition.Length)
+            {
+                case 4:
+                    score4Players.SetActive(true);
+                    break;
+                case 3:
+                    score3Players.SetActive(true);
+                    break;
+                case 2:
+                    score2Players.SetActive(true);
+                    break;
+            }
+        }
+        else
+        {
+            score4Players.SetActive(false);
+            score3Players.SetActive(false);
+            score2Players.SetActive(false);
         }
     }
 
