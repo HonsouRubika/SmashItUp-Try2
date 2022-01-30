@@ -511,7 +511,8 @@ public class PlayerController : MonoBehaviour
             {
                 //player is turning
                 movementActu -= ratioAddForce * Time.deltaTime;
-                Debug.Log("is turning");
+                rb.velocity = new Vector2(movementActu * speed, rb.velocity.y);
+                //Debug.Log("is turning");
             }
 
             //Action (anim)
@@ -551,7 +552,8 @@ public class PlayerController : MonoBehaviour
             {
                 //player is turning
                 movementActu += ratioAddForce * Time.deltaTime;
-                Debug.Log("is turning");
+                rb.velocity = new Vector2(movementActu * speed, rb.velocity.y);
+                //Debug.Log("is turning");
             }
 
             //Action (anim)

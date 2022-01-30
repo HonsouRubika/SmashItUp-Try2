@@ -271,7 +271,9 @@ public class GameManager : MonoBehaviour
                 transitionState = TransitionState.FINISHED;
                 didTransitionStarted = false;
                 //start minigame timer
-                GameObject.Find("--UI--").GetComponent<Timer>().StartTimer();
+                if (GameObject.Find("--UI CORNER--") != null) GameObject.Find("--UI CORNER--").GetComponent<Timer>().StartTimer();
+                else if (GameObject.Find("--UI TOP--") != null) GameObject.Find("--UI TOP--").GetComponent<Timer>().StartTimer();
+                else Debug.LogWarning("Error : prefab UI not found");
                 //GameObject.Find("Music").GetComponent<Music_Mini_Game>().StartMusic();
 
             }
