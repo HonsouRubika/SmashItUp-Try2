@@ -279,14 +279,12 @@ public class DontBeTheWolfManager : MonoBehaviour
 
     private void SpawnPlayerRandomly()
     {
-        randomNumbers = GenerateRandomNumbers(3, 0, 3);
+        //randomNumbers = GenerateRandomNumbers(4, 0, 4);
 
-        for (int i = 0; i < playersNotWolf.Count; i++)
+        for (int i = 0; i < players.Length; i++)
         {
-            playersNotWolf[i].transform.position = tpPoints[randomNumbers[i]].position;
+            players[i].transform.position = tpPoints[i].position;
         }
-
-        players[wolfPlayerNumber].transform.position = wolfTpPoint.position;
     }
 
     private List<int> GenerateRandomNumbers(int count, int minValue, int maxValue)

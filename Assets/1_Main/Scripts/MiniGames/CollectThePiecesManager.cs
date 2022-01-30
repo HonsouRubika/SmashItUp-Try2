@@ -88,11 +88,11 @@ public class CollectThePiecesManager : MonoBehaviour
 
     private void SpawnPlayerRandomly()
     {
-        randomNumbers = GenerateRandomNumbers(4, 0, 4);
+        //randomNumbers = GenerateRandomNumbers(4, 0, 4);
 
         for (int i = 0; i < players.Length; i++)
         {
-            players[i].transform.position = tpPoints[randomNumbers[i]].position;
+            players[i].transform.position = tpPoints[i].position;
         }
     }
 
