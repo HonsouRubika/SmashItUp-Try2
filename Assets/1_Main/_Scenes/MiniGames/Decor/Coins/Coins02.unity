@@ -272,8 +272,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   players: []
   piecesNumber: 0
-  scoreScript: {fileID: 0}
-  timerScript: {fileID: 0}
+  scoreScript: {fileID: 1143255493}
+  timerScript: {fileID: 1143255492}
   tpPoints:
   - {fileID: 1893379715}
   - {fileID: 843963086}
@@ -3717,6 +3717,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18291b64bae779e4fb34b5c5616a241a, type: 3}
+--- !u!114 &1143255492 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9077626428495543845, guid: 18291b64bae779e4fb34b5c5616a241a, type: 3}
+  m_PrefabInstance: {fileID: 1143255491}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239b7e7aca40c494fb3ba8a308e8bac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1143255493 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4151503575342458534, guid: 18291b64bae779e4fb34b5c5616a241a, type: 3}
+  m_PrefabInstance: {fileID: 1143255491}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2794cd33c311db24a89c01ca87daedc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1144008600
 PrefabInstance:
   m_ObjectHideFlags: 0

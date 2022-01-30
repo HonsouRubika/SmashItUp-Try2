@@ -2625,11 +2625,11 @@ PrefabInstance:
     - target: {fileID: 5624293880796402517, guid: 0fd72b809ecb01e49a0f252689a32784, type: 3}
       propertyPath: scoreScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2030024078}
     - target: {fileID: 5624293880796402517, guid: 0fd72b809ecb01e49a0f252689a32784, type: 3}
       propertyPath: timerScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2030024077}
     - target: {fileID: 5624293880796402517, guid: 0fd72b809ecb01e49a0f252689a32784, type: 3}
       propertyPath: wolfTpPoint
       value: 
@@ -3243,6 +3243,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18291b64bae779e4fb34b5c5616a241a, type: 3}
+--- !u!114 &2030024077 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9077626428495543845, guid: 18291b64bae779e4fb34b5c5616a241a, type: 3}
+  m_PrefabInstance: {fileID: 2030024076}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239b7e7aca40c494fb3ba8a308e8bac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2030024078 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4151503575342458534, guid: 18291b64bae779e4fb34b5c5616a241a, type: 3}
+  m_PrefabInstance: {fileID: 2030024076}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2794cd33c311db24a89c01ca87daedc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2050209607
 PrefabInstance:
   m_ObjectHideFlags: 0
