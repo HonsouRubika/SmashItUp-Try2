@@ -12,7 +12,7 @@ public class ContaminationManager : MonoBehaviour
     public List<int> playersTransformedWolf = new List<int>();
     private WolfSound WolfSoundScript;
 
-    public Transform wolfTpPoint;
+    //public Transform wolfTpPoint;
     public List<Transform> tpPoints = new List<Transform>();
     private List<int> randomNumbers = new List<int>();
 
@@ -280,6 +280,17 @@ public class ContaminationManager : MonoBehaviour
             players[i].transform.position = tpPoints[i].position;
         }
     }
+
+    /*private void SpawnPlayerRandomlyWithWolf()
+    {
+        randomNumbers = GenerateRandomNumbers(3, 0, 3);
+
+        for (int i = 0; i < playersNotWolf.Count; i++)
+        {
+            playersNotWolf[i].transform.position = tpPoints[randomNumbers[i]].position;
+        }
+        players[wolfPlayerNumber].transform.position = wolfTpPoint.position;
+    }*/
 
     private List<int> GenerateRandomNumbers(int count, int minValue, int maxValue)
     {
