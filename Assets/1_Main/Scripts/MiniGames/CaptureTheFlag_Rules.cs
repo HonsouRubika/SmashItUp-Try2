@@ -63,12 +63,12 @@ public class CaptureTheFlag_Rules : MonoBehaviour
 
         //GameManager.Instance.NextMap();
         GameManager.Instance.Score();
-
+        /*
         for (int i = 0; i < playersTeam.Length; i++)
         {
             players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("default");
         }
-
+        */
         playOneTime = true;
     }
 
@@ -101,11 +101,11 @@ public class CaptureTheFlag_Rules : MonoBehaviour
 
     private void SpawnPlayerRandomly()
     {
-        randomNumbers = GenerateRandomNumbers(4, 0, 4);
+        //randomNumbers = GenerateRandomNumbers(4, 0, 4);
 
         for (int i = 0; i < players.Length; i++)
         {
-            players[i].transform.position = tpPoints[randomNumbers[i]].position;
+            players[i].transform.position = tpPoints[i].position;
         }
     }
 
