@@ -1005,7 +1005,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
         }
-
+        /*
         if (teamCompo == 1 || teamCompo == 2)
         {
             for (int i = 0; i < playersTeam.Length; i++)
@@ -1020,7 +1020,7 @@ public class GameManager : MonoBehaviour
                         break;
                 }
             }
-        }
+        }*/
         return playersTeam;
     }
 
