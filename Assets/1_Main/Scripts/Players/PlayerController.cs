@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed = 3;
     public float movementJumpSpeed = 3;
     //addForce
-    [Range(0.01f, 1f)]
     public float ratioAddForce = 1;
     private float movementActu = 0;
 
@@ -50,7 +49,12 @@ public class PlayerController : MonoBehaviour
     public float maxJumpHigh = 1;
     private float startJumpPosition;
     public float minJumpHeigh = 0.5f;
-    public float maxFallingSpeed = 50f;
+    public float fallSpeedMultiplier = 1f;
+    private bool didTouchRoof = false;
+    private bool didTouchRoofInitiated = false;
+    private float tempVelocityRoofCheck = 0;
+    private float velocityWhenTouchedRoof = 0;
+
     
     //wall jump
     [Header("WallJump")]
@@ -213,7 +217,7 @@ public class PlayerController : MonoBehaviour
                     computeJump();
                 }
                 //long jump
-                else if (context.canceled && transform.position.y >= (minJumpHeigh + startJumpPosition))
+                else if (context.canceled && !didTouchRoof && transform.position.y >= (minJumpHeigh + startJumpPosition))
                 {
                     shaitanerieDUnityActu = Time.time; //ne touche pas à ça
                     //le perso descend car il relache la touche de saut
@@ -221,7 +225,7 @@ public class PlayerController : MonoBehaviour
                     isJumpFallSetted = true;
                 }
                 //small jump
-                else if (context.canceled && transform.position.y < (minJumpHeigh + startJumpPosition))
+                else if (context.canceled && !didTouchRoof && transform.position.y < (minJumpHeigh + startJumpPosition))
                 {
                     //dois s'arreter au minimum de saut
                     shaitanerieDUnityActu = Time.time;
@@ -489,19 +493,26 @@ public class PlayerController : MonoBehaviour
         if ((movementInput.x < -0.3) && !isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //gauche
-            rb.velocity = new Vector2(-speed, rb.velocity.y);
-            movementActu = -1;
+            //rb.velocity = new Vector2(-speed, rb.velocity.y);
+            //movementActu = -1;
             attackDirection = true;
 
             //wall grip
             isWallGripStarted = false;
 
-            /* 
+            
             //AddForce
-            movementActu -= ratioAddForce;
-            if (movementActu < -1) movementActu = -1;
-            rb.velocity = new Vector2(movementActu * speed, rb.velocity.y);
-            */
+            if (movementActu <= -1)
+            {
+                movementActu = -1;
+                rb.velocity = new Vector2(movementInput.x * speed, rb.velocity.y);
+            }
+            else
+            {
+                //player is turning
+                movementActu -= ratioAddForce * Time.deltaTime;
+                Debug.Log("is turning");
+            }
 
             //Action (anim)
             actionState = Action.Run;
@@ -523,19 +534,25 @@ public class PlayerController : MonoBehaviour
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
         {
             //droite
-            rb.velocity = new Vector2(speed, rb.velocity.y);
-            movementActu = 1;
+            //rb.velocity = new Vector2(speed, rb.velocity.y);
+            //movementActu = 1;
             attackDirection = false;
 
             //wall grip
             isWallGripStarted = false;
 
-            /*
             //AddForce
-            movementActu += ratioAddForce;
-            if (movementActu > 1) movementActu = 1;
-            rb.velocity = new Vector2(movementActu * speed, rb.velocity.y);
-            */
+            if (movementActu >= 1)
+            {
+                movementActu = 1;
+                rb.velocity = new Vector2(movementInput.x * speed, rb.velocity.y);
+            }
+            else
+            {
+                //player is turning
+                movementActu += ratioAddForce * Time.deltaTime;
+                Debug.Log("is turning");
+            }
 
             //Action (anim)
             actionState = Action.Run;
@@ -564,7 +581,7 @@ public class PlayerController : MonoBehaviour
             //rb.velocity = new Vector2(-movementJumpSpeed, rb.velocity.y);
             attackDirection = true;
 
-            movementActu -= ratioAddForce;
+            movementActu -= ratioAddForce * Time.deltaTime;
             if (movementActu < -1) movementActu = -1;
             rb.velocity = new Vector2(movementActu * movementJumpSpeed, rb.velocity.y);
 
@@ -592,6 +609,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        //wall grip left
         else if ((movementInput.x < -0.3) && isGrippingLeft && Time.time >= wallJumpMovementFreezeActuL && jumpState == JumpState.Falling)
         {
             if (!isWallGripStarted)
@@ -603,7 +621,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 //player doesnt move
-                rb.velocity = new Vector2(0, 0);
+                //rb.velocity = new Vector2(0, 0);
             }
 
             if (Time.time >= wallGripTimeActu)
@@ -612,7 +630,8 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.WallSlide(true);
                 PlayerSoundScript.WallRide(true);
                 playerAnimator.localScale = new Vector2(-Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
-                rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
+                rb.velocity = new Vector2(0, rb.velocity.y);
+                //Debug.Log("wall grip left : " + isJumpFallSetted + " , " + didTouchRoof);
                 //isWallGripStarted = false;
             }
         }
@@ -622,7 +641,7 @@ public class PlayerController : MonoBehaviour
             //rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
             attackDirection = false;
 
-            movementActu += ratioAddForce;
+            movementActu += ratioAddForce * Time.deltaTime;
             if (movementActu > 1) movementActu = 1;
             rb.velocity = new Vector2(movementActu * movementJumpSpeed, rb.velocity.y);
 
@@ -662,7 +681,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 //player doesnt move
-                rb.velocity = new Vector2(0, 0);
+                //rb.velocity = new Vector2(0, 0);
             }
 
             if (Time.time >= wallGripTimeActu)
@@ -671,7 +690,9 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.WallSlide(true);
                 PlayerSoundScript.WallRide(true);
                 playerAnimator.localScale = new Vector2(Mathf.Abs(playerAnimator.localScale.x), playerAnimator.localScale.y);
-                rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
+                //rb.velocity = new Vector2(0, rb.velocity.y);
+                //rb.velocity = new Vector2(rb.velocity.x, -wallGripFallSpeed);
+                //Debug.Log("wall grip right : " + isJumpFallSetted +" , "+ didTouchRoof);
                 //isWallGripStarted = false;
             }
         }
@@ -679,18 +700,20 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("x axe stop cause grounded");
             //rb.velocity = new Vector2(0, rb.velocity.y);
-
+            /*
             if (movementActu > 0)
             {
-                movementActu -= ratioAddForce;
+                movementActu -= ratioAddForce * Time.deltaTime;
                 if (movementActu < 0) movementActu = 0;
             }
             else if (movementActu < 0)
             {
-                movementActu += ratioAddForce;
+                movementActu += ratioAddForce * Time.deltaTime;
                 if (movementActu > 0) movementActu = 0;
             }
-            rb.velocity = new Vector2(movementActu * movementJumpSpeed, rb.velocity.y);
+            */
+            //rb.velocity = new Vector2(movementActu * movementJumpSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(0, rb.velocity.y);
 
             //Action (anim)
             actionState = Action.Idle;
@@ -740,23 +763,122 @@ public class PlayerController : MonoBehaviour
         }
 
         ///// JUMP CURVE /////
-        if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded && !isWallGripStarted)
+        if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded)
         {
             if (!isJumpFallSetted)
             {
                 isJumpFallSetted = true;
-                //startCurveVelocity = rb.velocity.y;
+            }
+            
+
+            if(!didTouchRoof)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - newJumpRatioAddForce * Time.deltaTime);
+                if (rb.velocity.y < -jumpSpeed * fallSpeedMultiplier) rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed * fallSpeedMultiplier);
             }
 
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - newJumpRatioAddForce * Time.deltaTime);
-            if (rb.velocity.y < -maxFallingSpeed) rb.velocity = new Vector2(rb.velocity.x, -maxFallingSpeed);
-
             //check if player is falling
-            if (rb.velocity.y < 0 && jumpState != JumpState.Falling)
+            if (rb.velocity.y < 0 && !didTouchRoof && jumpState != JumpState.Falling)
             {
                 jumpState = JumpState.Falling;
                 playerAnimScript.Falling(true);
             }
+        }
+
+        //roof stun & fall
+        if (didTouchRoof)
+        {   
+            tempVelocityRoofCheck -= newJumpRatioAddForce * Time.deltaTime;
+            if (tempVelocityRoofCheck < 0)
+            {
+                didTouchRoof = false;
+                //error : jumpFallSetted = false
+                isJumpFallSetted = true;
+                rb.velocity = new Vector2(0, tempVelocityRoofCheck);
+            }
+            else
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+            }
+        }
+
+        //Colision Side GripCheck
+        //float height = bc.size.y;
+        if (Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Plateform")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            ((Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform"))) &&
+            //check if touched roof
+            (!Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.65f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.65f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            !Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.65f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.65f), 1 << LayerMask.NameToLayer("Ground")))) ||
+            ((Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")))
+            && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling)) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
+        {
+            isGrippingLeft = true;
+            isBeingProjected = false;
+
+            //Action (anim)
+            actionState = Action.GripLeft;
+        }
+        else if (Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.65f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.65f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.65f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.65f), 1 << LayerMask.NameToLayer("Ground")))
+        {
+            if (!didTouchRoofInitiated)
+            {
+                //fix error (r.velocity.y est deja nul ou negative => didTouchRoof)
+                didTouchRoof = true;
+                didTouchRoofInitiated = true;
+                if (rb.velocity.y <= 0)
+                {
+                    //do nothing
+                    //var already setted bellow
+                }
+                else
+                {
+                    tempVelocityRoofCheck = rb.velocity.y;
+                    velocityWhenTouchedRoof = rb.velocity.y;
+                }
+            }
+        }
+        else
+        {
+            //correct error above
+            if (rb.velocity.y > 0)
+            {
+                tempVelocityRoofCheck = rb.velocity.y;
+                velocityWhenTouchedRoof = rb.velocity.y;
+            }
+            isGrippingLeft = false;
+        }
+        if (Physics2D.Linecast(transform.position, gripRightCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, gripRightCheck.position, 1 << LayerMask.NameToLayer("Plateform")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            ((Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform"))) &&
+            //check if touches roof
+            (!Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform")) ||
+            !Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")))) ||
+            ((Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")))
+            && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling)) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
+        {
+            isGrippingRight = true;
+            isBeingProjected = false;
+
+            //Action (anim)
+            actionState = Action.GripRight;
+        }
+        else
+        {
+            isGrippingRight = false;
         }
 
         //Colision Sol
@@ -781,9 +903,14 @@ public class PlayerController : MonoBehaviour
                 isBeingProjected = false;
                 coyoteTimeCheck = false;
                 coyoteTimeDone = false;
+                didTouchRoof = false;
+                didTouchRoofInitiated = false;
                 //reset var for walljump
                 wallJumpMovementFreezeActuL = Time.time;
                 wallJumpMovementFreezeActuR = Time.time;
+
+                //bounce off
+                rb.velocity = new Vector2(rb.velocity.x, 0);
 
                 //addForce = null
                 //jumpMovementActu = 0;
@@ -808,11 +935,10 @@ public class PlayerController : MonoBehaviour
                 coyoteTimeCheck = true;
             }
 
-            if (rb.velocity.y <= 0 && !isWallGripStarted && !isJumpFallSetted)
+            if (rb.velocity.y <= 0 && !isJumpFallSetted && !didTouchRoofInitiated)
             {
                 //le perso chute ou touche le plafond
                 isJumpFallSetted = true;
-                //ici
             }
             /*
             else if (rb.velocity.y <= movementJumpSpeed-startCurveVelocity && isJumpFallSetted)
@@ -825,59 +951,6 @@ public class PlayerController : MonoBehaviour
             {
                 jumpState = JumpState.InFlight;
             }
-        }
-
-        //Colision Side GripCheck
-        //float height = bc.size.y;
-        if (Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, gripLeftCheck.position, 1 << LayerMask.NameToLayer("Plateform")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform")) ||
-            ((Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform"))) &&
-            //check if touched roof
-            (!Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform")) &&
-            !Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")))) ||
-            ((Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")))
-            && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling)) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
-        {
-            isGrippingLeft = true;
-            isBeingProjected = false;
-
-            //Action (anim)
-            actionState = Action.GripLeft;
-        }
-        else
-        {
-            isGrippingLeft = false;
-        }
-        if (Physics2D.Linecast(transform.position, gripRightCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, gripRightCheck.position, 1 << LayerMask.NameToLayer("Plateform")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 0.5f), 1 << LayerMask.NameToLayer("Plateform")) ||
-            ((Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform"))) &&
-            //check if touches roof
-            (!Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform")) &&
-            !Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")))) ||
-            ((Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 2.2f), 1 << LayerMask.NameToLayer("Plateform")))
-            && (jumpState == JumpState.InFlight || jumpState == JumpState.Falling)) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, new Vector2(gripRightCheck.position.x, gripRightCheck.position.y - 0.5f), 1 << LayerMask.NameToLayer("Plateform")))
-        {
-            isGrippingRight = true;
-            isBeingProjected = false;
-
-            //Action (anim)
-            actionState = Action.GripRight;
-        }
-        else
-        {
-            isGrippingRight = false;
         }
 
     }
@@ -924,8 +997,8 @@ public class PlayerController : MonoBehaviour
         */
 
         if (jumpState == JumpState.Grounded || //simple saut
-            (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone) || 
-            (nbJumpActu != nbJump))
+            (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone && !didTouchRoof) || 
+            (nbJumpActu != nbJump && !didTouchRoof))
 
         {
             //coyot time
@@ -936,6 +1009,10 @@ public class PlayerController : MonoBehaviour
 
             //wall grip
             isWallGripStarted = false;
+
+            //roof check
+            didTouchRoofInitiated = false;
+            didTouchRoof = false;
 
             //block le check du ground : ne pas toucher
             shaitanerieDUnityActu = Time.time + shaitanerieDUnity;
@@ -1159,18 +1236,22 @@ public class PlayerController : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
+        //hammer
         Gizmos.DrawWireSphere(attackPointR.position, attackRange);
         Gizmos.DrawWireSphere(attackPointL.position, attackRange);
         Gizmos.DrawWireSphere(hammerPointL.transform.position, hammerHitboxRange);
         Gizmos.DrawWireSphere(hammerPointR.transform.position, hammerHitboxRange);
         //ground check
-        //Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y - 0.1f));
-        //Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - 0.1f));
-        //Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y - 0.1f));
+        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x - 1f, groundCheck.transform.position.y - 0.1f));
+        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x, groundCheck.transform.position.y - 0.1f));
+        Gizmos.DrawLine(groundCheck.transform.position, new Vector2(groundCheck.transform.position.x + 1f, groundCheck.transform.position.y - 0.1f));
 
+        //(Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripLeftCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Plateform"))
+        //Physics2D.Linecast(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripLeftCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f), 1 << LayerMask.NameToLayer("Ground")))
+        Gizmos.DrawLine(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.65f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.65f));
         //roof check
         //Gizmos.DrawLine(new Vector2(transform.position.x - 1.175f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y + 2.2f));
-        
+
         //DRAW RAYCASR
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 0.5f));
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y + 2.2f));
@@ -1180,6 +1261,7 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(transform.position, new Vector2(gripLeftCheck.position.x, gripLeftCheck.position.y - 2.2f));
         Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 0.5f));
         Gizmos.DrawLine(transform.position, new Vector2(gripRightCheck.position.x, gripLeftCheck.position.y - 2.2f));
+        
         // Test
         //Gizmos.DrawLine(new Vector2(transform.position.x - 1f, gripLeftCheck.position.y + 2.2f), new Vector2(gripRightCheck.position.x - 0.125f, gripLeftCheck.position.y + 2.2f));
 
