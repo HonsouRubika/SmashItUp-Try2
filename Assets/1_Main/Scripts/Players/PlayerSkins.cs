@@ -88,7 +88,7 @@ public class PlayerSkins : MonoBehaviour
         }
 
 
-        if (GameManager.Instance.nbGameFinished >= 1)
+        /*if (GameManager.Instance.nbGameFinished >= 1)
         {
             isSkinUnlocked[4] = true;
             //Debug.Log("skin 5 unlocked");
@@ -99,7 +99,7 @@ public class PlayerSkins : MonoBehaviour
         if (GameManager.Instance.nbGameFinished >= 3)
         {
             isSkinUnlocked[5] = true;
-        }
+        }*/
 
 
         playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
@@ -108,6 +108,7 @@ public class PlayerSkins : MonoBehaviour
         hammerColor = currentHammer.GetComponent<SpriteRenderer>().color;
 
         SetColorToPlayer(currentSkin);
+        setSkinColorOnSwitchingSkin();
     }
 
     /*
@@ -223,6 +224,7 @@ public class PlayerSkins : MonoBehaviour
             }
 
             setHammerColorOnSwitchingSkin();
+            setSkinColorOnSwitchingSkin();
 
             //on link les points du hammer
             /*foreach (var point in currentSkin.GetComponentsInChildren<GameObject>())
@@ -317,6 +319,7 @@ public class PlayerSkins : MonoBehaviour
             }
 
             setHammerColorOnSwitchingSkin();
+            setSkinColorOnSwitchingSkin();
 
             //on link les points du hammer
             /*foreach (var point in currentSkin.GetComponentsInChildren<GameObject>())
@@ -669,6 +672,37 @@ public class PlayerSkins : MonoBehaviour
                 {
                     currentSkin.transform.Find("Hammer").GetComponent<SpriteRenderer>().sprite = hammerP4;
                 }
+                break;
+        }
+    }
+
+    private void setSkinColorOnSwitchingSkin()
+    {
+        switch (playerControllerScript.playerID)
+        {
+            case 0:
+                currentSkin.transform.Find("P1").gameObject.SetActive(true);
+                currentSkin.transform.Find("P2").gameObject.SetActive(false);
+                currentSkin.transform.Find("P3").gameObject.SetActive(false);
+                currentSkin.transform.Find("P4").gameObject.SetActive(false);
+                break;
+            case 1:
+                currentSkin.transform.Find("P1").gameObject.SetActive(false);
+                currentSkin.transform.Find("P2").gameObject.SetActive(true);
+                currentSkin.transform.Find("P3").gameObject.SetActive(false);
+                currentSkin.transform.Find("P4").gameObject.SetActive(false);
+                break;
+            case 2:
+                currentSkin.transform.Find("P1").gameObject.SetActive(false);
+                currentSkin.transform.Find("P2").gameObject.SetActive(false);
+                currentSkin.transform.Find("P3").gameObject.SetActive(true);
+                currentSkin.transform.Find("P4").gameObject.SetActive(false);
+                break;
+            case 3:
+                currentSkin.transform.Find("P1").gameObject.SetActive(false);
+                currentSkin.transform.Find("P2").gameObject.SetActive(false);
+                currentSkin.transform.Find("P3").gameObject.SetActive(false);
+                currentSkin.transform.Find("P4").gameObject.SetActive(true);
                 break;
         }
     }
