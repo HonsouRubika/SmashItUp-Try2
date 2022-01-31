@@ -1571,8 +1571,8 @@ Transform:
   - {fileID: 1418869141}
   - {fileID: 1358211272}
   - {fileID: 2068428174}
-  - {fileID: 782072999}
   - {fileID: 438778894}
+  - {fileID: 782072999}
   m_Father: {fileID: 1797863080}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3388,18 +3388,22 @@ PrefabInstance:
       objectReference: {fileID: 1897571232}
     - target: {fileID: 5624293880796402517, guid: 0fd72b809ecb01e49a0f252689a32784, type: 3}
       propertyPath: tpPoints.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5624293880796402517, guid: 0fd72b809ecb01e49a0f252689a32784, type: 3}
       propertyPath: tpPoints.Array.data[0]
       value: 
-      objectReference: {fileID: 1094721863}
+      objectReference: {fileID: 1897571232}
     - target: {fileID: 5624293880796402517, guid: 0fd72b809ecb01e49a0f252689a32784, type: 3}
       propertyPath: tpPoints.Array.data[1]
       value: 
-      objectReference: {fileID: 1939764090}
+      objectReference: {fileID: 1094721863}
     - target: {fileID: 5624293880796402517, guid: 0fd72b809ecb01e49a0f252689a32784, type: 3}
       propertyPath: tpPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 1939764090}
+    - target: {fileID: 5624293880796402517, guid: 0fd72b809ecb01e49a0f252689a32784, type: 3}
+      propertyPath: tpPoints.Array.data[3]
       value: 
       objectReference: {fileID: 1577260413}
     - target: {fileID: 5624293880796402518, guid: 0fd72b809ecb01e49a0f252689a32784, type: 3}
