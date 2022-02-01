@@ -72,6 +72,10 @@ public class GameManager : MonoBehaviour
 
     private enum TransitionState { OPENING, OPEN, CLOSING, CLOSE, CONSIGNE, OPEN_YELLOW, CLOSE_YELLOW, OPEN_BLUE, CLOSE_BLUE, LOADING, LOADED, FOCUS, COUNTDOWN, FINISHED }
 
+    //TRANSITION
+
+    private GameObject transitionUI;
+
     void Awake()
     {
         #region Make Singleton
@@ -89,6 +93,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        transitionUI = transform.GetChild(4).gameObject;
+
         //Load save
         if (SaveSystem.LoadProgression() != null)
         {
@@ -125,6 +131,8 @@ public class GameManager : MonoBehaviour
             //yellow = ScoreFinal
             if (transitionState == TransitionState.CLOSE_YELLOW /*&& transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close")*/)
             {
+                Debug.Log("close yellow");
+
                 //Bonus fin de partie
                 /// TODO: Verifier apply des bonus/scores
                 //bonusManagerScript.ApplyBonusEndGame();
@@ -166,7 +174,7 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("Loading scene");
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
-                SceneManager.LoadScene("ScoreMiniGames");
+                //SceneManager.LoadScene("ScoreMiniGames");
 
                 /// TODO: Unfreeze players
                 for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
@@ -220,7 +228,7 @@ public class GameManager : MonoBehaviour
             {
                 //on suprr les rideaux
                 //Destroy(transition);
-                Debug.Log("oui");
+                //Debug.Log("oui");
 
                 //instantiate animation
                 consigneInstance = Instantiate<GameObject>(consigne);
@@ -481,6 +489,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void FadeOutTransition()
+    {
+        transitionUI.SetActive(true);
+    }
+
+    public void SwitchScene()
+    {
+        NextMap();
+        transitionUI.SetActive(false);
+    }
+
     public void LoadSceneAfterScore()
     {
         //Debug.Log("call fnct score");
@@ -523,41 +542,45 @@ public class GameManager : MonoBehaviour
 
     public void FinaleScore()
     {
-        if (!didTransitionStarted)
+        didTransitionStarted = true;
+        animatorLoaded = true;
+
+        /// TODO: Freeze players
+        for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
         {
-            didTransitionStarted = true;
-
-            /// TODO: Freeze players
-            for (int i = 0; i < scoreValuesManagerScript.players.Length; i++)
-            {
-                scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
-            }
-
-            //Debug.Log("call fnct score");
-            //reset transition state
-            transitionState = TransitionState.OPEN;
-
-            //2) pop gameObject rideau(NotDestroyOnLoad)
-            //transition = Instantiate<GameObject>(curtain);
-            //DontDestroyOnLoad(transition);
-            animatorLoaded = false;
-            ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
-
-            //get anim script
-            //transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
-
-            //3) play anim "fermer rideau"
-            //Debug.Log("fermer le rideau");
-            //transitionAnimScript.CloseYellow();
-            //dois attendre que l'animation de fermeture ce termine avant de loadScene
-            transitionState = TransitionState.CLOSE_YELLOW;
+            scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
         }
+
+        //Debug.Log("call fnct score");
+        //reset transition state
+        //transitionState = TransitionState.OPEN;
+
+        //2) pop gameObject rideau(NotDestroyOnLoad)
+        //transition = Instantiate<GameObject>(curtain);
+        //DontDestroyOnLoad(transition);
+        //animatorLoaded = false;
+        ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
+
+        //get anim script
+        //transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
+
+        //3) play anim "fermer rideau"
+        //Debug.Log("fermer le rideau");
+        //transitionAnimScript.CloseYellow();
+        //dois attendre que l'animation de fermeture ce termine avant de loadScene
+        transitionState = TransitionState.CLOSE_YELLOW;
     }
 
     public void NextMap()
     {
-        if (!didTransitionStarted)
+        if (_nbMancheActu < _nbManches)
         {
+            //partie termin�, affichage des scores finals
+            //Debug.Log("Affichage des scores");
+            animatorLoaded = true;
+            didTransitionStarted = true;
+            transitionState = TransitionState.CLOSE_YELLOW;
+
             didTransitionStarted = true;
 
             // Freeze players
@@ -592,10 +615,15 @@ public class GameManager : MonoBehaviour
             //dois attendre que l'animation de fermeture ce termine avant de loadScene
             transitionState = TransitionState.CLOSING;
         }
+        else
+        {
+            FinaleScore();
+        }
     }
 
     public void goToNextScene()
     {
+        //Debug.Log("next scene");
         //4) LoadScene(sc�ne2)
 
         if (_nbMancheActu < _nbManches && !isTest && gameModeToTest.Length <= 0 && teamCompoToTest.Length <= 0)
@@ -747,14 +775,6 @@ public class GameManager : MonoBehaviour
             _nbMancheActu++; //je garde ?
             SceneManager.LoadScene(testSceneName);
         }
-        /*
-        else
-        {
-            //partie termin�, affichage des scores finals
-            Debug.Log("Affichage des scores");
-            SceneManager.LoadScene("ScoreFinal");
-        }
-        */
     }
 
     public void PauseGame(uint playerID, InputAction.CallbackContext context)
@@ -1013,7 +1033,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
         }
-        /*
+        
         if (teamCompo == 1 || teamCompo == 2)
         {
             for (int i = 0; i < playersTeam.Length; i++)
@@ -1022,13 +1042,17 @@ public class GameManager : MonoBehaviour
                 {
                     case 0:
                         players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("purple");
+                        players[i].GetComponent<PlayerSkins>().SetCursorTeam("purple");
+                        players[i].GetComponent<PlayerSkins>().SetHaloTeam("purple");
                         break;
                     case 1:
                         players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("orange");
+                        players[i].GetComponent<PlayerSkins>().SetCursorTeam("orange");
+                        players[i].GetComponent<PlayerSkins>().SetHaloTeam("orange");
                         break;
                 }
             }
-        }*/
+        }
         return playersTeam;
     }
 

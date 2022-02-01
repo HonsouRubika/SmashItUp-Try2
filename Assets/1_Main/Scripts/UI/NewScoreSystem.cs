@@ -117,7 +117,7 @@ public class NewScoreSystem : MonoBehaviour
                 displayScore = false;
                 ScorePanel.SetActive(false);
                 DisplayScoreDependingPlayersNumber(false);
-                GameManager.Instance.LoadSceneAfterScore();
+                GameManager.Instance.FadeOutTransition();
                 break;
         }
     }
