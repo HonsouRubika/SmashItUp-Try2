@@ -228,7 +228,7 @@ public class GameManager : MonoBehaviour
             {
                 //on suprr les rideaux
                 //Destroy(transition);
-                Debug.Log("oui");
+                //Debug.Log("oui");
 
                 //instantiate animation
                 consigneInstance = Instantiate<GameObject>(consigne);
@@ -576,7 +576,7 @@ public class GameManager : MonoBehaviour
         if (_nbMancheActu < _nbManches)
         {
             //partie termin�, affichage des scores finals
-            Debug.Log("Affichage des scores");
+            //Debug.Log("Affichage des scores");
             animatorLoaded = true;
             didTransitionStarted = true;
             transitionState = TransitionState.CLOSE_YELLOW;
@@ -623,7 +623,7 @@ public class GameManager : MonoBehaviour
 
     public void goToNextScene()
     {
-        Debug.Log("next scene");
+        //Debug.Log("next scene");
         //4) LoadScene(sc�ne2)
 
         if (_nbMancheActu < _nbManches && !isTest && gameModeToTest.Length <= 0 && teamCompoToTest.Length <= 0)
@@ -1033,7 +1033,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
         }
-        /*
+        
         if (teamCompo == 1 || teamCompo == 2)
         {
             for (int i = 0; i < playersTeam.Length; i++)
@@ -1042,13 +1042,17 @@ public class GameManager : MonoBehaviour
                 {
                     case 0:
                         players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("purple");
+                        players[i].GetComponent<PlayerSkins>().SetCursorTeam("purple");
+                        players[i].GetComponent<PlayerSkins>().SetHaloTeam("purple");
                         break;
                     case 1:
                         players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("orange");
+                        players[i].GetComponent<PlayerSkins>().SetCursorTeam("orange");
+                        players[i].GetComponent<PlayerSkins>().SetHaloTeam("orange");
                         break;
                 }
             }
-        }*/
+        }
         return playersTeam;
     }
 

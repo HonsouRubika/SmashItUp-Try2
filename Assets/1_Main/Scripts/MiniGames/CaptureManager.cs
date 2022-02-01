@@ -125,12 +125,14 @@ public class CaptureManager : MonoBehaviour
                 //deactivate light movement
                 lightAnimator.enabled = false;
             }
-            /*
+            
             for (int i = 0; i < playersTeam.Length; i++)
             {
                 players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("default");
+                players[i].GetComponent<PlayerSkins>().SetCursorTeam("default");
+                players[i].GetComponent<PlayerSkins>().SetHaloTeam("default");
             }
-            */
+            
             playOneTime = true;
         }
 

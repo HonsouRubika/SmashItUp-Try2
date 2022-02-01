@@ -66,12 +66,14 @@ public class CollectThePiecesManager : MonoBehaviour
         if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
             SortPlayers();
-            /*
+            
             for (int i = 0; i < playersTeam.Length; i++)
             {
                 players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("default");
+                players[i].GetComponent<PlayerSkins>().SetCursorTeam("default");
+                players[i].GetComponent<PlayerSkins>().SetHaloTeam("default");
             }
-            */
+            
             playOneTime = true;
         }
 

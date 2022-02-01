@@ -47,6 +47,17 @@ public class PlayerSkins : MonoBehaviour
     public Sprite goldenPurpleHammer;
     public Sprite goldenOrangeHammer;
 
+    [Header("Team Cursor")]
+    public Sprite purpleCursor;
+    public Sprite orangeCursor;
+    private GameObject cursorTeam;
+
+    [Header("Team Halo")]
+    public Sprite purpleHalo;
+    public Sprite orangeHalo;
+    private GameObject haloTeam;
+
+
     [HideInInspector] private GameObject currentHammer;
     private GameObject previousHammer;
     private Color hammerColor;
@@ -65,6 +76,11 @@ public class PlayerSkins : MonoBehaviour
 
     private void Start()
     {
+        cursorTeam = transform.GetChild(6).gameObject;
+        haloTeam = transform.GetChild(7).gameObject;
+        SetCursorTeam("default");
+        SetHaloTeam("default");
+
         changerSkinTimerActu = Time.time;
 
         parent = GetComponentInParent<PlayerController>().transform;
@@ -618,6 +634,42 @@ public class PlayerSkins : MonoBehaviour
                 }
                 break;
         } 
+    }
+
+    public void SetCursorTeam(string color)
+    {
+        switch (color)
+        {
+            case "purple":
+                cursorTeam.SetActive(true);
+                cursorTeam.GetComponent<SpriteRenderer>().sprite = purpleCursor;
+                break;
+            case "orange":
+                cursorTeam.SetActive(true);
+                cursorTeam.GetComponent<SpriteRenderer>().sprite = orangeCursor;
+                break;
+            case "default":
+                cursorTeam.SetActive(false);
+                break;
+        }
+    }
+
+    public void SetHaloTeam(string color)
+    {
+        switch (color)
+        {
+            case "purple":
+                haloTeam.SetActive(true);
+                haloTeam.GetComponent<SpriteRenderer>().sprite = purpleHalo;
+                break;
+            case "orange":
+                haloTeam.SetActive(true);
+                haloTeam.GetComponent<SpriteRenderer>().sprite = orangeHalo;
+                break;
+            case "default":
+                haloTeam.SetActive(false);
+                break;
+        }
     }
 
     public void SetHammerOpacity(float alpha)
