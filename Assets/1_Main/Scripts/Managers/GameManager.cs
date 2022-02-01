@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
 
         if (didTransitionStarted && !animatorLoaded)
         {
-            transitionAnimator = transition.GetComponent<Animator>();
+            //transitionAnimator = transition.GetComponent<Animator>();
             animatorLoaded = true;
         }
 
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
         {
 
             //yellow = ScoreFinal
-            if (transitionState == TransitionState.CLOSE_YELLOW && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"))
+            if (transitionState == TransitionState.CLOSE_YELLOW /*&& transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close")*/)
             {
                 //Bonus fin de partie
                 /// TODO: Verifier apply des bonus/scores
@@ -138,9 +138,9 @@ public class GameManager : MonoBehaviour
                 //Scene is loaded
                 transitionState = TransitionState.OPEN_YELLOW;
                 //5) open curtains animation
-                transitionAnimScript.OpenYellow();
+                //transitionAnimScript.OpenYellow();
             }
-            else if (transitionState == TransitionState.OPEN_YELLOW && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
+            else if (transitionState == TransitionState.OPEN_YELLOW /*&& transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open")*/)
             {
                 //6) Show Players && goal
                 transitionState = TransitionState.FINISHED;
@@ -157,11 +157,11 @@ public class GameManager : MonoBehaviour
                 nbGameFinished++;
                 SaveSystem.SaveProgression(this);
 
-                Destroy(transition);
+                //Destroy(transition);
             }
 
             //blue = Score
-            if (transitionState == TransitionState.CLOSE_BLUE && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"))
+            if (transitionState == TransitionState.CLOSE_BLUE /*&& transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close")*/)
             {
                 //Debug.Log("Loading scene");
                 //on charge la prochaine scene
@@ -178,9 +178,9 @@ public class GameManager : MonoBehaviour
                 //Scene is loaded
                 transitionState = TransitionState.OPEN_BLUE;
                 //5) open curtains animation
-                transitionAnimScript.OpenBlue();
+                //transitionAnimScript.OpenBlue();
             }
-            else if (transitionState == TransitionState.OPEN_BLUE && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
+            else if (transitionState == TransitionState.OPEN_BLUE /*&& transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open")*/)
             {
                 //Debug.Log("blue curtain open");
                 //6) Show Players && goal
@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
                 didTransitionStarted = false;
 
                 //on suprr les rideaux
-                Destroy(transition);
+                //Destroy(transition);
 
                 //ApplyBonus
                 /// TODO: Verifier efficacité des bonus
@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
             }
 
             //red = NextMap
-            if (transitionState == TransitionState.CLOSING && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close"))
+            if (transitionState == TransitionState.CLOSING /*&& transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close")*/)
             {
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
@@ -214,12 +214,13 @@ public class GameManager : MonoBehaviour
                 //Scene is loaded
                 transitionState = TransitionState.OPENING;
                 //5) open curtains animation
-                transitionAnimScript.OpenRed();
+                //transitionAnimScript.OpenRed();
             }
-            else if (transitionState == TransitionState.OPENING && transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open"))
+            else if (transitionState == TransitionState.OPENING /*&& transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("open")*/)
             {
                 //on suprr les rideaux
-                Destroy(transition);
+                //Destroy(transition);
+                Debug.Log("oui");
 
                 //instantiate animation
                 consigneInstance = Instantiate<GameObject>(consigne);
@@ -388,11 +389,11 @@ public class GameManager : MonoBehaviour
     {
         //DEBUG
         if (gameModeToTest.Length > 0) _nbManches = gameModeToTest.Length;
-        
+
         _nbMancheActu = 0;
         transitionState = TransitionState.OPEN;
         _selectedGameModes = new int[_nbManches];
-        _teamCompo = new int[_nbManches];        
+        _teamCompo = new int[_nbManches];
 
         _scoreP1 = 0;
         _scoreP2 = 0;
@@ -407,7 +408,7 @@ public class GameManager : MonoBehaviour
 
             ///// LIMITATIONS /////
             if (i > 0) //pas de limitation pour le premier mini jeu choisi (logique)
-            {                
+            {
                 //on s'assure que le prochain game mode choisi soit diff�rent du premier
                 while (GameModeKind[nextGameMode] == GameModeKind[_selectedGameModes[i - 1]])
                 {
@@ -422,7 +423,7 @@ public class GameManager : MonoBehaviour
             if (teamCompoToTest.Length > 0)
             {
                 //Debug.Log(teamCompoToTest[i % teamCompoToTest.Length]);
-                _teamCompo[i] = (int) teamCompoToTest[i % teamCompoToTest.Length];
+                _teamCompo[i] = (int)teamCompoToTest[i % teamCompoToTest.Length];
             }
             else
             {
@@ -436,7 +437,7 @@ public class GameManager : MonoBehaviour
                     {
 
                         //on s'assure que le prochain team compo choisi soit diff�rent du premier
-                        while (nextTeamCompo == _teamCompo[i-1])
+                        while (nextTeamCompo == _teamCompo[i - 1])
                         {
                             nextTeamCompo = Random.Range(0, (int)TeamCompo.Coop);
                         }
@@ -487,18 +488,18 @@ public class GameManager : MonoBehaviour
         transitionState = TransitionState.OPEN;
 
         //2) pop gameObject rideau(NotDestroyOnLoad)
-        transition = Instantiate<GameObject>(curtain);
-        DontDestroyOnLoad(transition);
+        //transition = Instantiate<GameObject>(curtain);
+        //DontDestroyOnLoad(transition);
         animatorLoaded = false;
         ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
 
         //get anim script
-        transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
-        transitionAnimator = transition.GetComponent<Animator>();
+        //transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
+        //transitionAnimator = transition.GetComponent<Animator>();
 
         //3) play anim "fermer rideau"
         //Debug.Log("fermer le rideau");
-        transitionAnimScript.CloseBlue();
+        //transitionAnimScript.CloseBlue();
         //dois attendre que l'animation de fermeture ce termine avant de loadScene
         transitionState = TransitionState.CLOSE_BLUE;
     }
@@ -537,17 +538,17 @@ public class GameManager : MonoBehaviour
             transitionState = TransitionState.OPEN;
 
             //2) pop gameObject rideau(NotDestroyOnLoad)
-            transition = Instantiate<GameObject>(curtain);
-            DontDestroyOnLoad(transition);
+            //transition = Instantiate<GameObject>(curtain);
+            //DontDestroyOnLoad(transition);
             animatorLoaded = false;
             ///BUG : Changer le z axe du rideau => les players sont visibles par dessus le rideau
 
             //get anim script
-            transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
+            //transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
 
             //3) play anim "fermer rideau"
             //Debug.Log("fermer le rideau");
-            transitionAnimScript.CloseYellow();
+            //transitionAnimScript.CloseYellow();
             //dois attendre que l'animation de fermeture ce termine avant de loadScene
             transitionState = TransitionState.CLOSE_YELLOW;
         }
@@ -565,24 +566,29 @@ public class GameManager : MonoBehaviour
                 scoreValuesManagerScript.players[i].GetComponent<PlayerController>().isFrozen = true;
             }
 
-            //Stop Clock
+            //OLD Stop Clock
+            /*
             GameObject ui = GameObject.Find("--UI--");
             if (ui != null) ui.GetComponent<Timer>().StopTimer();
+            */
+            if (GameObject.Find("--UI CORNER--") != null) GameObject.Find("--UI CORNER--").GetComponent<Timer>().StopTimer();
+            else if (GameObject.Find("--UI TOP--") != null) GameObject.Find("--UI TOP--").GetComponent<Timer>().StopTimer();
+            else Debug.LogWarning("Error : prefab UI not found");
 
             //reset transition state
             transitionState = TransitionState.OPEN;
 
             //2) pop gameObject rideau(NotDestroyOnLoad)
-            transition = Instantiate<GameObject>(curtain);
-            DontDestroyOnLoad(transition);
+            //transition = Instantiate<GameObject>(curtain);
+            //DontDestroyOnLoad(transition);
             animatorLoaded = false;
 
             //get anim script
-            transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
-            transitionAnimator = transition.GetComponent<Animator>();
+            //transitionAnimScript = transition.GetComponent<TransitionAnim>(); //bonne solution
+            //transitionAnimator = transition.GetComponent<Animator>();
 
             //3) play anim "fermer rideau"
-            transitionAnimScript.CloseRed();
+            //transitionAnimScript.CloseRed();
             //dois attendre que l'animation de fermeture ce termine avant de loadScene
             transitionState = TransitionState.CLOSING;
         }
@@ -607,7 +613,7 @@ public class GameManager : MonoBehaviour
                 case (int)GameMode.Loup:
                     _nbMancheActu++;
                     //Limitation de GameMode
-                    _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
+                    _teamCompo[_nbMancheActu - 1] = (int)TeamCompo.FFA;
 
                     //load team compo
                     playersTeam = AssignPlayerTeam();
@@ -626,7 +632,7 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
 
                     //Limitation de GameMode
-                    _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
+                    _teamCompo[_nbMancheActu - 1] = (int)TeamCompo.FFA;
 
                     //load team compo
                     playersTeam = AssignPlayerTeam();
@@ -687,7 +693,7 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
                     //Limitation de GameMode
                     if (teamCompoToTest.Length > 0) teamCompoToTest[_nbMancheActu % teamCompoToTest.Length] = (int)TeamCompo.FFA;
-                    else _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
+                    else _teamCompo[_nbMancheActu - 1] = (int)TeamCompo.FFA;
                     //load team compo
                     playersTeam = AssignPlayerTeam();
                     SceneManager.LoadScene("Loup0" + Random.Range(1, 3));
@@ -702,7 +708,7 @@ public class GameManager : MonoBehaviour
                     _nbMancheActu++;
                     //Limitation de GameMode
                     if (teamCompoToTest.Length > 0) teamCompoToTest[_nbMancheActu % teamCompoToTest.Length] = (int)TeamCompo.FFA;
-                    else _teamCompo[_nbMancheActu-1] = (int)TeamCompo.FFA;
+                    else _teamCompo[_nbMancheActu - 1] = (int)TeamCompo.FFA;
                     //load team compo
                     playersTeam = AssignPlayerTeam();
                     SceneManager.LoadScene("Contamination0" + Random.Range(1, 3));
@@ -906,9 +912,9 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < GameManager.Instance.getNbPlayer(); i++)
         {
 
-            if (GameManager.Instance.getScorePlayer(i+1) > bestPlayerSpread)
+            if (GameManager.Instance.getScorePlayer(i + 1) > bestPlayerSpread)
             {
-                bestPlayerSpread = GameManager.Instance.getScorePlayer(i+1);
+                bestPlayerSpread = GameManager.Instance.getScorePlayer(i + 1);
                 bestPlayer = i;
             }
         }
