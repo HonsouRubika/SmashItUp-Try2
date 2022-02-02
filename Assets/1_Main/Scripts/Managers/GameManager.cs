@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ScoreValuesManager scoreValuesManagerScript;
 
     private int[] _selectedGameModes;
-    private int[] _teamCompo;
+    public int[] _teamCompo;
     //team compo
     public int[] playersTeam;
     public GameObject[] players;
@@ -594,9 +594,11 @@ public class GameManager : MonoBehaviour
             GameObject ui = GameObject.Find("--UI--");
             if (ui != null) ui.GetComponent<Timer>().StopTimer();
             */
+            /*
             if (GameObject.Find("--UI CORNER--") != null) GameObject.Find("--UI CORNER--").GetComponent<Timer>().StopTimer();
             else if (GameObject.Find("--UI TOP--") != null) GameObject.Find("--UI TOP--").GetComponent<Timer>().StopTimer();
             else Debug.LogWarning("Error : prefab UI not found");
+            */
 
             //reset transition state
             transitionState = TransitionState.OPEN;

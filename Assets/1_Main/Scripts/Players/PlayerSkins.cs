@@ -74,6 +74,9 @@ public class PlayerSkins : MonoBehaviour
     private float changerSkinTimer = 0.5f;
     private float changerSkinTimerActu;
 
+    //playtest
+    private uint overlayPreset = 0;
+
     private void Start()
     {
         cursorTeam = transform.GetChild(6).gameObject;
@@ -125,6 +128,68 @@ public class PlayerSkins : MonoBehaviour
 
         SetColorToPlayer(currentSkin);
         setSkinColorOnSwitchingSkin();
+    }
+
+    //FOR PLAYTEST PURPOSES
+    private void Update()
+    {
+
+        if (Keyboard.current.oKey.wasPressedThisFrame && GameManager.Instance.playersTeam.Length > 0)
+        {
+            overlayPreset++;
+            if (overlayPreset == 3) overlayPreset = 0;
+
+            //change preset
+            Debug.Log("change overlay preset");
+
+            switch (overlayPreset)
+            {
+                case 0: //halo seul
+                    Debug.Log("0");
+                    cursorTeam.SetActive(false);
+                    haloTeam.SetActive(true);
+                    SetHammerColorByTeam("default");
+                    break;
+                case 1: //halo et fleche
+                    Debug.Log("1");
+                    cursorTeam.SetActive(true);
+                    SetHammerColorByTeam("default");
+                    switch (GameManager.Instance.playersTeam[playerControllerScript.playerID])
+                    {
+                        case 0:
+                            haloTeam.SetActive(true);
+                            break;
+                        case 1:
+                            haloTeam.SetActive(true);
+                            break;
+                        default:
+                            haloTeam.SetActive(false);
+                            break;
+                    }
+                    break;
+                case 2: //halo et marteau
+                    Debug.Log("2");
+                    cursorTeam.SetActive(false);
+                    //hammer true on change
+                    switch (GameManager.Instance.playersTeam[playerControllerScript.playerID])
+                    {
+                        case 0:
+                            haloTeam.SetActive(true);
+                            SetHammerColorByTeam("purple");
+                            break;
+                        case 1:
+                            haloTeam.SetActive(true);
+                            SetHammerColorByTeam("orange");
+                            break;
+                        default:
+                            haloTeam.SetActive(false);
+                            SetHammerColorByTeam("default");
+                            break;
+                    }
+                    break;
+            }
+        }
+
     }
 
     /*
