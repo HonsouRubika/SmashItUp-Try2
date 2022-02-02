@@ -19,7 +19,7 @@ public class PlayerManagerScript : MonoBehaviour
     public void OnPlayerJoined(PlayerInput playerInput)
     {
         //initialisation des joueurs dans le menu selection
-        teleporterLobby.nbPlayerInGame++;
+        if (teleporterLobby != null) teleporterLobby.nbPlayerInGame++;
         if (teleporterRestartGame != null) teleporterRestartGame.nbPlayerInGame++;
 
         //instancialisation dans joueurs au d�but de chaque mapDebug.Log("player connected");
