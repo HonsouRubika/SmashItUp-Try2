@@ -341,7 +341,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("l'un des script n'est pas attaché");
         }
 
-        if (Time.time >= nextAttackTime)
+        /*if (Time.time >= nextAttackTime)
         {
             attackIsCD = false;
             playerSkinScript.SetHammerOpacity(1);
@@ -350,7 +350,23 @@ public class PlayerController : MonoBehaviour
         {
             attackIsCD = true;
             playerSkinScript.SetHammerOpacity(0.5f);
+        }*/
+
+        if (playerAnimScript.playerAnimator != null)
+        {
+            if (Time.time >= nextAttackTime)
+            {
+                playerSkinScript.SetHammerOpacity(1);
+            }
+            else
+            {
+                if (playerAnimScript.GetCooldownPlayer())
+                {
+                    playerSkinScript.SetHammerOpacity(0f);
+                }
+            }
         }
+        
     }
 
     void attack()
