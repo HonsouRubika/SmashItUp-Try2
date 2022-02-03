@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("LD")]
-    public float trampolineJump = 3;
+    public float trampolineJump = 6;
 
     [System.NonSerialized] public float lastTimeAttackHit = 0;
     [System.NonSerialized] public float lastTimeGotHit = 0;
