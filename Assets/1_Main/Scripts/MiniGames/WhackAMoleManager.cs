@@ -56,6 +56,10 @@ public class WhackAMoleManager : MonoBehaviour
 
     public TaupeSound TaupeSoundScript;
 
+    //Merge score team
+    private float scoreTeam1;
+    private float scoreTeam2;
+
     private void Start()
     {
         //init var
@@ -117,11 +121,49 @@ public class WhackAMoleManager : MonoBehaviour
 
         if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
+            EqualizeScoreIfTeam();
             SortPlayers();
 
             ResetColor();
 
             playOneTime = true;
+        }
+    }
+
+    public void MergeScoreTeam(int player, float score)
+    {
+        //2v2
+        if (GameManager.Instance.getTeamCompo() == 2 || GameManager.Instance.getTeamCompo() == 1)
+        {
+            switch (playersTeam[player])
+            {
+                case 0:
+                    scoreTeam1 += score;
+                    break;
+                case 1:
+                    scoreTeam2 += score;
+                    break;
+            }
+        }
+    }
+
+    private void EqualizeScoreIfTeam()
+    {
+        //2v2
+        if (GameManager.Instance.getTeamCompo() == 2 || GameManager.Instance.getTeamCompo() == 1)
+        {
+            for (int i = 0; i < players.Length; i++)
+            {
+                switch (playersTeam[i])
+                {
+                    case 0:
+                        scorePlayers[i] = scoreTeam1;
+                        break;
+                    case 1:
+                        scorePlayers[i] = scoreTeam2;
+                        break;
+                }
+            }
         }
     }
 

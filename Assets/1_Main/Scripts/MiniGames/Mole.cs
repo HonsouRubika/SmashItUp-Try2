@@ -73,12 +73,14 @@ public class Mole : MonoBehaviour
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
                         scoreScript.AddScore(pointsToAddAlone1V3, 0, 0, 0);
                         whackAWholeScript.scorePlayers[0] += pointsToAddAlone1V3;
+                        whackAMoleScript.MergeScoreTeam(0, pointsToAddAlone1V3);
                     }
                     else
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
                         scoreScript.AddScore(pointsToAdd, 0, 0, 0);
                         whackAWholeScript.scorePlayers[0]++;
+                        whackAMoleScript.MergeScoreTeam(0, 1);
                     }
                     break;
                 case 1:
@@ -89,12 +91,14 @@ public class Mole : MonoBehaviour
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
                         scoreScript.AddScore(0, pointsToAddAlone1V3, 0, 0);
                         whackAWholeScript.scorePlayers[1] += pointsToAddAlone1V3;
+                        whackAMoleScript.MergeScoreTeam(1, pointsToAddAlone1V3);
                     }
                     else
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
                         scoreScript.AddScore(0, pointsToAdd, 0, 0);
                         whackAWholeScript.scorePlayers[1]++;
+                        whackAMoleScript.MergeScoreTeam(1, 1);
                     }
                     break;
                 case 2:
@@ -105,12 +109,14 @@ public class Mole : MonoBehaviour
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
                         scoreScript.AddScore(0, 0, pointsToAddAlone1V3, 0);
                         whackAWholeScript.scorePlayers[2] += pointsToAddAlone1V3;
+                        whackAMoleScript.MergeScoreTeam(2, pointsToAddAlone1V3);
                     }
                     else
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
                         scoreScript.AddScore(0, 0, pointsToAdd, 0);
                         whackAWholeScript.scorePlayers[2]++;
+                        whackAMoleScript.MergeScoreTeam(2, 1);
                     }
                     break;
                 case 3:
@@ -121,12 +127,14 @@ public class Mole : MonoBehaviour
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
                         scoreScript.AddScore(0, 0, 0, pointsToAddAlone1V3);
                         whackAWholeScript.scorePlayers[3] += pointsToAddAlone1V3;
+                        whackAMoleScript.MergeScoreTeam(3, pointsToAddAlone1V3);
                     }
                     else
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
                         scoreScript.AddScore(0, 0, 0, pointsToAdd);
                         whackAWholeScript.scorePlayers[3]++;
+                        whackAMoleScript.MergeScoreTeam(3, 1);
                     }
                     break;
             }
