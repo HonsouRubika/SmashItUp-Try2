@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using TMPro;
 
 public class NewScoreSystem : MonoBehaviour
 {
@@ -51,6 +52,9 @@ public class NewScoreSystem : MonoBehaviour
     private GameObject[] players;
     private int[] playersPosition;
 
+    //AddingPoints
+    private List<TextMeshProUGUI> playerAddedPointsText;
+
     //Equality
     private EqualityCase equalityCase = EqualityCase.None;
 
@@ -62,6 +66,12 @@ public class NewScoreSystem : MonoBehaviour
 
     private void Start()
     {
+        playerAddedPointsText = new List<TextMeshProUGUI>(ScorePanel.transform.GetChild(9).childCount);
+        for (int i = 0; i < playerAddedPointsText.Count; i++)
+        {
+            playerAddedPointsText[i] = ScorePanel.transform.GetChild(9).GetChild(i).GetComponent<TextMeshProUGUI>();
+        }
+
         teamCursor = new Image[ScorePanel.transform.GetChild(8).childCount];
         for (int i = 0; i < teamCursor.Length; i++)
         {
@@ -114,6 +124,14 @@ public class NewScoreSystem : MonoBehaviour
             displayScore = false;
         }
 
+    }
+
+    private void DisplayAddingPoints(int player)
+    {
+        if (GameManager.Instance.getAddedPointsPlayer(player + 1) != 0)
+        {
+            playerAddedPointsText[player].text = "+ " + GameManager.Instance.getAddedPointsPlayer(player + 1);
+        }
     }
 
     public void DisplayScore(bool enable)
