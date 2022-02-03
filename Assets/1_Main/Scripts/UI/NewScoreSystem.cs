@@ -66,7 +66,7 @@ public class NewScoreSystem : MonoBehaviour
 
     private void Start()
     {
-        playerAddedPointsText = new List<TextMeshProUGUI>(ScorePanel.transform.GetChild(9).childCount);
+        playerAddedPointsText = new List<TextMeshProUGUI>(new TextMeshProUGUI[ScorePanel.transform.GetChild(9).childCount]);
         for (int i = 0; i < playerAddedPointsText.Count; i++)
         {
             playerAddedPointsText[i] = ScorePanel.transform.GetChild(9).GetChild(i).GetComponent<TextMeshProUGUI>();
@@ -126,13 +126,6 @@ public class NewScoreSystem : MonoBehaviour
 
     }
 
-    private void DisplayAddingPoints(int player)
-    {
-        if (GameManager.Instance.getAddedPointsPlayer(player + 1) != 0)
-        {
-            playerAddedPointsText[player].text = "+ " + GameManager.Instance.getAddedPointsPlayer(player + 1);
-        }
-    }
 
     public void DisplayScore(bool enable)
     {
@@ -154,6 +147,7 @@ public class NewScoreSystem : MonoBehaviour
                 GameManager.Instance.UpdatePlayerScore();
                 GameManager.Instance.resetScorePoints();
                 GameManager.Instance.FadeOutTransition();
+                DisplayAddingPoints(-1);
                 break;
         }
     }
@@ -163,11 +157,30 @@ public class NewScoreSystem : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeFirstIncrementation);
 
         AddPoints(GameManager.Instance.getAddedPointsPlayer(1), P1Points, p1PointIndex);
+        DisplayAddingPoints(0);
     }
 
     private void AddPoints(int addedPoints, Image[] points, int index)
     {
         StartCoroutine(SetHammerPoints(addedPoints, points, index));
+    }
+
+    private void DisplayAddingPoints(int player)
+    {
+        if (player == -1)
+        {
+            for (int i = 0; i < playerAddedPointsText.Count; i++)
+            {
+                playerAddedPointsText[i].text = "";
+            }
+        }
+        else
+        {
+            if (GameManager.Instance.getAddedPointsPlayer(player + 1) != 0)
+            {
+                playerAddedPointsText[player].text = "+ " + GameManager.Instance.getAddedPointsPlayer(player + 1);
+            }
+        } 
     }
 
     private IEnumerator SetHammerPoints(int addedPoints, Image[] points, int index)
@@ -244,9 +257,9 @@ public class NewScoreSystem : MonoBehaviour
                     }
                 }
 
-                if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; }
-                else if (points == P2Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(3), P3Points, p3PointIndex)); p2PointIndex = index; }
-                else if (points == P3Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(4), P4Points, p4PointIndex)); p3PointIndex = index; }
+                if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; DisplayAddingPoints(1); }
+                else if (points == P2Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(3), P3Points, p3PointIndex)); p2PointIndex = index; DisplayAddingPoints(2); }
+                else if (points == P3Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(4), P4Points, p4PointIndex)); p3PointIndex = index; DisplayAddingPoints(3); }
                 else if (points == P4Points) p4PointIndex = index;
                 break;
             case 3:
@@ -302,8 +315,8 @@ public class NewScoreSystem : MonoBehaviour
                     }
                 }
 
-                if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; }
-                else if (points == P2Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(3), P3Points, p3PointIndex)); p2PointIndex = index; }
+                if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; DisplayAddingPoints(1); }
+                else if (points == P2Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(3), P3Points, p3PointIndex)); p2PointIndex = index; DisplayAddingPoints(2); }
                 else if (points == P3Points) p3PointIndex = index;
                 break;
             case 2:
@@ -342,7 +355,7 @@ public class NewScoreSystem : MonoBehaviour
                     }
                 }
 
-                if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; }
+                if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; DisplayAddingPoints(1); }
                 else if (points == P2Points) p2PointIndex = index;
                 break;
         }

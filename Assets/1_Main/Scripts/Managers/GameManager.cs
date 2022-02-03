@@ -135,8 +135,6 @@ public class GameManager : MonoBehaviour
             //yellow = ScoreFinal
             if (transitionState == TransitionState.CLOSE_YELLOW /*&& transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName("close")*/)
             {
-                Debug.Log("close yellow");
-
                 //Bonus fin de partie
                 /// TODO: Verifier apply des bonus/scores
                 //bonusManagerScript.ApplyBonusEndGame();
