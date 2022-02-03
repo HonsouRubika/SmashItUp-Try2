@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Ce son peut s'appliquer à chaque fois que le joueur gagne des points, quand il a un +1 au dessus de son perso par exemple, quelque soit le mini jeu
 public class EarnPointSound : MonoBehaviour
 {
     [Space]

@@ -28,6 +28,8 @@ public class ScoreValuesManager : MonoBehaviour
     [Space]
     public GameObject[] players;
 
+    public EarnPointSound EarnPointSoundScript;
+
     private void Update()
     {
         ///TODO: Lire ça qu'une seule fois
@@ -35,6 +37,8 @@ public class ScoreValuesManager : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag("Player");
 
         PointsDependingPlayersNumber();
+
+        //EarnPointSoundScript.PlayerEarnPoint();
     }
 
     public void PointsDependingPlayersNumber()

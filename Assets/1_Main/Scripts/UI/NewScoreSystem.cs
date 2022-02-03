@@ -53,6 +53,8 @@ public class NewScoreSystem : MonoBehaviour
 
     private ScoreValuesManager scoreValuesScript;
 
+    public EarnPointSound EarnPointSoundScript;
+
     private void Start()
     {
         scoreValuesScript = GetComponent<ScoreValuesManager>();
@@ -83,6 +85,8 @@ public class NewScoreSystem : MonoBehaviour
         {
             P4Points[i] = P4.transform.GetChild(i).GetComponent<Image>();
         }
+
+       // EarnPointSoundScript.PlayerEarnPoint();
     }
 
     private void Update()
