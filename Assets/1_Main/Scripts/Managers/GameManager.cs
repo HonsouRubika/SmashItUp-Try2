@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
 
     private GameObject transitionUI;
 
+    private NewScoreSystem scoreSystemScript;
+
     void Awake()
     {
         #region Make Singleton
@@ -93,6 +95,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        scoreSystemScript = GetComponent<NewScoreSystem>();
+
         transitionUI = transform.GetChild(4).gameObject;
 
         //Load save
@@ -1046,14 +1050,21 @@ public class GameManager : MonoBehaviour
                         //players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("purple");
                         players[i].GetComponent<PlayerSkins>().SetCursorTeam("purple");
                         players[i].GetComponent<PlayerSkins>().SetHaloTeam("purple");
+                        scoreSystemScript.DisplayTeam(i, "purple");
+
                         break;
                     case 1:
                         //players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("orange");
                         players[i].GetComponent<PlayerSkins>().SetCursorTeam("orange");
                         players[i].GetComponent<PlayerSkins>().SetHaloTeam("orange");
+                        scoreSystemScript.DisplayTeam(i, "orange");
                         break;
                 }
             }
+        }
+        else
+        {
+            scoreSystemScript.EnableTeamCursor(false);
         }
         return playersTeam;
     }

@@ -21,6 +21,11 @@ public class NewScoreSystem : MonoBehaviour
     public Sprite hammerPointSilver;
     public Sprite hammerPointGold;
 
+    [Header("Team")]
+    public Sprite purpleCursor;
+    public Sprite orangeCursor;
+    private Image[] teamCursor;
+
     [Header("Canvas")]
     public GameObject ScorePanel;
     public GameObject P1;
@@ -57,6 +62,13 @@ public class NewScoreSystem : MonoBehaviour
 
     private void Start()
     {
+        teamCursor = new Image[ScorePanel.transform.GetChild(8).childCount];
+        for (int i = 0; i < teamCursor.Length; i++)
+        {
+            teamCursor[i] = ScorePanel.transform.GetChild(8).GetChild(i).GetComponent<Image>();
+        }
+        EnableTeamCursor(false);
+
         scoreValuesScript = GetComponent<ScoreValuesManager>();
         score4Players = ScorePanel.transform.GetChild(1).gameObject;
         score3Players = ScorePanel.transform.GetChild(2).gameObject;
@@ -314,6 +326,68 @@ public class NewScoreSystem : MonoBehaviour
 
                 if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; }
                 else if (points == P2Points) p2PointIndex = index;
+                break;
+        }
+    }
+
+    public void DisplayTeam(int player, string team)
+    {
+        switch (team)
+        {
+            case "purple":
+                switch (player)
+                {
+                    case 0:
+                        teamCursor[0].sprite = purpleCursor;
+                        break;
+                    case 1:
+                        teamCursor[1].sprite = purpleCursor;
+                        break;
+                    case 2:
+                        teamCursor[2].sprite = purpleCursor;
+                        break;
+                    case 3:
+                        teamCursor[3].sprite = purpleCursor;
+                        break;
+                }
+                break;
+            case "orange":
+                switch (player)
+                {
+                    case 0:
+                        teamCursor[0].sprite = orangeCursor;
+                        break;
+                    case 1:
+                        teamCursor[1].sprite = orangeCursor;
+                        break;
+                    case 2:
+                        teamCursor[2].sprite = orangeCursor;
+                        break;
+                    case 3:
+                        teamCursor[3].sprite = orangeCursor;
+                        break;
+                }
+                break;
+        }
+
+        EnableTeamCursor(true);
+    }
+
+    public void EnableTeamCursor(bool enable)
+    {
+        switch (enable)
+        {
+            case true:
+                for (int i = 0; i < teamCursor.Length; i++)
+                {
+                    teamCursor[i].gameObject.SetActive(true);
+                }
+                break;
+            case false:
+                for (int i = 0; i < teamCursor.Length; i++)
+                {
+                    teamCursor[i].gameObject.SetActive(false);
+                }
                 break;
         }
     }
