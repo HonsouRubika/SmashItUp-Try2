@@ -305,7 +305,7 @@ public class PlayerController : MonoBehaviour
         else if (Time.time < stunTimeActu - stunTime + stunTime / 5)
         {
             //vitesse de projection constante pendant le stun
-            Debug.Log("stun is active");
+            //Debug.Log("stun is active");
             if (rb.velocity.x > 0)
             {
                 rb.velocity = new Vector2(hammerXProjection, hammerYProjection);
@@ -795,7 +795,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x + (jumpAirIntake * Time.deltaTime), rb.velocity.y);
                 if (rb.velocity.x > 0) rb.velocity = new Vector2(0, rb.velocity.y);
             }
-            Debug.Log("1 : " + rb.velocity.x);
+            //Debug.Log("1 : " + rb.velocity.x);
         }
         else
         {
@@ -817,7 +817,7 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - newJumpRatioAddForce * Time.deltaTime);
                 if (rb.velocity.y < -jumpSpeed * fallSpeedMultiplier) rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed * fallSpeedMultiplier);
-                Debug.Log("2 : " + rb.velocity.x);
+                //Debug.Log("2 : " + rb.velocity.x);
             }
 
             //check if player is falling

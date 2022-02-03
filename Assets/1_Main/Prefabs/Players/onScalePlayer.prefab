@@ -209,7 +209,7 @@ MonoBehaviour:
   speed: 30
   jumpSpeed: 60
   movementJumpSpeed: 30
-  ratioAddForce: 5
+  ratioAddForce: 10
   ratioAddForceAir: 20
   playerID: 0
   rb: {fileID: 8299801329159407178}
@@ -227,8 +227,8 @@ MonoBehaviour:
   coyotTime: 0.3
   wallGripTime: 0
   wallGripFallSpeed: 30
-  newJumpRatioAddForce: 200
-  jumpAirIntake: 100
+  newJumpRatioAddForce: 150
+  jumpAirIntake: 150
   groundCheck: {fileID: 7944750135165682167}
   gripLeftCheck: {fileID: 8685648045550649710}
   gripRightCheck: {fileID: 6548757986954372878}
@@ -244,11 +244,11 @@ MonoBehaviour:
   hammerHitboxLayer:
     serializedVersion: 2
     m_Bits: 512
-  hammerXProjection: 40
-  hammerYProjection: 10
-  hammerBlockProjection: 5
+  hammerXProjection: 80
+  hammerYProjection: 20
+  hammerBlockProjection: 10
   HammerSideProjectionMaxDistance: 25
-  projectionStopSpeed: 2.5
+  projectionStopSpeed: 1
   attackRate: 1
   attackIsCD: 0
   attackDuration: 0.5
