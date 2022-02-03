@@ -9,7 +9,7 @@ public class CaptureManager : MonoBehaviour
     private GameObject[] playersUnsorted;
     public GameObject[] players;
 
-    private float[] scorePlayers;
+    [HideInInspector] public float[] scorePlayers;
     private float[] finalScores;
     private int[] playersPosition;
 
@@ -63,6 +63,10 @@ public class CaptureManager : MonoBehaviour
     //Equality
     public EqualityCase equalityCase = EqualityCase.None;
 
+    //Merge score team
+    private float scoreTeam1;
+    private float scoreTeam2;
+
     private void Start()
     {
         playersUnsorted = GameObject.FindGameObjectsWithTag("Player");
@@ -105,7 +109,10 @@ public class CaptureManager : MonoBehaviour
 
     private void Update()
     {
-        IncrementPlayerScore();
+        if (timerScript.miniGameTimer > 0)
+        {
+            IncrementPlayerScore();
+        }
 
         if (timerScript.isTimerStarted && lightAnimator != null)
         {
@@ -118,6 +125,7 @@ public class CaptureManager : MonoBehaviour
 
         if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
+            EqualizeScoreIfTeam();
             SortPlayers();
 
             if (lightAnimator != null)
@@ -134,6 +142,43 @@ public class CaptureManager : MonoBehaviour
         if (timerScript.miniGameTimer > 0 && timerScript.isTimerStarted)
         {
             MultiplePlayersCaptureZone();
+        }
+    }
+
+    private void MergeScoreTeam(int player, float score)
+    {
+        //2v2
+        if (GameManager.Instance.getTeamCompo() == 2 || GameManager.Instance.getTeamCompo() == 1)
+        {
+            switch (playersTeam[player])
+            {
+                case 0:
+                    scoreTeam1 += score;
+                    break;
+                case 1:
+                    scoreTeam2 += score;
+                    break;
+            }
+        }
+    }
+
+    private void EqualizeScoreIfTeam()
+    {
+        //2v2
+        if (GameManager.Instance.getTeamCompo() == 2 || GameManager.Instance.getTeamCompo() == 1)
+        {
+            for (int i = 0; i < players.Length; i++)
+            {
+                switch (playersTeam[i])
+                {
+                    case 0:
+                        scorePlayers[i] = scoreTeam1;
+                        break;
+                    case 1:
+                        scorePlayers[i] = scoreTeam2;
+                        break;
+                }
+            }
         }
     }
 
@@ -177,6 +222,7 @@ public class CaptureManager : MonoBehaviour
                     scorePlayer0 += pointsEarned1V3Alone;
                     scoreScript.AddScore(pointsEarned1V3Alone, 0, 0, 0);
                     pointCounterP1 += pointsEarned1V3Alone;
+                    MergeScoreTeam(0, pointsEarned1V3Alone);
                     
                 }
                 else
@@ -184,6 +230,7 @@ public class CaptureManager : MonoBehaviour
                     scorePlayer0++;
                     scoreScript.AddScore(1, 0, 0, 0);
                     pointCounterP1++;
+                    MergeScoreTeam(0, 1);
                 }
 
                 timePastInZonePlayer[0] = 0;
@@ -214,6 +261,7 @@ public class CaptureManager : MonoBehaviour
                     scorePlayer1 += pointsEarned1V3Alone;
                     scoreScript.AddScore(0, pointsEarned1V3Alone, 0, 0);
                     pointCounterP2 += pointsEarned1V3Alone;
+                    MergeScoreTeam(1, pointsEarned1V3Alone);
 
                 }
                 else
@@ -221,6 +269,7 @@ public class CaptureManager : MonoBehaviour
                     scorePlayer1++;
                     scoreScript.AddScore(0, 1, 0, 0);
                     pointCounterP2++;
+                    MergeScoreTeam(1, 1);
                 }
 
                 timePastInZonePlayer[1] = 0;
@@ -251,6 +300,7 @@ public class CaptureManager : MonoBehaviour
                     scorePlayer2 += pointsEarned1V3Alone;
                     scoreScript.AddScore(0, 0, pointsEarned1V3Alone, 0);
                     pointCounterP3 += pointsEarned1V3Alone;
+                    MergeScoreTeam(2, pointsEarned1V3Alone);
 
                 }
                 else
@@ -258,6 +308,7 @@ public class CaptureManager : MonoBehaviour
                     scorePlayer2++;
                     scoreScript.AddScore(0, 0, 1, 0);
                     pointCounterP3++;
+                    MergeScoreTeam(2, 1);
                 }
 
                 timePastInZonePlayer[2] = 0;
@@ -288,6 +339,7 @@ public class CaptureManager : MonoBehaviour
                     scorePlayer3 += pointsEarned1V3Alone;
                     scoreScript.AddScore(0, 0, 0, pointsEarned1V3Alone);
                     pointCounterP4 += pointsEarned1V3Alone;
+                    MergeScoreTeam(3, pointsEarned1V3Alone);
 
                 }
                 else
@@ -295,6 +347,7 @@ public class CaptureManager : MonoBehaviour
                     scorePlayer3++;
                     scoreScript.AddScore(0, 0, 0, 1);
                     pointCounterP4++;
+                    MergeScoreTeam(3, 1);
                 }
 
                 timePastInZonePlayer[3] = 0;

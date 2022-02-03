@@ -29,7 +29,7 @@ public class KeepTheFlagManager : MonoBehaviour
     public bool player2HaveFlag = false;
     public bool player3HaveFlag = false;
 
-    public float[] scorePlayers;
+    [HideInInspector] public float[] scorePlayers;
 
     public float[] timePastInZonePlayer;
     private float[] finalScores;
@@ -63,8 +63,8 @@ public class KeepTheFlagManager : MonoBehaviour
     public EqualityCase equalityCase = EqualityCase.None;
 
     //Merge score team
-    public float scoreTeam1;
-    public float scoreTeam2;
+    private float scoreTeam1;
+    private float scoreTeam2;
 
     private void Start()
     {
