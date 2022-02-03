@@ -140,6 +140,8 @@ public class NewScoreSystem : MonoBehaviour
 
     private IEnumerator SetHammerPoints(int addedPoints, Image[] points, int index)
     {
+        GameManager.Instance.UpdatePlayerScore();
+
         switch (playersPosition.Length)
         {
             case 4:
