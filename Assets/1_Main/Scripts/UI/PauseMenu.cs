@@ -46,7 +46,6 @@ public class PauseMenu : MonoBehaviour
             playerThatPausedID = playerID;
 
 
-           
 
 
             if (context.control == Keyboard.current.escapeKey)
@@ -72,7 +71,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(true);
 
-        //PauseSoundScript.GameIsOnPause();
+        PauseSoundScript.GameIsOnPause();
 
         Time.timeScale = 0f;
         GameManager.Instance.isPaused = true;
