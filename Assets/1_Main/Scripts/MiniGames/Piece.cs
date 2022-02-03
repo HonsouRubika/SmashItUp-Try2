@@ -53,11 +53,13 @@ public class Piece : MonoBehaviour
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
                         scoreScript.AddScore(pointsToAddAlone1V3, 0, 0, 0);
+                        collectThePiecesManager.MergeScoreTeam(0, pointsToAddAlone1V3);
                     }
                     else
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
                         scoreScript.AddScore(pointsToAdd, 0, 0, 0);
+                        collectThePiecesManager.MergeScoreTeam(0, pointsToAdd);
                     }
                     break;
                 case 1:
@@ -67,11 +69,13 @@ public class Piece : MonoBehaviour
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
                         scoreScript.AddScore(0, pointsToAddAlone1V3, 0, 0);
+                        collectThePiecesManager.MergeScoreTeam(1, pointsToAddAlone1V3);
                     }
                     else
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
                         scoreScript.AddScore(0, pointsToAdd, 0, 0);
+                        collectThePiecesManager.MergeScoreTeam(1, pointsToAdd);
                     }
                     break;
                 case 2:
@@ -81,11 +85,13 @@ public class Piece : MonoBehaviour
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
                         scoreScript.AddScore(0, 0, pointsToAddAlone1V3, 0);
+                        collectThePiecesManager.MergeScoreTeam(2, pointsToAddAlone1V3);
                     }
                     else
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
                         scoreScript.AddScore(0, 0, pointsToAdd, 0);
+                        collectThePiecesManager.MergeScoreTeam(2, pointsToAdd);
                     }
                     break;
                 case 3:
@@ -95,11 +101,13 @@ public class Piece : MonoBehaviour
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAddAlone1V3.ToString();
                         scoreScript.AddScore(0, 0, 0, pointsToAddAlone1V3);
+                        collectThePiecesManager.MergeScoreTeam(3, pointsToAddAlone1V3);
                     }
                     else
                     {
                         floatPoint.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+ " + pointsToAdd.ToString();
                         scoreScript.AddScore(0, 0, 0, pointsToAdd);
+                        collectThePiecesManager.MergeScoreTeam(3, pointsToAdd);
                     }
                     break;
             }

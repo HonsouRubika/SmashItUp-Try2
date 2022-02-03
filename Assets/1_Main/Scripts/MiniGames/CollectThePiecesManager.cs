@@ -8,7 +8,7 @@ public class CollectThePiecesManager : MonoBehaviour
     private GameObject[] playersUnsorted;
     public GameObject[] players;
 
-    private float[] scorePlayers;
+    public float[] scorePlayers;
     private float[] finalScores;
     private int[] playersPosition;
 
@@ -32,6 +32,10 @@ public class CollectThePiecesManager : MonoBehaviour
 
     //Equality
     public EqualityCase equalityCase = EqualityCase.None;
+
+    //Merge score team
+    public float scoreTeam1;
+    public float scoreTeam2;
 
     private void Start()
     {
@@ -61,10 +65,14 @@ public class CollectThePiecesManager : MonoBehaviour
    
     private void Update()
     {
-        IncrementPlayerScore();
+        if (timerScript.miniGameTimer > 0)
+        {
+            IncrementPlayerScore();
+        }
 
         if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
+            EqualizeScoreIfTeam();
             SortPlayers();
 
             ResetColor();
@@ -81,6 +89,43 @@ public class CollectThePiecesManager : MonoBehaviour
             playOneTime = true;
         }
      
+    }
+
+    public void MergeScoreTeam(int player, float score)
+    {
+        //2v2
+        if (GameManager.Instance.getTeamCompo() == 2 || GameManager.Instance.getTeamCompo() == 1)
+        {
+            switch (playersTeam[player])
+            {
+                case 0:
+                    scoreTeam1 += score;
+                    break;
+                case 1:
+                    scoreTeam2 += score;
+                    break;
+            }
+        }
+    }
+
+    private void EqualizeScoreIfTeam()
+    {
+        //2v2
+        if (GameManager.Instance.getTeamCompo() == 2 || GameManager.Instance.getTeamCompo() == 1)
+        {
+            for (int i = 0; i < players.Length; i++)
+            {
+                switch (playersTeam[i])
+                {
+                    case 0:
+                        scorePlayers[i] = scoreTeam1;
+                        break;
+                    case 1:
+                        scorePlayers[i] = scoreTeam2;
+                        break;
+                }
+            }
+        }
     }
 
     private void ResetColor()
