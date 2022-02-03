@@ -204,30 +204,6 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f8f501a70e443d849bd6c1b5e716bbc3, type: 3}
-    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
-      propertyPath: playerID
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
-      propertyPath: jumpAirIntake
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
-      propertyPath: wallJumpAngle
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
-      propertyPath: jumpRatioAddForce
-      value: 0.005
-      objectReference: {fileID: 0}
-    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
-      propertyPath: newJumpRatioAddForce
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
-      propertyPath: wallJumpRatioAddForce
-      value: 0.005
-      objectReference: {fileID: 0}
     - target: {fileID: 6809023613868175522, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -346,10 +322,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2037009115, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f24610db8c0f9146826429ef425b856, type: 2}
+    - target: {fileID: 2037009115, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 9f24610db8c0f9146826429ef425b856, type: 2}
     - target: {fileID: 2037009116, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2180264, guid: 307833a16f301824aa89a183357adddd, type: 2}
+      objectReference: {fileID: 2180264, guid: 9f24610db8c0f9146826429ef425b856, type: 2}
     - target: {fileID: 106109835885126146, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
       propertyPath: m_Name
       value: ButtonChangeRules
@@ -465,24 +449,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
-      propertyPath: jumpAirIntake
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
-      propertyPath: wallJumpAngle
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
-      propertyPath: jumpRatioAddForce
-      value: 0.005
-      objectReference: {fileID: 0}
-    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
-      propertyPath: newJumpRatioAddForce
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 5683741562430962611, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
-      propertyPath: wallJumpRatioAddForce
-      value: 0.005
+      propertyPath: hammerHitboxRange
+      value: 1.45
       objectReference: {fileID: 0}
     - target: {fileID: 6809023613868175522, guid: cc3960a44c867e840b17490bdd2f7a3b, type: 3}
       propertyPath: m_Enabled

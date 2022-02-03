@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public float movementJumpSpeed = 3;
     //addForce
     public float ratioAddForce = 1;
+    public float ratioAddForceAir = 1;
     private float movementActu = 0;
 
     //TODO : GameMode avec Hp
@@ -91,8 +92,7 @@ public class PlayerController : MonoBehaviour
     //private float jumpMovementActu = 1;
     private bool isJumpFallSetted = false;
     //private float startCurveVelocity;
-    [Range(10f, 40f)]
-    public float jumpAirIntake = 1f;
+    public float jumpAirIntake;
 
     //Colision checks
     [Header("GroundCheck")]
@@ -126,6 +126,8 @@ public class PlayerController : MonoBehaviour
     public bool attackIsCD = false;
     public float attackDuration = 0.1f;
     private float attackDurationActu;
+    public float untilAttackEffectiveDuration;
+    private float untilAttackEffectiveDurationActu;
     private bool isAttackRunningL, isAttackRunningR;
     private bool didAttackedBlockedL, didAttackedBlockedR;
     private float nextAttackTime = 0f;
@@ -300,6 +302,19 @@ public class PlayerController : MonoBehaviour
             attack();
 
         }
+        else if (Time.time < stunTimeActu - stunTime + stunTime / 5)
+        {
+            //vitesse de projection constante pendant le stun
+            Debug.Log("stun is active");
+            if (rb.velocity.x > 0)
+            {
+                rb.velocity = new Vector2(hammerXProjection, hammerYProjection);
+            }
+            else if (rb.velocity.x < 0)
+            {
+                rb.velocity = new Vector2(-hammerXProjection, hammerYProjection);
+            }
+        }
         else if (isFrozen)
         {
             rb.velocity = new Vector2(0, 0);
@@ -358,7 +373,7 @@ public class PlayerController : MonoBehaviour
         //Attaque droite et gauche
         //Gauche
         //2)animation attaque + verif block
-        if (isAttackRunningL && Time.time < attackDurationActu)
+        if (isAttackRunningL && Time.time < untilAttackEffectiveDurationActu)
         {
             //Detection d'un blocage
             Collider2D[] hammers = Physics2D.OverlapCircleAll(hammerPointL.transform.position, hammerHitboxRange, hammerHitboxLayer);
@@ -366,14 +381,15 @@ public class PlayerController : MonoBehaviour
             if (hammers.Length > 1)
             {
                 //on contre
-                //Debug.Log("Blocage à Gauche");
+                Debug.Log("Blocage à Gauche");
+                Debug.Log(hammers.Length);
 
                 didAttackedBlockedL = true;
             }
 
         }
         //3) applyAttack
-        if (isAttackRunningL && Time.time < attackDurationActu)
+        if (isAttackRunningL && Time.time < attackDurationActu && Time.time > untilAttackEffectiveDurationActu)
         {
             //Debug.Log("Attaque gauche3");
             //Animation / Attack hitbox Apparition (pour test)
@@ -424,6 +440,9 @@ public class PlayerController : MonoBehaviour
                 //Debug.Log("oui : " + hammers.Length + " " + hammers[1].gameObject.name);
                 //Debug.Log("oui : " + hammers.Length + " " + hammers[0].gameObject.name);
                 didAttackedBlockedR = true;
+                //on contre
+                Debug.Log("Blocage à droite");
+                Debug.Log(hammers.Length);
             }
             else
             {
@@ -431,7 +450,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         //3) applyAttack
-        if (isAttackRunningR && Time.time < attackDurationActu)
+        if (isAttackRunningR && Time.time < attackDurationActu && Time.time > untilAttackEffectiveDurationActu)
         {
             //reset timeAttack
             //nextAttackTime = Time.time + 1f / attackRate;
@@ -585,7 +604,7 @@ public class PlayerController : MonoBehaviour
             //rb.velocity = new Vector2(-movementJumpSpeed, rb.velocity.y);
             attackDirection = true;
 
-            movementActu -= ratioAddForce * Time.deltaTime;
+            movementActu -= ratioAddForceAir * Time.deltaTime;
             if (movementActu < -1) movementActu = -1;
             rb.velocity = new Vector2(movementActu * movementJumpSpeed, rb.velocity.y);
 
@@ -645,7 +664,7 @@ public class PlayerController : MonoBehaviour
             //rb.velocity = new Vector2(movementJumpSpeed, rb.velocity.y);
             attackDirection = false;
 
-            movementActu += ratioAddForce * Time.deltaTime;
+            movementActu += ratioAddForceAir * Time.deltaTime;
             if (movementActu > 1) movementActu = 1;
             rb.velocity = new Vector2(movementActu * movementJumpSpeed, rb.velocity.y);
 
@@ -718,6 +737,7 @@ public class PlayerController : MonoBehaviour
             */
             //rb.velocity = new Vector2(movementActu * movementJumpSpeed, rb.velocity.y);
             rb.velocity = new Vector2(0, rb.velocity.y);
+            movementActu = 0;
 
             //Action (anim)
             actionState = Action.Idle;
@@ -759,6 +779,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x + (jumpAirIntake * Time.deltaTime), rb.velocity.y);
                 if (rb.velocity.x > 0) rb.velocity = new Vector2(0, rb.velocity.y);
             }
+            Debug.Log("1 : " + rb.velocity.x);
         }
         else
         {
@@ -767,18 +788,20 @@ public class PlayerController : MonoBehaviour
         }
 
         ///// JUMP CURVE /////
-        if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded)
+        /*if ((transform.position.y >= startJumpPosition + maxJumpHigh || isJumpFallSetted) && jumpState != JumpState.Grounded)*/
+        if (jumpState != JumpState.Grounded)
         {
-            if (!isJumpFallSetted)
+            /*if (!isJumpFallSetted)
             {
                 isJumpFallSetted = true;
-            }
+            }*/
             
 
             if(!didTouchRoof)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - newJumpRatioAddForce * Time.deltaTime);
                 if (rb.velocity.y < -jumpSpeed * fallSpeedMultiplier) rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed * fallSpeedMultiplier);
+                Debug.Log("2 : " + rb.velocity.x);
             }
 
             //check if player is falling
@@ -787,6 +810,7 @@ public class PlayerController : MonoBehaviour
                 jumpState = JumpState.Falling;
                 playerAnimScript.Falling(true);
             }
+            //ici
         }
 
         //roof stun & fall
@@ -1040,7 +1064,8 @@ public class PlayerController : MonoBehaviour
 
             //Jump Curve
             //jumpMovementActu = 1;
-            isJumpFallSetted = false;
+            isJumpFallSetted = true;
+            //ici
         }
         /// Wall jump integrated?
         /*
@@ -1144,6 +1169,7 @@ public class PlayerController : MonoBehaviour
 
             isAttackRunningL = true;
             attackDurationActu = attackDuration + Time.time;
+            untilAttackEffectiveDurationActu = untilAttackEffectiveDuration + Time.time;
 
             //apparition hammerHitBox
             hammerPointL.SetActive(true);
@@ -1161,6 +1187,8 @@ public class PlayerController : MonoBehaviour
 
             isAttackRunningR = true;
             attackDurationActu = attackDuration + Time.time;
+            untilAttackEffectiveDurationActu = untilAttackEffectiveDuration + Time.time;
+
             //apparition hammerHitBox
             hammerPointR.SetActive(true);
             hammerPointL.SetActive(false);
