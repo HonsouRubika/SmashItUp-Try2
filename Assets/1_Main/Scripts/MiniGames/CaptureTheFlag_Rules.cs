@@ -61,17 +61,22 @@ public class CaptureTheFlag_Rules : MonoBehaviour
                 break;
         }
 
+        ResetColor();
+
         //GameManager.Instance.NextMap();
         GameManager.Instance.Score();
-        
+
+        playOneTime = true;
+    }
+
+    private void ResetColor()
+    {
         for (int i = 0; i < playersTeam.Length; i++)
         {
             players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("default");
             players[i].GetComponent<PlayerSkins>().SetCursorTeam("default");
             players[i].GetComponent<PlayerSkins>().SetHaloTeam("default");
         }
-        
-        playOneTime = true;
     }
 
     /*public void FlagCaptured(int playerWin)

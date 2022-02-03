@@ -121,6 +121,8 @@ public class NewScoreSystem : MonoBehaviour
                 displayScore = false;
                 ScorePanel.SetActive(false);
                 DisplayScoreDependingPlayersNumber(false);
+                GameManager.Instance.UpdatePlayerScore();
+                GameManager.Instance.resetScorePoints();
                 GameManager.Instance.FadeOutTransition();
                 break;
         }
@@ -140,8 +142,6 @@ public class NewScoreSystem : MonoBehaviour
 
     private IEnumerator SetHammerPoints(int addedPoints, Image[] points, int index)
     {
-        GameManager.Instance.UpdatePlayerScore();
-
         switch (playersPosition.Length)
         {
             case 4:
