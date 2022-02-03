@@ -8,7 +8,7 @@ public class CollectThePiecesManager : MonoBehaviour
     private GameObject[] playersUnsorted;
     public GameObject[] players;
 
-    public float[] scorePlayers;
+    [HideInInspector] public float[] scorePlayers;
     private float[] finalScores;
     private int[] playersPosition;
 
@@ -34,8 +34,8 @@ public class CollectThePiecesManager : MonoBehaviour
     public EqualityCase equalityCase = EqualityCase.None;
 
     //Merge score team
-    public float scoreTeam1;
-    public float scoreTeam2;
+    private float scoreTeam1;
+    private float scoreTeam2;
 
     private void Start()
     {

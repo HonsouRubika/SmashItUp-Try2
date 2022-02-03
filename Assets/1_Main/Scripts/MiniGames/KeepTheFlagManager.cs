@@ -29,7 +29,7 @@ public class KeepTheFlagManager : MonoBehaviour
     public bool player2HaveFlag = false;
     public bool player3HaveFlag = false;
 
-    private float[] scorePlayers;
+    public float[] scorePlayers;
 
     public float[] timePastInZonePlayer;
     private float[] finalScores;
@@ -61,6 +61,10 @@ public class KeepTheFlagManager : MonoBehaviour
 
     //Equality
     public EqualityCase equalityCase = EqualityCase.None;
+
+    //Merge score team
+    public float scoreTeam1;
+    public float scoreTeam2;
 
     private void Start()
     {
@@ -124,11 +128,49 @@ public class KeepTheFlagManager : MonoBehaviour
         if (timerScript.miniGameTimer <= 0 && !playOneTime)
         {
             keepingFlagScript.ResetFlag();
+            EqualizeScoreIfTeam();
             SortPlayers();
 
             ResetColor();
 
             playOneTime = true;
+        }
+    }
+
+    private void MergeScoreTeam(int player, float score)
+    {
+        //2v2
+        if (GameManager.Instance.getTeamCompo() == 2 || GameManager.Instance.getTeamCompo() == 1)
+        {
+            switch (playersTeam[player])
+            {
+                case 0:
+                    scoreTeam1 += score;
+                    break;
+                case 1:
+                    scoreTeam2 += score;
+                    break;
+            }
+        }
+    }
+
+    private void EqualizeScoreIfTeam()
+    {
+        //2v2
+        if (GameManager.Instance.getTeamCompo() == 2 || GameManager.Instance.getTeamCompo() == 1)
+        {
+            for (int i = 0; i < players.Length; i++)
+            {
+                switch (playersTeam[i])
+                {
+                    case 0:
+                        scorePlayers[i] = scoreTeam1;
+                        break;
+                    case 1:
+                        scorePlayers[i] = scoreTeam2;
+                        break;
+                }
+            }
         }
     }
 
@@ -194,6 +236,7 @@ public class KeepTheFlagManager : MonoBehaviour
                     scorePlayers[0] += pointsEarned1V3Alone;
                     scoreScript.AddScore(pointsEarned1V3Alone, 0, 0, 0);
                     pointCounterP1 += pointsEarned1V3Alone;
+                    MergeScoreTeam(0, pointsEarned1V3Alone);
 
                 }
                 else
@@ -201,6 +244,7 @@ public class KeepTheFlagManager : MonoBehaviour
                     scorePlayers[0]++;
                     scoreScript.AddScore(1, 0, 0, 0);
                     pointCounterP1++;
+                    MergeScoreTeam(0, 1);
                 }
 
                 timePastInZonePlayer[0] = 0;
@@ -231,6 +275,7 @@ public class KeepTheFlagManager : MonoBehaviour
                     scorePlayers[1] += pointsEarned1V3Alone;
                     scoreScript.AddScore(0, pointsEarned1V3Alone, 0, 0);
                     pointCounterP2 += pointsEarned1V3Alone;
+                    MergeScoreTeam(1, pointsEarned1V3Alone);
 
                 }
                 else
@@ -238,6 +283,7 @@ public class KeepTheFlagManager : MonoBehaviour
                     scorePlayers[1]++;
                     scoreScript.AddScore(0, 1, 0, 0);
                     pointCounterP2++;
+                    MergeScoreTeam(1, 1);
                 }
 
                 timePastInZonePlayer[1] = 0;
@@ -268,6 +314,7 @@ public class KeepTheFlagManager : MonoBehaviour
                     scorePlayers[2] += pointsEarned1V3Alone;
                     scoreScript.AddScore(0, 0, pointsEarned1V3Alone, 0);
                     pointCounterP3 += pointsEarned1V3Alone;
+                    MergeScoreTeam(2, pointsEarned1V3Alone);
 
                 }
                 else
@@ -275,6 +322,7 @@ public class KeepTheFlagManager : MonoBehaviour
                     scorePlayers[2]++;
                     scoreScript.AddScore(0, 0, 1, 0);
                     pointCounterP3++;
+                    MergeScoreTeam(2, 1);
                 }
 
                 timePastInZonePlayer[2] = 0;
@@ -305,6 +353,7 @@ public class KeepTheFlagManager : MonoBehaviour
                     scorePlayers[3] += pointsEarned1V3Alone;
                     scoreScript.AddScore(0, 0, 0, pointsEarned1V3Alone);
                     pointCounterP4 += pointsEarned1V3Alone;
+                    MergeScoreTeam(3, pointsEarned1V3Alone);
 
                 }
                 else
@@ -312,6 +361,7 @@ public class KeepTheFlagManager : MonoBehaviour
                     scorePlayers[3]++;
                     scoreScript.AddScore(0, 0, 0, 1);
                     pointCounterP4++;
+                    MergeScoreTeam(3, 1);
                 }
 
                 timePastInZonePlayer[3] = 0;
