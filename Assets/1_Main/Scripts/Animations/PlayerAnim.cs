@@ -58,4 +58,16 @@ public class PlayerAnim : MonoBehaviour
     {
         SetCooldownTimeAnimation(1 / playerControllerScript.attackRate);
     }
+
+    public bool GetCooldownPlayer()
+    {
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Cooldown"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

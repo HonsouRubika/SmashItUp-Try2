@@ -1043,12 +1043,12 @@ public class GameManager : MonoBehaviour
                 switch (playersTeam[i])
                 {
                     case 0:
-                        players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("purple");
+                        //players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("purple");
                         players[i].GetComponent<PlayerSkins>().SetCursorTeam("purple");
                         players[i].GetComponent<PlayerSkins>().SetHaloTeam("purple");
                         break;
                     case 1:
-                        players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("orange");
+                        //players[i].GetComponent<PlayerSkins>().SetHammerColorByTeam("orange");
                         players[i].GetComponent<PlayerSkins>().SetCursorTeam("orange");
                         players[i].GetComponent<PlayerSkins>().SetHaloTeam("orange");
                         break;
