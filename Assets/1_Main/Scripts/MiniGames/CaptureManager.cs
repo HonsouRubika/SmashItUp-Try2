@@ -29,6 +29,7 @@ public class CaptureManager : MonoBehaviour
     public float timeToScore = 1;
     public int pointsEarned1V3Alone = 2;
     private CaptureSound captureSoundScript;
+    public Score scoreScriptTeam;
     public Score scoreScript;
     public Timer timerScript;
     private bool zoneSound = false;
@@ -109,6 +110,8 @@ public class CaptureManager : MonoBehaviour
 
     private void Update()
     {
+        DisplayUITeam();
+
         if (timerScript.miniGameTimer > 0)
         {
             IncrementPlayerScore();
@@ -142,6 +145,23 @@ public class CaptureManager : MonoBehaviour
         if (timerScript.miniGameTimer > 0 && timerScript.isTimerStarted)
         {
             MultiplePlayersCaptureZone();
+        }
+    }
+
+    private void DisplayUITeam()
+    {
+        if (GameManager.Instance.getTeamCompo() == 2 || GameManager.Instance.getTeamCompo() == 1)
+        {
+            scoreScriptTeam.transform.GetChild(0).gameObject.SetActive(true);
+            scoreScript.transform.GetChild(0).gameObject.SetActive(false);
+
+            scoreScriptTeam.EnableAddScore();
+            scoreScriptTeam.SetScore(0, (int)scoreTeam2, (int)scoreTeam1, 0);
+        }
+        else
+        {
+            scoreScriptTeam.transform.GetChild(0).gameObject.SetActive(false);
+            scoreScript.transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 

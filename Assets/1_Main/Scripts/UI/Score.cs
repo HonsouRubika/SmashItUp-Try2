@@ -6,6 +6,7 @@ using TMPro;
 public class Score : MonoBehaviour
 {
     public bool enableDisplayScore = true;
+    public bool uiNotTeam = false;
     private bool enableAddScore = false;
 
     public TextMeshProUGUI score0;
@@ -31,7 +32,10 @@ public class Score : MonoBehaviour
         bulleScore2 = score2.transform.parent.gameObject;
         bulleScore3 = score3.transform.parent.gameObject;
 
-        DisplayUIDependingPlayers();
+        if (!uiNotTeam)
+        {
+            DisplayUIDependingPlayers();
+        } 
     }
 
     private void DisplayScore()

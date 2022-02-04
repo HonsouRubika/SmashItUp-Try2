@@ -31,6 +31,7 @@ public class WhackAMoleManager : MonoBehaviour
     public float moleTimeStay = 2;
 
     [Header("UI")]
+    public Score scoreScriptTeam;
     public Score scoreScript;
     public Timer timerScript;
 
@@ -96,6 +97,8 @@ public class WhackAMoleManager : MonoBehaviour
 
     private void Update()
     {
+        DisplayUITeam();
+
         /*if (moleDestroyed >= destroyedMoleToRespawn)
         {
             for (int i = 0; i < numberMoleToRespawn; i++)
@@ -130,6 +133,22 @@ public class WhackAMoleManager : MonoBehaviour
         }
     }
 
+    private void DisplayUITeam()
+    {
+        if (GameManager.Instance.getTeamCompo() == 2 || GameManager.Instance.getTeamCompo() == 1)
+        {
+            scoreScriptTeam.transform.GetChild(0).gameObject.SetActive(true);
+            scoreScript.transform.GetChild(0).gameObject.SetActive(false);
+
+            scoreScriptTeam.EnableAddScore();
+            scoreScriptTeam.SetScore(0, (int)scoreTeam2, (int)scoreTeam1, 0);
+        }
+        else
+        {
+            scoreScriptTeam.transform.GetChild(0).gameObject.SetActive(false);
+            scoreScript.transform.GetChild(0).gameObject.SetActive(true);
+        }
+    }
     public void MergeScoreTeam(int player, float score)
     {
         //2v2

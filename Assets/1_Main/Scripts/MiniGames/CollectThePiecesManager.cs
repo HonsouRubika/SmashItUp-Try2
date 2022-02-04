@@ -15,6 +15,7 @@ public class CollectThePiecesManager : MonoBehaviour
     public int piecesNumber = 0;
 
     [Space]
+    public Score scoreScriptTeam;
     public Score scoreScript;
     public Timer timerScript;
 
@@ -65,6 +66,8 @@ public class CollectThePiecesManager : MonoBehaviour
    
     private void Update()
     {
+        DisplayUITeam();
+
         if (timerScript.miniGameTimer > 0)
         {
             IncrementPlayerScore();
@@ -89,6 +92,23 @@ public class CollectThePiecesManager : MonoBehaviour
             playOneTime = true;
         }
      
+    }
+
+    private void DisplayUITeam()
+    {
+        if (GameManager.Instance.getTeamCompo() == 2 || GameManager.Instance.getTeamCompo() == 1)
+        {
+            scoreScriptTeam.transform.GetChild(0).gameObject.SetActive(true);
+            scoreScript.transform.GetChild(0).gameObject.SetActive(false);
+
+            scoreScriptTeam.EnableAddScore();
+            scoreScriptTeam.SetScore(0, (int)scoreTeam2, (int)scoreTeam1, 0);
+        }
+        else
+        {
+            scoreScriptTeam.transform.GetChild(0).gameObject.SetActive(false);
+            scoreScript.transform.GetChild(0).gameObject.SetActive(true);
+        }
     }
 
     public void MergeScoreTeam(int player, float score)
