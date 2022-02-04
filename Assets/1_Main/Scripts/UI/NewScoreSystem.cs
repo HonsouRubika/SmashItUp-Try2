@@ -169,7 +169,7 @@ public class NewScoreSystem : MonoBehaviour
 
     private void DisplayAddingPoints(int player)
     {
-        if (player == -1)
+        /*if (player == -1)
         {
             for (int i = 0; i < playerAddedPointsText.Count; i++)
             {
@@ -182,7 +182,7 @@ public class NewScoreSystem : MonoBehaviour
             {
                 playerAddedPointsText[player].text = "+ " + GameManager.Instance.getAddedPointsPlayer(player + 1);
             }
-        } 
+        } */
     }
 
     private IEnumerator SetHammerPoints(int addedPoints, Image[] points, int index)
