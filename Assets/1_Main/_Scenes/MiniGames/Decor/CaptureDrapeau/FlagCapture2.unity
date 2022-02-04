@@ -698,6 +698,10 @@ PrefabInstance:
       propertyPath: musicMiniGame60s
       value: 
       objectReference: {fileID: 8300000, guid: 5b32aabf2ddf87e4c8fed942c2c37136, type: 3}
+    - target: {fileID: 3278469494007073903, guid: e14382fb656492741a8fdaf448dd9f97, type: 3}
+      propertyPath: musicMiniGameVolume
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 3278469494007073904, guid: e14382fb656492741a8fdaf448dd9f97, type: 3}
       propertyPath: m_Name
       value: Music
@@ -1079,9 +1083,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1675880473}
   - {fileID: 1076216419}
   - {fileID: 1812656102}
-  - {fileID: 1675880473}
   m_Father: {fileID: 2084822707}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

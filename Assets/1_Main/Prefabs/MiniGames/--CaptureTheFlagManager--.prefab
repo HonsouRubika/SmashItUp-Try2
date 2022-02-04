@@ -44,11 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6fb45dcc5f6d044bb7277fab66c65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tpPoints0: {fileID: 0}
-  tpPoints1: {fileID: 0}
-  tpPoints2: {fileID: 0}
-  tpPoints3: {fileID: 0}
-  winPoints: 10
+  players: []
+  playersTeam: 
+  tpPoints: []
 --- !u!1001 &4871051483040075183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56,6 +54,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 623029101134967459}
     m_Modifications:
+    - target: {fileID: 3082478512678563000, guid: bfe15cb0042015c46ace6f4dad0f6c30, type: 3}
+      propertyPath: flag
+      value: 
+      objectReference: {fileID: 8300000, guid: 0287081c7c8ef454e82565a1fb0d41f0, type: 3}
+    - target: {fileID: 3082478512678563000, guid: bfe15cb0042015c46ace6f4dad0f6c30, type: 3}
+      propertyPath: flagVolume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5421210451693521622, guid: bfe15cb0042015c46ace6f4dad0f6c30, type: 3}
       propertyPath: m_Name
       value: Flag
