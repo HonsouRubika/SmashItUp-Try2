@@ -233,6 +233,7 @@ MonoBehaviour:
   groundCheck: {fileID: 7944750135165682167}
   gripLeftCheck: {fileID: 8685648045550649710}
   gripRightCheck: {fileID: 6548757986954372878}
+  hammerFXSpawn: {fileID: 2740025887465724809}
   attackPointL: {fileID: 1443207444070809175}
   attackPointR: {fileID: 2840526792365429354}
   hammerPointL: {fileID: 4583124211942917472}
@@ -538,6 +539,7 @@ MonoBehaviour:
   orangeCursor: {fileID: 21300000, guid: 7ab9704906784b549bb98cbad5659ef8, type: 3}
   purpleHalo: {fileID: 21300000, guid: b2bbeb7460178ec4eab9cf539b206aee, type: 3}
   orangeHalo: {fileID: 21300000, guid: d007e7ddcab0cb046ae9c88f547f05e1, type: 3}
+  currentHammer: {fileID: 0}
   skinSprites: []
 --- !u!114 &1789542739471898128
 MonoBehaviour:
@@ -564,6 +566,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ab4767f9d617e4aa049e0e890c31bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackEmptyParticle: {fileID: 100000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+  attackTouchParticle: {fileID: 100018, guid: a40b64bf23366dc42a892af2c6ff6140, type: 3}
+  blockParticle: {fileID: 100002, guid: e9391f622091e1449bdef4ef15af4948, type: 3}
 --- !u!1 &9001602288957623517
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,8 +909,44 @@ PrefabInstance:
       value: 0.004130125
       objectReference: {fileID: 0}
     - target: {fileID: 1090165994795734179, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
+      propertyPath: m_Bounds.m_Extent.x
+      value: 2.01607
+      objectReference: {fileID: 0}
+    - target: {fileID: 1090165994795734179, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
       propertyPath: m_Bounds.m_Extent.y
       value: 2.03427
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193878530524580311, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193878530524580311, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193878530524580311, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193878530539785367, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
+      propertyPath: SizeModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193878530539785367, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193878530539785367, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
+      propertyPath: SizeModule.y.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193878530539785367, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
+      propertyPath: SizeModule.z.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193878530539785367, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2161941911109463802, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
       propertyPath: m_RootOrder
@@ -1125,5 +1166,10 @@ GameObject:
 --- !u!1 &4583124211942917472 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6788643006039051804, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
+  m_PrefabInstance: {fileID: 7038173939976915836}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2740025887465724809 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5163969539057684725, guid: 06dab0b21f99e0e409b72319c1e3e5c9, type: 3}
   m_PrefabInstance: {fileID: 7038173939976915836}
   m_PrefabAsset: {fileID: 0}

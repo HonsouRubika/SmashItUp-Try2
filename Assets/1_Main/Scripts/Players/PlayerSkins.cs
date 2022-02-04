@@ -58,7 +58,7 @@ public class PlayerSkins : MonoBehaviour
     private GameObject haloTeam;
 
 
-    [HideInInspector] private GameObject currentHammer;
+    [HideInInspector] public GameObject currentHammer;
     private GameObject previousHammer;
     private Color hammerColor;
 
@@ -336,6 +336,7 @@ public class PlayerSkins : MonoBehaviour
             }*/
             //if (GetChildWithName(currentSkin, "Hammer") != null) Debug.Log("yesss");
             GameObject hammer = GetChildWithName(currentSkin, "Hammer");
+            playerControllerScript.hammerFXSpawn = GetChildWithName(hammer, "hammerFXSpawn").transform;
             playerControllerScript.attackPointL = GetChildWithName(hammer, "AttackPointL").transform;
             playerControllerScript.attackPointR = GetChildWithName(hammer, "AttackPointR").transform;
             playerControllerScript.hammerPointL = GetChildWithName(hammer, "hammerPointL");
@@ -433,6 +434,7 @@ public class PlayerSkins : MonoBehaviour
             }*/
             //if (GetChildWithName(currentSkin, "Hammer") != null) Debug.Log("yesss");
             GameObject hammer = GetChildWithName(currentSkin, "Hammer");
+            playerControllerScript.hammerFXSpawn = GetChildWithName(hammer, "hammerFXSpawn").transform;
             playerControllerScript.attackPointL = GetChildWithName(hammer, "AttackPointL").transform;
             playerControllerScript.attackPointR = GetChildWithName(hammer, "AttackPointR").transform;
             playerControllerScript.hammerPointL = GetChildWithName(hammer, "hammerPointL");

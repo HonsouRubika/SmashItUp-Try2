@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviour
     ///////////Attack///////////
     //Hitbox
     [Header("Attack")]
+    public Transform hammerFXSpawn;
     public Transform attackPointL;
     public Transform attackPointR;
     public GameObject hammerPointL;
@@ -166,6 +167,8 @@ public class PlayerController : MonoBehaviour
 
     //FX
     private PlayerFX playerFXScript;
+    private bool attackOneTimeLeft = false;
+    private bool attackOneTimeRight = false;
 
     void Start()
     {
@@ -401,8 +404,8 @@ public class PlayerController : MonoBehaviour
             if (hammers.Length > 1)
             {
                 //on contre
-                Debug.Log("Blocage à Gauche");
-                Debug.Log(hammers.Length);
+                //Debug.Log("Blocage à Gauche");
+                //Debug.Log(hammers.Length);
 
                 didAttackedBlockedL = true;
             }
@@ -420,6 +423,20 @@ public class PlayerController : MonoBehaviour
 
             if (!didAttackedBlockedL)
             {
+                if (!attackOneTimeLeft)
+                {
+                    if (hitEnemies.Length > 0)
+                    {
+                        playerFXScript.AttackFXTouch();
+                        attackOneTimeLeft = true;
+                    }
+                    else
+                    {
+                        playerFXScript.AttackFXEmpty();
+                        attackOneTimeLeft = true;
+                    }
+                }
+
                 //On leur applique une velocit� (effet de l'attaque)
                 foreach (Collider2D enemy in hitEnemies)
                 {
@@ -430,7 +447,6 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
-                        playerFXScript.AttackFX();
                     }
                 }
             }
@@ -438,6 +454,8 @@ public class PlayerController : MonoBehaviour
             {
                 // apply self blockProjection
                 applyBlock(hammerBlockProjection, 0);
+
+                if (!attackOneTimeLeft) { attackOneTimeLeft = true; playerFXScript.BlockFX(); }
             }
         }
         else if (isAttackRunningL && Time.time >= attackDurationActu)
@@ -462,8 +480,8 @@ public class PlayerController : MonoBehaviour
                 //Debug.Log("oui : " + hammers.Length + " " + hammers[0].gameObject.name);
                 didAttackedBlockedR = true;
                 //on contre
-                Debug.Log("Blocage à droite");
-                Debug.Log(hammers.Length);
+                //Debug.Log("Blocage à droite");
+                //Debug.Log(hammers.Length);
             }
             else
             {
@@ -484,17 +502,30 @@ public class PlayerController : MonoBehaviour
 
             if (!didAttackedBlockedR)
             {
+                if (!attackOneTimeRight)
+                {
+                    if (hitEnemies.Length > 0)
+                    {
+                        playerFXScript.AttackFXTouch();
+                        attackOneTimeRight = true;
+                    }
+                    else
+                    {
+                        playerFXScript.AttackFXEmpty();
+                        attackOneTimeRight = true;
+                    }
+                }
+
                 //On leur applique une velocit� (effet de l'attaque)
                 foreach (Collider2D enemy in hitEnemies)
                 {
                     //Appliquer une velocit�
                     //Attention: check la direction pour coord x
-                    if(enemy.gameObject != cc.gameObject)
+                    if (enemy.gameObject != cc.gameObject)
                     {
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
-                        playerFXScript.AttackFX();
                     }
                 }
             }
@@ -502,6 +533,8 @@ public class PlayerController : MonoBehaviour
             {
                 // apply self blockProjection
                 applyBlock(-hammerBlockProjection, 0);
+
+                if (!attackOneTimeRight) { attackOneTimeRight = true; playerFXScript.BlockFX(); }
             }
         }
         else if (isAttackRunningR && Time.time >= attackDurationActu)
@@ -573,7 +606,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.WallSlide(false);
                 PlayerSoundScript.WallRide(false);
                 PlayerSoundScript.Run();
-                playerFXScript.RunFX(true);
+                playerFXScript.RunFX();
             }
         }
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
@@ -615,7 +648,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.WallSlide(false);
                 PlayerSoundScript.WallRide(false);
                 PlayerSoundScript.Run();
-                playerFXScript.RunFX(true);
+                playerFXScript.RunFX();
             }
         }
         //en l'air
@@ -1080,7 +1113,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.WallSlide(false);
                 PlayerSoundScript.WallRide(false);
                 PlayerSoundScript.Jump();
-                playerFXScript.JumpFX();
+                if (jumpState != JumpState.Grounded) playerFXScript.JumpFX();
             }
 
             //jump or walljump
@@ -1173,7 +1206,7 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.WallSlide(false);
             PlayerSoundScript.WallRide(false);
             PlayerSoundScript.Jump();
-            playerFXScript.JumpFX();
+            if (jumpState != JumpState.Grounded) playerFXScript.JumpFX();
         }
 
         //jump or walljump
@@ -1193,6 +1226,7 @@ public class PlayerController : MonoBehaviour
             //reset timeAttack
             nextAttackTime = Time.time + attackRate;
 
+            attackOneTimeLeft = false;
             isAttackRunningL = true;
             attackDurationActu = attackDuration + Time.time;
             untilAttackEffectiveDurationActu = untilAttackEffectiveDuration + Time.time;
@@ -1211,6 +1245,7 @@ public class PlayerController : MonoBehaviour
             //reset timeAttack
             nextAttackTime = Time.time + attackRate;
 
+            attackOneTimeRight = false;
             isAttackRunningR = true;
             attackDurationActu = attackDuration + Time.time;
             untilAttackEffectiveDurationActu = untilAttackEffectiveDuration + Time.time;

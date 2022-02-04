@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class PlayerFX : MonoBehaviour
 {
+    private PlayerController playerControllerScript;
+
     private ParticleSystem jumpParticle;
     private ParticleSystem runParticle;
-    private ParticleSystem attackParticle;
+
+    public GameObject attackEmptyParticle;
+    public GameObject attackTouchParticle;
+    public GameObject blockParticle;
+
+    private void Start()
+    {
+        playerControllerScript = GetComponent<PlayerController>();
+    }
 
     public void FindParticlesSystems(GameObject skin, GameObject hammer)
     {
-        jumpParticle = skin.transform.Find("JumpFX").GetComponent<ParticleSystem>();
-        runParticle = skin.transform.Find("RunFX").GetComponent<ParticleSystem>();
-        attackParticle = hammer.transform.Find("AttackFX").GetComponent<ParticleSystem>();
+        jumpParticle = skin.transform.Find("FX_Jump").GetComponent<ParticleSystem>();
+        //runParticle = skin.transform.Find("RunFX").GetComponent<ParticleSystem>();
     }
 
     public void JumpFX()
@@ -20,21 +29,35 @@ public class PlayerFX : MonoBehaviour
         jumpParticle.Play();
     }
 
-    public void RunFX(bool enable)
+    public void RunFX()
     {
-        switch (enable)
-        {
-            case true:
-                runParticle.Play();
-                break;
-            case false:
-                runParticle.Stop();
-                break;
-        }
+        //runParticle.Play();
     }
 
-    public void AttackFX()
+    public void AttackFXEmpty()
     {
-        attackParticle.Play();
+        StartCoroutine(attackEmpty());
+    }
+
+    public void AttackFXTouch()
+    {
+        StartCoroutine(attackTouch());
+    }
+
+    public void BlockFX()
+    {
+        Instantiate(blockParticle, playerControllerScript.hammerFXSpawn.position, Quaternion.identity);
+    }
+
+    IEnumerator attackEmpty()
+    {
+        yield return new WaitForSeconds(0.05f);
+        Instantiate(attackEmptyParticle, playerControllerScript.hammerFXSpawn.position, Quaternion.identity);
+    }
+
+    IEnumerator attackTouch()
+    {
+        yield return new WaitForSeconds(0.05f);
+        Instantiate(attackTouchParticle, playerControllerScript.hammerFXSpawn.position, Quaternion.identity);
     }
 }
