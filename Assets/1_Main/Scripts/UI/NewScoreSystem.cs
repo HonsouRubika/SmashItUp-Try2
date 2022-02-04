@@ -108,6 +108,8 @@ public class NewScoreSystem : MonoBehaviour
             P4Points[i] = P4.transform.GetChild(i).GetComponent<Image>();
         }
 
+        ResetHammer();
+
        // EarnPointSoundScript.PlayerEarnPoint();
     }
 
@@ -145,7 +147,7 @@ public class NewScoreSystem : MonoBehaviour
                 ScorePanel.SetActive(false);
                 DisplayScoreDependingPlayersNumber(false);
                 GameManager.Instance.UpdatePlayerScore();
-                GameManager.Instance.resetScorePoints();
+                GameManager.Instance.resetAddingPoints();
                 GameManager.Instance.FadeOutTransition();
                 DisplayAddingPoints(-1);
                 break;
@@ -420,6 +422,29 @@ public class NewScoreSystem : MonoBehaviour
                     teamCursor[i].gameObject.SetActive(false);
                 }
                 break;
+        }
+    }
+
+    public void ResetHammer()
+    {
+        p1PointIndex = 0;
+        p2PointIndex = 0;
+        p3PointIndex = 0;
+        p4PointIndex = 0;
+
+        for (int i = 0; i < P1Points.Length; i++)
+        {
+            P1Points[i].sprite = null;
+            P1Points[i].color = new Color(1, 1, 1, 0);
+
+            P2Points[i].sprite = null;
+            P2Points[i].color = new Color(1, 1, 1, 0);
+
+            P3Points[i].sprite = null;
+            P3Points[i].color = new Color(1, 1, 1, 0);
+
+            P4Points[i].sprite = null;
+            P4Points[i].color = new Color(1, 1, 1, 0);
         }
     }
 

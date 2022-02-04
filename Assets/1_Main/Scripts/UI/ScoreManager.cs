@@ -223,7 +223,7 @@ public class ScoreManager : MonoBehaviour
                 bonusText.SetActive(false);
 
                 GameManager.Instance.NextMap();
-                GameManager.Instance.resetScorePoints();
+                GameManager.Instance.resetAddingPoints();
             }
             else if (!isBonus)
             {
@@ -232,7 +232,7 @@ public class ScoreManager : MonoBehaviour
                 bonusText.SetActive(false);
 
                 GameManager.Instance.FinaleScore();
-                GameManager.Instance.resetScorePoints();
+                GameManager.Instance.resetAddingPoints();
             }
             else
             {

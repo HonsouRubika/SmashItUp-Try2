@@ -397,6 +397,9 @@ public class GameManager : MonoBehaviour
     //fonction � call depuis le menu suite au clic() du bouton play;
     public void initializeGameModes()
     {
+        resetScorePoints();
+        scoreSystemScript.ResetHammer();
+
         //DEBUG
         if (gameModeToTest.Length > 0) _nbManches = gameModeToTest.Length;
 
@@ -834,12 +837,20 @@ public class GameManager : MonoBehaviour
     }
 
     //Security to reset earn points when changing scene
-    public void resetScorePoints()
+    public void resetAddingPoints()
     {
         _addingScoreP1 = 0;
         _addingScoreP2 = 0;
         _addingScoreP3 = 0;
         _addingScoreP4 = 0;
+    }
+
+    public void resetScorePoints()
+    {
+        _scoreP1 += 0;
+        _scoreP2 += 0;
+        _scoreP3 += 0;
+        _scoreP4 += 0;
     }
 
     public void UpdatePlayerScore()

@@ -90,7 +90,7 @@ public class BonusManager : MonoBehaviour
         int selectedBonus = Random.Range(0, (int)BonusEndGame.total);
 
         //reset old score temp var
-        GameManager.Instance.resetScorePoints();
+        GameManager.Instance.resetAddingPoints();
 
         //on apply l'effet sur le joueur (le temps de la game)
         switch (selectedBonus)
