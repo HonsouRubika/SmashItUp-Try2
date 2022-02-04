@@ -36,7 +36,7 @@ public class PlayerFX : MonoBehaviour
 
     public void AttackFXEmpty()
     {
-        StartCoroutine(attackEmpty());
+        //StartCoroutine(attackEmpty());
     }
 
     public void AttackFXTouch()
@@ -57,7 +57,7 @@ public class PlayerFX : MonoBehaviour
 
     IEnumerator attackTouch()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0f);
         Instantiate(attackTouchParticle, playerControllerScript.hammerFXSpawn.position, Quaternion.identity);
     }
 }

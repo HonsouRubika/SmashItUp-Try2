@@ -36,6 +36,8 @@ public class Mole : MonoBehaviour
 
     private bool playOneTime = false;
 
+    public ParticleSystem shineFX;
+
     private void Start()
     {
         whackAWholeScript = transform.parent.GetComponentInParent<WhackAMoleManager>();
@@ -62,6 +64,8 @@ public class Mole : MonoBehaviour
             playOneTime = true;
 
             GameObject floatPoint = Instantiate(floatingPoint, transform.position, Quaternion.identity);
+
+            CreateShine();
 
             switch (hammerCollider.GetComponentInParent<PlayerController>().playerID)
             {
@@ -154,6 +158,11 @@ public class Mole : MonoBehaviour
             //whackAWholeScript.moleDestroyed++;
             currentTpScript.alreadyMole = false;
         }
+    }
+
+    void CreateShine()
+    {
+        Instantiate(shineFX, transform.position, Quaternion.identity);
     }
 
     private void DestroyCrate()
