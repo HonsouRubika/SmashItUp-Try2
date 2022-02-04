@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public enum JumpState
 {
@@ -131,6 +134,11 @@ public class PlayerController : MonoBehaviour
     private bool isAttackRunningL, isAttackRunningR;
     private bool didAttackedBlockedL, didAttackedBlockedR;
     private float nextAttackTime = 0f;
+    //vibration
+    public float vibrationDurration = 0.5f;
+    private float vibrationDurrationActu;
+    private bool isVibrationSet = false;
+
 
     [Header("Stun")]
     //public bool disableCollider = false;
@@ -358,6 +366,32 @@ public class PlayerController : MonoBehaviour
             //error ce produit seulement lors de la frame d'apparition de l'entité, on peux l'ignorer
             //l'un des scipt n'est pas attaché
             //Debug.Log("l'un des script n'est pas attaché");
+        }
+
+        //vibration
+        if(vibrationDurrationActu > Time.time && isVibrationSet)
+        {
+            try
+            {
+                GetGamepad().SetMotorSpeeds(0.123f, 0.234f);
+            }
+            catch
+            {
+                //Debug.Log("keyboard exception");
+            }
+            
+        }
+        else if (isVibrationSet)
+        {
+            try
+            {
+                isVibrationSet = false;
+                GetGamepad().SetMotorSpeeds(0, 0);
+            }
+            catch
+            {
+                //Debug.Log("keyboard exception");
+            }
         }
 
         /*if (Time.time >= nextAttackTime)
@@ -1267,6 +1301,10 @@ public class PlayerController : MonoBehaviour
 
             //Velocit�
             rb.velocity = new Vector2(velocityX, velocityY);
+
+            //Vibration
+            vibrationDurrationActu = vibrationDurration + Time.time;
+            isVibrationSet = true;
         }
         else
         {
@@ -1290,6 +1328,35 @@ public class PlayerController : MonoBehaviour
 
         //Velocit�
         rb.velocity = new Vector2(velocityX, velocityY);
+
+        //Vibration
+        vibrationDurrationActu = vibrationDurration/2 + Time.time;
+        isVibrationSet = true;
+    }
+
+    private Gamepad GetGamepad()
+    {
+        return Gamepad.all.FirstOrDefault(g => GetComponent<PlayerInput>().devices.Any(d => d.deviceId == g.deviceId));
+
+        #region Linq Query Equivalent Logic
+        //Gamepad gamepad = null;
+        //foreach (var g in Gamepad.all)
+        //{
+        //    foreach (var d in _playerInput.devices)
+        //    {
+        //        if(d.deviceId == g.deviceId)
+        //        {
+        //            gamepad = g;
+        //            break;
+        //        }
+        //    }
+        //    if(gamepad != null)
+        //    {
+        //        break;
+        //    }
+        //}
+        //return gamepad;
+        #endregion
     }
 
     void OnDrawGizmosSelected()

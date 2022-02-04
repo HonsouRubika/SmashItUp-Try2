@@ -27,7 +27,6 @@ public class FocusPlayers : MonoBehaviour
     public Sprite keepTheFlagSprite;
     public Sprite dontBeWolfSprite;
     public Sprite contaminationSprite;
-    public Sprite zoneSprite;
     public Sprite destroyCratesSprite;
 
     [Header("Display Team Compo")]
