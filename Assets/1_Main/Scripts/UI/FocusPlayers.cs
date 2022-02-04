@@ -9,6 +9,7 @@ public class FocusPlayers : MonoBehaviour
 
     [Header("Focus Settings")]
     public float timeShowingPlayers;
+    private float timeShowingPlayersActu;
 
     public GameObject cerclePrefab;
     private GameObject[] cercles;
@@ -27,7 +28,6 @@ public class FocusPlayers : MonoBehaviour
     public Sprite keepTheFlagSprite;
     public Sprite dontBeWolfSprite;
     public Sprite contaminationSprite;
-    public Sprite zoneSprite;
     public Sprite destroyCratesSprite;
 
     [Header("Display Team Compo")]
@@ -55,6 +55,16 @@ public class FocusPlayers : MonoBehaviour
         VS2.SetActive(false);
         VS3.SetActive(false);
 
+        GameManager.Instance.isShowingPlayers = false;
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.isShowingPlayers && Time.time > timeShowingPlayersActu)
+        {
+            DestroyCercle();
+            GameManager.Instance.isShowingPlayers = false;
+        }
     }
 
     public void FindPlayers()
@@ -65,17 +75,18 @@ public class FocusPlayers : MonoBehaviour
 
     public void EnableFocus()
     {
-        StartCoroutine(GetReference());
-
-        StartCoroutine(IncrementTimer());
-
+        //StartCoroutine(GetReference());
+        //StartCoroutine(IncrementTimer());
         playersTeam = GameManager.Instance.playersTeam;
+        GetReference();
+        IncrementTimer();
+        
     }
 
     private void SpawnCercle()
     {
         canvasRef.SetActive(true);
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
 
         for (int i = 0; i < players.Length; i++)
         {
@@ -86,7 +97,7 @@ public class FocusPlayers : MonoBehaviour
     private void DestroyCercle()
     {
         canvasRef.SetActive(false);
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
 
         for (int i = 0; i < cercles.Length; i++)
         {
@@ -121,12 +132,9 @@ public class FocusPlayers : MonoBehaviour
         */
     }
 
-    private IEnumerator IncrementTimer()
+    public void IncrementTimer()
     {
-        yield return new WaitForSecondsRealtime(0.0001f);
-
         SpawnCercle();
-        GameManager.Instance.isShowingPlayers = true;
 
         ///////  affichage equipes  ///////
         //num des players :
@@ -308,18 +316,12 @@ public class FocusPlayers : MonoBehaviour
                 //add COOP display
                 break;
         }
-        
-
-        yield return new WaitForSecondsRealtime(timeShowingPlayers);
-
-        DestroyCercle();
-        GameManager.Instance.isShowingPlayers = false;
+        timeShowingPlayersActu = Time.time + timeShowingPlayers;
+        GameManager.Instance.isShowingPlayers = true;
     }
 
-    private IEnumerator GetReference()
+    public void GetReference()
     {
-        yield return new WaitForSecondsRealtime(0.0001f);
-
         canvas.worldCamera = Camera.main;
         FindPlayers();
     }

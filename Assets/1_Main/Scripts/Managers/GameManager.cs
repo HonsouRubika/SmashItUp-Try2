@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public int _addingScoreP1 = 0, _addingScoreP2 = 0, _addingScoreP3 = 0, _addingScoreP4 = 0;
 
     public bool isPaused;
-    public bool isShowingPlayers;
+    public bool isShowingPlayers = false;
 
     //Pause
     public PauseMenu pauseScript;
@@ -242,17 +242,12 @@ public class GameManager : MonoBehaviour
                 //play anim
                 //consigneAnimator.Play();
 
-                transitionState = TransitionState.CONSIGNE;
-            }
-            else if (transitionState == TransitionState.CONSIGNE && consigneAnimator.GetCurrentAnimatorStateInfo(0).IsName("Finished"))
-            {
-                //6) Show Players && goal
+                //affichage team compo
                 transitionState = TransitionState.FOCUS;
-
                 focusPlayersScript.EnableFocus();
 
             }
-            else if (transitionState == TransitionState.FOCUS && Time.time >= focusPlayerTimerActu)
+            else if (transitionState == TransitionState.FOCUS /*&& Time.time >= focusPlayerTimerActu*/ && consigneAnimator.GetCurrentAnimatorStateInfo(0).IsName("Finished"))
             {
                 Destroy(consigneInstance);
                 //7) Timer "1,2,3,GO"
@@ -417,20 +412,27 @@ public class GameManager : MonoBehaviour
         Random.InitState((int)Time.time);
         for (int i = 0; i < _nbManches; ++i)
         {
-            int nextGameMode = Random.Range(0, (int)GameMode.total);
+            int nextGameMode = 0;
+            bool isAlreadyPresent;
 
             ///// LIMITATIONS /////
             if (i > 0) //pas de limitation pour le premier mini jeu choisi (logique)
             {
                 //on s'assure que le prochain game mode choisi soit diff�rent du premier
-                while (GameModeKind[nextGameMode] == GameModeKind[_selectedGameModes[i - 1]])
+                //et que le mini jeu n'est pas déjà présent dans la liste
+                do
                 {
+                    isAlreadyPresent = false;
                     nextGameMode = Random.Range(0, (int)GameMode.total);
-                }
 
+                    for (int j = 0; j < i+1; j++)
+                    {
+                        if (_selectedGameModes[j] == nextGameMode) isAlreadyPresent = true;
+                    }
+                }
+                while (GameModeKind[nextGameMode] == GameModeKind[_selectedGameModes[i - 1]] && isAlreadyPresent);
             }
             _selectedGameModes[i] = nextGameMode;
-
             //TeamCompo
             //DEBUG
             if (teamCompoToTest.Length > 0)
