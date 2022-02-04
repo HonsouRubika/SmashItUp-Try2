@@ -77,6 +77,9 @@ public class PlayerSkins : MonoBehaviour
     //playtest
     private uint overlayPreset = 0;
 
+    //FX
+    private PlayerFX playerFXScript;
+
     private void Start()
     {
         cursorTeam = transform.GetChild(6).gameObject;
@@ -128,6 +131,9 @@ public class PlayerSkins : MonoBehaviour
 
         SetColorToPlayer(currentSkin);
         setSkinColorOnSwitchingSkin();
+
+        playerFXScript = GetComponent<PlayerFX>();
+        playerFXScript.FindParticlesSystems(currentSkin, currentHammer);
     }
 
     //FOR PLAYTEST PURPOSES
@@ -343,6 +349,8 @@ public class PlayerSkins : MonoBehaviour
             playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
             currentHammer = currentSkin.transform.Find("Hammer").gameObject;
             hammerColor = currentHammer.GetComponent<SpriteRenderer>().color;
+
+            playerFXScript.FindParticlesSystems(currentSkin, currentHammer);
         }
     }
 
@@ -440,7 +448,7 @@ public class PlayerSkins : MonoBehaviour
             currentHammer = currentSkin.transform.Find("Hammer").gameObject;
             hammerColor = currentHammer.GetComponent<SpriteRenderer>().color;
 
-            
+            playerFXScript.FindParticlesSystems(currentSkin, currentHammer);
         }
     }
     GameObject GetChildWithName(GameObject obj, string name)

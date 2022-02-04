@@ -164,8 +164,12 @@ public class PlayerController : MonoBehaviour
     //Bonus
     [System.NonSerialized] public bool isUnbreakable = false;
 
+    //FX
+    private PlayerFX playerFXScript;
+
     void Start()
     {
+        playerFXScript = GetComponent<PlayerFX>();
         cc = GetComponent<CapsuleCollider2D>();
         GameManager.Instance.playerControllers.Add(this);
         GameManager.Instance.playersUnsorted.Add(gameObject);
@@ -426,6 +430,7 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
+                        playerFXScript.AttackFX();
                     }
                 }
             }
@@ -489,6 +494,7 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
+                        playerFXScript.AttackFX();
                     }
                 }
             }
@@ -567,6 +573,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.WallSlide(false);
                 PlayerSoundScript.WallRide(false);
                 PlayerSoundScript.Run();
+                playerFXScript.RunFX(true);
             }
         }
         else if ((movementInput.x > 0.3) && !isGrippingRight && Time.time >= wallJumpMovementFreezeActuR && (jumpState != JumpState.InFlight && jumpState != JumpState.Falling))
@@ -608,6 +615,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.WallSlide(false);
                 PlayerSoundScript.WallRide(false);
                 PlayerSoundScript.Run();
+                playerFXScript.RunFX(true);
             }
         }
         //en l'air
@@ -1072,6 +1080,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimScript.WallSlide(false);
                 PlayerSoundScript.WallRide(false);
                 PlayerSoundScript.Jump();
+                playerFXScript.JumpFX();
             }
 
             //jump or walljump
@@ -1164,6 +1173,7 @@ public class PlayerController : MonoBehaviour
             playerAnimScript.WallSlide(false);
             PlayerSoundScript.WallRide(false);
             PlayerSoundScript.Jump();
+            playerFXScript.JumpFX();
         }
 
         //jump or walljump
