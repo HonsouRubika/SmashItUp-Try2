@@ -15,7 +15,7 @@ public class Music_Mini_Game : MonoBehaviour
     public AudioClip musicMiniGame60s;
 
     private AudioClip currentMusicMiniGame;
-    [Range(0f, 1f)] public float musicMiniGameVolume = 0.3f;
+    [Range(0f, 1f)] public float musicMiniGameVolume = 0.5f;
     public bool loopMusic = true;
 
     private void Start()
