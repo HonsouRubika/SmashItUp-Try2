@@ -943,12 +943,12 @@ public class PlayerController : MonoBehaviour
             }*/
             
 
-            if(!didTouchRoof)
-            {
+            //if(!didTouchRoof)
+            //{
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - newJumpRatioAddForce * Time.deltaTime);
                 if (rb.velocity.y < -jumpSpeed * fallSpeedMultiplier) rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed * fallSpeedMultiplier);
                 //Debug.Log("2 : " + rb.velocity.x);
-            }
+            //}
 
             //check if player is falling
             if (rb.velocity.y < 0 && !didTouchRoof && jumpState != JumpState.Falling)
@@ -960,6 +960,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //roof stun & fall
+        /*
         if (didTouchRoof)
         {   
             tempVelocityRoofCheck -= newJumpRatioAddForce * Time.deltaTime;
@@ -975,6 +976,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, 0);
             }
         }
+        */
 
         //Colision Side GripCheck
         //float height = bc.size.y;
