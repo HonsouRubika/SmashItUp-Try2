@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -57,6 +58,15 @@ public class PlayerSkins : MonoBehaviour
     public Sprite orangeHalo;
     private GameObject haloTeam;
 
+    [Header("Skin Display StartScene")]
+    public Sprite[] P1Skins;
+    public Sprite[] P2Skins;
+    public Sprite[] P3Skins;
+    public Sprite[] P4Skins;
+    private GameObject[] skinDisplay;
+    private IEnumerable<GameObject> orderedSkinDisplay;
+    private bool isInStartScene = false;
+    private bool isDisplaySetup = false;
 
     [HideInInspector] public GameObject currentHammer;
     private GameObject previousHammer;
@@ -86,6 +96,8 @@ public class PlayerSkins : MonoBehaviour
         haloTeam = transform.GetChild(7).gameObject;
         SetCursorTeam("default");
         SetHaloTeam("default");
+
+        skinDisplay = new GameObject[4];
 
         changerSkinTimerActu = Time.time;
 
@@ -196,6 +208,39 @@ public class PlayerSkins : MonoBehaviour
             }
         }
 
+        if(SceneManager.GetActiveScene().name == "NewStartScene" && !isDisplaySetup)
+        {
+            isInArea = true;
+            isInStartScene = true;
+            skinDisplay = GameObject.FindGameObjectsWithTag("SkinDisplay");
+            //orderedSkinDisplay = skinDisplay.OrderBy(go => go.name);
+            Array.Sort(skinDisplay, (a, b) => a.name.CompareTo(b.name));
+
+            //Start scene skin desplay
+            switch (playerControllerScript.playerID)
+            {
+                case 0:
+                    skinDisplay[0].GetComponent<SpriteRenderer>().sprite = P1Skins[skinNumber];
+                    break;
+                case 1:
+                    skinDisplay[1].GetComponent<SpriteRenderer>().sprite = P2Skins[skinNumber];
+                    break;
+                case 2:
+                    skinDisplay[2].GetComponent<SpriteRenderer>().sprite = P3Skins[skinNumber];
+                    break;
+                case 3:
+                    skinDisplay[3].GetComponent<SpriteRenderer>().sprite = P4Skins[skinNumber];
+                    break;
+            }
+            isDisplaySetup = true;
+        }
+        else
+        {
+            isInArea = false;
+            isInStartScene = false;
+            isDisplaySetup = false;
+        }
+
     }
 
     /*
@@ -297,6 +342,26 @@ public class PlayerSkins : MonoBehaviour
                 }
             }
 
+            //Start scene skin desplay
+            if(isInStartScene)
+            {
+                switch (playerControllerScript.playerID)
+                {
+                    case 0:
+                        skinDisplay[0].GetComponent<SpriteRenderer>().sprite = P1Skins[skinNumber];
+                        break;
+                    case 1:
+                        skinDisplay[1].GetComponent<SpriteRenderer>().sprite = P2Skins[skinNumber];
+                        break;
+                    case 2:
+                        skinDisplay[2].GetComponent<SpriteRenderer>().sprite = P3Skins[skinNumber];
+                        break;
+                    case 3:
+                        skinDisplay[3].GetComponent<SpriteRenderer>().sprite = P4Skins[skinNumber];
+                        break;
+                }
+            }
+
             //Save previous hammer
             previousHammer = currentHammer;
 
@@ -373,6 +438,26 @@ public class PlayerSkins : MonoBehaviour
                     {
                         skinNumber = skins.Count - 1;
                     }
+                }
+            }
+
+            //Start scene skin desplay
+            if (isInStartScene)
+            {
+                switch (playerControllerScript.playerID)
+                {
+                    case 0:
+                        skinDisplay[0].GetComponent<SpriteRenderer>().sprite = P1Skins[skinNumber];
+                        break;
+                    case 1:
+                        skinDisplay[1].GetComponent<SpriteRenderer>().sprite = P2Skins[skinNumber];
+                        break;
+                    case 2:
+                        skinDisplay[2].GetComponent<SpriteRenderer>().sprite = P3Skins[skinNumber];
+                        break;
+                    case 3:
+                        skinDisplay[3].GetComponent<SpriteRenderer>().sprite = P4Skins[skinNumber];
+                        break;
                 }
             }
 
