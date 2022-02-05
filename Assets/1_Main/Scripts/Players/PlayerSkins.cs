@@ -114,6 +114,13 @@ public class PlayerSkins : MonoBehaviour
             }
         }
 
+        //not visible in start scene from the start
+        if(SceneManager.GetActiveScene().name == "NewStartScene")
+        {
+            currentSkin.SetActive(false);
+        }
+        
+
         isSkinUnlocked = new bool[skins.Count];
         //starter skins
         for (int i = 0; i< 4; i++)
@@ -345,6 +352,9 @@ public class PlayerSkins : MonoBehaviour
             //Start scene skin desplay
             if(isInStartScene)
             {
+                //depop player
+                playerControllerScript.PlayerDepop();
+
                 switch (playerControllerScript.playerID)
                 {
                     case 0:
@@ -444,6 +454,9 @@ public class PlayerSkins : MonoBehaviour
             //Start scene skin desplay
             if (isInStartScene)
             {
+                //depop player
+                playerControllerScript.PlayerDepop();
+
                 switch (playerControllerScript.playerID)
                 {
                     case 0:
