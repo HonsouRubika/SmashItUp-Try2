@@ -8,6 +8,7 @@ public class PlayerFX : MonoBehaviour
 
     private ParticleSystem jumpParticle;
     private ParticleSystem runParticle;
+    private ParticleSystem ejectionParticle;
 
     public GameObject attackEmptyParticle;
     public GameObject attackTouchParticle;
@@ -21,7 +22,8 @@ public class PlayerFX : MonoBehaviour
     public void FindParticlesSystems(GameObject skin, GameObject hammer)
     {
         jumpParticle = skin.transform.Find("FX_Jump").GetComponent<ParticleSystem>();
-        //runParticle = skin.transform.Find("RunFX").GetComponent<ParticleSystem>();
+        runParticle = skin.transform.Find("FX_Run").GetComponent<ParticleSystem>();
+        ejectionParticle = skin.transform.Find("FX_Ejection").GetComponent<ParticleSystem>();
     }
 
     public void JumpFX()
@@ -31,12 +33,17 @@ public class PlayerFX : MonoBehaviour
 
     public void RunFX()
     {
-        //runParticle.Play();
+        runParticle.Play();
+    }
+
+    public void EjectionFX()
+    {
+        ejectionParticle.Play();
     }
 
     public void AttackFXEmpty()
     {
-        //StartCoroutine(attackEmpty());
+        StartCoroutine(attackEmpty());
     }
 
     public void AttackFXTouch()
@@ -51,7 +58,7 @@ public class PlayerFX : MonoBehaviour
 
     IEnumerator attackEmpty()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0f);
         Instantiate(attackEmptyParticle, playerControllerScript.hammerFXSpawn.position, Quaternion.identity);
     }
 

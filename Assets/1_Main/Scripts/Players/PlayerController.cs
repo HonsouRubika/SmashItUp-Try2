@@ -175,8 +175,7 @@ public class PlayerController : MonoBehaviour
 
     //FX
     private PlayerFX playerFXScript;
-    private bool attackOneTimeLeft = false;
-    private bool attackOneTimeRight = false;
+    private bool attackOneTime = false;
 
     void Start()
     {
@@ -343,6 +342,8 @@ public class PlayerController : MonoBehaviour
 
             //anim
             playerAnimScript.Expulsion(true);
+            playerFXScript.EjectionFX();
+
 
             //Disable the collision between players when player are stunt
             /*if (disableCollider)
@@ -413,6 +414,7 @@ public class PlayerController : MonoBehaviour
             if (Time.time >= nextAttackTime)
             {
                 playerSkinScript.SetHammerOpacity(1);
+                attackOneTime = false;
             }
             else
             {
@@ -457,20 +459,6 @@ public class PlayerController : MonoBehaviour
 
             if (!didAttackedBlockedL)
             {
-                if (!attackOneTimeLeft)
-                {
-                    if (hitEnemies.Length > 0)
-                    {
-                        playerFXScript.AttackFXTouch();
-                        attackOneTimeLeft = true;
-                    }
-                    else
-                    {
-                        playerFXScript.AttackFXEmpty();
-                        attackOneTimeLeft = true;
-                    }
-                }
-
                 //On leur applique une velocit� (effet de l'attaque)
                 foreach (Collider2D enemy in hitEnemies)
                 {
@@ -478,9 +466,28 @@ public class PlayerController : MonoBehaviour
                     //Attention: check la direction pour coord x
                     if (enemy.gameObject != cc.gameObject)
                     {
+                        if (!attackOneTime)
+                        {
+                            playerFXScript.AttackFXTouch();
+                            attackOneTime = true;
+                        }
                         enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
+                        
+                    }
+                }
+
+                if (!attackOneTime)
+                {
+                    if (hitEnemies.Length > 0)
+                    {
+
+                    }
+                    else
+                    {
+                        playerFXScript.AttackFXEmpty();
+                        attackOneTime = true;
                     }
                 }
             }
@@ -489,7 +496,7 @@ public class PlayerController : MonoBehaviour
                 // apply self blockProjection
                 applyBlock(hammerBlockProjection, 0);
 
-                if (!attackOneTimeLeft) { attackOneTimeLeft = true; playerFXScript.BlockFX(); }
+                if (!attackOneTime) { attackOneTime = true; playerFXScript.BlockFX(); }
             }
         }
         else if (isAttackRunningL && Time.time >= attackDurationActu)
@@ -536,20 +543,6 @@ public class PlayerController : MonoBehaviour
 
             if (!didAttackedBlockedR)
             {
-                if (!attackOneTimeRight)
-                {
-                    if (hitEnemies.Length > 0)
-                    {
-                        playerFXScript.AttackFXTouch();
-                        attackOneTimeRight = true;
-                    }
-                    else
-                    {
-                        playerFXScript.AttackFXEmpty();
-                        attackOneTimeRight = true;
-                    }
-                }
-
                 //On leur applique une velocit� (effet de l'attaque)
                 foreach (Collider2D enemy in hitEnemies)
                 {
@@ -557,9 +550,27 @@ public class PlayerController : MonoBehaviour
                     //Attention: check la direction pour coord x
                     if (enemy.gameObject != cc.gameObject)
                     {
+                        if (!attackOneTime)
+                        {
+                            playerFXScript.AttackFXTouch();
+                            attackOneTime = true;
+                        }
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
+                    }
+                }
+
+                if (!attackOneTime)
+                {
+                    if (hitEnemies.Length > 0)
+                    {
+
+                    }
+                    else
+                    {
+                        playerFXScript.AttackFXEmpty();
+                        attackOneTime = true;
                     }
                 }
             }
@@ -568,7 +579,7 @@ public class PlayerController : MonoBehaviour
                 // apply self blockProjection
                 applyBlock(-hammerBlockProjection, 0);
 
-                if (!attackOneTimeRight) { attackOneTimeRight = true; playerFXScript.BlockFX(); }
+                if (!attackOneTime) { attackOneTime = true; playerFXScript.BlockFX(); }
             }
         }
         else if (isAttackRunningR && Time.time >= attackDurationActu)
@@ -1260,7 +1271,6 @@ public class PlayerController : MonoBehaviour
             //reset timeAttack
             nextAttackTime = Time.time + attackRate;
 
-            attackOneTimeLeft = false;
             isAttackRunningL = true;
             attackDurationActu = attackDuration + Time.time;
             untilAttackEffectiveDurationActu = untilAttackEffectiveDuration + Time.time;
@@ -1279,7 +1289,6 @@ public class PlayerController : MonoBehaviour
             //reset timeAttack
             nextAttackTime = Time.time + attackRate;
 
-            attackOneTimeRight = false;
             isAttackRunningR = true;
             attackDurationActu = attackDuration + Time.time;
             untilAttackEffectiveDurationActu = untilAttackEffectiveDuration + Time.time;
