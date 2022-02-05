@@ -60,6 +60,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Player Out",
+                    "type": "Button",
+                    "id": "3fb76dd8-e13d-4efb-b7e9-06062095c9ef",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -269,6 +277,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Skin +",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "25d91f28-8b1c-4916-a1c5-4bb29b305499",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Player Out",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4752495c-9917-4864-b8b8-fc8e70dd9e40",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Manette",
+                    "action": "Player Out",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

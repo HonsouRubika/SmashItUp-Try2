@@ -198,7 +198,7 @@ public class FocusPlayers : MonoBehaviour
         {
             switch (players[i].GetComponent<PlayerSkins>().currentSkin.name)
             {
-                case "KamékinV2":
+                case "KamékinMulticolor(Clone)":
                     skinPlayers[i].sprite = skinsSprite[0];
                     break;
                 case "LaptiteFraise(Clone)":
@@ -207,7 +207,7 @@ public class FocusPlayers : MonoBehaviour
                 case "Pouletto(Clone)":
                     skinPlayers[i].sprite = skinsSprite[2];
                     break;
-                case "Mashmaboy(Clone)":
+                case "Cuppy(Clone)":
                     skinPlayers[i].sprite = skinsSprite[3];
                     break;
                 case "TakoTako(Clone)":

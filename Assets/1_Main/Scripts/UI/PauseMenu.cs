@@ -67,6 +67,14 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    public void PressB(uint playerID, InputAction.CallbackContext context)
+    {
+        if (context.started && playerThatPausedID == playerID)
+        {
+            Resume();
+        }
+    }
+
     private void Pause()
     {
         pauseMenu.SetActive(true);

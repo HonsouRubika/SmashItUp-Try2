@@ -791,6 +791,11 @@ public class GameManager : MonoBehaviour
         pauseScript.GamePause(playerID, context);
     }
 
+    public void UnPauseGame(uint playerID, InputAction.CallbackContext context)
+    {
+        pauseScript.PressB(playerID, context);
+    }
+
     public int getNbPlayer()
     {
         return scoreValuesManagerScript.players.Length;

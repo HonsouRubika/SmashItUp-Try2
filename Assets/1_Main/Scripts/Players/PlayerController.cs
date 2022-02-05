@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public enum JumpState
 {
@@ -156,6 +157,10 @@ public class PlayerController : MonoBehaviour
     [Header("LD")]
     public float trampolineJump = 6;
 
+    [Header("StartMenu")]
+    private Vector2 _spawn;
+    private bool isSkinSelected = false;
+
     [System.NonSerialized] public float lastTimeAttackHit = 0;
     [System.NonSerialized] public float lastTimeGotHit = 0;
 
@@ -213,6 +218,37 @@ public class PlayerController : MonoBehaviour
         PlayerSoundScript = GetComponentInChildren<PlayerSound>();
     }
 
+    public void PlayerConnected(Vector2 spawn, uint id)
+    {
+        playerID = id;
+        _spawn = spawn;
+
+        //player not in scene
+        rb.transform.position = _spawn;
+        isFrozen = true;
+        isSkinSelected = false;
+
+        //already set false in PlayerSkin Start()
+        //playerSkinScript.currentSkin.SetActive(false);
+    }
+
+    public void PlayerDepop()
+    {
+        //player not in scene
+        isFrozen = true;
+        rb.transform.position = _spawn;
+        playerSkinScript.currentSkin.SetActive(false);
+        isSkinSelected = false;
+    }
+
+    public void SkinSelected()
+    {
+        rb.transform.position = _spawn; 
+        playerSkinScript.currentSkin.SetActive(true);
+        isFrozen = false;
+        isSkinSelected = true;
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
@@ -223,7 +259,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers)
+        if (!GameManager.Instance.isPaused && !GameManager.Instance.isShowingPlayers && isSkinSelected)
         {
             //stun
             if (Time.time >= stunTimeActu && Time.time >= blockStunTimeActu && !isFrozen)
@@ -251,6 +287,10 @@ public class PlayerController : MonoBehaviour
                 */
             }
         }
+        else if (SceneManager.GetActiveScene().name == "NewStartScene" && !isSkinSelected)
+        {
+            SkinSelected();
+        }
     }
     public void OnAttacked(InputAction.CallbackContext context)
     {
@@ -262,6 +302,21 @@ public class PlayerController : MonoBehaviour
                 if (context.started) computeAttack();
             }
        
+        }
+    }
+
+    public void OnBPressed(InputAction.CallbackContext context)
+    {
+        if (isSkinSelected && SceneManager.GetActiveScene().name == "NewStartScene")
+        {
+            if (context.started)
+            {
+                PlayerDepop();
+            }
+        }
+        else if (GameManager.Instance.isPaused)
+        {
+            GameManager.Instance.UnPauseGame(playerID, context);
         }
     }
 
@@ -899,12 +954,12 @@ public class PlayerController : MonoBehaviour
             }*/
             
 
-            if(!didTouchRoof)
-            {
+            //if(!didTouchRoof)
+            //{
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - newJumpRatioAddForce * Time.deltaTime);
                 if (rb.velocity.y < -jumpSpeed * fallSpeedMultiplier) rb.velocity = new Vector2(rb.velocity.x, -jumpSpeed * fallSpeedMultiplier);
                 //Debug.Log("2 : " + rb.velocity.x);
-            }
+            //}
 
             //check if player is falling
             if (rb.velocity.y < 0 && !didTouchRoof && jumpState != JumpState.Falling)
@@ -916,6 +971,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //roof stun & fall
+        /*
         if (didTouchRoof)
         {   
             tempVelocityRoofCheck -= newJumpRatioAddForce * Time.deltaTime;
@@ -931,6 +987,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, 0);
             }
         }
+        */
 
         //Colision Side GripCheck
         //float height = bc.size.y;
