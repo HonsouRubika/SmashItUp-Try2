@@ -64,6 +64,6 @@ public class PlayerManagerScript : MonoBehaviour
         nbPlayerActu--;
 
         Debug.Log("controller disconnected");
-        Destroy(playerInput.gameObject);
+        Destroy(playerInput);
     }
 }

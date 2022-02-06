@@ -142,6 +142,32 @@ public class PlayerSkins : MonoBehaviour
             isSkinUnlocked[5] = true;
         }*/
 
+        if (SceneManager.GetActiveScene().name == "NewStartScene")
+        {
+            isInArea = true;
+            isInStartScene = true;
+            skinDisplay = GameObject.FindGameObjectsWithTag("SkinDisplay");
+            //orderedSkinDisplay = skinDisplay.OrderBy(go => go.name);
+            Array.Sort(skinDisplay, (a, b) => a.name.CompareTo(b.name));
+
+            //Start scene skin desplay
+            switch (playerControllerScript.playerID)
+            {
+                case 0:
+                    skinDisplay[0].GetComponent<SpriteRenderer>().sprite = P1Skins[skinNumber];
+                    break;
+                case 1:
+                    skinDisplay[1].GetComponent<SpriteRenderer>().sprite = P2Skins[skinNumber];
+                    break;
+                case 2:
+                    skinDisplay[2].GetComponent<SpriteRenderer>().sprite = P3Skins[skinNumber];
+                    break;
+                case 3:
+                    skinDisplay[3].GetComponent<SpriteRenderer>().sprite = P4Skins[skinNumber];
+                    break;
+            }
+        }
+
 
         playerAnimScript.playerAnimator = currentSkin.GetComponent<Animator>();
         playerControllerScript.playerAnimator = currentSkin.GetComponent<Animator>().transform;
@@ -213,39 +239,6 @@ public class PlayerSkins : MonoBehaviour
                     }
                     break;
             }
-        }
-
-        if(SceneManager.GetActiveScene().name == "NewStartScene" && !isDisplaySetup)
-        {
-            isInArea = true;
-            isInStartScene = true;
-            skinDisplay = GameObject.FindGameObjectsWithTag("SkinDisplay");
-            //orderedSkinDisplay = skinDisplay.OrderBy(go => go.name);
-            Array.Sort(skinDisplay, (a, b) => a.name.CompareTo(b.name));
-
-            //Start scene skin desplay
-            switch (playerControllerScript.playerID)
-            {
-                case 0:
-                    skinDisplay[0].GetComponent<SpriteRenderer>().sprite = P1Skins[skinNumber];
-                    break;
-                case 1:
-                    skinDisplay[1].GetComponent<SpriteRenderer>().sprite = P2Skins[skinNumber];
-                    break;
-                case 2:
-                    skinDisplay[2].GetComponent<SpriteRenderer>().sprite = P3Skins[skinNumber];
-                    break;
-                case 3:
-                    skinDisplay[3].GetComponent<SpriteRenderer>().sprite = P4Skins[skinNumber];
-                    break;
-            }
-            isDisplaySetup = true;
-        }
-        else
-        {
-            isInArea = false;
-            isInStartScene = false;
-            isDisplaySetup = false;
         }
 
     }

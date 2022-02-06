@@ -84,7 +84,7 @@ public class TeleporterLobby : MonoBehaviour
             {
                 SceneManager.LoadScene("NewSkinScene"); //return to lobby
             }
-            else SceneManager.LoadScene("StartScene"); //return to lobby
+            else SceneManager.LoadScene("NewStartScene"); //return to lobby
         }
     }
 

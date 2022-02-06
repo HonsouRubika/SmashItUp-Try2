@@ -409,15 +409,15 @@ public class GameManager : MonoBehaviour
         _scoreP4 = 0;
 
         //randomize depuis une liste de gameMode possible
-        Random.InitState((int)Time.time);
+        Random.InitState((int)Time.timeSinceLevelLoad);
         for (int i = 0; i < _nbManches; ++i)
         {
             int nextGameMode = 0;
-            bool isAlreadyPresent;
 
             ///// LIMITATIONS /////
             if (i > 0) //pas de limitation pour le premier mini jeu choisi (logique)
             {
+                bool isAlreadyPresent;
                 //on s'assure que le prochain game mode choisi soit diff�rent du premier
                 //et que le mini jeu n'est pas déjà présent dans la liste
                 do
@@ -425,14 +425,19 @@ public class GameManager : MonoBehaviour
                     isAlreadyPresent = false;
                     nextGameMode = Random.Range(0, (int)GameMode.total);
 
-                    for (int j = 0; j < i+1; j++)
+                    for (int j = 0; j < i; j++)
                     {
                         if (_selectedGameModes[j] == nextGameMode) isAlreadyPresent = true;
                     }
                 }
-                while (GameModeKind[nextGameMode] == GameModeKind[_selectedGameModes[i - 1]] && isAlreadyPresent);
+                while ((GameModeKind[nextGameMode] == GameModeKind[_selectedGameModes[i - 1]] || isAlreadyPresent) && _selectedGameModes.Length < 8);
+            }
+            else
+            {
+                nextGameMode = Random.Range(0, (int)GameMode.total);
             }
             _selectedGameModes[i] = nextGameMode;
+            
             //TeamCompo
             //DEBUG
             if (teamCompoToTest.Length > 0)
