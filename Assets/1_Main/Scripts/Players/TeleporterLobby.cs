@@ -39,6 +39,7 @@ public class TeleporterLobby : MonoBehaviour
     private void Start()
     {
         isDebug = false;
+        nbPlayerInGame = GameManager.Instance.players.Length;
     }
 
     private void Update()

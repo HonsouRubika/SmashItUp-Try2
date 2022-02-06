@@ -1194,8 +1194,8 @@ public class PlayerController : MonoBehaviour
         */
 
         if (jumpState == JumpState.Grounded || //simple saut
-            (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone && !didTouchRoof) || 
-            (nbJumpActu != nbJump && !didTouchRoof))
+            (jumpState != JumpState.Grounded && Time.time < coyotTimeActu && coyoteTimeCheck && !coyoteTimeDone) || 
+            (nbJumpActu != nbJump))
 
         {
             //coyot time

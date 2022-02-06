@@ -439,6 +439,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: _nbManches
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: testSceneName
       value: 
       objectReference: {fileID: 0}
@@ -1882,6 +1886,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2102464377}
+  - component: {fileID: 2102464378}
   m_Layer: 7
   m_Name: SkinDisplay
   m_TagString: Untagged
@@ -1907,6 +1912,38 @@ Transform:
   m_Father: {fileID: 764428614}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2102464378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102464376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc5f98be38399d4caf7dacabd794931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  P1Skins:
+  - {fileID: 21300000, guid: 8aee551fd45b8e440998f6df2c8d57d7, type: 3}
+  - {fileID: 21300000, guid: cc18a0dfa3e2330428d875bfe212c995, type: 3}
+  - {fileID: 21300000, guid: 823a3eb4ed00a5447828bb75992fe90a, type: 3}
+  - {fileID: 21300000, guid: f29875aa3ed3dd042b52c770374bbe5a, type: 3}
+  P2Skins:
+  - {fileID: 21300000, guid: 546fbf12e4ff09c42a191a8ddf756121, type: 3}
+  - {fileID: 21300000, guid: 02e5d10aa2ec3ac429b6f4aaf6cdc59f, type: 3}
+  - {fileID: 21300000, guid: ee600a85238d3494b8e3f5a250e1898c, type: 3}
+  - {fileID: 21300000, guid: 35f4dc64cdbb8b24bbd6dcf298b11ff5, type: 3}
+  P3Skins:
+  - {fileID: 21300000, guid: 9cc898b1d236a6440945ad96412acf3e, type: 3}
+  - {fileID: 21300000, guid: 4d2cc409c8374cb4c878100edf947d5f, type: 3}
+  - {fileID: 21300000, guid: ad261700d07f9274b9369f3b37fe4c99, type: 3}
+  - {fileID: 21300000, guid: 800e6814ceab75f499ba42d8de26a6e8, type: 3}
+  P4Skins:
+  - {fileID: 21300000, guid: 298a9df8160d4644a907c396883cb8d0, type: 3}
+  - {fileID: 21300000, guid: 6300ea6314d0174458e9d4ba891d14cf, type: 3}
+  - {fileID: 21300000, guid: 6ba036aa72a38694a87561193787f99b, type: 3}
+  - {fileID: 21300000, guid: 01654fa092db18941bdd72420fdcbdbe, type: 3}
 --- !u!1001 &2121464278
 PrefabInstance:
   m_ObjectHideFlags: 0

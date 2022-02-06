@@ -74,7 +74,7 @@ public class PlayerSkins : MonoBehaviour
 
     public SpriteRenderer[] skinSprites;
 
-    private int skinNumber;
+    public int skinNumber;
 
     private PlayerAnim playerAnimScript;
     private Transform parent;
