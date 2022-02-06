@@ -243,7 +243,7 @@ public class PlayerController : MonoBehaviour
 
     public void SkinSelected()
     {
-        rb.transform.position = _spawn; 
+        rb.transform.position = _spawn;
         playerSkinScript.currentSkin.SetActive(true);
         isFrozen = false;
         isSkinSelected = true;
@@ -287,7 +287,7 @@ public class PlayerController : MonoBehaviour
                 */
             }
         }
-        else if (SceneManager.GetActiveScene().name == "NewStartScene" && !isSkinSelected)
+        else if (SceneManager.GetActiveScene().name == "NewStartScene" && !isSkinSelected && playerSkinScript != null)
         {
             SkinSelected();
         }
@@ -362,13 +362,23 @@ public class PlayerController : MonoBehaviour
             /////////////////////////////////////
             //////////// DEPLACEMENT ////////////
             /////////////////////////////////////
-            move();
+            if (isSkinSelected)
+            {
+                move();
+            }
+            else
+            {
+                rb.velocity = new Vector2(0, 0);
+            }
+
 
             /////////////////////////////////
             //////////// ATTAQUE ////////////
             /////////////////////////////////
-
-            attack();
+            if (isSkinSelected)
+            {
+                attack();
+            }
 
         }
         else if (Time.time < stunTimeActu - stunTime + stunTime / 5)

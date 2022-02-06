@@ -15,12 +15,12 @@ public class PlayerAnim : MonoBehaviour
 
     public void Idle(bool idle)
     {
-        playerAnimator.SetBool("isIdle", idle);
+        if (playerAnimator != null) playerAnimator.SetBool("isIdle", idle);
     }
 
     public void Running(bool run)
     {
-        playerAnimator.SetBool("isRunning", run);
+        if (playerAnimator != null) playerAnimator.SetBool("isRunning", run);
     }
 
     public void Jumping(bool jump)
@@ -30,7 +30,7 @@ public class PlayerAnim : MonoBehaviour
 
     public void Expulsion(bool expulsed)
     {
-        playerAnimator.SetBool("isExpulsing", expulsed);
+        if (playerAnimator != null) playerAnimator.SetBool("isExpulsing", expulsed);
     }
 
     public void Attack()

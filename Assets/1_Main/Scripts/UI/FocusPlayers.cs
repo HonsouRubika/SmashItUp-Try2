@@ -62,7 +62,8 @@ public class FocusPlayers : MonoBehaviour
     {
         if (GameManager.Instance.isShowingPlayers && Time.time > timeShowingPlayersActu)
         {
-            DestroyCercle();
+            //DestroyCercle();
+            canvasRef.SetActive(false);
             GameManager.Instance.isShowingPlayers = false;
         }
     }
@@ -134,7 +135,8 @@ public class FocusPlayers : MonoBehaviour
 
     public void IncrementTimer()
     {
-        SpawnCercle();
+        //SpawnCercle();
+        canvasRef.SetActive(true);
 
         ///////  affichage equipes  ///////
         //num des players :
@@ -229,7 +231,7 @@ public class FocusPlayers : MonoBehaviour
             case (int)GameManager.TeamCompo.FFA:
                 //no change in players placement
                 for (int j = 0; j < playersTeam.Length; j++)
-                {
+                {   
                     playersDisplay[j].transform.position = new Vector2(FFAPlayerDisplayCoordonate[j].position.x, FFAPlayerDisplayCoordonate[j].position.y);
                 }
                 //add FFA display
@@ -237,25 +239,22 @@ public class FocusPlayers : MonoBehaviour
                 //hide VS sprite
                 if(players.Length > 1)
                 {
-                    VS.SetActive(false);
-                    VS2.SetActive(true);
+                    VS.SetActive(true);
+                    VS2.SetActive(false);
                 }
                 else
                 {
-                    VS.transform.localScale = new Vector2(30, 30);
                     VS.SetActive(false);
                 }
                 if (playersTeam.Length > 2)
                 {
                     VS2.SetActive(true);
                     VS.SetActive(true);
-                    VS.transform.localScale = new Vector2(30, 30);
                 }
                 if (playersTeam.Length > 3)
                 {
                     VS3.SetActive(true);
-                    VS.SetActive(true);
-                    VS.transform.localScale = new Vector2(30, 30);
+                    VS2.SetActive(true);
                 }
                 break;
 

@@ -39,6 +39,7 @@ public class ConsigneDisplayScript : MonoBehaviour
         if (GameManager.Instance.teamCompoToTest.Length > 0)
         {
             //Debug.Log("affichage team compo debug");
+            Debug.Log(GameManager.Instance._nbMancheActu);
             switch (GameManager.Instance.teamCompoToTest[GameManager.Instance._nbMancheActu - 1])
             {
                 case GameManager.TeamCompo.OneVSThree:
