@@ -29,7 +29,7 @@ public class NewSkinManager : MonoBehaviour
             UnlockNewSkin();
             isSetup = true;
         }
-        if (Time.time > waitTimeActu) SceneManager.LoadScene("StartScene"); //return to lobby
+        if (Time.time > waitTimeActu) SceneManager.LoadScene("NewStartScene"); //return to lobby
     }
 
     private void UnlockNewSkin()
