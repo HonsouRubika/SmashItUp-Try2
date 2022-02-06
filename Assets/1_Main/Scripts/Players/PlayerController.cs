@@ -227,6 +227,7 @@ public class PlayerController : MonoBehaviour
         rb.transform.position = _spawn;
         isFrozen = true;
         isSkinSelected = false;
+        rb.gravityScale = 0;
 
         //already set false in PlayerSkin Start()
         //playerSkinScript.currentSkin.SetActive(false);
@@ -236,6 +237,7 @@ public class PlayerController : MonoBehaviour
     {
         //player not in scene
         isFrozen = true;
+        rb.gravityScale = 0;
         rb.transform.position = _spawn;
         playerSkinScript.currentSkin.SetActive(false);
         isSkinSelected = false;
@@ -247,6 +249,7 @@ public class PlayerController : MonoBehaviour
         playerSkinScript.currentSkin.SetActive(true);
         isFrozen = false;
         isSkinSelected = true;
+        rb.gravityScale = 2;
     }
 
     public void OnMove(InputAction.CallbackContext context)
