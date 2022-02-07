@@ -438,7 +438,6 @@ public class GameManager : MonoBehaviour
                 nextGameMode = Random.Range(0, (int)GameMode.total);
             }
             _selectedGameModes[i] = nextGameMode;
-            Debug.Log(nextGameMode);
             
             //TeamCompo
             //DEBUG
