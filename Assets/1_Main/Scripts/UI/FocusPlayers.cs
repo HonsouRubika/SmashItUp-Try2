@@ -34,7 +34,11 @@ public class FocusPlayers : MonoBehaviour
     public SpriteRenderer[] skinPlayers;
     public SpriteRenderer[] playersNumber;
     public GameObject[] playersDisplay;
-    public Sprite[] skinsSprite;
+    //public Sprite[] skinsSprite;
+    public Sprite[] kamekinSprite;
+    public Sprite[] pouletoSprite;
+    public Sprite[] fraiseSprite;
+    public Sprite[] cuppySprite;
     public Sprite[] numberSprite;
     public Transform[] oneVSThreePlayerDisplayCoordonate;
     public Transform[] twoVSTwoPlayerDisplayCoordonate;
@@ -201,26 +205,26 @@ public class FocusPlayers : MonoBehaviour
             switch (players[i].GetComponent<PlayerSkins>().currentSkin.name)
             {
                 case "KamékinMulticolor(Clone)":
-                    skinPlayers[i].sprite = skinsSprite[0];
+                    skinPlayers[i].sprite = kamekinSprite[i];
                     break;
                 case "LaptiteFraise(Clone)":
-                    skinPlayers[i].sprite = skinsSprite[1];
+                    skinPlayers[i].sprite = fraiseSprite[i];
                     break;
                 case "Pouletto(Clone)":
-                    skinPlayers[i].sprite = skinsSprite[2];
+                    skinPlayers[i].sprite = pouletoSprite[i];
                     break;
                 case "Cuppy(Clone)":
-                    skinPlayers[i].sprite = skinsSprite[3];
+                    skinPlayers[i].sprite = cuppySprite[i];
                     break;
                 case "TakoTako(Clone)":
-                    skinPlayers[i].sprite = skinsSprite[4];
+                    skinPlayers[i].sprite = kamekinSprite[i];
                     break;
                 case "DevilPrincess(Clone)":
-                    skinPlayers[i].sprite = skinsSprite[5];
+                    skinPlayers[i].sprite = kamekinSprite[i];
                     break;
                 default:
                     Debug.LogWarning("New sprite needs to be linked in script FocusPlayers");
-                    skinPlayers[i].sprite = skinsSprite[0];
+                    skinPlayers[i].sprite = kamekinSprite[i];
                     break;
             }
         }
