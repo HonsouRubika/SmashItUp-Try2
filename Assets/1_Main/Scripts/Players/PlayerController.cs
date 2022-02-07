@@ -136,6 +136,7 @@ public class PlayerController : MonoBehaviour
     private float untilAttackEffectiveDurationActu;
     private bool isAttackRunningL, isAttackRunningR;
     private bool didAttackedBlockedL, didAttackedBlockedR;
+    private bool didAttackedTouched;
     private float nextAttackTime = 0f;
     //vibration
     public float vibrationDurration = 0.5f;
@@ -543,20 +544,7 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
-                        
-                    }
-                }
 
-                if (!attackOneTime)
-                {
-                    if (hitEnemies.Length > 0)
-                    {
-
-                    }
-                    else
-                    {
-                        playerFXScript.AttackFXEmpty();
-                        attackOneTime = true;
                     }
                 }
             }
@@ -570,6 +558,11 @@ public class PlayerController : MonoBehaviour
         }
         else if (isAttackRunningL && Time.time >= attackDurationActu)
         {
+            if (!didAttackedTouched)
+            {
+                playerFXScript.AttackFXEmpty();
+            }
+
             isAttackRunningL = false;
             //reset var
             didAttackedBlockedL = false;
@@ -627,19 +620,7 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
-                    }
-                }
 
-                if (!attackOneTime)
-                {
-                    if (hitEnemies.Length > 0)
-                    {
-
-                    }
-                    else
-                    {
-                        playerFXScript.AttackFXEmpty();
-                        attackOneTime = true;
                     }
                 }
             }
@@ -653,6 +634,11 @@ public class PlayerController : MonoBehaviour
         }
         else if (isAttackRunningR && Time.time >= attackDurationActu)
         {
+            if (!didAttackedTouched)
+            {
+                playerFXScript.AttackFXEmpty();
+            }
+
             //reset var
             didAttackedBlockedR = false;
             isAttackRunningR = false;
@@ -1341,6 +1327,7 @@ public class PlayerController : MonoBehaviour
         {
             //reset timeAttack
             nextAttackTime = Time.time + attackRate;
+            didAttackedTouched = false;
 
             isAttackRunningL = true;
             attackDurationActu = attackDuration + Time.time;
@@ -1363,6 +1350,7 @@ public class PlayerController : MonoBehaviour
         {
             //reset timeAttack
             nextAttackTime = Time.time + attackRate;
+            didAttackedTouched = false;
 
             isAttackRunningR = true;
             attackDurationActu = attackDuration + Time.time;

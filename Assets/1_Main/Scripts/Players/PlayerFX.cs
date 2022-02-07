@@ -43,11 +43,13 @@ public class PlayerFX : MonoBehaviour
 
     public void AttackFXEmpty()
     {
+        Debug.Log("empty called");
         StartCoroutine(attackEmpty());
     }
 
     public void AttackFXTouch()
     {
+        Debug.Log("touch called");
         StartCoroutine(attackTouch());
     }
 
