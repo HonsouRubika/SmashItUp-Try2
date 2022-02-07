@@ -536,6 +536,8 @@ public class PlayerController : MonoBehaviour
                     //Attention: check la direction pour coord x
                     if (enemy.gameObject != cc.gameObject)
                     {
+                        didAttackedTouched = true;
+
                         if (!attackOneTime)
                         {
                             playerFXScript.AttackFXTouch();
@@ -612,6 +614,7 @@ public class PlayerController : MonoBehaviour
                     //Attention: check la direction pour coord x
                     if (enemy.gameObject != cc.gameObject)
                     {
+                        didAttackedTouched = true;
                         if (!attackOneTime)
                         {
                             playerFXScript.AttackFXTouch();
