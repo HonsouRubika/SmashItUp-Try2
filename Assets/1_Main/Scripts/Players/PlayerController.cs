@@ -620,7 +620,6 @@ public class PlayerController : MonoBehaviour
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
-
                     }
                 }
             }
