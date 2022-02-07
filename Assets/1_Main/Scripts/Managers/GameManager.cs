@@ -431,13 +431,14 @@ public class GameManager : MonoBehaviour
                         if (_selectedGameModes[j] == nextGameMode) isAlreadyPresent = true;
                     }
                 }
-                while ((GameModeKind[nextGameMode] == GameModeKind[_selectedGameModes[i - 1]] || isAlreadyPresent) && _selectedGameModes.Length < 8);
+                while ((GameModeKind[nextGameMode] == GameModeKind[_selectedGameModes[i - 1]] || isAlreadyPresent) && i < 8);
             }
             else
             {
                 nextGameMode = Random.Range(0, (int)GameMode.total);
             }
             _selectedGameModes[i] = nextGameMode;
+            Debug.Log(nextGameMode);
             
             //TeamCompo
             //DEBUG
