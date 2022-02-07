@@ -146,6 +146,14 @@ public class CaptureManager : MonoBehaviour
         {
             MultiplePlayersCaptureZone();
         }
+        else
+        {
+            if (zoneSound)
+            {
+                zoneSound = false;
+                captureSoundScript.PlayerOutZone();
+            }
+        }
     }
 
     private void DisplayUITeam()
