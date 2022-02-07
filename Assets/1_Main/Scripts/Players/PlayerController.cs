@@ -1366,10 +1366,6 @@ public class PlayerController : MonoBehaviour
             hammerPointR.SetActive(true);
             hammerPointL.SetActive(false);
 
-            //Vibration
-            vibrationDurrationActu = vibrationDurration + Time.time;
-            isVibrationSet = true;
-
             //anim
             if (playerAnimScript != null)
             {
