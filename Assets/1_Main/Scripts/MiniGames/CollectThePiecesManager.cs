@@ -35,8 +35,8 @@ public class CollectThePiecesManager : MonoBehaviour
     public EqualityCase equalityCase = EqualityCase.None;
 
     //Merge score team
-    private float scoreTeam1;
-    private float scoreTeam2;
+    public float scoreTeam1;
+    public float scoreTeam2;
 
     private void Start()
     {

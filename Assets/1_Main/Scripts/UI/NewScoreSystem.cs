@@ -273,7 +273,6 @@ public class NewScoreSystem : MonoBehaviour
                         else points[index].color = new Color(1, 1, 1, 1);
 
                         EarnPointSoundScript.PlayerEarnPoint();
-
                         index++;
 
                         yield return new WaitForSeconds(timeBtwPops);

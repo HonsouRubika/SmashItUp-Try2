@@ -50,7 +50,7 @@ public class Mole : MonoBehaviour
         moleColliderBoundsY = moleCollider.bounds.size.y;
         pos = transform.position;
 
-        pointsToAddAlone1V3 = pointsToAdd * 2;
+        pointsToAddAlone1V3 = pointsToAdd * 3;
     }
 
     private void FixedUpdate()
