@@ -246,10 +246,33 @@ public class PlayerSkins : MonoBehaviour
             isInStartScene = false;
             isInArea = false;
         }
-        else if (SceneManager.GetActiveScene().name == "NewStartScene")
+        else if (SceneManager.GetActiveScene().name == "NewStartScene" && !isInStartScene)
         {
             isInStartScene = true;
             isInArea = true;
+
+            if (skinDisplay[0] == null)
+            {
+                skinDisplay = GameObject.FindGameObjectsWithTag("SkinDisplay");
+                //orderedSkinDisplay = skinDisplay.OrderBy(go => go.name);
+                Array.Sort(skinDisplay, (a, b) => a.name.CompareTo(b.name));
+
+                switch (playerControllerScript.playerID)
+                {
+                    case 0:
+                        skinDisplay[0].GetComponent<SpriteRenderer>().sprite = P1Skins[skinNumber];
+                        break;
+                    case 1:
+                        skinDisplay[1].GetComponent<SpriteRenderer>().sprite = P2Skins[skinNumber];
+                        break;
+                    case 2:
+                        skinDisplay[2].GetComponent<SpriteRenderer>().sprite = P3Skins[skinNumber];
+                        break;
+                    case 3:
+                        skinDisplay[3].GetComponent<SpriteRenderer>().sprite = P4Skins[skinNumber];
+                        break;
+                }
+            }
         }
 
     }
@@ -359,6 +382,13 @@ public class PlayerSkins : MonoBehaviour
                 //depop player
                 playerControllerScript.PlayerDepop();
 
+                if (skinDisplay[0] == null)
+                {
+                    skinDisplay = GameObject.FindGameObjectsWithTag("SkinDisplay");
+                    //orderedSkinDisplay = skinDisplay.OrderBy(go => go.name);
+                    Array.Sort(skinDisplay, (a, b) => a.name.CompareTo(b.name));
+                }
+
                 switch (playerControllerScript.playerID)
                 {
                     case 0:
@@ -461,6 +491,13 @@ public class PlayerSkins : MonoBehaviour
             {
                 //depop player
                 playerControllerScript.PlayerDepop();
+
+                if (skinDisplay[0] == null)
+                {
+                    skinDisplay = GameObject.FindGameObjectsWithTag("SkinDisplay");
+                    //orderedSkinDisplay = skinDisplay.OrderBy(go => go.name);
+                    Array.Sort(skinDisplay, (a, b) => a.name.CompareTo(b.name));
+                }
 
                 switch (playerControllerScript.playerID)
                 {
