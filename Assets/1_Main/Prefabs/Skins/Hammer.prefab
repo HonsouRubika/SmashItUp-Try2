@@ -77,6 +77,36 @@ Transform:
   m_Father: {fileID: 7434115745256131856}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3583533725665106993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 403096855530666246}
+  m_Layer: 0
+  m_Name: hammerFXSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &403096855530666246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3583533725665106993}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.45, y: 1.32, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7434115745256131856}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5769712278278332532
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,6 +186,7 @@ Transform:
   - {fileID: 602671810530044769}
   - {fileID: 1348356863307821496}
   - {fileID: 6071189994762134585}
+  - {fileID: 403096855530666246}
   - {fileID: 4205469595039305407}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -251,7 +282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4205469595039305407}
   m_Layer: 0
-  m_Name: hammerFXSpawn
+  m_Name: hammerFXSpawnEmpty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -265,9 +296,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8635122535911001535}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.45, y: 1.32, z: 0}
+  m_LocalPosition: {x: -13.69, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7434115745256131856}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

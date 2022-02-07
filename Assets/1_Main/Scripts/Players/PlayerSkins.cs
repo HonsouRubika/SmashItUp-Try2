@@ -416,6 +416,7 @@ public class PlayerSkins : MonoBehaviour
             //if (GetChildWithName(currentSkin, "Hammer") != null) Debug.Log("yesss");
             GameObject hammer = GetChildWithName(currentSkin, "Hammer");
             playerControllerScript.hammerFXSpawn = GetChildWithName(hammer, "hammerFXSpawn").transform;
+            playerControllerScript.hammerFXSpawnEmpty = GetChildWithName(hammer, "hammerFXSpawnEmpty").transform;
             playerControllerScript.attackPointL = GetChildWithName(hammer, "AttackPointL").transform;
             playerControllerScript.attackPointR = GetChildWithName(hammer, "AttackPointR").transform;
             playerControllerScript.hammerPointL = GetChildWithName(hammer, "hammerPointL");
@@ -537,6 +538,7 @@ public class PlayerSkins : MonoBehaviour
             //if (GetChildWithName(currentSkin, "Hammer") != null) Debug.Log("yesss");
             GameObject hammer = GetChildWithName(currentSkin, "Hammer");
             playerControllerScript.hammerFXSpawn = GetChildWithName(hammer, "hammerFXSpawn").transform;
+            playerControllerScript.hammerFXSpawnEmpty = GetChildWithName(hammer, "hammerFXSpawnEmpty").transform;
             playerControllerScript.attackPointL = GetChildWithName(hammer, "AttackPointL").transform;
             playerControllerScript.attackPointR = GetChildWithName(hammer, "AttackPointR").transform;
             playerControllerScript.hammerPointL = GetChildWithName(hammer, "hammerPointL");

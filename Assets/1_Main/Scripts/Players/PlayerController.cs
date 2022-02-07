@@ -109,6 +109,7 @@ public class PlayerController : MonoBehaviour
     //Hitbox
     [Header("Attack")]
     public Transform hammerFXSpawn;
+    public Transform hammerFXSpawnEmpty;
     public Transform attackPointL;
     public Transform attackPointR;
     public GameObject hammerPointL;

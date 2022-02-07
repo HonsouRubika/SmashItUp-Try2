@@ -59,7 +59,7 @@ public class PlayerFX : MonoBehaviour
     IEnumerator attackEmpty()
     {
         yield return new WaitForSeconds(0f);
-        Instantiate(attackEmptyParticle, playerControllerScript.hammerFXSpawn.position, Quaternion.identity);
+        Instantiate(attackEmptyParticle, playerControllerScript.hammerFXSpawnEmpty.position, Quaternion.identity);
     }
 
     IEnumerator attackTouch()
