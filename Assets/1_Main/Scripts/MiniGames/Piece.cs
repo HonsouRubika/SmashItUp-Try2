@@ -28,7 +28,7 @@ public class Piece : MonoBehaviour
 
         scoreScript = collectThePiecesManager.scoreScript;
 
-        pointsToAddAlone1V3 = pointsToAdd * 2;
+        pointsToAddAlone1V3 = pointsToAdd * 3;
     }
 
     //Test FX 
