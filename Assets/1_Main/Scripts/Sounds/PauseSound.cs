@@ -11,6 +11,6 @@ public class PauseSound : MonoBehaviour
 
     public void GameIsOnPause()
     {
-        SoundManager.Instance.PlaySfx(pause, pauseVolume);
+        SoundManager.Instance.PlayUI(pause, pauseVolume);
     }
 }

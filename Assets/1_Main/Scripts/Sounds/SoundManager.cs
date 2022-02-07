@@ -37,7 +37,8 @@ public class SoundManager : MonoBehaviour
     public AudioSource zoneSource;
     public AudioSource footStepsSource;
     public AudioSource wallRideSource;
-    public AudioSource jingleStart;
+    public AudioSource jingleStartSource;
+    public AudioSource UISource;
 
     private bool fadeOut = false;
 
@@ -66,7 +67,7 @@ public class SoundManager : MonoBehaviour
             musicSource.UnPause();
             sfxSource.volume = 1f;
             zoneSource.volume = 1f;
-            jingleStart.volume = 1f;
+            jingleStartSource.volume = 1f;
             footStepsSource.volume = 1f;
             voiceSource.volume = 1f;
         }
@@ -75,7 +76,7 @@ public class SoundManager : MonoBehaviour
             musicSource.Pause();
             sfxSource.volume = 0f;
             zoneSource.volume = 0f;
-            jingleStart.volume = 0f;
+            jingleStartSource.volume = 0f;
             footStepsSource.volume = 0f;
             voiceSource.volume = 0f;
         }
@@ -216,6 +217,16 @@ public class SoundManager : MonoBehaviour
     public void StopJingleStart()
     {
         zoneSource.Stop();
+
+        return;
+    }
+
+    public void PlayUI(AudioClip sfx, float volume = 1f, float pitch = 1f)
+    {
+        UISource.pitch = pitch;
+        UISource.PlayOneShot(sfx, (sfxDefaultVolume * volume) * globalDefaultVolume);
+
+        UISource.pitch = 1;
 
         return;
     }
