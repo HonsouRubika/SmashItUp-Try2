@@ -61,6 +61,8 @@ public class WhackAMoleManager : MonoBehaviour
     private float scoreTeam1;
     private float scoreTeam2;
 
+    public ParticleSystem spawnMoleFX;
+
     private void Start()
     {
         //init var
@@ -93,6 +95,11 @@ public class WhackAMoleManager : MonoBehaviour
             OneVSThreeEnable = true;
             playerAlone1v3 = System.Array.IndexOf(playersTeam, 0);
         }
+    }
+
+    void CreateShine(Transform spawn)
+    {
+        Instantiate(spawnMoleFX, spawn.position, Quaternion.identity);
     }
 
     private void Update()
@@ -224,6 +231,9 @@ public class WhackAMoleManager : MonoBehaviour
             moleScript.whackAMoleScript = this;
             MoleInScene++;
             TaupeSoundScript.TaupeSpawning();
+
+            CreateShine(allTpPoints[randomNumberChosen]);
+
         }
         /*
         else

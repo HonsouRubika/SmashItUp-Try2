@@ -37,6 +37,7 @@ public class Mole : MonoBehaviour
     private bool playOneTime = false;
 
     public ParticleSystem shineFX;
+    
 
     private void Start()
     {
