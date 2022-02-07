@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
                 //on charge la prochaine scene
                 transitionState = TransitionState.LOADING;
 
-                SceneManager.LoadScene("ScoreFinal");
+                SceneManager.LoadScene("NewScoreFinal");
 
                 //Scene is loaded
                 transitionState = TransitionState.OPEN_YELLOW;
