@@ -55,13 +55,18 @@ MonoBehaviour:
   MoleInScene: 0
   molePrefab: {fileID: 5728648553451281549, guid: 7a6952c5f98dd7442884595afcfbb1c8, type: 3}
   moleTimeStay: 3
+  scoreScriptTeam: {fileID: 0}
   scoreScript: {fileID: 0}
   timerScript: {fileID: 0}
   allTpPoints: []
   previousRandomNumber: 
+  delaySpawnMoleTime: 2
   playersTeam: 
+  playerAlone1v3: 0
+  OneVSThreeEnable: 0
   equalityCase: 0
   TaupeSoundScript: {fileID: 0}
+  spawnMoleFX: {fileID: 198602994958770764, guid: 7196a6ae77c7e2a4e8e963a2c3fcbb2f, type: 3}
 --- !u!114 &1347219380376409837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,10 +79,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c8da99c3506be45af2bf49be00e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taupeSpawn: {fileID: 8300000, guid: 6221b4d320a0f814689572c1dc95c322, type: 3}
-  taupeSpawnVolume: 0.5
-  taupeHit: {fileID: 8300000, guid: bdb841ba79817554e8cef2c34be926ca, type: 3}
-  taupeHitVolume: 0.5
+  taupeSpawn: {fileID: 8300000, guid: bdb841ba79817554e8cef2c34be926ca, type: 3}
+  taupeSpawnVolume: 0.4
+  taupeHit: {fileID: 8300000, guid: 1365ee7ab0d5ca4468711f88458ac747, type: 3}
+  taupeHitVolume: 0.4
 --- !u!1 &7124528467919759086
 GameObject:
   m_ObjectHideFlags: 0
