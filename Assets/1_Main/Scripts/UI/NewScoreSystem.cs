@@ -573,55 +573,98 @@ public class NewScoreSystem : MonoBehaviour
 
         CheckIfEquality();
 
-        switch (equalityCase)
+        switch (playersPosition.Length)
         {
-            case EqualityCase.None:
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, null);
+            case 4:
+                switch (equalityCase)
+                {
+                    case EqualityCase.None:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, null);
+                        break;
+                    case EqualityCase.AllEqualDifferentZero:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownGold);
+                        break;
+                    case EqualityCase.FirstSecondAndThirdFourth:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
+                        break;
+                    case EqualityCase.FirstSecondThird:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
+                        break;
+                    case EqualityCase.SecondThirdFourth:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
+                        break;
+                    case EqualityCase.FirstSecond:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
+                        break;
+                    case EqualityCase.SecondThird:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
+                        break;
+                    case EqualityCase.ThirdFourth:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
+                        break;
+                }
                 break;
-            case EqualityCase.AllEqualDifferentZero:
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownGold);
+            case 3:
+                switch (equalityCase)
+                {
+                    case EqualityCase.None:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
+                        break;
+                    case EqualityCase.AllEqualDifferentZero:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
+                        break;
+                    case EqualityCase.FirstSecond:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        break;
+                    case EqualityCase.SecondThird:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
+                        break;
+                }
                 break;
-            case EqualityCase.FirstSecondAndThirdFourth:
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
-                break;
-            case EqualityCase.FirstSecondThird:
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
-                break;
-            case EqualityCase.SecondThirdFourth:
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownSilver);
-                break;
-            case EqualityCase.FirstSecond:
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
-                break;
-            case EqualityCase.SecondThird:
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownSilver);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
-                break;
-            case EqualityCase.ThirdFourth:
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 3] + 1, crownBronze);
-                SetCrownToPlayers(playersPosition[playersPosition.Length - 4] + 1, crownBronze);
+            case 2:
+                switch (equalityCase)
+                {
+                    case EqualityCase.None:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownSilver);
+                        break;
+                    case EqualityCase.AllEqualDifferentZero:
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 1] + 1, crownGold);
+                        SetCrownToPlayers(playersPosition[playersPosition.Length - 2] + 1, crownGold);
+                        break;
+                }
                 break;
         }
     }
