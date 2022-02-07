@@ -49,13 +49,20 @@ public class TeleporterLobby : MonoBehaviour
             //start timer
             timerBeforeTeleportationActu = timerBeforeTeleportation + Time.time;
             isTimerInitiated = true;
-            StartGameSoundScript.GameStarting(true);
+            if (StartGameSoundScript != null)
+            {
+                StartGameSoundScript.GameStarting(true);
+            }
+            
 
         } else if (nbPlayerInZone != nbPlayerInGame)
         {
             timerBeforeTeleportationActu = 0;
             isTimerInitiated = false;
-            StartGameSoundScript.GameStarting(false);
+            if(StartGameSoundScript != null)
+            {
+                StartGameSoundScript.GameStarting(false);
+            }
         }
 
         if (((Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized) || isDebug) && !isSendingToLobby)

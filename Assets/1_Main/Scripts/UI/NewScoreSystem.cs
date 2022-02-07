@@ -502,24 +502,28 @@ public class NewScoreSystem : MonoBehaviour
                 if (crown == crownGold) crownPlayers[0].GetComponent<RectTransform>().sizeDelta = sizeCrowns[0]; 
                 if (crown == crownSilver) crownPlayers[0].GetComponent<RectTransform>().sizeDelta = sizeCrowns[1];
                 if (crown == crownBronze) crownPlayers[0].GetComponent<RectTransform>().sizeDelta = sizeCrowns[2];
+                if (crown == null) crownPlayers[0].gameObject.SetActive(false);
                 break;
             case 2:
                 crownPlayers[1].sprite = crown;
                 if (crown == crownGold) crownPlayers[1].GetComponent<RectTransform>().sizeDelta = sizeCrowns[0];
                 if (crown == crownSilver) crownPlayers[1].GetComponent<RectTransform>().sizeDelta = sizeCrowns[1];
                 if (crown == crownBronze) crownPlayers[1].GetComponent<RectTransform>().sizeDelta = sizeCrowns[2];
+                if (crown == null) crownPlayers[1].gameObject.SetActive(false);
                 break;
             case 3:
                 crownPlayers[2].sprite = crown;
                 if (crown == crownGold) crownPlayers[2].GetComponent<RectTransform>().sizeDelta = sizeCrowns[0];
                 if (crown == crownSilver) crownPlayers[2].GetComponent<RectTransform>().sizeDelta = sizeCrowns[1];
                 if (crown == crownBronze) crownPlayers[2].GetComponent<RectTransform>().sizeDelta = sizeCrowns[2];
+                if (crown == null) crownPlayers[2].gameObject.SetActive(false);
                 break;
             case 4:
                 crownPlayers[3].sprite = crown;
                 if (crown == crownGold) crownPlayers[3].GetComponent<RectTransform>().sizeDelta = sizeCrowns[0];
                 if (crown == crownSilver) crownPlayers[3].GetComponent<RectTransform>().sizeDelta = sizeCrowns[1];
                 if (crown == crownBronze) crownPlayers[3].GetComponent<RectTransform>().sizeDelta = sizeCrowns[2];
+                if (crown == null) crownPlayers[3].gameObject.SetActive(false);
                 break;
         } 
     }
