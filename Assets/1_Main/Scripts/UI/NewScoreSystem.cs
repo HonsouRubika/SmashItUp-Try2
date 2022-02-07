@@ -488,7 +488,8 @@ public class NewScoreSystem : MonoBehaviour
         {
             case 1:
                 crownPlayers[0].sprite = crown;
-                //if (crown = crownGold) crownPlayers[0].rectTransform.rect.width = sizeCrowns[0].x;
+                /*if (crown = crownGold) { crownPlayersWH[0].x = sizeCrowns[0].x; crownPlayersWH.[0].y
+                        = sizeCrowns[0].y; }*/
 
                 break;
             case 2:
