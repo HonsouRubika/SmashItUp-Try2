@@ -241,6 +241,17 @@ public class PlayerSkins : MonoBehaviour
             }
         }
 
+        if (isInStartScene && SceneManager.GetActiveScene().name != "NewStartScene")
+        {
+            isInStartScene = false;
+            isInArea = false;
+        }
+        else if (SceneManager.GetActiveScene().name == "NewStartScene")
+        {
+            isInStartScene = true;
+            isInArea = true;
+        }
+
     }
 
     /*

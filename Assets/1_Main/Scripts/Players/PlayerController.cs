@@ -1349,6 +1349,10 @@ public class PlayerController : MonoBehaviour
             hammerPointL.SetActive(true);
             hammerPointR.SetActive(false);
 
+            //Vibration
+            vibrationDurrationActu = vibrationDurration + Time.time;
+            isVibrationSet = true;
+
             //anim
             if (playerAnimScript != null) playerAnimScript.Attack();
             if(PlayerSoundScript != null) PlayerSoundScript.HammerPouet();
@@ -1366,6 +1370,10 @@ public class PlayerController : MonoBehaviour
             //apparition hammerHitBox
             hammerPointR.SetActive(true);
             hammerPointL.SetActive(false);
+
+            //Vibration
+            vibrationDurrationActu = vibrationDurration + Time.time;
+            isVibrationSet = true;
 
             //anim
             if (playerAnimScript != null)
