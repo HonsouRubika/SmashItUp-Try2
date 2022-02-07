@@ -169,7 +169,7 @@ public class Mole : MonoBehaviour
     private void DestroyCrate()
     {
         whackAMoleScript.despawnMole(moleID);
-        Destroy(gameObject);
+        Destroy(gameObject.transform.parent.gameObject);
     }
 
     /*Renderer the overlappBox 
