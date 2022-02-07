@@ -542,6 +542,10 @@ public class PlayerController : MonoBehaviour
                         {
                             playerFXScript.AttackFXTouch();
                             attackOneTime = true;
+
+                            //Vibration
+                            vibrationDurrationActu = vibrationDurration + Time.time;
+                            isVibrationSet = true;
                         }
                         enemy.GetComponent<PlayerController>().applyAttack(-hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
@@ -619,11 +623,14 @@ public class PlayerController : MonoBehaviour
                         {
                             playerFXScript.AttackFXTouch();
                             attackOneTime = true;
+
+                            //Vibration
+                            vibrationDurrationActu = vibrationDurration + Time.time;
+                            isVibrationSet = true;
                         }
                         enemy.GetComponent<PlayerController>().applyAttack(hammerXProjection, hammerYProjection);
                         lastTimeAttackHit = Time.time;
                         playerIDHit = (int)enemy.GetComponent<PlayerController>().playerID;
-
                     }
                 }
             }
@@ -1339,10 +1346,6 @@ public class PlayerController : MonoBehaviour
             //apparition hammerHitBox
             hammerPointL.SetActive(true);
             hammerPointR.SetActive(false);
-
-            //Vibration
-            vibrationDurrationActu = vibrationDurration + Time.time;
-            isVibrationSet = true;
 
             //anim
             if (playerAnimScript != null) playerAnimScript.Attack();

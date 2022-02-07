@@ -223,8 +223,10 @@ public class WhackAMoleManager : MonoBehaviour
             previousRandomNumber.Add(randomNumberChosen);
 
             allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>().alreadyMole = true;
-            GameObject moleInstance = Instantiate(molePrefab, allTpPoints[randomNumberChosen].position, Quaternion.identity, molesFolder);
-            Mole moleScript = moleInstance.GetComponent<Mole>();
+            Vector2 spawn = allTpPoints[randomNumberChosen].position;
+            GameObject moleInstance = Instantiate(molePrefab, new Vector3(spawn.x, spawn.y - 4.5f), Quaternion.identity, molesFolder);
+
+            Mole moleScript = moleInstance.GetComponentInChildren<Mole>();
             moleScript.currentTpScript = allTpPoints[randomNumberChosen].GetComponent<CheckPlayerIsClose>();
             moleScript.moleTimeStay = moleTimeStay;
             moleScript.moleID = randomNumberChosen;
