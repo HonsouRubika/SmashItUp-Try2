@@ -159,7 +159,7 @@ public class NewScoreSystem : MonoBehaviour
                 displayScore = false;
                 ScorePanel.SetActive(false);
                 DisplayScoreDependingPlayersNumber(false);
-                GameManager.Instance.UpdatePlayerScore();
+                
                 GameManager.Instance.resetAddingPoints();
                 GameManager.Instance.FadeOutTransition();
                 DisplayAddingPoints(-1);
@@ -283,7 +283,7 @@ public class NewScoreSystem : MonoBehaviour
                 if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; DisplayAddingPoints(1); }
                 else if (points == P2Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(3), P3Points, p3PointIndex)); p2PointIndex = index; DisplayAddingPoints(2); }
                 else if (points == P3Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(4), P4Points, p4PointIndex)); p3PointIndex = index; DisplayAddingPoints(3); }
-                else if (points == P4Points) { p4PointIndex = index; SortPlayers(); }
+                else if (points == P4Points) { p4PointIndex = index; GameManager.Instance.UpdatePlayerScore(); SortPlayers(); }
                 break;
             case 3:
                 if (addedPoints == scoreValuesScript.ThreePlayersPointsFirstPlace)
@@ -346,7 +346,7 @@ public class NewScoreSystem : MonoBehaviour
 
                 if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; DisplayAddingPoints(1); }
                 else if (points == P2Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(3), P3Points, p3PointIndex)); p2PointIndex = index; DisplayAddingPoints(2); }
-                else if (points == P3Points) { p3PointIndex = index; SortPlayers(); }
+                else if (points == P3Points) { p3PointIndex = index; GameManager.Instance.UpdatePlayerScore(); SortPlayers(); }
                 break;
             case 2:
                 if (addedPoints == scoreValuesScript.TwoPlayersPointsFirstPlace)
@@ -389,7 +389,7 @@ public class NewScoreSystem : MonoBehaviour
                 }
 
                 if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; DisplayAddingPoints(1); }
-                else if (points == P2Points) { p2PointIndex = index; SortPlayers(); }
+                else if (points == P2Points) { p2PointIndex = index; GameManager.Instance.UpdatePlayerScore(); SortPlayers(); }
                 break;
         }
     }
