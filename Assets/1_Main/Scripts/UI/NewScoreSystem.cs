@@ -595,19 +595,19 @@ public class NewScoreSystem : MonoBehaviour
         switch (scorePlayers.Length)
         {
             case 2:
-                scorePlayers[0] = GameManager.Instance.getAddedPointsPlayer(1);
-                scorePlayers[1] = GameManager.Instance.getAddedPointsPlayer(2);
+                scorePlayers[0] = GameManager.Instance.getScorePlayer(1);
+                scorePlayers[1] = GameManager.Instance.getScorePlayer(2);
                 break;
             case 3:
-                scorePlayers[0] = GameManager.Instance.getAddedPointsPlayer(1);
-                scorePlayers[1] = GameManager.Instance.getAddedPointsPlayer(2);
-                scorePlayers[2] = GameManager.Instance.getAddedPointsPlayer(3);
+                scorePlayers[0] = GameManager.Instance.getScorePlayer(1);
+                scorePlayers[1] = GameManager.Instance.getScorePlayer(2);
+                scorePlayers[2] = GameManager.Instance.getScorePlayer(3);
                 break;
             case 4:
-                scorePlayers[0] = GameManager.Instance.getAddedPointsPlayer(1);
-                scorePlayers[1] = GameManager.Instance.getAddedPointsPlayer(2);
-                scorePlayers[2] = GameManager.Instance.getAddedPointsPlayer(3);
-                scorePlayers[3] = GameManager.Instance.getAddedPointsPlayer(4);
+                scorePlayers[0] = GameManager.Instance.getScorePlayer(1);
+                scorePlayers[1] = GameManager.Instance.getScorePlayer(2);
+                scorePlayers[2] = GameManager.Instance.getScorePlayer(3);
+                scorePlayers[3] = GameManager.Instance.getScorePlayer(4);
                 break;
         }
 
