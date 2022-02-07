@@ -444,15 +444,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: gameModeToTest.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: teamCompoToTest.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: gameModeToTest.Array.data[0]
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 512891308522117509, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: teamCompoToTest.Array.data[0]
@@ -465,6 +465,10 @@ PrefabInstance:
     - target: {fileID: 2393110260777838759, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2433375145412552740, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
+      propertyPath: musicDefaultVolume
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2523120408918715304, guid: 548b5af2fe6dd564284d4521935f3ba0, type: 3}
       propertyPath: m_IsActive
@@ -656,7 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startGame: {fileID: 8300000, guid: 76ab28d980baf8e4cb0d562c2125d94e, type: 3}
-  startGameVolume: 0.5
+  startGameVolume: 1
 --- !u!1001 &527998421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -871,6 +875,10 @@ PrefabInstance:
       propertyPath: StartGameSoundScript
       value: 
       objectReference: {fileID: 503647906}
+    - target: {fileID: 4101149393318138798, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
+      propertyPath: timerBeforeTeleportation
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09f53ce75cb59a04fb9ab243b8a1b7db, type: 3}
 --- !u!114 &824044968 stripped
@@ -1084,7 +1092,7 @@ PrefabInstance:
     - target: {fileID: 2037009116, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2180264, guid: 34079a77c0dc1a648ab7e121f64585d6, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 2037009117, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 5
@@ -1759,7 +1767,7 @@ PrefabInstance:
     - target: {fileID: 2037009116, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2180264, guid: 34079a77c0dc1a648ab7e121f64585d6, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 2037009117, guid: ab763ae9bce7cd9469a97cb618818f8f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 5

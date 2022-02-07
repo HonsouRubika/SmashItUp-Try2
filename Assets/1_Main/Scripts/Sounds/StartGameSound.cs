@@ -9,8 +9,16 @@ public class StartGameSound : MonoBehaviour
     public AudioClip startGame;
     [Range(0f, 1f)] public float startGameVolume = 0.5f;
 
-    public void GameStarting()
+    public void GameStarting(bool enable)
     {
-        SoundManager.Instance.PlaySfx(startGame, startGameVolume);
+        switch (enable)
+        {
+            case true:
+                SoundManager.Instance.PlayJingleStart(startGame, startGameVolume);
+                break;
+            case false:
+                SoundManager.Instance.StopJingleStart();
+                break;
+        } 
     }
 }

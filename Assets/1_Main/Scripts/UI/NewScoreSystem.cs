@@ -127,8 +127,6 @@ public class NewScoreSystem : MonoBehaviour
         }
 
         ResetHammer();
-
-       // EarnPointSoundScript.PlayerEarnPoint();
     }
 
     private void Update()
@@ -217,6 +215,8 @@ public class NewScoreSystem : MonoBehaviour
                         else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
                         else points[index].color = new Color(1, 1, 1, 1);
 
+                        EarnPointSoundScript.PlayerEarnPoint();
+
                         index++;
 
                         yield return new WaitForSeconds(timeBtwPops);
@@ -233,6 +233,8 @@ public class NewScoreSystem : MonoBehaviour
                         if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
                         else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
                         else points[index].color = new Color(1, 1, 1, 1);
+
+                        EarnPointSoundScript.PlayerEarnPoint();
 
                         index++;
 
@@ -251,6 +253,8 @@ public class NewScoreSystem : MonoBehaviour
                         else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
                         else points[index].color = new Color(1, 1, 1, 1);
 
+                        EarnPointSoundScript.PlayerEarnPoint();
+
                         index++;
 
                         yield return new WaitForSeconds(timeBtwPops);
@@ -267,6 +271,8 @@ public class NewScoreSystem : MonoBehaviour
                         if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
                         else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
                         else points[index].color = new Color(1, 1, 1, 1);
+
+                        EarnPointSoundScript.PlayerEarnPoint();
 
                         index++;
 
@@ -292,6 +298,8 @@ public class NewScoreSystem : MonoBehaviour
                         else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
                         else points[index].color = new Color(1, 1, 1, 1);
 
+                        EarnPointSoundScript.PlayerEarnPoint();
+
                         index++;
 
                         yield return new WaitForSeconds(timeBtwPops);
@@ -309,6 +317,8 @@ public class NewScoreSystem : MonoBehaviour
                         else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
                         else points[index].color = new Color(1, 1, 1, 1);
 
+                        EarnPointSoundScript.PlayerEarnPoint();
+
                         index++;
 
                         yield return new WaitForSeconds(timeBtwPops);
@@ -325,6 +335,8 @@ public class NewScoreSystem : MonoBehaviour
                         if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
                         else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
                         else points[index].color = new Color(1, 1, 1, 1);
+
+                        EarnPointSoundScript.PlayerEarnPoint();
 
                         index++;
 
@@ -349,6 +361,8 @@ public class NewScoreSystem : MonoBehaviour
                         else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
                         else points[index].color = new Color(1, 1, 1, 1);
 
+                        EarnPointSoundScript.PlayerEarnPoint();
+
                         index++;
 
                         yield return new WaitForSeconds(timeBtwPops);
@@ -365,6 +379,8 @@ public class NewScoreSystem : MonoBehaviour
                         if (index > (points.Length * 2) - 1) points[index - (points.Length * 2)].color = new Color(1, 1, 1, 1);
                         else if (index > points.Length - 1) points[index - points.Length].color = new Color(1, 1, 1, 1);
                         else points[index].color = new Color(1, 1, 1, 1);
+
+                        EarnPointSoundScript.PlayerEarnPoint();
 
                         index++;
 

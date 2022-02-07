@@ -49,11 +49,13 @@ public class TeleporterLobby : MonoBehaviour
             //start timer
             timerBeforeTeleportationActu = timerBeforeTeleportation + Time.time;
             isTimerInitiated = true;
+            StartGameSoundScript.GameStarting(true);
 
         } else if (nbPlayerInZone != nbPlayerInGame)
         {
             timerBeforeTeleportationActu = 0;
             isTimerInitiated = false;
+            StartGameSoundScript.GameStarting(false);
         }
 
         if (((Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized) || isDebug) && !isSendingToLobby)
@@ -67,8 +69,6 @@ public class TeleporterLobby : MonoBehaviour
 
             //doesnt work
             GameManager.Instance.initializeGameModes();
-
-            StartGameSoundScript.GameStarting();
         }
         else if (((Time.time >= timerBeforeTeleportationActu && isTimerInitiated && !isGameInitialized) || isDebug) && isSendingToLobby)
         {
