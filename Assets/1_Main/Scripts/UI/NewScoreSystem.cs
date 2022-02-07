@@ -32,7 +32,6 @@ public class NewScoreSystem : MonoBehaviour
     public Sprite crownSilver;
     public Sprite crownBronze;
     private Image[] crownPlayers;
-    private Vector2[] crownPlayersWH;
     private Vector2[] sizeCrowns;
 
     [Header("Canvas")]
@@ -75,14 +74,10 @@ public class NewScoreSystem : MonoBehaviour
     private void Start()
     {
         crownPlayers = new Image[ScorePanel.transform.GetChild(10).childCount];
-        crownPlayersWH = new Vector2[crownPlayers.Length];
         sizeCrowns = new Vector2[crownPlayers.Length];
         for (int i = 0; i < crownPlayers.Length; i++)
         {
             crownPlayers[i] = ScorePanel.transform.GetChild(10).GetChild(i).GetComponent<Image>();
-
-            crownPlayersWH[i].x = crownPlayers[i].GetComponent<RectTransform>().rect.width;
-            crownPlayersWH[i].y = crownPlayers[i].GetComponent<RectTransform>().rect.height;
 
             sizeCrowns[i].x = crownPlayers[i].GetComponent<RectTransform>().rect.width;
             sizeCrowns[i].y = crownPlayers[i].GetComponent<RectTransform>().rect.height;
@@ -488,18 +483,27 @@ public class NewScoreSystem : MonoBehaviour
         {
             case 1:
                 crownPlayers[0].sprite = crown;
-                /*if (crown = crownGold) { crownPlayersWH[0].x = sizeCrowns[0].x; crownPlayersWH.[0].y
-                        = sizeCrowns[0].y; }*/
-
+                if (crown == crownGold) crownPlayers[0].GetComponent<RectTransform>().sizeDelta = sizeCrowns[0]; 
+                if (crown == crownSilver) crownPlayers[0].GetComponent<RectTransform>().sizeDelta = sizeCrowns[1];
+                if (crown == crownBronze) crownPlayers[0].GetComponent<RectTransform>().sizeDelta = sizeCrowns[2];
                 break;
             case 2:
                 crownPlayers[1].sprite = crown;
+                if (crown == crownGold) crownPlayers[1].GetComponent<RectTransform>().sizeDelta = sizeCrowns[0];
+                if (crown == crownSilver) crownPlayers[1].GetComponent<RectTransform>().sizeDelta = sizeCrowns[1];
+                if (crown == crownBronze) crownPlayers[1].GetComponent<RectTransform>().sizeDelta = sizeCrowns[2];
                 break;
             case 3:
                 crownPlayers[2].sprite = crown;
+                if (crown == crownGold) crownPlayers[2].GetComponent<RectTransform>().sizeDelta = sizeCrowns[0];
+                if (crown == crownSilver) crownPlayers[2].GetComponent<RectTransform>().sizeDelta = sizeCrowns[1];
+                if (crown == crownBronze) crownPlayers[2].GetComponent<RectTransform>().sizeDelta = sizeCrowns[2];
                 break;
             case 4:
                 crownPlayers[3].sprite = crown;
+                if (crown == crownGold) crownPlayers[3].GetComponent<RectTransform>().sizeDelta = sizeCrowns[0];
+                if (crown == crownSilver) crownPlayers[3].GetComponent<RectTransform>().sizeDelta = sizeCrowns[1];
+                if (crown == crownBronze) crownPlayers[3].GetComponent<RectTransform>().sizeDelta = sizeCrowns[2];
                 break;
         } 
     }
