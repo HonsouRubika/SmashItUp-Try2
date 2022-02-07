@@ -32,6 +32,7 @@ public class NewScoreSystem : MonoBehaviour
     public Sprite crownSilver;
     public Sprite crownBronze;
     private Image[] crownPlayers;
+    private Vector2[] crownPlayersWH;
     private Vector2[] sizeCrowns;
 
     [Header("Canvas")]
@@ -74,10 +75,15 @@ public class NewScoreSystem : MonoBehaviour
     private void Start()
     {
         crownPlayers = new Image[ScorePanel.transform.GetChild(10).childCount];
+        crownPlayersWH = new Vector2[crownPlayers.Length];
         sizeCrowns = new Vector2[crownPlayers.Length];
         for (int i = 0; i < crownPlayers.Length; i++)
         {
             crownPlayers[i] = ScorePanel.transform.GetChild(10).GetChild(i).GetComponent<Image>();
+
+            crownPlayersWH[i].x = crownPlayers[i].GetComponent<RectTransform>().rect.width;
+            crownPlayersWH[i].y = crownPlayers[i].GetComponent<RectTransform>().rect.height;
+
             sizeCrowns[i].x = crownPlayers[i].GetComponent<RectTransform>().rect.width;
             sizeCrowns[i].y = crownPlayers[i].GetComponent<RectTransform>().rect.height;
         }
@@ -482,6 +488,8 @@ public class NewScoreSystem : MonoBehaviour
         {
             case 1:
                 crownPlayers[0].sprite = crown;
+                //if (crown = crownGold) crownPlayers[0].rectTransform.rect.width = sizeCrowns[0].x;
+
                 break;
             case 2:
                 crownPlayers[1].sprite = crown;
@@ -492,9 +500,7 @@ public class NewScoreSystem : MonoBehaviour
             case 4:
                 crownPlayers[3].sprite = crown;
                 break;
-        }
-
-
+        } 
     }
 
     public void ResetHammer()
