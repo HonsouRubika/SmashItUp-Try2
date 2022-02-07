@@ -54,10 +54,10 @@ public class NewScoreSystem : MonoBehaviour
     private GameObject score3Players;
     private GameObject score2Players;
 
-    public  int[] scorePlayers;
+    private  int[] scorePlayers;
     private GameObject[] playersUnsorted;
     private GameObject[] players;
-    public int[] playersPosition;
+    private int[] playersPosition;
 
     //AddingPoints
     private List<TextMeshProUGUI> playerAddedPointsText;
@@ -81,7 +81,7 @@ public class NewScoreSystem : MonoBehaviour
             sizeCrowns[i].x = crownPlayers[i].GetComponent<RectTransform>().rect.width;
             sizeCrowns[i].y = crownPlayers[i].GetComponent<RectTransform>().rect.height;
         }
-        EnableCrowns();
+        EnableCrowns(false);
 
         playerAddedPointsText = new List<TextMeshProUGUI>(new TextMeshProUGUI[ScorePanel.transform.GetChild(9).childCount]);
         for (int i = 0; i < playerAddedPointsText.Count; i++)
@@ -276,7 +276,7 @@ public class NewScoreSystem : MonoBehaviour
                 if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; DisplayAddingPoints(1); }
                 else if (points == P2Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(3), P3Points, p3PointIndex)); p2PointIndex = index; DisplayAddingPoints(2); }
                 else if (points == P3Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(4), P4Points, p4PointIndex)); p3PointIndex = index; DisplayAddingPoints(3); }
-                else if (points == P4Points) p4PointIndex = index;
+                else if (points == P4Points) { p4PointIndex = index; SortPlayers(); }
                 break;
             case 3:
                 if (addedPoints == scoreValuesScript.ThreePlayersPointsFirstPlace)
@@ -333,7 +333,7 @@ public class NewScoreSystem : MonoBehaviour
 
                 if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; DisplayAddingPoints(1); }
                 else if (points == P2Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(3), P3Points, p3PointIndex)); p2PointIndex = index; DisplayAddingPoints(2); }
-                else if (points == P3Points) p3PointIndex = index;
+                else if (points == P3Points) { p3PointIndex = index; SortPlayers(); }
                 break;
             case 2:
                 if (addedPoints == scoreValuesScript.TwoPlayersPointsFirstPlace)
@@ -372,11 +372,9 @@ public class NewScoreSystem : MonoBehaviour
                 }
 
                 if (points == P1Points) { StartCoroutine(SetHammerPoints(GameManager.Instance.getAddedPointsPlayer(2), P2Points, p2PointIndex)); p1PointIndex = index; DisplayAddingPoints(1); }
-                else if (points == P2Points) p2PointIndex = index;
+                else if (points == P2Points) { p2PointIndex = index; SortPlayers(); }
                 break;
         }
-
-        SortPlayers();
     }
 
     public void DisplayTeam(int player, string team)
@@ -441,16 +439,45 @@ public class NewScoreSystem : MonoBehaviour
         }
     }
 
-    private void EnableCrowns()
+    private void EnableCrowns(bool enable)
     {
-        for (int i = 0; i < crownPlayers.Length; i++)
+        if (enable)
         {
-            crownPlayers[i].sprite = null;
+            switch (players.Length)
+            {
+                case 2:
+                    for (int i = 0; i < crownPlayers.Length - 2; i++)
+                    {
+                        crownPlayers[i].gameObject.SetActive(true);
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i < crownPlayers.Length - 1; i++)
+                    {
+                        crownPlayers[i].gameObject.SetActive(true);
+                    }
+                    break;
+                case 4:
+                    for (int i = 0; i < crownPlayers.Length; i++)
+                    {
+                        crownPlayers[i].gameObject.SetActive(true);
+                    }
+                    break;
+            }
         }
+        else
+        {
+            for (int i = 0; i < crownPlayers.Length; i++)
+            {
+                crownPlayers[i].gameObject.SetActive(false);
+            }
+        }  
     }
 
     private void SetCrownToPlayers(int player, Sprite crown)
     {
+        EnableCrowns(true);
+
         switch (player)
         {
             case 1:
@@ -466,6 +493,8 @@ public class NewScoreSystem : MonoBehaviour
                 crownPlayers[3].sprite = crown;
                 break;
         }
+
+
     }
 
     public void ResetHammer()
