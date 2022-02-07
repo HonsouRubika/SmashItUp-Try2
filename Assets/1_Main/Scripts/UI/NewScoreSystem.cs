@@ -81,7 +81,7 @@ public class NewScoreSystem : MonoBehaviour
             sizeCrowns[i].x = crownPlayers[i].GetComponent<RectTransform>().rect.width;
             sizeCrowns[i].y = crownPlayers[i].GetComponent<RectTransform>().rect.height;
         }
-        EnableCrowns(false);
+        EnableCrowns();
 
         playerAddedPointsText = new List<TextMeshProUGUI>(new TextMeshProUGUI[ScorePanel.transform.GetChild(9).childCount]);
         for (int i = 0; i < playerAddedPointsText.Count; i++)
@@ -441,29 +441,16 @@ public class NewScoreSystem : MonoBehaviour
         }
     }
 
-    private void EnableCrowns(bool enable)
+    private void EnableCrowns()
     {
-        switch (enable)
+        for (int i = 0; i < crownPlayers.Length; i++)
         {
-            case true:
-                for (int i = 0; i < crownPlayers.Length; i++)
-                {
-                    crownPlayers[i].gameObject.SetActive(true);
-                }
-                break;
-            case false:
-                for (int i = 0; i < crownPlayers.Length; i++)
-                {
-                    crownPlayers[i].gameObject.SetActive(false);
-                }
-                break;
+            crownPlayers[i].sprite = null;
         }
     }
 
     private void SetCrownToPlayers(int player, Sprite crown)
     {
-        EnableCrowns(true);
-
         switch (player)
         {
             case 1:
