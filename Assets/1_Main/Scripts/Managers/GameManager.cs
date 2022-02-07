@@ -394,6 +394,7 @@ public class GameManager : MonoBehaviour
     {
         resetScorePoints();
         scoreSystemScript.ResetHammer();
+        scoreSystemScript.EnableCrowns(false);
 
         //DEBUG
         if (gameModeToTest.Length > 0) _nbManches = gameModeToTest.Length;

@@ -440,7 +440,7 @@ public class NewScoreSystem : MonoBehaviour
         }
     }
 
-    private void EnableCrowns(bool enable)
+    public void EnableCrowns(bool enable)
     {
         if (enable)
         {
